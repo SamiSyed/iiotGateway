@@ -1,0 +1,9 @@
+{
+    "cSpell.words": [
+        "huart"
+    ],
+    "files.associations": {
+        "uartringbuffer_multi.h": "c",
+        "cstdio": "c"
+    }
+}
