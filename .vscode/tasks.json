@@ -26,6 +26,23 @@
             }
         },
         {
+            "label": "Build with ARM GCC",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "./build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Build your project using CMake and ARM toolchain."
+        },
+        {
             "label": "make flash",
             "type": "shell",
             "dependsOn": [
