@@ -4,6 +4,8 @@
     ],
     "files.associations": {
         "uartringbuffer_multi.h": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "uartringbufdma.h": "c",
+        "stm32wlxx_it.h": "c"
     }
 }

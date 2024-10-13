@@ -26,30 +26,13 @@
             }
         },
         {
-            "label": "Build with ARM GCC",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "./build"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "detail": "Build your project using CMake and ARM toolchain."
-        },
-        {
             "label": "make flash",
             "type": "shell",
             "dependsOn": [
                 "build"
             ],
             "command": [
-                "openocd -f interface/stlink-v2.cfg -f target/stm32g0x.cfg -c \"program \"build/Mono_SFCPU.bin\" verify reset exit 0x08000000\" -c shutdown"
+                "openocd -f interface/stlink-v2.cfg -f target/stm32wlx.cfg -c \"program \"build/IOT_GATEWAY.bin\" verify reset exit 0x08000000\" -c shutdown"
             ],
             "options": {
                 "cwd": "${workspaceFolder}",
@@ -80,175 +63,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        },
-        {
-            "label": "Run gtest unit tests(docker)",
-            "detail": "As if you were the CI pipeline in GitLab",
-            "type": "shell",
-            "command": "../../../scripts/run_docker_task.sh unittest",
-            "options": {
-                "cwd": "${workspaceFolder}/test/docker"
-            },
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            }
-        },
-        {
-            "label": "Build and Run Script with Renode",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "build",
-                "Run Renode Script"
-            ],
-            "problemMatcher": [],
-        },
-        {
-            "label": "Run Renode Script",
-            "type": "shell",
-            "command": "renode",
-            "args": [
-                "-e",
-                "include @${workspaceFolder}/renode/scripts/stm32g0_sfcpu.resc",
-                "-e",
-                "start"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Renode Script Multi-node",
-            "type": "shell",
-            "command": "renode",
-            "args": [
-                "-e",
-                "i @${workspaceFolder}/renode/scripts/mono_sfcpu_multi_node.resc",
-                "-e",
-                "start"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Load Renode Script",
-            "type": "shell",
-            "isBackground": true,
-            "command": "renode",
-            "args": [
-                "-e",
-                "include @${workspaceFolder}/renode/scripts/stm32g0_sfcpu.resc",
-            ],
-            "problemMatcher": [
-                {
-                    "pattern": {
-                        "regexp": "",
-                    },
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": ".",
-                        "endsPattern": ".",
-                    },
-                }
-            ],
-        },
-        {
-            "label": "Load Renode Multi-Node Script",
-            "type": "shell",
-            "isBackground": true,
-            "command": "renode",
-            "args": [
-                "-e",
-                "include @${workspaceFolder}/renode/scripts/mono_sfcpu_multi_node.resc",
-            ],
-            "problemMatcher": [
-                {
-                    "pattern": {
-                        "regexp": "",
-                    },
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": ".",
-                        "endsPattern": ".",
-                    },
-                }
-            ],
-        },
-        {
-            "label": "Run Renode Script (with extra logging)",
-            "type": "shell",
-            "command": "renode",
-            "args": [
-                "-e",
-                "set LOG_FUNCTION_NAMES ${input:LOG_FUNCTION_NAMES}",
-                "-e",
-                "set LOG_ALL_PERIPHERAL_ACCESS ${input:LOG_ALL_PERIPHERAL_ACCESS}",
-                "-e",
-                "set LOG_LEVEL ${input:LOG_LEVEL}",
-                "-e",
-                "include @${workspaceFolder}/renode/scripts/stm32g0_sfcpu.resc",
-                "-e",
-                "start"
-            ],
-            "problemMatcher": [],
-        },
-        {
-            "label": "Run Renode Tests Selected",
-            "type": "shell",
-            "command": "cmd \"/c renode-test -t renode\\tests\\tests.yaml -r renode\\tests\\results\\win -f \"${input:TEST_NAME}\"\"",
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Renode Tests",
-            "type": "shell",
-            "command": "cmd \"/c renode-test -j10 -t renode\\tests\\tests.yaml -r renode\\tests\\results\\win\"",
-            "problemMatcher": []
-        },
-        {
-            "label": "Debug Renode Tests",
-            "type": "shell",
-            "command": "cmd \"/c renode-test -j10 -t renode\\tests\\tests.yaml -r renode\\tests\\results\\win --show-log --enable-xwt\"",
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Renode Tests (docker)",
-            "type": "shell",
-            "command": "docker compose run --build renode-tests-run",
-            "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/renode/tests/docker/"
-            },
-        },
-        {
-            "label": "Debug Renode Tests (docker)",
-            "type": "shell",
-            "command": "docker compose run --build renode-tests-show-log",
-            "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/renode/tests/docker/"
-            },
-        },
-        {
-            "label": "Run All Renode Test Variants",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Run Renode Tests",
-                "Debug Renode Tests",
-                "Run Renode Tests (docker)",
-                "Debug Renode Tests (docker)"
-            ],
-            "problemMatcher": [],
-        },
-        {
-            "label": "Run Renode Test And (docker) Variants",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Run Renode Tests",
-                "Run Renode Tests (docker)"
-            ],
-            "problemMatcher": [],
         },
         {
             "label": "Terminate All Tasks",
