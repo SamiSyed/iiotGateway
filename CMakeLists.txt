@@ -102,13 +102,13 @@ set(C_SOURCES
     Core/Src/sys_app.c
     Core/Src/timer_if.c
     Core/Src/system_stm32wlxx.c
-    Core/Src/stm32wlxx_hal_timebase_tim.c
     SubGHz_Phy/App/app_subghz_phy.c
     SubGHz_Phy/App/subghz_phy_app.c
     SubGHz_Phy/Target/radio_board_if.c
     Core/Src/usart_if.c
     Core/Src/sys_debug.c
     Core/Src/dma.c
+    Core/Src/uartRingBufDMA.c
 )
 
 # List of ASM source files
@@ -154,11 +154,11 @@ endif()
 
 # Add executable
 add_executable(${TARGET}
-    ${C_SOURCES}
     ${ASM_SOURCES}
-    ${MIDDLEWARE_SOURCES}
     ${DRIVER_SOURCE}
+    ${MIDDLEWARE_SOURCES}
     ${UTILITES_SOURCE}
+    ${C_SOURCES}
 )
 
 # Define compile definitions (MCU_MODEL)
