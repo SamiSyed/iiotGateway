@@ -27,10 +27,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "UartRingbuffer_multi.h"
 #include "filter.h"
 #include "subghz.h"
 #include "system.h"
+#include "uartRingBufDMA.h"
 #include "usart.h"
 
 /* USER CODE END Includes */
@@ -153,6 +153,7 @@ void StartDefaultTask(void *argument) {
   /* init code for SubGHz_Phy */
   MX_SubGHz_Phy_Init();
   /* USER CODE BEGIN StartDefaultTask */
+  Ringbuf_Init();
   // uint16_t reading = 25;
   // HAL_StatusTypeDef status = HAL_ERROR;
   // printf("SUBGhz Init Done\r\n");
@@ -161,6 +162,12 @@ void StartDefaultTask(void *argument) {
   } else {
     printf("*********END_NODE*********\r\n");
   }
+
+  if (isConfirmed(5000) != 1) {
+    printf("isConfirm() Fail.\r\n");
+    // Error_Handler();
+  }
+
   osDelay(30000);
   /* Infinite loop */
   for (;;) {
@@ -225,7 +232,7 @@ void prepareDataEntry(void *argument) {
     // Prepare message
     prepareMqttMessageStruct(getMqttMessage());
     // put into variable or send
-    LocalError = sendAllDataToMqttBroker(getMqttMessage());
+    // LocalError = sendAllDataToMqttBroker(getMqttMessage());
     if (LocalError != NO_ERROR) {
       // Log Error
     }
@@ -250,11 +257,11 @@ void gsmTaskEntry(void *argument) {
     SystemError localError = NO_ERROR;
     localError = atCommandCheck();
 
-    if (localError != NO_ERROR) {
-      // Log Error
-    } else {
-      localError = gsmInit();
-    }
+    // if (localError != NO_ERROR) {
+    //   // Log Error
+    // } else {
+    //   localError = gsmInit();
+    // }
 
     if (localError != NO_ERROR) {
       // Log Error

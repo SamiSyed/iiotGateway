@@ -1,6 +1,9 @@
 #include "system.h"
-#include "UartRingbuffer_multi.h"
+#include "uartRingBufDMA.h"
 #include "filter.h"
+
+extern UART_HandleTypeDef huart2;
+#define gsm_uart &huart2
 
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
