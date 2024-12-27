@@ -153,15 +153,23 @@ void StartDefaultTask(void *argument) {
   /* init code for SubGHz_Phy */
   MX_SubGHz_Phy_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  // uint16_t reading = 25;
-  // HAL_StatusTypeDef status = HAL_ERROR;
-  // printf("SUBGhz Init Done\r\n");
   if (IS_GATEWAY) {
     printf("*********GATEWAY*********\r\n");
   } else {
     printf("*********END_NODE*********\r\n");
   }
-  osDelay(30000);
+
+  ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+  if (IS_GATEWAY == 1) {
+    printf("Start fetching sensor data\r\n");
+  }
+  if (IS_GATEWAY == 0) {
+    printf("Start Sending data\r\n");
+  }
+  // osDelay(30000);
+  /* Release filter task */
+  xTaskNotifyGive(runFilterHandle);
+
   /* Infinite loop */
   for (;;) {
     /* Lora test ===> */
@@ -173,14 +181,9 @@ void StartDefaultTask(void *argument) {
     /* Get Lora data ===> */
     if (IS_GATEWAY == 1) {
       listenForLoraNodes(LORA_LISTENING_DURATION);
-      osDelay(1);
     }
     /* <=== Get Lora data */
-
-    // MqttMessage_t *tempMqttMessage = getMqttMessageByIndex(sensorID_0);
-    // printf("mqttTopic : %s\r\n", tempMqttMessage->topic);
-    // printf("mqttValue : %i\r\n\r\n", tempMqttMessage->value);
-    // osDelay(1000);
+    osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -195,6 +198,9 @@ void StartDefaultTask(void *argument) {
 void runFilterEntry(void *argument) {
   /* USER CODE BEGIN runFilterEntry */
   initSensorFilter();
+  ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+  printf("Filter loop started\r\n");
+
   /* Infinite loop */
   for (;;) {
     if (isRawDataReceived()) {
@@ -215,20 +221,10 @@ void runFilterEntry(void *argument) {
 /* USER CODE END Header_prepareDataEntry */
 void prepareDataEntry(void *argument) {
   /* USER CODE BEGIN prepareDataEntry */
-  SystemError LocalError = NO_ERROR;
-  setMqttTopic();
   /* Infinite loop */
-  // if (isGSMReady()) {
-  osDelay(30000);
   for (;;) {
     // Copy data
     // Prepare message
-    prepareMqttMessageStruct(getMqttMessage());
-    // put into variable or send
-    LocalError = sendAllDataToMqttBroker(getMqttMessage());
-    if (LocalError != NO_ERROR) {
-      // Log Error
-    }
     osDelay(1000);
   }
   // }
@@ -245,24 +241,28 @@ void prepareDataEntry(void *argument) {
 void gsmTaskEntry(void *argument) {
   /* USER CODE BEGIN gsmTaskEntry */
   if (IS_GATEWAY == 1) {
-    // Ringbuf_init();
     osDelay(3000);
-    SystemError localError = NO_ERROR;
-    localError = atCommandCheck();
 
-    if (localError != NO_ERROR) {
+    if (atCommandCheck() != NO_ERROR) {
       // Log Error
+      printf("AT Command Check Error\r\n");
     } else {
-      localError = gsmInit();
+      if (gsmInit() != NO_ERROR) {
+        printf("GSM Init Error\r\n");
+      } else {
+        /* If gsmInit() is successful then release Task to send / receive data*/
+        xTaskNotifyGive(defaultTaskHandle);
+      }
     }
+    setMqttTopic();
 
-    if (localError != NO_ERROR) {
-      // Log Error
-    }
     /* Infinite loop */
     for (;;) {
+      prepareMqttMessageStruct(getMqttMessage());
+      if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
+        printf("Error sending data to MQTT Broker\r\n");
+      }
       osDelay(1000);
-      // gsmSend();
     }
   }
   /* USER CODE END gsmTaskEntry */
