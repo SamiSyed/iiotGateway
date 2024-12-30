@@ -8,7 +8,8 @@ static bool sendingData = false;
 static bool initialized = false;
 
 static uint16_t newValueBuffer[NUMBER_OF_SENSORS];
-static uint16_t filteredSensorValues[NUMBER_OF_SENSORS];
+static uint16_t
+    filteredSensorValues[NUMBER_OF_SENSORS]; /* Global Sensor Values*/
 static MovingAverageFilter sensorFilters[NUMBER_OF_SENSORS];
 static uint16_t filterBuffer[NUMBER_OF_SENSORS][FILTER_BUFFER_SIZE];
 static MqttMessage_t mqttMessages[NUMBER_OF_SENSORS];
@@ -67,20 +68,25 @@ void setNewValueBuffer(uint16_t newValue) {
   }
 }
 
+/* Get value from global sensor array*/
 uint16_t getFilteredValueByIndex(uint8_t index) {
   return filteredSensorValues[index];
 }
 
+/* Update MQTT struct with latest value to be send */
 void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
     mqttMessages[i].topic = mqttTopic[i];
-    mqttMessages[i].value = getFilteredValueByIndex(i);
+    char data[20];
+    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
+    mqttMessages[i].value = data;
+    printf("mqttMessages[i].value : %s \r\n", mqttMessages[i].value);
   }
 }
 
 void setMqttTopic(void) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
-    strcpy(mqttTopic[i], "iiot/sensorID_1");
+    strcpy(mqttTopic[i], "iiot/sensorID_2");
     // printf("%s\r\n", mqttTopic[i]);
   }
 }
@@ -94,11 +100,16 @@ MqttMessage_t *getMqttMessageByIndex(uint8_t index) {
 
 bool sendMqttServer(MqttMessage_t mqttMessage) {
   char data[80];
+  if (atCommandCheck() == NO_ERROR) {
 
-  sprintf(data, "SMPUB=\"%s\",1,0,\"%i\"", mqttMessage.topic, mqttMessage.value);
-  sendCommand(data);
-  // sendCommand("SMPUB=\"SensorReadings2024sami\",1,0,\"hello world\"");
-  osDelay(1000);
+    sprintf(data, "SMPUB=\"%s\",1,0,\"%s\"", mqttMessage.topic,
+            mqttMessage.value);
+    sendCommand(data);
+    osDelay(1000);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage) {
@@ -157,12 +168,6 @@ SystemError gsmInit(void) {
 // }
 
 SystemError atCommandCheck(void) {
-  // Take care of BAUDRATE
-  // AT
-  // Uart_sendstring("AT\r\n", gsm_uart);
-  // while (!(Wait_for("OK\r\n", gsm_uart)))
-  //   ;
-  // Uart_sendstring("AT---->OK\n\n", usb_uart);
   for (uint8_t i = 0; i < 3; i++) {
     sprintf(dataUart, "AT\r\n");
     printf(dataUart);
@@ -170,20 +175,6 @@ SystemError atCommandCheck(void) {
   }
 
   return NO_ERROR;
-}
-
-void gsmSend(void) {
-  // osDelay(1000);
-  // sendCommand("sapbr=1,1");
-  // osDelay(2000);
-
-  // sendCommand("SMCONN");
-  // osDelay(2000);
-  // sendCommand("SMPUB=\"SensorReadings2024sami\",1,0,\"hello world\"");
-  // osDelay(1000);
-  // sendCommand("SMDISC");
-  // sendCommand("sapbr=0,1");
-  // osDelay(1000);
 }
 
 HAL_StatusTypeDef atCommandToGSM(const uint8_t *command) {

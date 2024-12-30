@@ -11,7 +11,7 @@
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define MAX_APP_BUFFER_SIZE 2
-#define IS_GATEWAY 0
+#define IS_GATEWAY 1
 
 // #define log_uart &huart3
 
@@ -33,7 +33,7 @@ typedef enum {
 
 typedef struct {
   char *topic;
-  uint16_t value;
+  char *value;
   // timestamp
 } MqttMessage_t;
 
@@ -71,4 +71,5 @@ uint16_t GetTemperatureLevel(void);
 void sendCommand(char *command);
 void setGMSReadinessFlag(bool);
 bool isGSMReady(void);
+SystemError atCommandCheck(void);
 #endif /* SYSTEM_H */

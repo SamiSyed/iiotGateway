@@ -67,12 +67,6 @@ const osThreadAttr_t runFilter_attributes = {.name = "runFilter",
                                              .priority =
                                                  (osPriority_t)osPriorityNormal,
                                              .stack_size = 128 * 4};
-/* Definitions for prepareData */
-osThreadId_t prepareDataHandle;
-const osThreadAttr_t prepareData_attributes = {
-    .name = "prepareData",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
 /* Definitions for gmsTask */
 osThreadId_t gmsTaskHandle;
 const osThreadAttr_t gmsTask_attributes = {.name = "gmsTask",
@@ -87,7 +81,6 @@ const osThreadAttr_t gmsTask_attributes = {.name = "gmsTask",
 
 void StartDefaultTask(void *argument);
 void runFilterEntry(void *argument);
-void prepareDataEntry(void *argument);
 void gsmTaskEntry(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -126,10 +119,6 @@ void MX_FREERTOS_Init(void) {
   /* creation of runFilter */
   runFilterHandle = osThreadNew(runFilterEntry, NULL, &runFilter_attributes);
 
-  /* creation of prepareData */
-  prepareDataHandle =
-      osThreadNew(prepareDataEntry, NULL, &prepareData_attributes);
-
   /* creation of gmsTask */
   gmsTaskHandle = osThreadNew(gsmTaskEntry, NULL, &gmsTask_attributes);
 
@@ -153,22 +142,22 @@ void StartDefaultTask(void *argument) {
   /* init code for SubGHz_Phy */
   MX_SubGHz_Phy_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  if (IS_GATEWAY) {
+  if (IS_GATEWAY == 1) {
     printf("*********GATEWAY*********\r\n");
-  } else {
+  }
+  if (IS_GATEWAY == 0) {
     printf("*********END_NODE*********\r\n");
   }
 
-  ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
   if (IS_GATEWAY == 1) {
-    printf("Start fetching sensor data\r\n");
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    printf("----------------------------------Start fetching sensor data\r\n");
   }
   if (IS_GATEWAY == 0) {
     printf("Start Sending data\r\n");
   }
   // osDelay(30000);
   /* Release filter task */
-  xTaskNotifyGive(runFilterHandle);
 
   /* Infinite loop */
   for (;;) {
@@ -197,38 +186,22 @@ void StartDefaultTask(void *argument) {
 /* USER CODE END Header_runFilterEntry */
 void runFilterEntry(void *argument) {
   /* USER CODE BEGIN runFilterEntry */
-  initSensorFilter();
-  ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-  printf("Filter loop started\r\n");
-
+  if (IS_GATEWAY == 1) {
+    osDelay(500);
+    initSensorFilter();
+    printf("----------------------------------Filter loop started\r\n");
+  }
   /* Infinite loop */
   for (;;) {
-    if (isRawDataReceived()) {
-      runAllFilter();
-      setRawDataReceived(false);
+    if (IS_GATEWAY == 1) {
+      if (isRawDataReceived()) {
+        runAllFilter();
+        setRawDataReceived(false);
+      }
     }
     osDelay(1);
   }
   /* USER CODE END runFilterEntry */
-}
-
-/* USER CODE BEGIN Header_prepareDataEntry */
-/**
- * @brief Function implementing the prepareData thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_prepareDataEntry */
-void prepareDataEntry(void *argument) {
-  /* USER CODE BEGIN prepareDataEntry */
-  /* Infinite loop */
-  for (;;) {
-    // Copy data
-    // Prepare message
-    osDelay(1000);
-  }
-  // }
-  /* USER CODE END prepareDataEntry */
 }
 
 /* USER CODE BEGIN Header_gsmTaskEntry */
@@ -240,9 +213,9 @@ void prepareDataEntry(void *argument) {
 /* USER CODE END Header_gsmTaskEntry */
 void gsmTaskEntry(void *argument) {
   /* USER CODE BEGIN gsmTaskEntry */
-  if (IS_GATEWAY == 1) {
-    osDelay(3000);
+  osDelay(3000);
 
+  if (IS_GATEWAY == 1) {
     if (atCommandCheck() != NO_ERROR) {
       // Log Error
       printf("AT Command Check Error\r\n");
@@ -255,15 +228,17 @@ void gsmTaskEntry(void *argument) {
       }
     }
     setMqttTopic();
+  }
 
-    /* Infinite loop */
-    for (;;) {
+  /* Infinite loop */
+  for (;;) {
+    if (IS_GATEWAY == 1) {
       prepareMqttMessageStruct(getMqttMessage());
       if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
         printf("Error sending data to MQTT Broker\r\n");
       }
-      osDelay(1000);
     }
+    osDelay(10000);
   }
   /* USER CODE END gsmTaskEntry */
 }

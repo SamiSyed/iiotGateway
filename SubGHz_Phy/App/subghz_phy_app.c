@@ -152,7 +152,7 @@ void SubghzApp_Init(void)
 static void OnTxDone(void)
 {
   /* USER CODE BEGIN OnTxDone */
-  printf("OnTxDone(void) :\r\n");
+  printf("OnTxDone(void) : Called\r\n");
 
   /* USER CODE END OnTxDone */
 }
