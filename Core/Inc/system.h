@@ -11,7 +11,7 @@
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define MAX_APP_BUFFER_SIZE 2
-#define IS_GATEWAY 1
+#define IS_GATEWAY 0
 
 // #define log_uart &huart3
 
