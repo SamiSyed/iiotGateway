@@ -19,9 +19,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
-#include "cmsis_os.h"
-#include "main.h"
 #include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
 
 #include "app_subghz_phy.h"
 
@@ -58,21 +58,24 @@ uint8_t debugCounter = 0;
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
-    .name = "defaultTask",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 128 * 4};
+  .name = "defaultTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 4
+};
 /* Definitions for runFilter */
 osThreadId_t runFilterHandle;
-const osThreadAttr_t runFilter_attributes = {.name = "runFilter",
-                                             .priority =
-                                                 (osPriority_t)osPriorityNormal,
-                                             .stack_size = 128 * 4};
+const osThreadAttr_t runFilter_attributes = {
+  .name = "runFilter",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 4
+};
 /* Definitions for gmsTask */
 osThreadId_t gmsTaskHandle;
-const osThreadAttr_t gmsTask_attributes = {.name = "gmsTask",
-                                           .priority =
-                                               (osPriority_t)osPriorityHigh,
-                                           .stack_size = 128 * 4};
+const osThreadAttr_t gmsTask_attributes = {
+  .name = "gmsTask",
+  .priority = (osPriority_t) osPriorityHigh,
+  .stack_size = 128 * 4
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -86,10 +89,10 @@ void gsmTaskEntry(void *argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
- * @brief  FreeRTOS initialization
- * @param  None
- * @retval None
- */
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
@@ -113,8 +116,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* creation of defaultTask */
-  defaultTaskHandle =
-      osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* creation of runFilter */
   runFilterHandle = osThreadNew(runFilterEntry, NULL, &runFilter_attributes);
@@ -129,6 +131,7 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
   /* USER CODE END RTOS_EVENTS */
+
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -138,10 +141,12 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument) {
+void StartDefaultTask(void *argument)
+{
   /* init code for SubGHz_Phy */
   MX_SubGHz_Phy_Init();
   /* USER CODE BEGIN StartDefaultTask */
+  initUart();
   if (IS_GATEWAY == 1) {
     printf("*********GATEWAY*********\r\n");
   }
@@ -184,7 +189,8 @@ void StartDefaultTask(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_runFilterEntry */
-void runFilterEntry(void *argument) {
+void runFilterEntry(void *argument)
+{
   /* USER CODE BEGIN runFilterEntry */
   if (IS_GATEWAY == 1) {
     osDelay(500);
@@ -211,7 +217,8 @@ void runFilterEntry(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_gsmTaskEntry */
-void gsmTaskEntry(void *argument) {
+void gsmTaskEntry(void *argument)
+{
   /* USER CODE BEGIN gsmTaskEntry */
   osDelay(3000);
 
