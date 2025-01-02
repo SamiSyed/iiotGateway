@@ -64,7 +64,7 @@ void MX_FREERTOS_Init(void);
 int _write(int fd, unsigned char *buf, int len) {
   if (fd == 1 || fd == 2) {                    // stdout or stderr ?
     // HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
-    uart2status = HAL_UART_Transmit(&huart2, buf, len, 999); // Print to the UART
+    uart2status = HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
     //Orange wire => RX2
     //Yellow wire => TX2
   }

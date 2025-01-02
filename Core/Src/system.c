@@ -1,6 +1,11 @@
 #include "system.h"
 #include "UartRingbuffer_multi.h"
 #include "filter.h"
+#include "usart.h"
+
+#define AT_OK "OK"
+#define ADD_AT true
+#define NO_AT false
 
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
@@ -100,7 +105,7 @@ MqttMessage_t *getMqttMessageByIndex(uint8_t index) {
 
 bool sendMqttServer(MqttMessage_t mqttMessage) {
   char data[80];
-  if (atCommandCheck() == NO_ERROR) {
+  if (sendAT() == NO_ERROR) {
 
     sprintf(data, "SMPUB=\"%s\",1,0,\"%s\"", mqttMessage.topic,
             mqttMessage.value);
@@ -127,36 +132,39 @@ void sendCommand(char *command) {
 }
 
 SystemError gsmInit(void) {
-  printf("ATZ\r\n");
-  osDelay(50);
-  sendCommand("cfun=1,1");
-  osDelay(15000);
+  osDelay(1000);
+  sendATCommand("ATE1", AT_OK, NO_AT);
+  sendATCommand("ATZ", AT_OK, NO_AT);
 
-  sendCommand("cpin?");
-  sendCommand("csq");
-  sendCommand("creg?");
-  sendCommand("cgatt?");
-  sendCommand("cgdcont?");
+  sendATCommand("cfun=1,1", AT_OK, ADD_AT);
+  osDelay(15000);
+  sendATCommand("cpin?", AT_OK, ADD_AT);
+  sendATCommand("csq", AT_OK, ADD_AT);
+  sendATCommand("creg?", AT_OK, ADD_AT);
+  sendATCommand("cgatt?", AT_OK, ADD_AT);
+  /* Kept mute due to reply size more than rx_buffer size */
+  // sendATCommand("cgdcont?", AT_OK, ADD_AT);
 
   /* MQTT */
-  sendCommand("sapbr=3,1,\"Contype\",\"GPRS\"");
-  sendCommand("sapbr=3,1,\"APN\",\"telia\"");
-  sendCommand("SAPBR=3,1,\"USER\",\"\"");
-  sendCommand("SAPBR=3,1,\"PWD\",\"\"");
-  sendCommand("sapbr=1,1");
+  sendATCommand("sapbr=3,1,\"Contype\",\"GPRS\"", AT_OK, ADD_AT);
+  sendATCommand("sapbr=3,1,\"APN\",\"telia\"", AT_OK, ADD_AT);
+  sendATCommand("SAPBR=3,1,\"USER\",\"\"", AT_OK, ADD_AT);
+  sendATCommand("SAPBR=3,1,\"PWD\",\"\"", AT_OK, ADD_AT);
+  sendATCommand("sapbr=1,1", AT_OK, ADD_AT);
+
   osDelay(2000);
-  sendCommand("sapbr=2,1");
+  sendATCommand("sapbr=2,1", AT_OK, ADD_AT);
+
   osDelay(2000);
-  sendCommand("smconf=\"URL\",broker.emqx.io:1883");
+  sendATCommand("smconf=\"URL\",broker.emqx.io:1883", AT_OK, ADD_AT);
+
   osDelay(500);
-  sendCommand("smconf=\"KEEPTIME\",60");
-  sendCommand("smconf=\"CLEANSS\",1");
-  sendCommand("SMCONN");
+  sendATCommand("smconf=\"KEEPTIME\",60", AT_OK, ADD_AT);
+  sendATCommand("smconf=\"CLEANSS\",1", AT_OK, ADD_AT);
+  sendATCommand("SMCONN", AT_OK, ADD_AT);
   osDelay(2000);
 
-  // sendCommand("sapbr=0,1");
-  // osDelay(2000);
-  // setGMSReadinessFlag(true);
+  return NO_ERROR;
 }
 
 // void setGMSReadinessFlag(bool state){
@@ -167,26 +175,75 @@ SystemError gsmInit(void) {
 //   return gSMReadiness;
 // }
 
-SystemError atCommandCheck(void) {
-  for (uint8_t i = 0; i < 3; i++) {
-    sprintf(dataUart, "AT\r\n");
-    printf(dataUart);
-    osDelay(10);
+SystemError sendAT(void) {
+  sprintf(dataUart, "\r\nAT\r\n");
+  if (HAL_OK == HAL_UART_Transmit(gsm_uart, (uint8_t *)dataUart,
+                                  strlen(dataUart), 1000)) {
+    setSendingFlag(true);
+
+    for (size_t i = 0; i < 5; i++) {
+      osDelay(200);
+      if (replyContains("OK")) {
+        return NO_ERROR;
+      }
+      printf("AT Command Check Error\r\n");
+    }
+    return ERROR_NO_AT_REPLY;
+  }
+  return ERROR_UART_TRANSMIT;
+}
+
+SystemError sendATCommand(char *command, char *reply, bool addAT) {
+  char p_command[50];
+
+  if (addAT) {
+    sprintf(p_command, "AT + %s\r\n", command);
+  } else {
+    sprintf(p_command, "%s\r\n", command);
+  }
+  // printf(p_command);
+  // printf("\r\n");
+  osDelay(500);
+  if (HAL_OK == HAL_UART_Transmit(gsm_uart, (uint8_t *)p_command,
+                                  strlen(p_command), 100)) {
+    setSendingFlag(true);
   }
 
-  return NO_ERROR;
+  for (uint8_t i = 0; i < 20; i++) {
+    osDelay(50);
+
+    if (!getSendingFlag()) {
+      if (isOKReceived() && replyContains(command)) {
+        // if (isOKReceived()) {
+        printf("OK : %s\r\n", p_command);
+        return NO_ERROR;
+      } else {
+        printf("ERROR : %s\r\n", p_command);
+        return ERROR_NO_AT_REPLY;
+      }
+    }
+  }
+
+  return ERROR_UART_TRANSMIT;
 }
 
-HAL_StatusTypeDef atCommandToGSM(const uint8_t *command) {
-  printf("Log Print : atCommandToGSM\n\a");
-  printArray(command, 40);
-
-  HAL_StatusTypeDef status =
-      HAL_UART_Transmit_IT(gsm_uart, command, countCommandLength(command));
-
-  // Add code to check for OK response from ESP8266
-  return status;
+bool checkReply(void) {
+  if (replyContains("OK")) {
+    return true;
+  }
+  return false;
 }
+
+// HAL_StatusTypeDef atCommandToGSM(const uint8_t *command) {
+//   printf("Log Print : atCommandToGSM\n\a");
+//   printArray(command, 40);
+
+//   HAL_StatusTypeDef status =
+//       HAL_UART_Transmit_IT(gsm_uart, command, countCommandLength(command));
+
+//   // Add code to check for OK response from ESP8266
+//   return status;
+// }
 
 void setSendingFlag(bool flag) { sendingData = flag; }
 bool getSendingFlag(void) { return sendingData; }

@@ -161,7 +161,6 @@ void StartDefaultTask(void *argument)
   if (IS_GATEWAY == 0) {
     printf("Start Sending data\r\n");
   }
-  // osDelay(30000);
   /* Release filter task */
 
   /* Infinite loop */
@@ -205,7 +204,7 @@ void runFilterEntry(void *argument)
         setRawDataReceived(false);
       }
     }
-    osDelay(1);
+    osDelay(1000);
   }
   /* USER CODE END runFilterEntry */
 }
@@ -221,12 +220,14 @@ void gsmTaskEntry(void *argument)
 {
   /* USER CODE BEGIN gsmTaskEntry */
   osDelay(3000);
-
+  // sendAT();
+  osDelay(100);
   if (IS_GATEWAY == 1) {
-    if (atCommandCheck() != NO_ERROR) {
+    if (sendAT() != NO_ERROR) {
       // Log Error
-      printf("AT Command Check Error\r\n");
+      printf("ERROR : AT Command Check\r\n");
     } else {
+      printf("OK : AT Command Check\r\n");
       if (gsmInit() != NO_ERROR) {
         printf("GSM Init Error\r\n");
       } else {
@@ -239,7 +240,7 @@ void gsmTaskEntry(void *argument)
 
   /* Infinite loop */
   for (;;) {
-    if (IS_GATEWAY == 1) {
+    if (IS_GATEWAY == 0) {
       prepareMqttMessageStruct(getMqttMessage());
       if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
         printf("Error sending data to MQTT Broker\r\n");

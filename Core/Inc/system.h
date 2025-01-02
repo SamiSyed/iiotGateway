@@ -11,7 +11,10 @@
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define MAX_APP_BUFFER_SIZE 2
-#define IS_GATEWAY 0
+#define IS_GATEWAY 1
+
+#define usb_uart &huart1
+#define gsm_uart &huart2
 
 // #define log_uart &huart3
 
@@ -20,6 +23,8 @@ typedef enum {
   ERROR_MESSAGE_QUEUE,
   ERROR_FILTER_BUFFER_SIZE,
   ERROR_INDEX_OUT_OF_RANGE,
+  ERROR_UART_TRANSMIT,
+  ERROR_NO_AT_REPLY,
 } SystemError;
 
 /* This number of IDs should be same as the NUMBER_OF_SENSORS */
@@ -71,5 +76,6 @@ uint16_t GetTemperatureLevel(void);
 void sendCommand(char *command);
 void setGMSReadinessFlag(bool);
 bool isGSMReady(void);
-SystemError atCommandCheck(void);
+SystemError sendAT(void);
+SystemError sendATCommand(char *command, char *reply, bool addAT);
 #endif /* SYSTEM_H */
