@@ -32,6 +32,7 @@
 #include "subghz.h"
 #include "system.h"
 #include "usart.h"
+#include "user_mqttFunctions.h"
 
 /* USER CODE END Includes */
 
@@ -225,9 +226,9 @@ void gsmTaskEntry(void *argument)
   if (IS_GATEWAY == 1) {
     if (sendAT() != NO_ERROR) {
       // Log Error
-      printf("ERROR : AT Command Check\r\n");
+      printf("ERROR : AT\r\n");
     } else {
-      printf("OK : AT Command Check\r\n");
+      printf("OK : AT\r\n");
       if (gsmInit() != NO_ERROR) {
         printf("GSM Init Error\r\n");
       } else {
@@ -240,13 +241,13 @@ void gsmTaskEntry(void *argument)
 
   /* Infinite loop */
   for (;;) {
-    if (IS_GATEWAY == 0) {
+    if (IS_GATEWAY == 1) {
       prepareMqttMessageStruct(getMqttMessage());
       if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
         printf("Error sending data to MQTT Broker\r\n");
       }
     }
-    osDelay(10000);
+    osDelay(5000);
   }
   /* USER CODE END gsmTaskEntry */
 }

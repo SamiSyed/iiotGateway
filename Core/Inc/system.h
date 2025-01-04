@@ -5,16 +5,19 @@
 #include "stdint.h"
 #include "stm32wlxx_hal.h"
 
-#define NUMBER_OF_SENSORS 5
+#define NUMBER_OF_SENSORS 1U
 #define FILTER_BUFFER_SIZE 10U
-#define MQTT_TOPIC_SIZE 30U
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
-#define MAX_APP_BUFFER_SIZE 2
+#define MAX_APP_BUFFER_SIZE 2U
 #define IS_GATEWAY 1
 
 #define usb_uart &huart1
 #define gsm_uart &huart2
+
+#define AT_OK "OK"
+#define ADD_AT true
+#define NO_AT false
 
 // #define log_uart &huart3
 
@@ -36,12 +39,6 @@ typedef enum {
   sensorID_4,
 } SensorId;
 
-typedef struct {
-  char *topic;
-  char *value;
-  // timestamp
-} MqttMessage_t;
-
 typedef enum {
   UART2_WAITING_TX,
   UART2_TX_COMPLETE,
@@ -62,12 +59,6 @@ SystemError initSensorFilter(void);
 void runAllFilter(void);
 void setNewValueBuffer(uint16_t newValue);
 uint16_t getFilteredValueByIndex(uint8_t index);
-void prepareMqttMessageStruct(MqttMessage_t *mqttMessage);
-SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage);
-void setMqttTopic(void);
-MqttMessage_t *getMqttMessageByIndex(uint8_t index);
-bool sendMqttServer(MqttMessage_t mqttMessage);
-MqttMessage_t *getMqttMessage(void);
 void setSendingFlag(bool flag);
 bool getSendingFlag(void);
 SystemError gsmInit(void);

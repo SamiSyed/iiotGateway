@@ -3,10 +3,6 @@
 #include "filter.h"
 #include "usart.h"
 
-#define AT_OK "OK"
-#define ADD_AT true
-#define NO_AT false
-
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
 static bool sendingData = false;
@@ -17,18 +13,15 @@ static uint16_t
     filteredSensorValues[NUMBER_OF_SENSORS]; /* Global Sensor Values*/
 static MovingAverageFilter sensorFilters[NUMBER_OF_SENSORS];
 static uint16_t filterBuffer[NUMBER_OF_SENSORS][FILTER_BUFFER_SIZE];
-static MqttMessage_t mqttMessages[NUMBER_OF_SENSORS];
 static Uart2Status_e uart2Status = UART2_RX_COMPLETE;
 
 /* GSM variables */
 char dataUart[80];
 // static bool gSMReadiness = false;
 /* MQTT variables */
-char mqttTopic[NUMBER_OF_SENSORS][MQTT_TOPIC_SIZE];
 
 /* Flag */
 void setRawDataReceived(bool status) { rawDataReceived = status; }
-MqttMessage_t *getMqttMessage(void) { return mqttMessages; }
 bool isRawDataReceived(void) { return rawDataReceived; }
 
 /* Error */
@@ -78,52 +71,6 @@ uint16_t getFilteredValueByIndex(uint8_t index) {
   return filteredSensorValues[index];
 }
 
-/* Update MQTT struct with latest value to be send */
-void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
-  for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
-    mqttMessages[i].topic = mqttTopic[i];
-    char data[20];
-    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
-    mqttMessages[i].value = data;
-    printf("mqttMessages[i].value : %s \r\n", mqttMessages[i].value);
-  }
-}
-
-void setMqttTopic(void) {
-  for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
-    strcpy(mqttTopic[i], "iiot/sensorID_2");
-    // printf("%s\r\n", mqttTopic[i]);
-  }
-}
-
-MqttMessage_t *getMqttMessageByIndex(uint8_t index) {
-  if (index > NUMBER_OF_SENSORS) {
-    setSystemError(ERROR_INDEX_OUT_OF_RANGE);
-  }
-  return &mqttMessages[index];
-}
-
-bool sendMqttServer(MqttMessage_t mqttMessage) {
-  char data[80];
-  if (sendAT() == NO_ERROR) {
-
-    sprintf(data, "SMPUB=\"%s\",1,0,\"%s\"", mqttMessage.topic,
-            mqttMessage.value);
-    sendCommand(data);
-    osDelay(1000);
-    return true;
-  } else {
-    return false;
-  }
-}
-
-SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage) {
-  // for (uint8_t i = 0; i < 1; i++) {
-  sendMqttServer(mqttMessage[0]);
-  // }
-
-  return NO_ERROR;
-}
 void sendCommand(char *command) {
   printf("at+");
   printf(command);
@@ -146,6 +93,7 @@ SystemError gsmInit(void) {
   // sendATCommand("cgdcont?", AT_OK, ADD_AT);
 
   /* MQTT */
+  osDelay(500);
   sendATCommand("sapbr=3,1,\"Contype\",\"GPRS\"", AT_OK, ADD_AT);
   sendATCommand("sapbr=3,1,\"APN\",\"telia\"", AT_OK, ADD_AT);
   sendATCommand("SAPBR=3,1,\"USER\",\"\"", AT_OK, ADD_AT);

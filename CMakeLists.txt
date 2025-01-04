@@ -88,10 +88,11 @@ set(UTILITES_SOURCE
 set(C_SOURCES
     Core/Src/adc.c
     Core/Src/adc_if.c
-    Core/Src/main.c
-    Core/Src/gpio.c
     Core/Src/app_freertos.c
     Core/Src/filter.c
+    Core/Src/gpio.c
+    Core/Src/main.c
+    Core/Src/user_mqttFunctions.c
     Core/Src/rtc.c
     Core/Src/subghz.c
     Core/Src/system.c
