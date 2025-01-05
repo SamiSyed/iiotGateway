@@ -75,7 +75,7 @@ osThreadId_t gmsTaskHandle;
 const osThreadAttr_t gmsTask_attributes = {
   .name = "gmsTask",
   .priority = (osPriority_t) osPriorityHigh,
-  .stack_size = 128 * 4
+  .stack_size = 300 * 4
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -148,6 +148,8 @@ void StartDefaultTask(void *argument)
   MX_SubGHz_Phy_Init();
   /* USER CODE BEGIN StartDefaultTask */
   initUart();
+  cleanAllBuffers();
+
   if (IS_GATEWAY == 1) {
     printf("*********GATEWAY*********\r\n");
   }
@@ -173,7 +175,7 @@ void StartDefaultTask(void *argument)
     /* <===Lora test */
 
     /* Get Lora data ===> */
-    if (IS_GATEWAY == 1) {
+    if (IS_GATEWAY == 0) {
       listenForLoraNodes(LORA_LISTENING_DURATION);
     }
     /* <=== Get Lora data */
@@ -192,20 +194,23 @@ void StartDefaultTask(void *argument)
 void runFilterEntry(void *argument)
 {
   /* USER CODE BEGIN runFilterEntry */
-  if (IS_GATEWAY == 1) {
+  if (IS_GATEWAY == 0) {
     osDelay(500);
     initSensorFilter();
     printf("----------------------------------Filter loop started\r\n");
   }
   /* Infinite loop */
   for (;;) {
+    // printf("Tick\r\n");
+    // printfMainBuffer();
+
     if (IS_GATEWAY == 1) {
       if (isRawDataReceived()) {
         runAllFilter();
         setRawDataReceived(false);
       }
     }
-    osDelay(1000);
+    osDelay(5000);
   }
   /* USER CODE END runFilterEntry */
 }
@@ -220,15 +225,20 @@ void runFilterEntry(void *argument)
 void gsmTaskEntry(void *argument)
 {
   /* USER CODE BEGIN gsmTaskEntry */
-  osDelay(3000);
-  // sendAT();
-  osDelay(100);
+  // osDelay(3000);
+  setLastCommandOK(true);
   if (IS_GATEWAY == 1) {
-    if (sendAT() != NO_ERROR) {
-      // Log Error
-      printf("ERROR : AT\r\n");
-    } else {
-      printf("OK : AT\r\n");
+
+    SystemError status = ERROR_NO_AT_REPLY;
+    for (uint8_t i = 0; i < 5; i++) {
+      setLastCommandOK(true);
+      status = sendATCommand("AT","", AT_OK, NO_AT);
+      if (status == NO_ERROR) {
+        break;
+      }
+    }
+
+    if (sendATCommand("AT", "", AT_OK, NO_AT) == NO_ERROR) {
       if (gsmInit() != NO_ERROR) {
         printf("GSM Init Error\r\n");
       } else {

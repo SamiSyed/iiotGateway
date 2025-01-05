@@ -174,8 +174,7 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraS
   }
 
   // printf("Received Payload Size : %i\r\n", RxBufferSize);
-  printf("PL : %i\r\n", BufferRx[0]);
-  // printArray(BufferRx, RxBufferSize);
+  printf("LoRa Received Payload : %i\r\n", BufferRx[0]);
 
   // printf("<=== OnRxDone(void)\r\n\r\n");
 

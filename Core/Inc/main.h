@@ -66,7 +66,6 @@ void Error_Handler(void);
 #define ENABLE_PWR_LED_GPIO_Port GPIOB
 #define ACTION_BUTTON_Pin GPIO_PIN_13
 #define ACTION_BUTTON_GPIO_Port GPIOB
-#define ACTION_BUTTON_EXTI_IRQn EXTI15_10_IRQn
 #define GPRS_TX_Pin GPIO_PIN_6
 #define GPRS_TX_GPIO_Port GPIOB
 #define ENABLE_3V_Pin GPIO_PIN_9

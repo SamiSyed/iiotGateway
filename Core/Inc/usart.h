@@ -44,10 +44,11 @@ void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-bool isMessageEnd(int bufferCounter);
 void initUart(void);
 bool replyContains(char *reply);
 bool isOKReceived(void);
+void cleanAllBuffers(void);
+void printfMainBuffer(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -17,12 +17,12 @@ SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage) {
 bool sendMqttServer(MqttMessage_t mqttMessage) {
   char data[MQTT_SEND_MESSAGE_SIZE];
 
-  if (sendAT() == NO_ERROR) {
+  if (sendATCommand("AT", "", AT_OK, NO_AT) == NO_ERROR) {
 
     sprintf(data, "SMPUB=\"%s\",1,0,\"%s\"", mqttMessage.topic,
             mqttMessage.value);
     // sendCommand(data);
-    sendATCommand(data, AT_OK, ADD_AT);
+    sendATCommand(data, "", AT_OK, ADD_AT);
     osDelay(1000);
     return true;
   } else {
@@ -47,7 +47,7 @@ MqttMessage_t *getMqttMessageByIndex(uint8_t index) {
 void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
     char data[20];
-    
+
     sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
     strcpy(mqttMessages[i].value, data);
     strcpy(mqttMessages[i].topic, mqttTopic[i]);

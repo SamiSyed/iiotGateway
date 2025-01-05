@@ -16,6 +16,9 @@
 #define gsm_uart &huart2
 
 #define AT_OK "OK"
+#define AT_SAPBR "SAPBR"
+#define AT_SMCONF "SMCONF"
+#define AT_SMCONN "SMCONN"
 #define ADD_AT true
 #define NO_AT false
 
@@ -27,7 +30,9 @@ typedef enum {
   ERROR_FILTER_BUFFER_SIZE,
   ERROR_INDEX_OUT_OF_RANGE,
   ERROR_UART_TRANSMIT,
+  ERROR_REPLY,
   ERROR_NO_AT_REPLY,
+  ERROR_LAST_COMMAND_FAILED,
 } SystemError;
 
 /* This number of IDs should be same as the NUMBER_OF_SENSORS */
@@ -49,6 +54,9 @@ typedef enum {
 void setRawDataReceived(bool status);
 bool isRawDataReceived(void);
 
+void setLastCommandOK(bool status);
+bool isLastCommandOK(void);
+
 void setSystemError(SystemError error);
 SystemError getSystemError(void);
 
@@ -59,14 +67,22 @@ SystemError initSensorFilter(void);
 void runAllFilter(void);
 void setNewValueBuffer(uint16_t newValue);
 uint16_t getFilteredValueByIndex(uint8_t index);
+
+/* Uart Flag */
 void setSendingFlag(bool flag);
 bool getSendingFlag(void);
+void setReceivingFlag(bool flag);
+bool getReceivingFlag(void);
+
+/* GSM */
 SystemError gsmInit(void);
-void printArray(uint8_t *array, uint8_t dataLength);
-uint16_t GetTemperatureLevel(void);
-void sendCommand(char *command);
 void setGMSReadinessFlag(bool);
 bool isGSMReady(void);
-SystemError sendAT(void);
-SystemError sendATCommand(char *command, char *reply, bool addAT);
+
+uint16_t GetTemperatureLevel(void);
+
+/* AT command */
+SystemError sendATCommand(char *command, char *param, char *reply, bool addAT);
+SystemError sendATCommandRetry(char *command, char *param, char *reply, bool addAT);
+void sendCommand(char *command);
 #endif /* SYSTEM_H */
