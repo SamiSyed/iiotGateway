@@ -126,7 +126,7 @@ SystemError gsmInit(void) {
   /* MQTT */
   // osDelay(500);
 
-  status = sendATCommand(AT_SAPBR, "3,1,\"Contype\",\"GPRS\"", AT_OK, ADD_AT);
+  status = sendATCommandRetry(AT_SAPBR, "3,1,\"Contype\",\"GPRS\"", AT_OK, ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
@@ -166,7 +166,7 @@ SystemError gsmInit(void) {
     return status;
   }
   osDelay(500);
-  status = sendATCommandRetry(AT_SMCONF, "\"KEEPTIME\",60", "OK", ADD_AT);
+  status = sendATCommandRetry(AT_SMCONF, "\"KEEPALIVE\",60", "OK", ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
@@ -174,7 +174,7 @@ SystemError gsmInit(void) {
   if (!lastCommandOK) {
     return status;
   }
-  status = sendATCommand(AT_SMCONN, "", AT_OK, ADD_AT);
+  status = sendATCommandRetry(AT_SMCONN, "", AT_OK, ADD_AT);
   osDelay(2000);
 
   return status;
@@ -208,7 +208,7 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
   SystemError status = ERROR_LAST_COMMAND_FAILED;
   if (isLastCommandOK()) {
     status = ERROR_NO_AT_REPLY;
-    char p_command[50];
+    char p_command[MQTT_SEND_MESSAGE_SIZE];
     lastCommandOK = false;
 
     if (addAT) {

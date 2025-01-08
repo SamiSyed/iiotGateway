@@ -19,11 +19,12 @@ bool sendMqttServer(MqttMessage_t mqttMessage) {
 
   if (sendATCommand("AT", "", AT_OK, NO_AT) == NO_ERROR) {
 
-    sprintf(data, "SMPUB=\"%s\",1,0,\"%s\"", mqttMessage.topic,
+    sprintf(data, "\"%s\",1,0,\"%s\"", mqttMessage.topic,
             mqttMessage.value);
     // sendCommand(data);
-    sendATCommand(data, "", AT_OK, ADD_AT);
-    osDelay(1000);
+    // sendATCommand(data, "", AT_OK, ADD_AT);
+    sendATCommand("SMPUB", data, AT_OK, ADD_AT);
+    // osDelay(1000);
     return true;
   } else {
     return false;
@@ -52,6 +53,6 @@ void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
     strcpy(mqttMessages[i].value, data);
     strcpy(mqttMessages[i].topic, mqttTopic[i]);
 
-    printf("mqttMessages[i].value : %s \r\n", mqttMessages[i].value);
+    // printf("mqttMessages[i].value : %s \r\n", mqttMessages[i].value);
   }
 }

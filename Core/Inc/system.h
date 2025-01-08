@@ -22,6 +22,10 @@
 #define ADD_AT true
 #define NO_AT false
 
+#define MQTT_TOPIC_SIZE 50U
+#define MQTT_MESSAGE_SIZE 50U
+#define MQTT_SEND_MESSAGE_SIZE (MQTT_TOPIC_SIZE + MQTT_MESSAGE_SIZE)
+
 // #define log_uart &huart3
 
 typedef enum {
