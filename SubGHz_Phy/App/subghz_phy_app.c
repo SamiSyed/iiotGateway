@@ -23,7 +23,6 @@
 #include "sys_app.h"
 #include "subghz_phy_app.h"
 #include "radio.h"
-#include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
 #include "radio_driver.h"

@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 #include "system.h"
-#include "cmsis_os2.h"
 
 typedef struct {
   uint16_t *buffer;

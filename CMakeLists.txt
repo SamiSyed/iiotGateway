@@ -31,16 +31,6 @@ set(MCU_FLAGS "-mcpu=cortex-m4 -mthumb")
 set(DEFINITIONS "-DCORE_CM4" "-DUSE_HAL_DRIVER" "-DSTM32WLE5xx")
 
 set(MIDDLEWARE_SOURCES
-    Middlewares/Third_Party/FreeRTOS/Source/croutine.c
-    Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-    Middlewares/Third_Party/FreeRTOS/Source/list.c
-    Middlewares/Third_Party/FreeRTOS/Source/queue.c
-    Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-    Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-    Middlewares/Third_Party/FreeRTOS/Source/timers.c
-    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
-    Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-    Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c
     Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver/lr_fhss_mac.c
     Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver/radio.c
     Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver/radio_driver.c
@@ -88,7 +78,6 @@ set(UTILITES_SOURCE
 set(C_SOURCES
     Core/Src/adc.c
     Core/Src/adc_if.c
-    Core/Src/app_freertos.c
     Core/Src/filter.c
     Core/Src/gpio.c
     Core/Src/main.c
@@ -110,6 +99,7 @@ set(C_SOURCES
     Core/Src/usart_if.c
     Core/Src/sys_debug.c
     Core/Src/dma.c
+    Utilities/sequencer/stm32_seq.c
 )
 
 # List of ASM source files
@@ -122,9 +112,6 @@ include_directories(
     Core/Inc
     Drivers/STM32WLxx_HAL_Driver/Inc
     Drivers/STM32WLxx_HAL_Driver/Inc/Legacy
-    Middlewares/Third_Party/FreeRTOS/Source/include
-    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
-    Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
     Drivers/CMSIS/Device/ST/STM32WLxx/Include
     Drivers/BSP
     Drivers/CMSIS/Include
@@ -136,6 +123,7 @@ include_directories(
     Utilities/lpm/tiny_lpm
     Middlewares/Third_Party/SubGHz_Phy
     Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver
+    Utilities/sequencer
 )
 
 # Compiler and linker flags

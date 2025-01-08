@@ -1,9 +1,6 @@
 #include "system.h"
-#include "UartRingbuffer_multi.h"
 #include "filter.h"
-#include "freeRTOS.h"
 #include "stdio.h"
-#include "task.h"
 #include "usart.h"
 
 static bool rawDataReceived = false;
@@ -274,7 +271,3 @@ uint16_t GetTemperatureLevel(void) {
   return temperatureLevel;
 }
 
-vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
-  // Handle stack overflow (log, restart, etc.)
-  printf("Stack Overflow in Task : %s\r\n", pcTaskName);
-}
