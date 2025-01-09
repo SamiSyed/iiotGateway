@@ -17,7 +17,7 @@
             "executable": "${command:cmake.launchTargetPath}",
             "preLaunchTask": "build",
             "configFiles": [
-                "interface/stlink-v2.cfg",
+                "interface/stlink.cfg",
                 "target/stm32WLx.cfg"
             ],
         },

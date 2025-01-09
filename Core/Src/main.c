@@ -22,12 +22,13 @@
 #include "dma.h"
 #include "rtc.h"
 #include "app_subghz_phy.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "system.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,6 +50,7 @@
 
 /* USER CODE BEGIN PV */
 HAL_StatusTypeDef uart2status = HAL_OK;
+uint32_t timeStamp_timer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,11 +62,12 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int _write(int fd, unsigned char *buf, int len) {
-  if (fd == 1 || fd == 2) {                    // stdout or stderr ?
+  if (fd == 1 || fd == 2) { // stdout or stderr ?
     // HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
-    uart2status = HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
-    //Orange wire => RX2
-    //Yellow wire => TX2
+    uart2status =
+        HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
+    // Orange wire => RX2
+    // Yellow wire => TX2
   }
   return len;
 }
@@ -107,8 +110,20 @@ int main(void)
   MX_SubGHz_Phy_Init();
   MX_USART2_UART_Init();
   MX_ADC_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start(&htim16);
+  timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim16);
 
+  printf("**********IOT Gateway**********\r\n");
+  initUart();
+  // setLastCommandOK(true);
+  DelayCustom(1000);
+  // sendATSimple("AT", "", AT_OK, NO_AT);
+  sendATCommand("AT", "", AT_OK, NO_AT);
+
+  gsmInit();
+  initSensorFilter();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -118,11 +133,18 @@ int main(void)
     MX_SubGHz_Phy_Process();
 
     /* USER CODE BEGIN 3 */
-    HAL_Delay(1000);
+    DelayCustom(1000);
   }
   /* USER CODE END 3 */
 }
 
+void DelayCustom(uint32_t delayMs) {
+    while(1){
+    if(__HAL_TIM_GET_COUNTER(&htim16) - timeStamp_timer >= delayMs){
+      break;
+    }
+  }
+}
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -167,27 +189,6 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  /* USER CODE BEGIN Callback 0 */
-
-  /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {
-    HAL_IncTick();
-  }
-  /* USER CODE BEGIN Callback 1 */
-
-  /* USER CODE END Callback 1 */
-}
 
 /**
   * @brief  This function is executed in case of error occurrence.

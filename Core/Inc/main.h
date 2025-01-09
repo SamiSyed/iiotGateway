@@ -78,7 +78,7 @@ void Error_Handler(void);
 #define RF_SW_CTRL2_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
-
+void DelayCustom(uint32_t delayMs);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
