@@ -134,10 +134,10 @@ int main(void) {
   DelayCustom(2000);
   while (1) {
     /* USER CODE END WHILE */
-    MX_SubGHz_Phy_Process();
+    // MX_SubGHz_Phy_Process();
 
     /* USER CODE BEGIN 3 */
-
+    listenForLoraNodes(LORA_LISTENING_DURATION);
     if (isRawDataReceived()) {
       runAllFilter();
       setRawDataReceived(false);

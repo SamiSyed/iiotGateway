@@ -42,8 +42,7 @@ void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
     char data[20];
 
-    // sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
-    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", 32);
+    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
     strcpy(mqttMessages[i].value, data);
     strcpy(mqttMessages[i].topic, mqttTopic[i]);
 
