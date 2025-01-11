@@ -62,6 +62,7 @@ set(DRIVER_SOURCE
     Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_adc.c
     Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_adc_ex.c
     Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_ll_adc
+    Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_iwdg.c
 )
 
 set(UTILITES_SOURCE
@@ -100,6 +101,7 @@ set(C_SOURCES
     Core/Src/sys_debug.c
     Core/Src/dma.c
     Utilities/sequencer/stm32_seq.c
+    Core/Src/iwdg.c
 )
 
 # List of ASM source files

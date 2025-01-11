@@ -8,7 +8,7 @@
         {
             "name": "ST-Link (openocd)",
             "type": "cortex-debug",
-            "request": "launch",
+            "request": "attach",
             "servertype": "openocd",
             "device": "STM32WLE5JC",
             "interface": "swd",

@@ -85,27 +85,27 @@ void sendCommand(char *command) {
   printf("at+");
   printf(command);
   printf("\r\n");
-  DelayCustom(100);
+  Delay_CustomTimer(100);
 }
 
 SystemError gsmInit(void) {
   SystemError status = ERROR_NO_AT_REPLY;
-  // DelayCustom(1000);
+  // Delay_CustomTimer(1000);
   // sendATCommand("ATE1", AT_OK, NO_AT);
   status = sendATCommand("ATZ", "", AT_OK, NO_AT);
 
   if (!isLastCommandOK()) {
     return status;
   }
-  // DelayCustom(500);
+  // Delay_CustomTimer(500);
   status = sendATCommandRetry("cfun", "1,1", AT_OK, ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(15000);
+  Delay_CustomTimer(15000);
 
   // sendATCommandRetry("cpin?", "", AT_OK, ADD_AT);
-  // DelayCustom(500);
+  // Delay_CustomTimer(500);
   // sendATCommandRetry("csq", "", AT_OK, ADD_AT);
   // sendATCommandRetry("creg?", "", AT_OK, ADD_AT);
   // sendATCommandRetry("cgatt?", "", AT_OK, ADD_AT);
@@ -113,49 +113,49 @@ SystemError gsmInit(void) {
   // sendATCommand("cgdcont?", AT_OK, ADD_AT);
 
   /* MQTT */
-  // DelayCustom(500);
+  // Delay_CustomTimer(500);
 
   status = sendATCommandRetry(AT_SAPBR, "3,1,\"Contype\",\"GPRS\"", AT_SAPBR,
                               ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(50);
+  Delay_CustomTimer(50);
   status = sendATCommandRetry(AT_SAPBR, "3,1,\"APN\",\"telia\"", AT_OK, ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(100);
+  Delay_CustomTimer(100);
   status = sendATCommandRetry(AT_SAPBR, "3,1,\"USER\",\"\"", AT_OK, ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(100);
+  Delay_CustomTimer(100);
   status = sendATCommandRetry(AT_SAPBR, "3,1,\"PWD\",\"\"", AT_OK, ADD_AT);
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(100);
+  Delay_CustomTimer(100);
   status = sendATCommandRetry(AT_SAPBR, "1,1", AT_OK, ADD_AT);
 
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(100);
+  Delay_CustomTimer(100);
   // status = sendATCommand(AT_SAPBR, "2,1", AT_SAPBR, ADD_AT);
   status = sendATCommandRetry(AT_SAPBR, "2,1", AT_OK, ADD_AT);
 
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(2000);
+  Delay_CustomTimer(2000);
   status = sendATCommandRetry(AT_SMCONF, "\"URL\",broker.emqx.io:1883", AT_OK,
                               ADD_AT);
 
   if (!lastCommandOK) {
     return status;
   }
-  DelayCustom(500);
+  Delay_CustomTimer(500);
   status = sendATCommandRetry(AT_SMCONF, "\"KEEPALIVE\",60", "OK", ADD_AT);
   if (!lastCommandOK) {
     return status;
@@ -165,7 +165,7 @@ SystemError gsmInit(void) {
     return status;
   }
   status = sendATCommandRetry(AT_SMCONN, "", AT_OK, ADD_AT);
-  DelayCustom(2000);
+  Delay_CustomTimer(2000);
 
   return status;
 }
@@ -182,7 +182,7 @@ SystemError sendATCommandRetry(char *command, char *param, char *reply,
       setLastCommandOK(true);
       cleanAllBuffers();
 
-      DelayCustom(1000);
+      Delay_CustomTimer(1000);
     } else {
       return NO_ERROR;
       // break;
@@ -213,7 +213,7 @@ SystemError sendATSimple(char *command, char *param, char *reply, bool addAT) {
                                   strlen(p_command))) {
 
     for (uint8_t i = 0; i < 2000; i++) {
-      DelayCustom(50);
+      Delay_CustomTimer(50);
       if (!getReceivingFlag()) {
         if (replyContains(reply)) {
           status = NO_ERROR;
@@ -241,7 +241,7 @@ SystemError sendATSimple(char *command, char *param, char *reply, bool addAT) {
 }
 
 SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
-  // DelayCustom(2000);
+  // Delay_CustomTimer(2000);
   SystemError status = ERROR_LAST_COMMAND_FAILED;
   HAL_StatusTypeDef halStatus = HAL_ERROR;
   if (isLastCommandOK()) {
@@ -268,7 +268,7 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
       if (HAL_OK == halStatus) {
 
         for (uint8_t i = 0; i < 10000; i++) {
-          DelayCustom(50);
+          Delay_CustomTimer(50);
           if (!getReceivingFlag()) {
             if (replyContains(reply)) {
               status = NO_ERROR;
