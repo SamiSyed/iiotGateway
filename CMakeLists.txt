@@ -78,14 +78,14 @@ set(UTILITES_SOURCE
 set(C_SOURCES
     Core/Src/adc.c
     Core/Src/adc_if.c
-    Core/Src/filter.c
-    Core/Src/gpio.c
     Core/Src/main.c
-    Core/Src/user_mqttFunctions.c
+    Core/Src/gpio.c
+    Core/Src/filter.c
     Core/Src/rtc.c
     Core/Src/subghz.c
-    Core/Src/system.c
+    Core/Src/user_system.c
     Core/Src/usart.c
+    Core/Src/user_mqttFunctions.c
     Core/Src/stm32wlxx_it.c
     Core/Src/stm32wlxx_hal_msp.c
     Core/Src/stm32_lpm_if.c

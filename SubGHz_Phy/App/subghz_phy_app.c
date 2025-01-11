@@ -26,7 +26,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "radio_driver.h"
-#include "system.h"
+#include "user_system.h"
 /* USER CODE END Includes */
 
 /* External variables ---------------------------------------------------------*/

@@ -1,4 +1,4 @@
-#include "system.h"
+#include "user_system.h"
 #include "filter.h"
 #include "stdio.h"
 #include "usart.h"
@@ -104,11 +104,11 @@ SystemError gsmInit(void) {
   }
   DelayCustom(15000);
 
-  sendATCommandRetry("cpin?", "", AT_OK, ADD_AT);
-  DelayCustom(500);
-  sendATCommandRetry("csq", "", AT_OK, ADD_AT);
-  sendATCommandRetry("creg?", "", AT_OK, ADD_AT);
-  sendATCommandRetry("cgatt?", "", AT_OK, ADD_AT);
+  // sendATCommandRetry("cpin?", "", AT_OK, ADD_AT);
+  // DelayCustom(500);
+  // sendATCommandRetry("csq", "", AT_OK, ADD_AT);
+  // sendATCommandRetry("creg?", "", AT_OK, ADD_AT);
+  // sendATCommandRetry("cgatt?", "", AT_OK, ADD_AT);
   /* Kept mute due to reply size more than rx_buffer size */
   // sendATCommand("cgdcont?", AT_OK, ADD_AT);
 
@@ -209,10 +209,10 @@ SystemError sendATSimple(char *command, char *param, char *reply, bool addAT) {
 
   printf("Sending : %s\r\n", p_command);
   setReceivingFlag(true);
-  if (HAL_OK == HAL_UART_Transmit(gsm_uart, (uint8_t *)p_command,
-                                  strlen(p_command), 100)) {
+  if (HAL_OK == HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command,
+                                  strlen(p_command))) {
 
-    for (uint8_t i = 0; i < 1000; i++) {
+    for (uint8_t i = 0; i < 2000; i++) {
       DelayCustom(50);
       if (!getReceivingFlag()) {
         if (replyContains(reply)) {
@@ -262,7 +262,7 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
     if (getReceivingFlag() == false) {
       setReceivingFlag(true);
       // printf("Sending : %s\r\n", p_command);
-      printf("strlen(p_command) : %i\r\n", strlen(p_command));
+      // printf("strlen(p_command) : %i\r\n", strlen(p_command));
       halStatus = HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command,
                                        strlen(p_command));
       if (HAL_OK == halStatus) {
@@ -296,7 +296,7 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
         }
       } else {
         printf("Error in Transmit : %s\r\n", p_command);
-        printf("Error in Transmit : %i\r\n", (uint8_t)halStatus);
+        // printf("Error in Transmit : %i\r\n", (uint8_t)halStatus);
         status = ERROR_UART_TRANSMIT;
       }
     }

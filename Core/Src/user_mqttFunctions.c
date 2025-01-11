@@ -1,5 +1,6 @@
-#include "system.h"
 #include "user_mqttFunctions.h"
+#include "user_system.h"
+
 
 char mqttTopic[NUMBER_OF_SENSORS][MQTT_TOPIC_SIZE];
 static MqttMessage_t mqttMessages[NUMBER_OF_SENSORS];
@@ -17,19 +18,11 @@ SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage) {
 bool sendMqttServer(MqttMessage_t mqttMessage) {
   char data[MQTT_SEND_MESSAGE_SIZE];
 
-  if (sendATCommand("AT", "", AT_OK, NO_AT) == NO_ERROR) {
-
-    sprintf(data, "\"%s\",1,0,\"%s\"", mqttMessage.topic,
-            mqttMessage.value);
-    // sendCommand(data);
-    // sendATCommand(data, "", AT_OK, ADD_AT);
-    sendATCommand("SMPUB", data, AT_OK, ADD_AT);
-    // osDelay(1000);
-    return true;
-  } else {
-    return false;
-  }
+  sprintf(data, "\"%s\",1,0,\"%s\"", mqttMessage.topic, mqttMessage.value);
+  sendATCommandRetry("SMPUB", data, "SMPUB", ADD_AT);
+  return true;
 }
+
 void setMqttTopic(void) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
     strcpy(mqttTopic[i], "iiot/sensorID_2");
@@ -49,7 +42,8 @@ void prepareMqttMessageStruct(MqttMessage_t *mqttMessages) {
   for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++) {
     char data[20];
 
-    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
+    // sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(i));
+    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", 32);
     strcpy(mqttMessages[i].value, data);
     strcpy(mqttMessages[i].topic, mqttTopic[i]);
 

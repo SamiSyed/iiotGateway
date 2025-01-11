@@ -22,7 +22,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-#include "system.h"
+#include "user_system.h"
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
