@@ -1,0 +1,3 @@
+1. Enable 5 sensors
+2. If not successfully send MQTT then take action -> RESET or initGSM
+3. If LoRa message not received give error message or notification. Because sending data from filter without update is flase.

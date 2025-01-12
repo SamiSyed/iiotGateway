@@ -139,7 +139,7 @@ int main(void) {
   /* USER CODE BEGIN WHILE */
   printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
   /* Long delay is given to spot if the gate way got reset */
-  Delay_CustomTimer(40000);
+  // Delay_CustomTimer(40000);
 
   /* Init IWDG */
   initIwdg();
@@ -163,6 +163,8 @@ int main(void) {
     }
 
     setLastCommandOK(true);
+    cleanAllBuffers();
+
     refreshIwdg();
   }
   /* USER CODE END 3 */

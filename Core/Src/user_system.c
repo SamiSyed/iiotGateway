@@ -182,7 +182,7 @@ SystemError sendATCommandRetry(char *command, char *param, char *reply,
       setLastCommandOK(true);
       cleanAllBuffers();
 
-      Delay_CustomTimer(1000);
+      Delay_CustomTimer(2000);
     } else {
       return NO_ERROR;
       // break;
@@ -209,8 +209,8 @@ SystemError sendATSimple(char *command, char *param, char *reply, bool addAT) {
 
   printf("Sending : %s\r\n", p_command);
   setReceivingFlag(true);
-  if (HAL_OK == HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command,
-                                  strlen(p_command))) {
+  if (HAL_OK ==
+      HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command, strlen(p_command))) {
 
     for (uint8_t i = 0; i < 2000; i++) {
       Delay_CustomTimer(50);
