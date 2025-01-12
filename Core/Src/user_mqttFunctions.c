@@ -14,8 +14,7 @@ SystemError sendMqttServer(MqttMessage_t mqttMessage) {
   char data[MQTT_SEND_MESSAGE_SIZE];
 
   sprintf(data, "\"%s\",1,0,\"%s\"", mqttMessage.topic, mqttMessage.value);
-  SystemError status = sendATCommand("SMPUB", data, "SMPUB", ADD_AT);
-  return status;
+  return sendATCommand("SMPUB", data, "SMPUB", ADD_AT);
 }
 
 void setMqttTopic(void) {
@@ -45,5 +44,5 @@ void prepareMqttMessageStruct(uint8_t sensorIndex) {
   strcpy(mqttMessages[sensorIndex].value, data);
   strcpy(mqttMessages[sensorIndex].topic, mqttTopic[sensorIndex]);
 
-  printf("mqttMessages[i].value : %s \r\n", mqttMessages[sensorIndex].value);
+  // printf("mqttMessages[i].value : %s \r\n", mqttMessages[sensorIndex].value);
 }

@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
+#include "stm32wlxx.h"
 
 #include "user_mqttFunctions.h"
 #include "user_system.h"
@@ -56,6 +57,8 @@
 HAL_StatusTypeDef uart2status = HAL_OK;
 uint32_t timer5sStatus = 0;
 uint32_t timer20sStatus = 0;
+uint32_t dataOkStatus = 0;
+uint32_t loraRecieveOkStatus = 0;
 uint8_t mqttMessageCounter = 0;
 bool sendMqttData = true;
 /* USER CODE END PV */
@@ -125,6 +128,8 @@ int main(void) {
   initDelayCustomTimer();
   timer5sStatus = getTick_CustomTimer();
   timer20sStatus = getTick_CustomTimer();
+  dataOkStatus = getTick_CustomTimer();
+  loraRecieveOkStatus = getTick_CustomTimer();
 
   printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
   initUart();
@@ -132,7 +137,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  // gsmInit();
+  gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -144,7 +149,7 @@ int main(void) {
   // Delay_CustomTimer(40000);
 
   /* Init IWDG */
-  // initIwdg();
+  initIwdg();
 
   while (1) {
     /* USER CODE END WHILE */
@@ -157,6 +162,7 @@ int main(void) {
     if (isRawDataReceived()) {
       runAllFilter();
       setRawDataReceived(false);
+      loraRecieveOkStatus = getTick_CustomTimer();
     }
 
     if (getTick_CustomTimer() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL) {
@@ -169,6 +175,9 @@ int main(void) {
         prepareMqttMessageStruct(mqttMessageCounter);
         if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR) {
           printf("Error sending data to MQTT Broker\r\n");
+        } 
+        else{
+          dataOkStatus = getTick_CustomTimer();
         }
 
         /* MQTT Send counter updated based on NUMBER_OF_SENSORS */
@@ -182,6 +191,17 @@ int main(void) {
         sendMqttData = false;
       }
     }
+
+    if(getTick_CustomTimer() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT){
+      printf("**Cannot Get LoRa data for 40 sec**\r\n");
+      NVIC_SystemReset();
+    }
+
+    if(getTick_CustomTimer() - loraRecieveOkStatus > MAX_TIME_LORA_INCOMING_MISSING){
+      printf("**Cannot Send MQTT data for 40 sec**\r\n");
+      NVIC_SystemReset();
+    }
+
     setLastCommandOK(true);
     cleanAllBuffers();
 

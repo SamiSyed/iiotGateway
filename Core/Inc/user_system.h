@@ -15,6 +15,9 @@
 #define MQTT_DATA_SEND_INTERVAL 1000U /* UNIT ms */
 #define MQTT_DATA_SEND_MAIN_INTERVAL 20000U /* UNIT ms */
 
+#define MAX_TIME_CANNOT_SEND_MQTT 40000U /* UNIT ms */
+#define MAX_TIME_LORA_INCOMING_MISSING 20000U /* UNIT ms */
+
 #define IS_GATEWAY 1
 
 #define usb_uart &huart1
