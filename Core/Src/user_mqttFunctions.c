@@ -9,18 +9,18 @@ MqttMessage_t *getMqttMessage(void) { return mqttMessages; }
 
 SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage) {
   // for (uint8_t i = 0; i < 1; i++) {
-  sendMqttServer(mqttMessage[0]);
+  SystemError status = sendMqttServer(mqttMessage[0]);
   // }
 
-  return NO_ERROR;
+  return status;
 }
 
-bool sendMqttServer(MqttMessage_t mqttMessage) {
+SystemError sendMqttServer(MqttMessage_t mqttMessage) {
   char data[MQTT_SEND_MESSAGE_SIZE];
 
   sprintf(data, "\"%s\",1,0,\"%s\"", mqttMessage.topic, mqttMessage.value);
-  sendATCommandRetry("SMPUB", data, "SMPUB", ADD_AT);
-  return true;
+  SystemError status = sendATCommand("SMPUB", data, "SMPUB", ADD_AT);
+  return status;
 }
 
 void setMqttTopic(void) {

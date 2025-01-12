@@ -10,6 +10,7 @@
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define MAX_APP_BUFFER_SIZE 2U
+#define MQTT_DATA_SEND_INTERVAL 10000U /* UNIT ms */
 #define IS_GATEWAY 1
 
 #define usb_uart &huart1

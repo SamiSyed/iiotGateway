@@ -26,6 +26,7 @@
 #include "tim.h"
 #include "usart.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
@@ -117,8 +118,11 @@ int main(void) {
   MX_ADC_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
+
+  /* Init ticks */
   HAL_TIM_Base_Start(&htim16);
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim16);
+  timer5sStatus = getTick_CustomTimer();
 
   printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
   initUart();
@@ -126,7 +130,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  // gsmInit();
+  gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -134,10 +138,8 @@ int main(void) {
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
-  Delay_CustomTimer(2000);
-
-  /* Init ticks */
-  timer5sStatus = getTick_CustomTimer();
+  /* Long delay is given to spot if the gate way got reset */
+  Delay_CustomTimer(40000);
 
   /* Init IWDG */
   initIwdg();
@@ -152,7 +154,7 @@ int main(void) {
       setRawDataReceived(false);
     }
 
-    if (getTick_CustomTimer() - timer5sStatus > 5000) {
+    if (getTick_CustomTimer() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
       prepareMqttMessageStruct(getMqttMessage());
       if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
         printf("Error sending data to MQTT Broker\r\n");
