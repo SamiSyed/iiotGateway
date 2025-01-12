@@ -126,6 +126,8 @@ int main(void) {
   /* Init ticks */
   HAL_TIM_Base_Start(&htim16);
   initDelayCustomTimer();
+  /* Long delay is given to spot if the gate way got reset */
+  // Delay_CustomTimer(40000);
   timer5sStatus = getTick_CustomTimer();
   timer20sStatus = getTick_CustomTimer();
   dataOkStatus = getTick_CustomTimer();
@@ -145,8 +147,6 @@ int main(void) {
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
-  /* Long delay is given to spot if the gate way got reset */
-  // Delay_CustomTimer(40000);
 
   /* Init IWDG */
   initIwdg();
@@ -175,8 +175,7 @@ int main(void) {
         prepareMqttMessageStruct(mqttMessageCounter);
         if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR) {
           printf("Error sending data to MQTT Broker\r\n");
-        } 
-        else{
+        } else {
           dataOkStatus = getTick_CustomTimer();
         }
 
@@ -192,15 +191,16 @@ int main(void) {
       }
     }
 
-    if(getTick_CustomTimer() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT){
-      printf("**Cannot Get LoRa data for 40 sec**\r\n");
-      NVIC_SystemReset();
-    }
+    // if (getTick_CustomTimer() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT) {
+    //   printf("**Cannot Send MQTT data for 40 sec**\r\n");
+    //   NVIC_SystemReset();
+    // }
 
-    if(getTick_CustomTimer() - loraRecieveOkStatus > MAX_TIME_LORA_INCOMING_MISSING){
-      printf("**Cannot Send MQTT data for 40 sec**\r\n");
-      NVIC_SystemReset();
-    }
+    // if (getTick_CustomTimer() - loraRecieveOkStatus >
+    //     MAX_TIME_LORA_INCOMING_MISSING) {
+    //   printf("**Cannot Get LoRa data for 40 sec**\r\n");
+    //   NVIC_SystemReset();
+    // }
 
     setLastCommandOK(true);
     cleanAllBuffers();

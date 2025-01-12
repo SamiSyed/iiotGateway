@@ -151,7 +151,7 @@ void SubghzApp_Init(void)
 static void OnTxDone(void)
 {
   /* USER CODE BEGIN OnTxDone */
-  printf("OnTxDone(void) : Called\r\n");
+  printf("LORA: OnTxDone(void) : Called\r\n");
 
   /* USER CODE END OnTxDone */
 }
@@ -173,7 +173,7 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraS
   }
 
   // printf("Received Payload Size : %i\r\n", RxBufferSize);
-  printf("LoRa Received Payload : %i\r\n", BufferRx[0]);
+  printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
 
   // printf("<=== OnRxDone(void)\r\n\r\n");
 
@@ -195,7 +195,7 @@ static void OnRxTimeout(void)
 static void OnRxError(void)
 {
   /* USER CODE BEGIN OnRxError */
-  printf("OnRxError(void) :\r\n");
+  printf("LORA: OnRxError(void) :\r\n");
   /* USER CODE END OnRxError */
 }
 
@@ -206,18 +206,18 @@ void pingPong(void) {
   temperature = GetTemperatureLevel();
   // batLevel = SYS_GetBatteryLevel();
 
-  printf("Temperature : %i\r\n", temperature);
+  printf("LORA: Temperature : %i\r\n", temperature);
   // printf("Battery Level : %i\r\n", batLevel);
   BufferTx[0] = temperature;
   BufferTx[1] = temperature >> 8;
   status = Radio.Send(BufferTx, MAX_APP_BUFFER_SIZE);
-  printf("Radio.Tx() : %i\r\n", status);
+  printf("LORA: Radio.Tx() : %i\r\n", status);
 }
 
 void listenForLoraNodes(void) {
   if (Radio.GetStatus() == RF_IDLE) {
     Radio.Rx(LORA_LISTENING_DURATION);
-    printf("Radio.Rx() : RF_IDLE\r\n");
+    printf("LORA: Radio.Rx() : RF_IDLE\r\n");
   }
 }
 
