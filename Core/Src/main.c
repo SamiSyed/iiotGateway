@@ -26,7 +26,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
@@ -55,8 +54,10 @@
 
 /* USER CODE BEGIN PV */
 HAL_StatusTypeDef uart2status = HAL_OK;
-uint32_t timeStamp_timer = 0;
 uint32_t timer5sStatus = 0;
+uint32_t timer20sStatus = 0;
+uint8_t mqttMessageCounter = 0;
+bool sendMqttData = true;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,8 +122,9 @@ int main(void) {
 
   /* Init ticks */
   HAL_TIM_Base_Start(&htim16);
-  timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim16);
+  initDelayCustomTimer();
   timer5sStatus = getTick_CustomTimer();
+  timer20sStatus = getTick_CustomTimer();
 
   printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
   initUart();
@@ -130,7 +132,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  gsmInit();
+  // gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -142,26 +144,44 @@ int main(void) {
   // Delay_CustomTimer(40000);
 
   /* Init IWDG */
-  initIwdg();
+  // initIwdg();
 
   while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
     listenForLoraNodes(LORA_LISTENING_DURATION);
+
+    /* Run filter in Data received through LoRa. rawDataReceived flag is set in
+     * the LoRa interrupt callback OnRxDone() */
     if (isRawDataReceived()) {
       runAllFilter();
       setRawDataReceived(false);
     }
 
-    if (getTick_CustomTimer() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
-      prepareMqttMessageStruct(getMqttMessage());
-      if (sendAllDataToMqttBroker(getMqttMessage()) != NO_ERROR) {
-        printf("Error sending data to MQTT Broker\r\n");
-      }
-      timer5sStatus = getTick_CustomTimer();
+    if (getTick_CustomTimer() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL) {
+      sendMqttData = true;
+      timer20sStatus = getTick_CustomTimer();
     }
 
+    if (sendMqttData) {
+      if (getTick_CustomTimer() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
+        prepareMqttMessageStruct(mqttMessageCounter);
+        if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR) {
+          printf("Error sending data to MQTT Broker\r\n");
+        }
+
+        /* MQTT Send counter updated based on NUMBER_OF_SENSORS */
+        mqttMessageCounter++;
+        mqttMessageCounter = mqttMessageCounter % NUMBER_OF_SENSORS;
+
+        /* Update last tick */
+        timer5sStatus = getTick_CustomTimer();
+      }
+      if (mqttMessageCounter == 0) {
+        sendMqttData = false;
+      }
+    }
     setLastCommandOK(true);
     cleanAllBuffers();
 
@@ -212,16 +232,7 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
-void Delay_CustomTimer(uint32_t delayMs) {
-  timeStamp_timer = getTick_CustomTimer();
-  while (1) {
-    if (__HAL_TIM_GET_COUNTER(&htim16) - timeStamp_timer >= delayMs) {
-      break;
-    }
-  }
-}
 
-uint32_t getTick_CustomTimer(void) { return __HAL_TIM_GET_COUNTER(&htim16); }
 /* USER CODE END 4 */
 
 /**

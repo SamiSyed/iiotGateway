@@ -2,6 +2,8 @@
 #include "filter.h"
 #include "stdio.h"
 #include "usart.h"
+#include "main.h"
+#include "tim.h"
 
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
@@ -10,6 +12,7 @@ static bool receivingData = false;
 static bool initialized = false;
 /* This initially has to be true to fetch first AT Reply*/
 static bool lastCommandOK = true;
+uint32_t timeStamp_timer = 0;
 
 static uint16_t newValueBuffer[NUMBER_OF_SENSORS];
 static uint16_t
@@ -312,4 +315,19 @@ uint16_t GetTemperatureLevel(void) {
 
   /* USER CODE END GetTemperatureLevel */
   return temperatureLevel;
+}
+
+void Delay_CustomTimer(uint32_t delayMs) {
+  timeStamp_timer = getTick_CustomTimer();
+  while (1) {
+    if (__HAL_TIM_GET_COUNTER(&htim16) - timeStamp_timer >= delayMs) {
+      break;
+    }
+  }
+}
+
+uint32_t getTick_CustomTimer(void) { return __HAL_TIM_GET_COUNTER(&htim16); }
+
+void initDelayCustomTimer(void){
+    timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim16);
 }

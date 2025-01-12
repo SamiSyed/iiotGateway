@@ -6,8 +6,8 @@ typedef struct {
   // timestamp
 } MqttMessage_t;
 
-void prepareMqttMessageStruct(MqttMessage_t *mqttMessage);
-SystemError sendAllDataToMqttBroker(MqttMessage_t *mqttMessage);
+void prepareMqttMessageStruct(uint8_t sensorIndex);
+SystemError sendDataToMqttBroker(uint8_t sensorIndex);
 void setMqttTopic(void);
 MqttMessage_t *getMqttMessageByIndex(uint8_t index);
 SystemError sendMqttServer(MqttMessage_t mqttMessage);

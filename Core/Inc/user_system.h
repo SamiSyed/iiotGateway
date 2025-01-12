@@ -5,12 +5,16 @@
 #include "stdint.h"
 #include "stm32wlxx_hal.h"
 
-#define NUMBER_OF_SENSORS 1U
+#define NUMBER_OF_SENSORS 5U
 #define FILTER_BUFFER_SIZE 10U
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define MAX_APP_BUFFER_SIZE 2U
-#define MQTT_DATA_SEND_INTERVAL 10000U /* UNIT ms */
+
+/* MQTT_DATA_SEND_INTERVAL has to be smaller than MQTT_DATA_SEND_MAIN_INTERVAL */
+#define MQTT_DATA_SEND_INTERVAL 1000U /* UNIT ms */
+#define MQTT_DATA_SEND_MAIN_INTERVAL 20000U /* UNIT ms */
+
 #define IS_GATEWAY 1
 
 #define usb_uart &huart1
@@ -38,6 +42,7 @@ typedef enum {
   ERROR_REPLY,
   ERROR_NO_AT_REPLY,
   ERROR_LAST_COMMAND_FAILED,
+  ERROR_SEND_MQTT_FAILED,
 } SystemError;
 
 /* This number of IDs should be same as the NUMBER_OF_SENSORS */
@@ -88,6 +93,12 @@ uint16_t GetTemperatureLevel(void);
 
 /* AT command */
 SystemError sendATCommand(char *command, char *param, char *reply, bool addAT);
-SystemError sendATCommandRetry(char *command, char *param, char *reply, bool addAT);
+SystemError sendATCommandRetry(char *command, char *param, char *reply,
+                               bool addAT);
 void sendCommand(char *command);
+
+/* Custom Delay */
+void Delay_CustomTimer(uint32_t delayMs);
+uint32_t getTick_CustomTimer(void);
+void initDelayCustomTimer(void);
 #endif /* SYSTEM_H */

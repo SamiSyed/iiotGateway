@@ -8,6 +8,7 @@
         "uartringbufdma.h": "c",
         "stm32wlxx_it.h": "c",
         "user_system.h": "c",
-        "user_mqttfunctions.h": "c"
+        "user_mqttfunctions.h": "c",
+        "tim.h": "c"
     }
 }
