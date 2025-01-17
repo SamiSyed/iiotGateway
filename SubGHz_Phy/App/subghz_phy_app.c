@@ -173,7 +173,7 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraS
   }
 
   // printf("Received Payload Size : %i\r\n", RxBufferSize);
-  printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
+  // printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
 
   // printf("<=== OnRxDone(void)\r\n\r\n");
 
@@ -195,7 +195,7 @@ static void OnRxTimeout(void)
 static void OnRxError(void)
 {
   /* USER CODE BEGIN OnRxError */
-  printf("LORA: OnRxError(void) :\r\n");
+  // printf("LORA: OnRxError(void) :\r\n");
   /* USER CODE END OnRxError */
 }
 

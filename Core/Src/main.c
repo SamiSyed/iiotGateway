@@ -55,12 +55,13 @@
 
 /* USER CODE BEGIN PV */
 HAL_StatusTypeDef uart2status = HAL_OK;
-uint32_t timer5sStatus = 0;
-uint32_t timer20sStatus = 0;
-uint32_t dataOkStatus = 0;
-uint32_t loraRecieveOkStatus = 0;
+int32_t timer5sStatus = 0;
+int32_t timer20sStatus = 0;
+int32_t dataOkStatus = 0;
+int32_t loraRecieveOkStatus = 0;
 uint8_t mqttMessageCounter = 0;
-bool sendMqttData = true;
+uint8_t debugDifference = 0;
+bool sendMqttData = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -120,18 +121,18 @@ int main(void) {
   MX_SubGHz_Phy_Init();
   MX_USART2_UART_Init();
   MX_ADC_Init();
-  MX_TIM16_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   /* Init ticks */
-  HAL_TIM_Base_Start(&htim16);
+  HAL_TIM_Base_Start_IT(&htim2);
   initDelayCustomTimer();
   /* Long delay is given to spot if the gate way got reset */
   // Delay_CustomTimer(40000);
-  timer5sStatus = getTick_CustomTimer();
-  timer20sStatus = getTick_CustomTimer();
-  dataOkStatus = getTick_CustomTimer();
-  loraRecieveOkStatus = getTick_CustomTimer();
+  timer5sStatus = getTick_CustomTimer_Sec();
+  timer20sStatus = getTick_CustomTimer_Sec();
+  dataOkStatus = getTick_CustomTimer_Sec();
+  loraRecieveOkStatus = getTick_CustomTimer_Sec();
 
   printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
   initUart();
@@ -139,7 +140,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  gsmInit();
+  // gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -162,21 +163,21 @@ int main(void) {
     if (isRawDataReceived()) {
       runAllFilter();
       setRawDataReceived(false);
-      loraRecieveOkStatus = getTick_CustomTimer();
+      loraRecieveOkStatus = getTick_CustomTimer_Sec();
     }
 
-    if (getTick_CustomTimer() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL) {
+    if (getTick_CustomTimer_Sec() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL) {
       sendMqttData = true;
-      timer20sStatus = getTick_CustomTimer();
+      timer20sStatus = getTick_CustomTimer_Sec();
     }
 
     if (sendMqttData) {
-      if (getTick_CustomTimer() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
+      if (getTick_CustomTimer_Sec() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
         prepareMqttMessageStruct(mqttMessageCounter);
         if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR) {
           printf("Error sending data to MQTT Broker\r\n");
         } else {
-          dataOkStatus = getTick_CustomTimer();
+          dataOkStatus = getTick_CustomTimer_Sec();
         }
 
         /* MQTT Send counter updated based on NUMBER_OF_SENSORS */
@@ -184,23 +185,23 @@ int main(void) {
         mqttMessageCounter = mqttMessageCounter % NUMBER_OF_SENSORS;
 
         /* Update last tick */
-        timer5sStatus = getTick_CustomTimer();
+        timer5sStatus = getTick_CustomTimer_Sec();
       }
       if (mqttMessageCounter == 0) {
         sendMqttData = false;
       }
     }
 
-    // if (getTick_CustomTimer() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT) {
-    //   printf("**Cannot Send MQTT data for 40 sec**\r\n");
-    //   NVIC_SystemReset();
-    // }
+    if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT) {
+      printf("**MQTT data cannot be send for 2 min**\r\n");
+      NVIC_SystemReset();
+    }
 
-    // if (getTick_CustomTimer() - loraRecieveOkStatus >
-    //     MAX_TIME_LORA_INCOMING_MISSING) {
-    //   printf("**Cannot Get LoRa data for 40 sec**\r\n");
-    //   NVIC_SystemReset();
-    // }
+    if (getTick_CustomTimer_Sec() - loraRecieveOkStatus >
+        MAX_TIME_LORA_INCOMING_MISSING) {
+      printf("**LoRa data not receiving for 2 min**\r\n");
+      NVIC_SystemReset();
+    }
 
     setLastCommandOK(true);
     cleanAllBuffers();
@@ -252,7 +253,10 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
+void resetAllTimerState(void) {
+  loraRecieveOkStatus = getTick_CustomTimer_Sec();
+  dataOkStatus = getTick_CustomTimer_Sec();
+}
 /* USER CODE END 4 */
 
 /**

@@ -1,9 +1,10 @@
 #include "user_system.h"
 #include "filter.h"
-#include "stdio.h"
-#include "usart.h"
 #include "main.h"
+#include "stdio.h"
 #include "tim.h"
+#include "usart.h"
+
 
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
@@ -320,14 +321,18 @@ uint16_t GetTemperatureLevel(void) {
 void Delay_CustomTimer(uint32_t delayMs) {
   timeStamp_timer = getTick_CustomTimer();
   while (1) {
-    if (__HAL_TIM_GET_COUNTER(&htim16) - timeStamp_timer >= delayMs) {
+    if (__HAL_TIM_GET_COUNTER(&htim2) - timeStamp_timer >= delayMs) {
       break;
     }
   }
 }
 
-uint32_t getTick_CustomTimer(void) { return __HAL_TIM_GET_COUNTER(&htim16); }
+uint32_t getTick_CustomTimer(void) { return __HAL_TIM_GET_COUNTER(&htim2); }
 
-void initDelayCustomTimer(void){
-    timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim16);
+uint32_t getTick_CustomTimer_Sec(void) {
+  return (__HAL_TIM_GET_COUNTER(&htim2) + 1) / 1000;
+}
+
+void initDelayCustomTimer(void) {
+  timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
 }
