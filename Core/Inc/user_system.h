@@ -103,5 +103,6 @@ void sendCommand(char *command);
 /* Custom Delay */
 void Delay_CustomTimer(uint32_t delayMs);
 uint32_t getTick_CustomTimer(void);
+uint32_t getTick_CustomTimer_Sec(void);
 void initDelayCustomTimer(void);
 #endif /* SYSTEM_H */

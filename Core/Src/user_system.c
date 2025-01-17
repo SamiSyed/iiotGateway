@@ -283,7 +283,6 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
                       matter OK or ERROR */
           }
         }
-        // cleanAllBuffers();
 
         /* Print message according to status */
         if (status == ERROR_NO_AT_REPLY) {
@@ -300,7 +299,6 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
         }
       } else {
         printf("Error in Transmit : %s\r\n", p_command);
-        // printf("Error in Transmit : %i\r\n", (uint8_t)halStatus);
         status = ERROR_UART_TRANSMIT;
       }
     }

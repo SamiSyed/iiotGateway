@@ -26,6 +26,7 @@
 #include "tim.h"
 #include "usart.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
@@ -140,7 +141,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  // gsmInit();
+  gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -166,7 +167,8 @@ int main(void) {
       loraRecieveOkStatus = getTick_CustomTimer_Sec();
     }
 
-    if (getTick_CustomTimer_Sec() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL) {
+    if (getTick_CustomTimer_Sec() - timer20sStatus >
+        MQTT_DATA_SEND_MAIN_INTERVAL) {
       sendMqttData = true;
       timer20sStatus = getTick_CustomTimer_Sec();
     }
