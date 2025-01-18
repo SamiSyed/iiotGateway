@@ -94,7 +94,7 @@ void setUart2Status(Uart2Status_e status);
 
 SystemError initSensorFilter(void);
 void runAllFilter(void);
-void setNewValueBuffer(uint16_t newValue);
+void setNewValueBuffer(uint16_t newValue, uint8_t sID);
 uint16_t getFilteredValueByIndex(uint8_t index);
 
 /* Uart Flag */

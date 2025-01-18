@@ -56,19 +56,17 @@
 static RadioEvents_t RadioEvents;
 
 /* USER CODE BEGIN PV */
-static uint8_t BufferTx[LORA_TX_BUFFER_SIZE + 1];
-static uint8_t BufferRx[LORA_RX_BUFFER_SIZE + 1];
+static volatile uint8_t BufferTx[LORA_TX_BUFFER_SIZE + 1];
+static volatile BufferRx[LORA_RX_BUFFER_SIZE + 1];
+
+static volatile bool loraReceived = false;
 
 uint16_t temperature = 0;
 uint16_t batLevel = 0;
 
-/* Last  Received Buffer Size*/
-uint16_t RxBufferSize = 0;
-
 radio_status_t status = RADIO_STATUS_ERROR;
 RadioOperatingModes_t mode = MODE_SLEEP;
 
-uint8_t increaseValue = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -167,22 +165,10 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
 
   /* Record payload size*/
   memcpy(BufferRx, payload, LORA_RX_BUFFER_SIZE);
-  printf("LORA: BufferRx (%i): %s\r\n", size, BufferRx);
+  setLoraReceived(true);
+  // printf("LORA: BufferRx (%i): %s\r\n", size, BufferRx);
 
   /* Check buffer */
-  char *message;
-  message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
-  if (strstr(message, IOT_GATEWAY_KEY) != NULL) {
-    message = strtok(NULL, LORA_MESSAGE_DELIMITER);
-    uint8_t sID = atoi(message);
-    if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS)) {
-      printf("Correct Message :-)\r\n");
-      setNewValueBuffer(BufferRx[0]);
-      setRawDataReceived(true);
-    }
-  } else {
-    printf("END NODE Key mismatch :-(\r\n");
-  }
 
   // printf("Received Payload Size : %i\r\n", RxBufferSize);
   // printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
@@ -227,5 +213,26 @@ void listenForLoraNodes(void) {
     // printf("LORA: Radio.Rx() : RF_IDLE\r\n");
   }
 }
+
+void processIncomingLoraMessage(void) {
+  char *message;
+  message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
+  if (strstr(message, IOT_GATEWAY_KEY) != NULL) {
+    message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+    uint8_t sID = atoi(message);
+    if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS)) {
+      message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+      uint8_t sValue = atoi(message);
+      printf("Correct Message :-) %i\r\n", sValue);
+      setNewValueBuffer(sValue, sID);
+      setRawDataReceived(true);
+    }
+  } else {
+    printf("END NODE Key mismatch :-(\r\n");
+  }
+}
+void setLoraReceived(bool status) { loraReceived = status; }
+
+bool isLoraReceived(void) { return loraReceived; }
 
 /* USER CODE END PrFD */

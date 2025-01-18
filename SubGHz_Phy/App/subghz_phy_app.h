@@ -95,6 +95,7 @@ void SubghzApp_Init(void);
 /* USER CODE BEGIN EFP */
 void listenForLoraNodes(void);
 void getDataFromEndNode(SensorId sensorID);
+void processIncomingLoraMessage(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

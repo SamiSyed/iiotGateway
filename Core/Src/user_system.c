@@ -75,9 +75,10 @@ void runAllFilter(void) {
   }
 }
 
-void setNewValueBuffer(uint16_t newValue) {
-  for (uint8_t sId = 0; sId < (uint8_t)NUMBER_OF_SENSORS; sId++) {
-    newValueBuffer[sId] = newValue;
+void setNewValueBuffer(uint16_t newValue, uint8_t sID) {
+  sID = sID - sensorID_0;
+  if (sID <  NUMBER_OF_SENSORS) {
+    newValueBuffer[sID] = newValue;
   }
 }
 
@@ -281,7 +282,6 @@ uint32_t getTick_CustomTimer_Sec(void) {
 void initDelayCustomTimer(void) {
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
 }
-
 
 char *prepareLoraMessage(uint8_t sID) {
   uint8_t sIDString[SENSOR_ID_DIGIT];

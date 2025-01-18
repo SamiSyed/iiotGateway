@@ -143,7 +143,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  gsmInit();
+  // gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -161,6 +161,11 @@ int main(void) {
     /* USER CODE BEGIN 3 */
     listenForLoraNodes(LORA_LISTENING_DURATION);
 
+    if (isLoraReceived()) {
+      processIncomingLoraMessage();
+      setLoraReceived(false);
+    }
+    
     /* Run filter in Data received through LoRa. rawDataReceived flag is set in
      * the LoRa interrupt callback OnRxDone() */
     if (isRawDataReceived()) {
@@ -207,7 +212,7 @@ int main(void) {
       NVIC_SystemReset();
     }
 
-    if (getTick_CustomTimer_Sec() - timer2sStatus > 5) {
+    if (getTick_CustomTimer_Sec() - timer2sStatus > 1) {
       getDataFromEndNode(sensorID_0 + loraGetMsgCounter);
       loraGetMsgCounter++;
       loraGetMsgCounter = loraGetMsgCounter % NUMBER_OF_SENSORS;
