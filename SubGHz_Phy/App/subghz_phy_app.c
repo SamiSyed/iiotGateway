@@ -19,17 +19,19 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "platform.h"
-#include "sys_app.h"
 #include "subghz_phy_app.h"
+#include "platform.h"
 #include "radio.h"
+#include "sys_app.h"
+
 
 /* USER CODE BEGIN Includes */
 #include "radio_driver.h"
 #include "user_system.h"
 /* USER CODE END Includes */
 
-/* External variables ---------------------------------------------------------*/
+/* External variables
+ * ---------------------------------------------------------*/
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -55,7 +57,7 @@
 static RadioEvents_t RadioEvents;
 
 /* USER CODE BEGIN PV */
-static uint8_t BufferTx[MAX_APP_BUFFER_SIZE];
+static uint8_t BufferTx[MAX_APP_BUFFER_SIZE + 1];
 static uint8_t BufferRx[MAX_APP_BUFFER_SIZE];
 
 uint16_t temperature = 0;
@@ -77,36 +79,37 @@ uint8_t increaseValue = 0;
 static void OnTxDone(void);
 
 /**
-  * @brief Function to be executed on Radio Rx Done event
-  * @param  payload ptr of buffer received
-  * @param  size buffer size
-  * @param  rssi
-  * @param  LoraSnr_FskCfo
-  */
-static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo);
+ * @brief Function to be executed on Radio Rx Done event
+ * @param  payload ptr of buffer received
+ * @param  size buffer size
+ * @param  rssi
+ * @param  LoraSnr_FskCfo
+ */
+static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
+                     int8_t LoraSnr_FskCfo);
 
 /**
-  * @brief Function executed on Radio Tx Timeout event
-  */
+ * @brief Function executed on Radio Tx Timeout event
+ */
 static void OnTxTimeout(void);
 
 /**
-  * @brief Function executed on Radio Rx Timeout event
-  */
+ * @brief Function executed on Radio Rx Timeout event
+ */
 static void OnRxTimeout(void);
 
 /**
-  * @brief Function executed on Radio Rx Error event
-  */
+ * @brief Function executed on Radio Rx Error event
+ */
 static void OnRxError(void);
 
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
-/* Exported functions ---------------------------------------------------------*/
-void SubghzApp_Init(void)
-{
+/* Exported functions
+ * ---------------------------------------------------------*/
+void SubghzApp_Init(void) {
   /* USER CODE BEGIN SubghzApp_Init_1 */
 
   /* USER CODE END SubghzApp_Init_1 */
@@ -130,13 +133,13 @@ void SubghzApp_Init(void)
 
   Radio.SetTxConfig(MODEM_LORA, TX_OUTPUT_POWER, 0, LORA_BANDWIDTH,
                     LORA_SPREADING_FACTOR, LORA_CODINGRATE,
-                    LORA_PREAMBLE_LENGTH, LORA_FIX_LENGTH_PAYLOAD_ON, true, 0,
+                    LORA_PREAMBLE_LENGTH, LORA_FIX_LENGTH_PAYLOAD_ON, false, 0,
                     0, LORA_IQ_INVERSION_ON, 3000);
 
   Radio.SetRxConfig(MODEM_LORA, LORA_BANDWIDTH, LORA_SPREADING_FACTOR,
                     LORA_CODINGRATE, 0, LORA_PREAMBLE_LENGTH,
-                    LORA_SYMBOL_TIMEOUT, LORA_FIX_LENGTH_PAYLOAD_ON, 0, true, 0,
-                    0, LORA_IQ_INVERSION_ON, true);
+                    LORA_SYMBOL_TIMEOUT, LORA_FIX_LENGTH_PAYLOAD_ON, 0, false,
+                    0, 0, LORA_IQ_INVERSION_ON, true);
 
   Radio.SetMaxPayloadLength(MODEM_LORA, 255);
 
@@ -148,16 +151,15 @@ void SubghzApp_Init(void)
 /* USER CODE END EF */
 
 /* Private functions ---------------------------------------------------------*/
-static void OnTxDone(void)
-{
+static void OnTxDone(void) {
   /* USER CODE BEGIN OnTxDone */
   printf("LORA: OnTxDone(void) : Called\r\n");
 
   /* USER CODE END OnTxDone */
 }
 
-static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo)
-{
+static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
+                     int8_t LoraSnr_FskCfo) {
   /* USER CODE BEGIN OnRxDone */
   // printf("\r\n===> OnRxDone(void)\r\n");
 
@@ -180,38 +182,30 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraS
   /* USER CODE END OnRxDone */
 }
 
-static void OnTxTimeout(void)
-{
+static void OnTxTimeout(void) {
   /* USER CODE BEGIN OnTxTimeout */
   /* USER CODE END OnTxTimeout */
 }
 
-static void OnRxTimeout(void)
-{
+static void OnRxTimeout(void) {
   /* USER CODE BEGIN OnRxTimeout */
   /* USER CODE END OnRxTimeout */
 }
 
-static void OnRxError(void)
-{
+static void OnRxError(void) {
   /* USER CODE BEGIN OnRxError */
   // printf("LORA: OnRxError(void) :\r\n");
   /* USER CODE END OnRxError */
 }
 
 /* USER CODE BEGIN PrFD */
-void pingPong(void) {
+void sendByLora(void) {
   HAL_Delay(Radio.GetWakeupTime() + 200);
-  osDelay(2000);
-  temperature = GetTemperatureLevel();
-  // batLevel = SYS_GetBatteryLevel();
+  
+  char* loraMessage_p = prepareLoraMessage(sensorID_0);
+  status = Radio.Send(loraMessage_p, MAX_APP_BUFFER_SIZE);
 
-  printf("LORA: Temperature : %i\r\n", temperature);
-  // printf("Battery Level : %i\r\n", batLevel);
-  BufferTx[0] = temperature;
-  BufferTx[1] = temperature >> 8;
-  status = Radio.Send(BufferTx, MAX_APP_BUFFER_SIZE);
-  printf("LORA: Radio.Tx() : %i\r\n", status);
+  printf("LORA: TO END NODE: %.14s\r\n", loraMessage_p);
 }
 
 void listenForLoraNodes(void) {

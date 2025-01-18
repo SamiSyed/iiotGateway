@@ -26,7 +26,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
@@ -56,6 +55,7 @@
 
 /* USER CODE BEGIN PV */
 HAL_StatusTypeDef uart2status = HAL_OK;
+int32_t timer2sStatus = 0;
 int32_t timer5sStatus = 0;
 int32_t timer20sStatus = 0;
 int32_t dataOkStatus = 0;
@@ -130,6 +130,7 @@ int main(void) {
   initDelayCustomTimer();
   /* Long delay is given to spot if the gate way got reset */
   // Delay_CustomTimer(40000);
+  timer2sStatus = getTick_CustomTimer_Sec();
   timer5sStatus = getTick_CustomTimer_Sec();
   timer20sStatus = getTick_CustomTimer_Sec();
   dataOkStatus = getTick_CustomTimer_Sec();
@@ -141,7 +142,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  gsmInit();
+  // gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -203,6 +204,11 @@ int main(void) {
         MAX_TIME_LORA_INCOMING_MISSING) {
       printf("**LoRa data not receiving for 2 min**\r\n");
       NVIC_SystemReset();
+    }
+
+    if (getTick_CustomTimer_Sec() - timer2sStatus > 5) {
+      getDataFromEndNode();
+      timer2sStatus = getTick_CustomTimer_Sec();
     }
 
     setLastCommandOK(true);

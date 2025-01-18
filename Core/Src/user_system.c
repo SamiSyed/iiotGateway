@@ -4,16 +4,17 @@
 #include "stdio.h"
 #include "tim.h"
 #include "usart.h"
-
+#include <string.h>
 
 static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
 static bool sendingData = false;
 static bool receivingData = false;
-static bool initialized = false;
 /* This initially has to be true to fetch first AT Reply*/
 static bool lastCommandOK = true;
 uint32_t timeStamp_timer = 0;
+
+char loraMessage_TX[MAX_APP_BUFFER_SIZE + 1];
 
 static uint16_t newValueBuffer[NUMBER_OF_SENSORS];
 static uint16_t
@@ -83,13 +84,6 @@ void setNewValueBuffer(uint16_t newValue) {
 /* Get value from global sensor array*/
 uint16_t getFilteredValueByIndex(uint8_t index) {
   return filteredSensorValues[index];
-}
-
-void sendCommand(char *command) {
-  printf("at+");
-  printf(command);
-  printf("\r\n");
-  Delay_CustomTimer(100);
 }
 
 SystemError gsmInit(void) {
@@ -197,53 +191,6 @@ SystemError sendATCommandRetry(char *command, char *param, char *reply,
   return ERROR_NO_AT_REPLY;
 }
 
-SystemError sendATSimple(char *command, char *param, char *reply, bool addAT) {
-  char p_command[MQTT_SEND_MESSAGE_SIZE];
-  SystemError status = ERROR_NO_AT_REPLY;
-
-  if (addAT) {
-    if (param == "") {
-      snprintf(p_command, sizeof(p_command), "AT + %s\r\n", command);
-    } else {
-      snprintf(p_command, sizeof(p_command), "AT + %s=%s\r\n", command, param);
-    }
-  } else {
-    sprintf(p_command, "%s\r\n", command);
-  }
-
-  printf("Sending : %s\r\n", p_command);
-  setReceivingFlag(true);
-  if (HAL_OK ==
-      HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command, strlen(p_command))) {
-
-    for (uint8_t i = 0; i < 2000; i++) {
-      Delay_CustomTimer(50);
-      if (!getReceivingFlag()) {
-        if (replyContains(reply)) {
-          status = NO_ERROR;
-        } else {
-          status = ERROR_REPLY;
-        }
-        break; /* If it gets reply it will break the loop. It does not
-                  matter OK or ERROR */
-      }
-    }
-
-    if (status == ERROR_NO_AT_REPLY) {
-      printf("No AT Reply : %s\r\n", p_command);
-    } else if (status == ERROR_REPLY) {
-      printf("Error : %s\r\n", p_command);
-    } else if (status == NO_ERROR) {
-      printf("OK : %s\r\n", p_command);
-    } else {
-      setReceivingFlag(false);
-    }
-
-  } // if (HAL_OK == HAL_UART_Transmit(g...
-
-  return status;
-}
-
 SystemError sendATCommand(char *command, char *param, char *reply, bool addAT) {
   // Delay_CustomTimer(2000);
   SystemError status = ERROR_LAST_COMMAND_FAILED;
@@ -333,4 +280,15 @@ uint32_t getTick_CustomTimer_Sec(void) {
 
 void initDelayCustomTimer(void) {
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
+}
+
+void getDataFromEndNode(void) { sendByLora(); }
+
+char *prepareLoraMessage(uint8_t sID) {
+  uint8_t sIDString[SENSOR_ID_DIGIT];
+  itoa(sID, sIDString, 10);
+
+  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s", IOT_GATEWAY_KEY,
+           sIDString);
+  return loraMessage_TX;
 }

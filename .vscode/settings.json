@@ -9,6 +9,7 @@
         "stm32wlxx_it.h": "c",
         "user_system.h": "c",
         "user_mqttfunctions.h": "c",
-        "tim.h": "c"
+        "tim.h": "c",
+        "system_error": "c"
     }
 }

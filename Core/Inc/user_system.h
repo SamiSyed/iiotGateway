@@ -5,20 +5,29 @@
 #include "stdint.h"
 #include "stm32wlxx_hal.h"
 
-#define NUMBER_OF_SENSORS 5U
 #define FILTER_BUFFER_SIZE 10U
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
-#define MAX_APP_BUFFER_SIZE 2U
-
-/* MQTT_DATA_SEND_INTERVAL has to be smaller than MQTT_DATA_SEND_MAIN_INTERVAL */
-#define MQTT_DATA_SEND_INTERVAL 1U /* UNIT second */
+#define NUMBER_OF_SENSORS 5U
+/* MQTT_DATA_SEND_INTERVAL has to be smaller than MQTT_DATA_SEND_MAIN_INTERVAL
+ */
+#define MQTT_DATA_SEND_INTERVAL 1U       /* UNIT second */
 #define MQTT_DATA_SEND_MAIN_INTERVAL 60U /* UNIT second */
 
-#define MAX_TIME_CANNOT_SEND_MQTT 120U /* UNIT second */
+#define MAX_TIME_CANNOT_SEND_MQTT 120U      /* UNIT second */
 #define MAX_TIME_LORA_INCOMING_MISSING 120U /* UNIT second */
 
-#define IS_GATEWAY 1
+#define SENSOR_ID_DIGIT 3
+#define IOT_GATEWAY_KEY "0123456789"
+#define IOT_GATEWAY_KEY_SIZE 10U
+#define LORA_MESSAGE_DELIMITER '#'
+#define LORA_MESSAGE_DELIMITER_SIZE 1
+#define IOT_GATEWAY_MESSAGE_SIZE 3U
+
+/* Must sync with END node. Other wise LoRa communication will hang*/
+#define MAX_APP_BUFFER_SIZE                                                    \
+  (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
+   IOT_GATEWAY_MESSAGE_SIZE)
 
 #define usb_uart &huart1
 #define gsm_uart &huart2
@@ -34,8 +43,6 @@
 #define MQTT_MESSAGE_SIZE 50U
 #define MQTT_SEND_MESSAGE_SIZE (MQTT_TOPIC_SIZE + MQTT_MESSAGE_SIZE)
 
-// #define log_uart &huart3
-
 typedef enum {
   NO_ERROR,
   ERROR_MESSAGE_QUEUE,
@@ -48,13 +55,19 @@ typedef enum {
   ERROR_SEND_MQTT_FAILED,
 } SystemError;
 
-/* This number of IDs should be same as the NUMBER_OF_SENSORS */
+/* This number of IDs should be same as the NUMBER_OF_SENSORS
+
+   This IDs should be same with END node. END node reply based on comparing this
+   IDs
+*/
 typedef enum {
-  sensorID_0,
+  sensorID_0 =
+      100, /* Should start with 0 to keep the NUMBER_OF_SENSORS accurate */
   sensorID_1,
   sensorID_2,
   sensorID_3,
   sensorID_4,
+
 } SensorId;
 
 typedef enum {
@@ -98,11 +111,11 @@ uint16_t GetTemperatureLevel(void);
 SystemError sendATCommand(char *command, char *param, char *reply, bool addAT);
 SystemError sendATCommandRetry(char *command, char *param, char *reply,
                                bool addAT);
-void sendCommand(char *command);
 
 /* Custom Delay */
 void Delay_CustomTimer(uint32_t delayMs);
 uint32_t getTick_CustomTimer(void);
 uint32_t getTick_CustomTimer_Sec(void);
 void initDelayCustomTimer(void);
+char *prepareLoraMessage(uint8_t sID);
 #endif /* SYSTEM_H */
