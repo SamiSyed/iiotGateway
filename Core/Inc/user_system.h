@@ -20,14 +20,17 @@
 #define SENSOR_ID_DIGIT 3
 #define IOT_GATEWAY_KEY "0123456789"
 #define IOT_GATEWAY_KEY_SIZE 10U
-#define LORA_MESSAGE_DELIMITER '#'
+#define LORA_MESSAGE_DELIMITER "#"
 #define LORA_MESSAGE_DELIMITER_SIZE 1
 #define IOT_GATEWAY_MESSAGE_SIZE 3U
+#define LORA_END_NODE_VALUE_SIZE 4U
 
 /* Must sync with END node. Other wise LoRa communication will hang*/
-#define MAX_APP_BUFFER_SIZE                                                    \
+#define LORA_TX_BUFFER_SIZE                                                    \
   (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
    IOT_GATEWAY_MESSAGE_SIZE)
+#define LORA_RX_BUFFER_SIZE                                                    \
+  (LORA_TX_BUFFER_SIZE + LORA_MESSAGE_DELIMITER_SIZE + LORA_END_NODE_VALUE_SIZE)
 
 #define usb_uart &huart1
 #define gsm_uart &huart2

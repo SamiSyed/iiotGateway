@@ -14,7 +14,7 @@ static bool receivingData = false;
 static bool lastCommandOK = true;
 uint32_t timeStamp_timer = 0;
 
-char loraMessage_TX[MAX_APP_BUFFER_SIZE + 1];
+char loraMessage_TX[LORA_TX_BUFFER_SIZE + 1];
 
 static uint16_t newValueBuffer[NUMBER_OF_SENSORS];
 static uint16_t
@@ -282,7 +282,6 @@ void initDelayCustomTimer(void) {
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
 }
 
-void getDataFromEndNode(void) { sendByLora(); }
 
 char *prepareLoraMessage(uint8_t sID) {
   uint8_t sIDString[SENSOR_ID_DIGIT];

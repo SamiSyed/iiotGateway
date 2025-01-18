@@ -61,6 +61,7 @@ int32_t timer20sStatus = 0;
 int32_t dataOkStatus = 0;
 int32_t loraRecieveOkStatus = 0;
 uint8_t mqttMessageCounter = 0;
+uint8_t loraGetMsgCounter = 0;
 uint8_t debugDifference = 0;
 bool sendMqttData = false;
 /* USER CODE END PV */
@@ -142,7 +143,7 @@ int main(void) {
   Delay_CustomTimer(1000);
   sendATCommand("AT", "", AT_OK, NO_AT);
 
-  // gsmInit();
+  gsmInit();
   initSensorFilter();
   setMqttTopic();
   /* USER CODE END 2 */
@@ -207,7 +208,10 @@ int main(void) {
     }
 
     if (getTick_CustomTimer_Sec() - timer2sStatus > 5) {
-      getDataFromEndNode();
+      getDataFromEndNode(sensorID_0 + loraGetMsgCounter);
+      loraGetMsgCounter++;
+      loraGetMsgCounter = loraGetMsgCounter % NUMBER_OF_SENSORS;
+
       timer2sStatus = getTick_CustomTimer_Sec();
     }
 

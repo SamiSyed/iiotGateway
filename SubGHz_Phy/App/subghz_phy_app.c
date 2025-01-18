@@ -24,7 +24,6 @@
 #include "radio.h"
 #include "sys_app.h"
 
-
 /* USER CODE BEGIN Includes */
 #include "radio_driver.h"
 #include "user_system.h"
@@ -57,8 +56,8 @@
 static RadioEvents_t RadioEvents;
 
 /* USER CODE BEGIN PV */
-static uint8_t BufferTx[MAX_APP_BUFFER_SIZE + 1];
-static uint8_t BufferRx[MAX_APP_BUFFER_SIZE];
+static uint8_t BufferTx[LORA_TX_BUFFER_SIZE + 1];
+static uint8_t BufferRx[LORA_RX_BUFFER_SIZE + 1];
 
 uint16_t temperature = 0;
 uint16_t batLevel = 0;
@@ -153,7 +152,7 @@ void SubghzApp_Init(void) {
 /* Private functions ---------------------------------------------------------*/
 static void OnTxDone(void) {
   /* USER CODE BEGIN OnTxDone */
-  printf("LORA: OnTxDone(void) : Called\r\n");
+  // printf("LORA: OnTxDone(void) : Called\r\n");
 
   /* USER CODE END OnTxDone */
 }
@@ -164,14 +163,25 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
   // printf("\r\n===> OnRxDone(void)\r\n");
 
   /* Clear BufferRx*/
-  memset(BufferRx, 0, MAX_APP_BUFFER_SIZE);
+  memset(BufferRx, 0, LORA_RX_BUFFER_SIZE);
 
   /* Record payload size*/
-  RxBufferSize = MAX_APP_BUFFER_SIZE;
-  if (RxBufferSize <= MAX_APP_BUFFER_SIZE) {
-    memcpy(BufferRx, payload, RxBufferSize);
-    setNewValueBuffer(BufferRx[0]);
-    setRawDataReceived(true);
+  memcpy(BufferRx, payload, LORA_RX_BUFFER_SIZE);
+  printf("LORA: BufferRx (%i): %s\r\n", size, BufferRx);
+
+  /* Check buffer */
+  char *message;
+  message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
+  if (strstr(message, IOT_GATEWAY_KEY) != NULL) {
+    message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+    uint8_t sID = atoi(message);
+    if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS)) {
+      printf("Correct Message :-)\r\n");
+      setNewValueBuffer(BufferRx[0]);
+      setRawDataReceived(true);
+    }
+  } else {
+    printf("END NODE Key mismatch :-(\r\n");
   }
 
   // printf("Received Payload Size : %i\r\n", RxBufferSize);
@@ -199,19 +209,22 @@ static void OnRxError(void) {
 }
 
 /* USER CODE BEGIN PrFD */
-void sendByLora(void) {
-  HAL_Delay(Radio.GetWakeupTime() + 200);
-  
-  char* loraMessage_p = prepareLoraMessage(sensorID_0);
-  status = Radio.Send(loraMessage_p, MAX_APP_BUFFER_SIZE);
+void getDataFromEndNode(SensorId sensorID) {
+  // HAL_Delay(Radio.GetWakeupTime() + 200);
 
-  printf("LORA: TO END NODE: %.14s\r\n", loraMessage_p);
+  char *loraMessage_p = prepareLoraMessage(sensorID);
+  status = Radio.Send(loraMessage_p, LORA_TX_BUFFER_SIZE);
+  /* After sending any length of LORA message, MAX_PAYLOAD_LENGTH updates with
+   * the same for receiving. Hence need to reset with following code. */
+  Radio.SetMaxPayloadLength(MODEM_LORA, LORA_RX_BUFFER_SIZE);
+
+  printf("\r\nLORA: TO END NODE: %s\r\n", loraMessage_p);
 }
 
 void listenForLoraNodes(void) {
   if (Radio.GetStatus() == RF_IDLE) {
     Radio.Rx(LORA_LISTENING_DURATION);
-    printf("LORA: Radio.Rx() : RF_IDLE\r\n");
+    // printf("LORA: Radio.Rx() : RF_IDLE\r\n");
   }
 }
 
