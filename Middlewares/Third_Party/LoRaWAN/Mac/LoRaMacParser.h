@@ -38,8 +38,7 @@
 #define __LORAMAC_PARSER_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LoRaMacMessageTypes.h"
@@ -65,7 +64,7 @@ typedef enum eLoRaMacParserStatus
      * Undefined Error occurred
      */
     LORAMAC_PARSER_ERROR,
-}LoRaMacParserStatus_t;
+} LoRaMacParserStatus_t;
 
 /*!
  * Parse a serialized join-accept message and fills the structured object.
@@ -73,7 +72,7 @@ typedef enum eLoRaMacParserStatus
  * \param [in,out] macMsg      - Join-accept message object
  * \retval                     - Status of the operation
  */
-LoRaMacParserStatus_t LoRaMacParserJoinAccept( LoRaMacMessageJoinAccept_t *macMsg );
+LoRaMacParserStatus_t LoRaMacParserJoinAccept(LoRaMacMessageJoinAccept_t *macMsg);
 
 /*!
  * Parse a serialized data message and fills the structured object.
@@ -81,7 +80,7 @@ LoRaMacParserStatus_t LoRaMacParserJoinAccept( LoRaMacMessageJoinAccept_t *macMs
  * \param [in,out] macMsg      - Data message object
  * \retval                     - Status of the operation
  */
-LoRaMacParserStatus_t LoRaMacParserData( LoRaMacMessageData_t *macMsg );
+LoRaMacParserStatus_t LoRaMacParserData(LoRaMacMessageData_t *macMsg);
 
 /*! \} addtogroup LORAMAC */
 
@@ -90,4 +89,3 @@ LoRaMacParserStatus_t LoRaMacParserData( LoRaMacMessageData_t *macMsg );
 #endif
 
 #endif // __LORAMAC_PARSER_H__
-

@@ -28,18 +28,19 @@
  *
  * \author    Johannes Bruder ( STACKFORCE )
  */
-#include "utilities.h"
 #include "LoRaMacCommands.h"
 #include "LoRaMacConfirmQueue.h"
 #include "LoRaMacVersion.h"
+#include "utilities.h"
 
 #ifndef NUM_OF_MAC_COMMANDS
 /*!
  * Number of MAC Command slots
  */
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01000300 ))
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01000300))
 #define NUM_OF_MAC_COMMANDS 15
-#elif (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
+#elif (defined(LORAMAC_VERSION)                                                                    \
+       && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
 #define NUM_OF_MAC_COMMANDS 32
 #endif /* LORAMAC_VERSION */
 #endif
@@ -57,11 +58,11 @@ typedef struct sMacCommandsList
     /*
      * First element of MAC command list.
      */
-    MacCommand_t* First;
+    MacCommand_t *First;
     /*
      * Last element of MAC command list.
      */
-    MacCommand_t* Last;
+    MacCommand_t *Last;
 } MacCommandsList_t;
 
 /*!
@@ -96,13 +97,13 @@ static LoRaMacCommandsCtx_t CommandsCtx;
  * \param [in]    slot           - Slot to check
  * \retval                       - Status of the operation
  */
-static bool IsSlotFree( const MacCommand_t* slot )
+static bool IsSlotFree(const MacCommand_t *slot)
 {
-    uint8_t* mem = ( uint8_t* )slot;
+    uint8_t *mem = (uint8_t *)slot;
 
-    for( uint16_t size = 0; size < sizeof( MacCommand_t ); size++ )
+    for (uint16_t size = 0; size < sizeof(MacCommand_t); size++)
     {
-        if( mem[size] != 0x00 )
+        if (mem[size] != 0x00)
         {
             return false;
         }
@@ -115,14 +116,14 @@ static bool IsSlotFree( const MacCommand_t* slot )
  *
  * \retval                       - Pointer to slot
  */
-static MacCommand_t* MallocNewMacCommandSlot( void )
+static MacCommand_t *MallocNewMacCommandSlot(void)
 {
     uint8_t itr = 0;
 
-    while( IsSlotFree( ( const MacCommand_t* )&CommandsCtx.MacCommandSlots[itr] ) == false )
+    while (IsSlotFree((const MacCommand_t *)&CommandsCtx.MacCommandSlots[itr]) == false)
     {
         itr++;
-        if( itr == NUM_OF_MAC_COMMANDS )
+        if (itr == NUM_OF_MAC_COMMANDS)
         {
             return NULL;
         }
@@ -138,14 +139,14 @@ static MacCommand_t* MallocNewMacCommandSlot( void )
  *
  * \retval                       - Status of the operation
  */
-static bool FreeMacCommandSlot( MacCommand_t* slot )
+static bool FreeMacCommandSlot(MacCommand_t *slot)
 {
-    if( slot == NULL )
+    if (slot == NULL)
     {
         return false;
     }
 
-    memset1( ( uint8_t* )slot, 0x00, sizeof( MacCommand_t ) );
+    memset1((uint8_t *)slot, 0x00, sizeof(MacCommand_t));
 
     return true;
 }
@@ -158,9 +159,9 @@ static bool FreeMacCommandSlot( MacCommand_t* slot )
  * \param [in]    list           - List that shall be initialized
  * \retval                       - Status of the operation
  */
-static bool LinkedListInit( MacCommandsList_t* list )
+static bool LinkedListInit(MacCommandsList_t *list)
 {
-    if( list == NULL )
+    if (list == NULL)
     {
         return false;
     }
@@ -178,21 +179,21 @@ static bool LinkedListInit( MacCommandsList_t* list )
  * \param [in]    element        - Element to add
  * \retval                       - Status of the operation
  */
-static bool LinkedListAdd( MacCommandsList_t* list, MacCommand_t* element )
+static bool LinkedListAdd(MacCommandsList_t *list, MacCommand_t *element)
 {
-    if( ( list == NULL ) || ( element == NULL ) )
+    if ((list == NULL) || (element == NULL))
     {
         return false;
     }
 
     // Check if this is the first entry to enter the list.
-    if( list->First == NULL )
+    if (list->First == NULL)
     {
         list->First = element;
     }
 
     // Check if the last entry exists and update its next point.
-    if( list->Last )
+    if (list->Last)
     {
         list->Last->Next = element;
     }
@@ -213,23 +214,25 @@ static bool LinkedListAdd( MacCommandsList_t* list, MacCommand_t* element )
  * \param [in]    element        - Element where the previous element shall be searched
  * \retval                       - Status of the operation
  */
-static MacCommand_t* LinkedListGetPrevious( MacCommandsList_t* list, MacCommand_t* element )
+static MacCommand_t *LinkedListGetPrevious(MacCommandsList_t *list, MacCommand_t *element)
 {
-    if( ( list == NULL ) || ( element == NULL ) )
+    if ((list == NULL) || (element == NULL))
     {
         return NULL;
     }
 
-    MacCommand_t* curElement;
+    MacCommand_t *curElement;
 
     // Start at the head of the list
     curElement = list->First;
 
-    // When current element is the first of the list, there's no previous element so we can return NULL immediately.
-    if( element != curElement )
+    // When current element is the first of the list, there's no previous element so we can return
+    // NULL immediately.
+    if (element != curElement)
     {
-        // Loop through all elements until the end is reached or the next of current is the current element.
-        while( ( curElement != NULL ) && ( curElement->Next != element ) )
+        // Loop through all elements until the end is reached or the next of current is the current
+        // element.
+        while ((curElement != NULL) && (curElement->Next != element))
         {
             curElement = curElement->Next;
         }
@@ -249,26 +252,26 @@ static MacCommand_t* LinkedListGetPrevious( MacCommandsList_t* list, MacCommand_
  * \param [in]    element        - Element to remove
  * \retval                       - Status of the operation
  */
-static bool LinkedListRemove( MacCommandsList_t* list, MacCommand_t* element )
+static bool LinkedListRemove(MacCommandsList_t *list, MacCommand_t *element)
 {
-    if( ( list == NULL ) || ( element == NULL ) )
+    if ((list == NULL) || (element == NULL))
     {
         return false;
     }
 
-    MacCommand_t* PrevElement = LinkedListGetPrevious( list, element );
+    MacCommand_t *PrevElement = LinkedListGetPrevious(list, element);
 
-    if( list->First == element )
+    if (list->First == element)
     {
         list->First = element->Next;
     }
 
-    if( list->Last == element )
+    if (list->Last == element)
     {
         list->Last = PrevElement;
     }
 
-    if( PrevElement != NULL )
+    if (PrevElement != NULL)
     {
         PrevElement->Next = element->Next;
     }
@@ -285,25 +288,26 @@ static bool LinkedListRemove( MacCommandsList_t* list, MacCommand_t* element )
  *
  * \retval                     - Status of the operation
  */
-static bool IsSticky( uint8_t cid )
+static bool IsSticky(uint8_t cid)
 {
-    switch( cid )
+    switch (cid)
     {
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01010100 ))
-        case MOTE_MAC_RESET_IND:
-        case MOTE_MAC_REKEY_IND:
-        case MOTE_MAC_DEVICE_MODE_IND:
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01010100))
+    case MOTE_MAC_RESET_IND:
+    case MOTE_MAC_REKEY_IND:
+    case MOTE_MAC_DEVICE_MODE_IND:
 #endif /* LORAMAC_VERSION */
-        case MOTE_MAC_DL_CHANNEL_ANS:
-        case MOTE_MAC_RX_PARAM_SETUP_ANS:
-        case MOTE_MAC_RX_TIMING_SETUP_ANS:
-        case MOTE_MAC_TX_PARAM_SETUP_ANS:
-#if (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
-        case MOTE_MAC_PING_SLOT_CHANNEL_ANS:
+    case MOTE_MAC_DL_CHANNEL_ANS:
+    case MOTE_MAC_RX_PARAM_SETUP_ANS:
+    case MOTE_MAC_RX_TIMING_SETUP_ANS:
+    case MOTE_MAC_TX_PARAM_SETUP_ANS:
+#if (defined(LORAMAC_VERSION)                                                                      \
+     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+    case MOTE_MAC_PING_SLOT_CHANNEL_ANS:
 #endif /* LORAMAC_VERSION */
-            return true;
-        default:
-            return false;
+        return true;
+    default:
+        return false;
     }
 }
 
@@ -314,49 +318,49 @@ static bool IsSticky( uint8_t cid )
  *
  * \retval                     - Status of the operation
  */
-static bool IsConfirmationRequired( uint8_t cid )
+static bool IsConfirmationRequired(uint8_t cid)
 {
-    switch( cid )
+    switch (cid)
     {
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01010100 ))
-        case MOTE_MAC_RESET_IND:
-        case MOTE_MAC_REKEY_IND:
-        case MOTE_MAC_DEVICE_MODE_IND:
-            return true;
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01010100))
+    case MOTE_MAC_RESET_IND:
+    case MOTE_MAC_REKEY_IND:
+    case MOTE_MAC_DEVICE_MODE_IND:
+        return true;
 #endif /* LORAMAC_VERSION */
-        default:
-            return false;
+    default:
+        return false;
     }
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsInit( void )
+LoRaMacCommandStatus_t LoRaMacCommandsInit(void)
 {
     // Initialize with default
-    memset1( ( uint8_t* )&CommandsCtx, 0, sizeof( CommandsCtx ) );
+    memset1((uint8_t *)&CommandsCtx, 0, sizeof(CommandsCtx));
 
-    LinkedListInit( &CommandsCtx.MacCommandList );
+    LinkedListInit(&CommandsCtx.MacCommandList);
 
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, size_t payloadSize )
+LoRaMacCommandStatus_t LoRaMacCommandsAddCmd(uint8_t cid, uint8_t *payload, size_t payloadSize)
 {
-    if( payload == NULL )
+    if (payload == NULL)
     {
         return LORAMAC_COMMANDS_ERROR_NPE;
     }
-    MacCommand_t* newCmd;
+    MacCommand_t *newCmd;
 
     // Allocate a memory slot
-    newCmd = MallocNewMacCommandSlot( );
+    newCmd = MallocNewMacCommandSlot();
 
-    if( newCmd == NULL )
+    if (newCmd == NULL)
     {
         return LORAMAC_COMMANDS_ERROR_MEMORY;
     }
 
     // Add it to the list of Mac commands
-    if( LinkedListAdd( &CommandsCtx.MacCommandList, newCmd ) == false )
+    if (LinkedListAdd(&CommandsCtx.MacCommandList, newCmd) == false)
     {
         return LORAMAC_COMMANDS_ERROR;
     }
@@ -364,32 +368,32 @@ LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, siz
     // Set Values
     newCmd->CID = cid;
     newCmd->PayloadSize = payloadSize;
-    memcpy1( ( uint8_t* )newCmd->Payload, payload, payloadSize );
-    newCmd->IsSticky = IsSticky( cid );
-    newCmd->IsConfirmationRequired = IsConfirmationRequired( cid );
+    memcpy1((uint8_t *)newCmd->Payload, payload, payloadSize);
+    newCmd->IsSticky = IsSticky(cid);
+    newCmd->IsConfirmationRequired = IsConfirmationRequired(cid);
 
-    CommandsCtx.SerializedCmdsSize += ( CID_FIELD_SIZE + payloadSize );
+    CommandsCtx.SerializedCmdsSize += (CID_FIELD_SIZE + payloadSize);
 
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd )
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd(MacCommand_t *macCmd)
 {
-    if( macCmd == NULL )
+    if (macCmd == NULL)
     {
         return LORAMAC_COMMANDS_ERROR_NPE;
     }
 
     // Remove the Mac command element from MacCommandList
-    if( LinkedListRemove( &CommandsCtx.MacCommandList, macCmd ) == false )
+    if (LinkedListRemove(&CommandsCtx.MacCommandList, macCmd) == false)
     {
         return LORAMAC_COMMANDS_ERROR_CMD_NOT_FOUND;
     }
 
-    CommandsCtx.SerializedCmdsSize -= ( CID_FIELD_SIZE + macCmd->PayloadSize );
+    CommandsCtx.SerializedCmdsSize -= (CID_FIELD_SIZE + macCmd->PayloadSize);
 
     // Free the MacCommand Slot
-    if( FreeMacCommandSlot( macCmd ) == false )
+    if (FreeMacCommandSlot(macCmd) == false)
     {
         return LORAMAC_COMMANDS_ERROR;
     }
@@ -397,15 +401,15 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd )
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsGetCmd( uint8_t cid, MacCommand_t** macCmd )
+LoRaMacCommandStatus_t LoRaMacCommandsGetCmd(uint8_t cid, MacCommand_t **macCmd)
 {
-    MacCommand_t* curElement;
+    MacCommand_t *curElement;
 
     // Start at the head of the list
     curElement = CommandsCtx.MacCommandList.First;
 
     // Loop through all elements until we find the element with the given CID
-    while( ( curElement != NULL ) && ( curElement->CID != cid ) )
+    while ((curElement != NULL) && (curElement->CID != cid))
     {
         curElement = curElement->Next;
     }
@@ -414,28 +418,28 @@ LoRaMacCommandStatus_t LoRaMacCommandsGetCmd( uint8_t cid, MacCommand_t** macCmd
     *macCmd = curElement;
 
     // Handle error in case if we reached the end without finding it.
-    if( curElement == NULL )
+    if (curElement == NULL)
     {
         return LORAMAC_COMMANDS_ERROR_CMD_NOT_FOUND;
     }
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds( void )
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds(void)
 {
-    MacCommand_t* curElement;
-    MacCommand_t* nexElement;
+    MacCommand_t *curElement;
+    MacCommand_t *nexElement;
 
     // Start at the head of the list
     curElement = CommandsCtx.MacCommandList.First;
 
     // Loop through all elements
-    while( curElement != NULL )
+    while (curElement != NULL)
     {
-        if( curElement->IsSticky == false )
+        if (curElement->IsSticky == false)
         {
             nexElement = curElement->Next;
-            LoRaMacCommandsRemoveCmd( curElement );
+            LoRaMacCommandsRemoveCmd(curElement);
             curElement = nexElement;
         }
         else
@@ -447,22 +451,22 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds( void )
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void )
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds(void)
 {
-    MacCommand_t* curElement;
-    MacCommand_t* nexElement;
+    MacCommand_t *curElement;
+    MacCommand_t *nexElement;
 
     // Start at the head of the list
     curElement = CommandsCtx.MacCommandList.First;
 
     // Loop through all elements
-    while( curElement != NULL )
+    while (curElement != NULL)
     {
         nexElement = curElement->Next;
-        if( ( IsSticky( curElement->CID ) == true ) &&
-            ( IsConfirmationRequired( curElement->CID ) == false ) )
+        if ((IsSticky(curElement->CID) == true)
+            && (IsConfirmationRequired(curElement->CID) == false))
         {
-            LoRaMacCommandsRemoveCmd( curElement );
+            LoRaMacCommandsRemoveCmd(curElement);
         }
         curElement = nexElement;
     }
@@ -470,9 +474,9 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void )
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size )
+LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds(size_t *size)
 {
-    if( size == NULL )
+    if (size == NULL)
     {
         return LORAMAC_COMMANDS_ERROR_NPE;
     }
@@ -480,25 +484,27 @@ LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size )
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_t* effectiveSize, uint8_t* buffer )
+LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds(size_t availableSize,
+                                                    size_t *effectiveSize,
+                                                    uint8_t *buffer)
 {
-    MacCommand_t* curElement = CommandsCtx.MacCommandList.First;
-    MacCommand_t* nextElement;
+    MacCommand_t *curElement = CommandsCtx.MacCommandList.First;
+    MacCommand_t *nextElement;
     uint8_t itr = 0;
 
-    if( ( buffer == NULL ) || ( effectiveSize == NULL ) )
+    if ((buffer == NULL) || (effectiveSize == NULL))
     {
         return LORAMAC_COMMANDS_ERROR_NPE;
     }
 
     // Loop through all elements which fits into the buffer
-    while( curElement != NULL )
+    while (curElement != NULL)
     {
         // If the next MAC command still fits into the buffer, add it.
-        if( ( availableSize - itr ) >= ( CID_FIELD_SIZE + curElement->PayloadSize ) )
+        if ((availableSize - itr) >= (CID_FIELD_SIZE + curElement->PayloadSize))
         {
             buffer[itr++] = curElement->CID;
-            memcpy1( &buffer[itr], curElement->Payload, curElement->PayloadSize );
+            memcpy1(&buffer[itr], curElement->Payload, curElement->PayloadSize);
             itr += curElement->PayloadSize;
         }
         else
@@ -509,156 +515,156 @@ LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_
     }
 
     // Remove all commands which do not fit into the buffer
-    while( curElement != NULL )
+    while (curElement != NULL)
     {
         // Store the next element before removing the current one
         nextElement = curElement->Next;
-        LoRaMacCommandsRemoveCmd( curElement );
+        LoRaMacCommandsRemoveCmd(curElement);
         curElement = nextElement;
     }
 
     // Fetch the effective size of the mac commands
-    LoRaMacCommandsGetSizeSerializedCmds( effectiveSize );
+    LoRaMacCommandsGetSizeSerializedCmds(effectiveSize);
 
     return LORAMAC_COMMANDS_SUCCESS;
 }
 
-uint8_t LoRaMacCommandsGetCmdSize( uint8_t cid )
+uint8_t LoRaMacCommandsGetCmdSize(uint8_t cid)
 {
     uint8_t cidSize = 0;
 
     // Decode Frame MAC commands
-    switch( cid )
+    switch (cid)
     {
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01010100 ))
-        case SRV_MAC_RESET_CONF:
-        {
-            // cid + Serv_LoRaWAN_version
-            cidSize = 2;
-            break;
-        }
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01010100))
+    case SRV_MAC_RESET_CONF:
+    {
+        // cid + Serv_LoRaWAN_version
+        cidSize = 2;
+        break;
+    }
 #endif /* LORAMAC_VERSION */
-        case SRV_MAC_LINK_CHECK_ANS:
-        {
-            // cid + Margin + GwCnt
-            cidSize = 3;
-            break;
-        }
-        case SRV_MAC_LINK_ADR_REQ:
-        {
-            // cid + DataRate_TXPower + ChMask (2) + Redundancy
-            cidSize = 5;
-            break;
-        }
-        case SRV_MAC_DUTY_CYCLE_REQ:
-        {
-            // cid + DutyCyclePL
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_RX_PARAM_SETUP_REQ:
-        {
-            // cid + DLsettings + Frequency (3)
-            cidSize = 5;
-            break;
-        }
-        case SRV_MAC_DEV_STATUS_REQ:
-        {
-            // cid
-            cidSize = 1;
-            break;
-        }
-        case SRV_MAC_NEW_CHANNEL_REQ:
-        {
-            // cid + ChIndex + Frequency (3) + DrRange
-            cidSize = 6;
-            break;
-        }
-        case SRV_MAC_RX_TIMING_SETUP_REQ:
-        {
-            // cid + Settings
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_TX_PARAM_SETUP_REQ:
-        {
-            // cid + EIRP_DwellTime
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_DL_CHANNEL_REQ:
-        {
-            // cid + ChIndex + Frequency (3)
-            cidSize = 5;
-            break;
-        }
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01010100 ))
-        case SRV_MAC_REKEY_CONF:
-        {
-            // cid + Serv_LoRaWAN_version
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_ADR_PARAM_SETUP_REQ:
-        {
-            // cid + ADRparam
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_FORCE_REJOIN_REQ:
-        {
-            // cid + Payload (2)
-            cidSize = 3;
-            break;
-        }
-        case SRV_MAC_REJOIN_PARAM_REQ:
-        {
-            // cid + Payload (1)
-            cidSize = 2;
-            break;
-        }
-        case SRV_MAC_DEVICE_MODE_CONF:
-        {
-            // cid + Class
-            cidSize = 2;
-            break;
-        }
+    case SRV_MAC_LINK_CHECK_ANS:
+    {
+        // cid + Margin + GwCnt
+        cidSize = 3;
+        break;
+    }
+    case SRV_MAC_LINK_ADR_REQ:
+    {
+        // cid + DataRate_TXPower + ChMask (2) + Redundancy
+        cidSize = 5;
+        break;
+    }
+    case SRV_MAC_DUTY_CYCLE_REQ:
+    {
+        // cid + DutyCyclePL
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_RX_PARAM_SETUP_REQ:
+    {
+        // cid + DLsettings + Frequency (3)
+        cidSize = 5;
+        break;
+    }
+    case SRV_MAC_DEV_STATUS_REQ:
+    {
+        // cid
+        cidSize = 1;
+        break;
+    }
+    case SRV_MAC_NEW_CHANNEL_REQ:
+    {
+        // cid + ChIndex + Frequency (3) + DrRange
+        cidSize = 6;
+        break;
+    }
+    case SRV_MAC_RX_TIMING_SETUP_REQ:
+    {
+        // cid + Settings
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_TX_PARAM_SETUP_REQ:
+    {
+        // cid + EIRP_DwellTime
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_DL_CHANNEL_REQ:
+    {
+        // cid + ChIndex + Frequency (3)
+        cidSize = 5;
+        break;
+    }
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01010100))
+    case SRV_MAC_REKEY_CONF:
+    {
+        // cid + Serv_LoRaWAN_version
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_ADR_PARAM_SETUP_REQ:
+    {
+        // cid + ADRparam
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_FORCE_REJOIN_REQ:
+    {
+        // cid + Payload (2)
+        cidSize = 3;
+        break;
+    }
+    case SRV_MAC_REJOIN_PARAM_REQ:
+    {
+        // cid + Payload (1)
+        cidSize = 2;
+        break;
+    }
+    case SRV_MAC_DEVICE_MODE_CONF:
+    {
+        // cid + Class
+        cidSize = 2;
+        break;
+    }
 #endif /* LORAMAC_VERSION */
-        case SRV_MAC_DEVICE_TIME_ANS:
-        {
-            // cid + Seconds (4) + Fractional seconds (1)
-            cidSize = 6;
-            break;
-        }
-        case SRV_MAC_PING_SLOT_INFO_ANS:
-        {
-            // cid
-            cidSize = 1;
-            break;
-        }
-        case SRV_MAC_PING_SLOT_CHANNEL_REQ:
-        {
-            // cid + Frequency (3) + DR
-            cidSize = 5;
-            break;
-        }
-        case SRV_MAC_BEACON_TIMING_ANS:
-        {
-            // cid + TimingDelay (2) + Channel
-            cidSize = 4;
-            break;
-        }
-        case SRV_MAC_BEACON_FREQ_REQ:
-        {
-            // cid + Frequency (3)
-            cidSize = 4;
-            break;
-        }
-        default:
-        {
-            // Unknown command. ABORT MAC commands processing
-            break;
-        }
+    case SRV_MAC_DEVICE_TIME_ANS:
+    {
+        // cid + Seconds (4) + Fractional seconds (1)
+        cidSize = 6;
+        break;
+    }
+    case SRV_MAC_PING_SLOT_INFO_ANS:
+    {
+        // cid
+        cidSize = 1;
+        break;
+    }
+    case SRV_MAC_PING_SLOT_CHANNEL_REQ:
+    {
+        // cid + Frequency (3) + DR
+        cidSize = 5;
+        break;
+    }
+    case SRV_MAC_BEACON_TIMING_ANS:
+    {
+        // cid + TimingDelay (2) + Channel
+        cidSize = 4;
+        break;
+    }
+    case SRV_MAC_BEACON_FREQ_REQ:
+    {
+        // cid + Frequency (3)
+        cidSize = 4;
+        break;
+    }
+    default:
+    {
+        // Unknown command. ABORT MAC commands processing
+        break;
+    }
     }
     return cidSize;
 }

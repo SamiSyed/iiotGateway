@@ -58,13 +58,12 @@
   @return        none
  */
 
-void arm_sub_f32(
-  const float32_t * pSrcA,
-  const float32_t * pSrcB,
-        float32_t * pDst,
-        uint32_t blockSize)
+void arm_sub_f32(const float32_t *pSrcA,
+                 const float32_t *pSrcB,
+                 float32_t *pDst,
+                 uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+    uint32_t blkCnt; /* Loop counter */
 
 #if defined(ARM_MATH_NEON)
     float32x4_t vec1;
@@ -86,9 +85,9 @@ void arm_sub_f32(
 
         /* Increment pointers */
         pSrcA += 4;
-        pSrcB += 4; 
+        pSrcB += 4;
         pDst += 4;
-        
+
         /* Decrement the loop counter */
         blkCnt--;
     }
@@ -97,50 +96,49 @@ void arm_sub_f32(
     blkCnt = blockSize & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A - B */
+    while (blkCnt > 0U)
+    {
+        /* C = A - B */
 
-    /* Subtract and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+        /* Subtract and store result in destination buffer. */
+        *pDst++ = (*pSrcA++) - (*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+        *pDst++ = (*pSrcA++) - (*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+        *pDst++ = (*pSrcA++) - (*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+        *pDst++ = (*pSrcA++) - (*pSrcB++);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A - B */
+    while (blkCnt > 0U)
+    {
+        /* C = A - B */
 
-    /* Subtract and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+        /* Subtract and store result in destination buffer. */
+        *pDst++ = (*pSrcA++) - (*pSrcB++);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 }
 
 /**

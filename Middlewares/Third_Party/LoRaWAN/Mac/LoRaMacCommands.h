@@ -36,8 +36,7 @@
 #define __LORAMAC_COMMANDS_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LoRaMacTypes.h"
@@ -45,7 +44,7 @@ extern "C"
 /*
  * Number of MAC Command slots
  */
-#define LORAMAC_COMMADS_MAX_NUM_OF_PARAMS   2
+#define LORAMAC_COMMADS_MAX_NUM_OF_PARAMS 2
 
 /*!
  * LoRaWAN MAC Command element
@@ -57,7 +56,7 @@ struct sMacCommand
     /*!
      *  The pointer to the next MAC Command element in the list
      */
-    MacCommand_t* Next;
+    MacCommand_t *Next;
     /*!
      * MAC command identifier
      */
@@ -109,20 +108,20 @@ typedef enum eLoRaMacCommandsStatus
      * Undefined Error occurred
      */
     LORAMAC_COMMANDS_ERROR,
-}LoRaMacCommandStatus_t;
+} LoRaMacCommandStatus_t;
 
 /*!
  * Signature of callback function to be called by this module when the
  * non-volatile needs to be saved.
  */
-typedef void ( *LoRaMacCommandsNvmEvent )( void );
+typedef void (*LoRaMacCommandsNvmEvent)(void);
 
 /*!
  * \brief Initialization of LoRaMac MAC commands module
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsInit( void );
+LoRaMacCommandStatus_t LoRaMacCommandsInit(void);
 
 /*!
  * \brief Adds a new MAC command to be sent.
@@ -133,7 +132,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsInit( void );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, size_t payloadSize );
+LoRaMacCommandStatus_t LoRaMacCommandsAddCmd(uint8_t cid, uint8_t *payload, size_t payloadSize);
 
 /*!
  * \brief Remove a MAC command.
@@ -142,7 +141,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsAddCmd( uint8_t cid, uint8_t* payload, siz
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd );
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd(MacCommand_t *macCmd);
 
 /*!
  * \brief Get the MAC command with corresponding CID.
@@ -152,21 +151,21 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd( MacCommand_t* macCmd );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsGetCmd( uint8_t cid, MacCommand_t** macCmd );
+LoRaMacCommandStatus_t LoRaMacCommandsGetCmd(uint8_t cid, MacCommand_t **macCmd);
 
 /*!
  * \brief Remove all none sticky MAC commands.
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds( void );
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveNoneStickyCmds(void);
 
 /*!
  * \brief Remove all sticky answer MAC commands.
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void );
+LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds(void);
 
 /*!
  * \brief Get size of all MAC commands serialized as buffer
@@ -175,7 +174,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveStickyAnsCmds( void );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size );
+LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds(size_t *size);
 
 /*!
  * \brief Get as many as possible MAC commands serialized
@@ -186,7 +185,9 @@ LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds( size_t* size );
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_t* effectiveSize,  uint8_t* buffer );
+LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds(size_t availableSize,
+                                                    size_t *effectiveSize,
+                                                    uint8_t *buffer);
 
 /*!
  * \brief Get the MAC command size with corresponding CID.
@@ -195,7 +196,7 @@ LoRaMacCommandStatus_t LoRaMacCommandsSerializeCmds( size_t availableSize, size_
  *
  * \retval Size of the command.
  */
-uint8_t LoRaMacCommandsGetCmdSize( uint8_t cid );
+uint8_t LoRaMacCommandsGetCmdSize(uint8_t cid);
 
 /*! \} addtogroup LORAMAC */
 
@@ -204,4 +205,3 @@ uint8_t LoRaMacCommandsGetCmdSize( uint8_t cid );
 #endif
 
 #endif // __LORAMAC_COMMANDS_H__
-

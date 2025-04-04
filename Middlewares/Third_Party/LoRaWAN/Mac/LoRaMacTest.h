@@ -37,8 +37,7 @@
 #define __LORAMACTEST_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*!
@@ -49,7 +48,7 @@ extern "C"
  *
  * \param   [in] enable - Enabled or disables the duty cycle
  */
-void LoRaMacTestSetDutyCycleOn( bool enable );
+void LoRaMacTestSetDutyCycleOn(bool enable);
 
 /*! \} defgroup LORAMACTEST */
 

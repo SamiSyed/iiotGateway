@@ -19,21 +19,20 @@
  * \author    Miguel Luis ( Semtech )
  */
 /**
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    LmHandlerTypes.h
-  * @author  MCD Application Team
-  * @brief   Header for Global types used by LoRaMAC Layer handler
-  ******************************************************************************
-  */
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    LmHandlerTypes.h
+ * @author  MCD Application Team
+ * @brief   Header for Global types used by LoRaMAC Layer handler
+ ******************************************************************************
+ */
 #ifndef __LORAMAC_HANDLER_TYPES_H__
 #define __LORAMAC_HANDLER_TYPES_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -138,8 +137,7 @@ typedef struct LmHandlerRequestParams_s
 {
     uint8_t IsMcpsRequest;
     LoRaMacStatus_t Status;
-    union
-    {
+    union {
         Mcps_t Mcps;
         Mlme_t Mlme;
     } RequestType_t;

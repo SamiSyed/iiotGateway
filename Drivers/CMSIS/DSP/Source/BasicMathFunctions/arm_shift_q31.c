@@ -57,7 +57,8 @@
 /**
   @brief         Shifts the elements of a Q31 vector a specified number of bits.
   @param[in]     pSrc       points to the input vector
-  @param[in]     shiftBits  number of bits to shift.  A positive value shifts left; a negative value shifts right.
+  @param[in]     shiftBits  number of bits to shift.  A positive value shifts left; a negative value
+  shifts right.
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in the vector
   @return        none
@@ -67,113 +68,108 @@
                    Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] are saturated.
  */
 
-void arm_shift_q31(
-  const q31_t * pSrc,
-        int8_t shiftBits,
-        q31_t * pDst,
-        uint32_t blockSize)
+void arm_shift_q31(const q31_t *pSrc, int8_t shiftBits, q31_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        uint8_t sign = (shiftBits & 0x80);             /* Sign of shiftBits */
+    uint32_t blkCnt;                   /* Loop counter */
+    uint8_t sign = (shiftBits & 0x80); /* Sign of shiftBits */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  q31_t in, out;                                 /* Temporary variables */
+    q31_t in, out; /* Temporary variables */
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
 
-  /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0U)
-  {
-    while (blkCnt > 0U)
+    /* If the shift value is positive then do right shift else left shift */
+    if (sign == 0U)
     {
-      /* C = A << shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A << shiftBits */
 
-      /* Shift input and store result in destination buffer. */
-      in = *pSrc++;
-      out = in << shiftBits;
-      if (in != (out >> shiftBits))
-        out = 0x7FFFFFFF ^ (in >> 31);
-      *pDst++ = out;
+            /* Shift input and store result in destination buffer. */
+            in = *pSrc++;
+            out = in << shiftBits;
+            if (in != (out >> shiftBits))
+                out = 0x7FFFFFFF ^ (in >> 31);
+            *pDst++ = out;
 
-      in = *pSrc++;
-      out = in << shiftBits;
-      if (in != (out >> shiftBits))
-        out = 0x7FFFFFFF ^ (in >> 31);
-      *pDst++ = out;
+            in = *pSrc++;
+            out = in << shiftBits;
+            if (in != (out >> shiftBits))
+                out = 0x7FFFFFFF ^ (in >> 31);
+            *pDst++ = out;
 
-      in = *pSrc++;
-      out = in << shiftBits;
-      if (in != (out >> shiftBits))
-        out = 0x7FFFFFFF ^ (in >> 31);
-      *pDst++ = out;
+            in = *pSrc++;
+            out = in << shiftBits;
+            if (in != (out >> shiftBits))
+                out = 0x7FFFFFFF ^ (in >> 31);
+            *pDst++ = out;
 
-      in = *pSrc++;
-      out = in << shiftBits;
-      if (in != (out >> shiftBits))
-        out = 0x7FFFFFFF ^ (in >> 31);
-      *pDst++ = out;
+            in = *pSrc++;
+            out = in << shiftBits;
+            if (in != (out >> shiftBits))
+                out = 0x7FFFFFFF ^ (in >> 31);
+            *pDst++ = out;
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-  else
-  {
-    while (blkCnt > 0U)
+    else
     {
-      /* C = A >> shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A >> shiftBits */
 
-      /* Shift input and store results in destination buffer. */
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
+            /* Shift input and store results in destination buffer. */
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0U)
-  {
-    while (blkCnt > 0U)
+    /* If the shift value is positive then do right shift else left shift */
+    if (sign == 0U)
     {
-      /* C = A << shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A << shiftBits */
 
-      /* Shift input and store result in destination buffer. */
-      *pDst++ = clip_q63_to_q31((q63_t) *pSrc++ << shiftBits);
+            /* Shift input and store result in destination buffer. */
+            *pDst++ = clip_q63_to_q31((q63_t)*pSrc++ << shiftBits);
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-  else
-  {
-    while (blkCnt > 0U)
+    else
     {
-      /* C = A >> shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A >> shiftBits */
 
-      /* Shift input and store result in destination buffer. */
-      *pDst++ = (*pSrc++ >> -shiftBits);
+            /* Shift input and store result in destination buffer. */
+            *pDst++ = (*pSrc++ >> -shiftBits);
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-
 }
 
 /**

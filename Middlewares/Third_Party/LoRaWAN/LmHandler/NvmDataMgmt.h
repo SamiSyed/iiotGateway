@@ -38,8 +38,7 @@
 #define __NVMDATAMGMT_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 typedef enum NvmDataErrorStatus_e
@@ -59,21 +58,21 @@ typedef enum NvmDataErrorStatus_e
  * \param [in] notifyFlags Bitmap which contains the information about modules that
  *                         changed.
  */
-void NvmDataMgmtEvent( uint16_t notifyFlags );
+void NvmDataMgmtEvent(uint16_t notifyFlags);
 
 /*!
  * \brief Check the NVM Flag status and LoRaMAC state
  *
  * \retval status NVM_DATA_OK, NVM_DATA_DISABLED, NVM_DATA_NOT_AVAILABLE, NVM_DATA_NO_UPDATED_DATA
  */
-int32_t NvmDataMgmtStoreBegin( void );
+int32_t NvmDataMgmtStoreBegin(void);
 
 /*!
  * \brief Clean the NVM Flag status and resume LoRaMAC process
  *
  * \retval status NVM_DATA_OK, NVM_DATA_DISABLED
  */
-int32_t NvmDataMgmtStoreEnd( void );
+int32_t NvmDataMgmtStoreEnd(void);
 
 /*! \} defgroup NVMDATAMGMT */
 

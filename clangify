@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Optionally, navigate to the project root directory
+# pushd $(git rev-parse --show-toplevel)/products/port/case-handling > /dev/null
+
+# Find c/c++ files to format, with exclusions (using `grep` to exclude dirs)
+excludeMatch="/tracealyzer/|/build/"
+fileList=$(find . -iname '*.h' -o -iname '*.c' -o -iname '*.cpp' | grep -Ev "$excludeMatch")
+
+# Format the files
+clangFormatVersion=$(clang-format --version)
+echo "Clangifying IIOT-GATEWAY with $clangFormatVersion"
+
+# Run clang-format on the files
+# Use xargs to handle large file lists, limiting to 10 files at a time
+echo "$fileList" | xargs -n 10 clang-format -i
+
+# If you want to check if clang-format actually modified the files
+echo "Clang-format completed."
+
+# Optionally, go back to the previous directory
+# popd > /dev/null

@@ -14,14 +14,14 @@
  *
  ******************************************************************************
  */
-  
-/* Includes ------------------------------------------------------------------*/  
-#include "stm32_lpm_if.h"
+
+/* Includes ------------------------------------------------------------------*/
 #include "stm32_lpm.h"
+#include "stm32_lpm_if.h"
 
 /** @addtogroup TINY_LPM_IF
-  * @{
-  */
+ * @{
+ */
 
 /* USER CODE BEGIN include */
 
@@ -29,22 +29,21 @@
 
 /* Exported variables --------------------------------------------------------*/
 /** @defgroup TINY_LPM_IF_Exported_varaibles TINY LPM IF exported variables
-  * @{
-  */
+ * @{
+ */
 
 /**
  * @brief variable to provide all the functions corresponding to the different low power modes.
  */
-const struct UTIL_LPM_Driver_s UTIL_PowerDriver = 
-{
-  PWR_EnterSleepMode,
-  PWR_ExitSleepMode,
-  
-  PWR_EnterStopMode,
-  PWR_ExitStopMode, 
-  
-  PWR_EnterOffMode,
-  PWR_ExitOffMode,
+const struct UTIL_LPM_Driver_s UTIL_PowerDriver = {
+    PWR_EnterSleepMode,
+    PWR_ExitSleepMode,
+
+    PWR_EnterStopMode,
+    PWR_ExitStopMode,
+
+    PWR_EnterOffMode,
+    PWR_ExitOffMode,
 };
 
 /**
@@ -75,46 +74,46 @@ const struct UTIL_LPM_Driver_s UTIL_PowerDriver =
  * @{
  */
 
-void PWR_EnterOffMode( void )
+void PWR_EnterOffMode(void)
 {
-/* USER CODE BEGIN PWR_EnterOffMode */
+    /* USER CODE BEGIN PWR_EnterOffMode */
 
-/* USER CODE END PWR_EnterOffMode */
+    /* USER CODE END PWR_EnterOffMode */
 }
 
-void PWR_ExitOffMode( void )
+void PWR_ExitOffMode(void)
 {
-/* USER CODE BEGIN PWR_ExitOffMode */
+    /* USER CODE BEGIN PWR_ExitOffMode */
 
-/* USER CODE END PWR_ExitOffMode */
+    /* USER CODE END PWR_ExitOffMode */
 }
 
-void PWR_EnterStopMode( void )
+void PWR_EnterStopMode(void)
 {
-/* USER CODE BEGIN PWR_EnterStopMode */
+    /* USER CODE BEGIN PWR_EnterStopMode */
 
-/* USER CODE END PWR_EnterStopMode */
+    /* USER CODE END PWR_EnterStopMode */
 }
 
-void PWR_ExitStopMode( void )
+void PWR_ExitStopMode(void)
 {
-/* USER CODE BEGIN PWR_ExitStopMode */
+    /* USER CODE BEGIN PWR_ExitStopMode */
 
-/* USER CODE END PWR_ExitStopMode */
+    /* USER CODE END PWR_ExitStopMode */
 }
 
-void PWR_EnterSleepMode( void )
+void PWR_EnterSleepMode(void)
 {
-/* USER CODE BEGIN PWR_EnterSleepMode */
+    /* USER CODE BEGIN PWR_EnterSleepMode */
 
-/* USER CODE END PWR_EnterSleepMode */
+    /* USER CODE END PWR_EnterSleepMode */
 }
 
-void PWR_ExitSleepMode( void )
+void PWR_ExitSleepMode(void)
 {
-/* USER CODE BEGIN PWR_ExitSleepMode */
+    /* USER CODE BEGIN PWR_ExitSleepMode */
 
-/* USER CODE END PWR_ExitSleepMode */
+    /* USER CODE END PWR_ExitSleepMode */
 }
 
 /* USER CODE BEGIN Private_Functions */
@@ -128,4 +127,3 @@ void PWR_ExitSleepMode( void )
 /**
  * @}
  */
-

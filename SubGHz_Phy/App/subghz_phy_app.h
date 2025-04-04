@@ -43,14 +43,15 @@ extern "C" {
 
 #define RF_FREQUENCY 868000000 /* Hz */
 
-#ifndef TX_OUTPUT_POWER /* please, to change this value, redefine it in USER   \
-                           CODE SECTION */
+#ifndef TX_OUTPUT_POWER    /* please, to change this value, redefine it in USER                    \
+                              CODE SECTION */
 #define TX_OUTPUT_POWER 14 /* dBm */
 #endif                     /* TX_OUTPUT_POWER */
 
 #if ((USE_MODEM_LORA == 1) && (USE_MODEM_FSK == 0))
-#define LORA_BANDWIDTH 0 /* [0: 125 kHz, 1: 250 kHz, 2: 500 kHz, 3: Reserved]  \
-                          */
+#define LORA_BANDWIDTH                                                                             \
+    0                           /* [0: 125 kHz, 1: 250 kHz, 2: 500 kHz, 3: Reserved]               \
+                                 */
 #define LORA_SPREADING_FACTOR 7 /* [SF7..SF12] */
 #define LORA_CODINGRATE 1       /* [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8] */
 #define LORA_PREAMBLE_LENGTH 8  /* Same for Tx and Rx */
@@ -96,6 +97,8 @@ void SubghzApp_Init(void);
 void listenForLoraNodes(void);
 void getDataFromEndNode(SensorId sensorID);
 void processIncomingLoraMessage(void);
+void setLoraReceived(bool status);
+bool isLoraReceived(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

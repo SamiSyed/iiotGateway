@@ -38,8 +38,7 @@
 #define __LORAMAC_SERIALIZER_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 #include "LoRaMacMessageTypes.h"
 
@@ -64,7 +63,7 @@ typedef enum eLoRaMacSerializerStatus
      * Undefined Error occurred
      */
     LORAMAC_SERIALIZER_ERROR,
-}LoRaMacSerializerStatus_t;
+} LoRaMacSerializerStatus_t;
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -72,7 +71,7 @@ typedef enum eLoRaMacSerializerStatus
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerJoinRequest( LoRaMacMessageJoinRequest_t* macMsg );
+LoRaMacSerializerStatus_t LoRaMacSerializerJoinRequest(LoRaMacMessageJoinRequest_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -80,7 +79,7 @@ LoRaMacSerializerStatus_t LoRaMacSerializerJoinRequest( LoRaMacMessageJoinReques
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType1( LoRaMacMessageReJoinType1_t* macMsg );
+LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType1(LoRaMacMessageReJoinType1_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -88,7 +87,7 @@ LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType1( LoRaMacMessageReJoinType
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType0or2( LoRaMacMessageReJoinType0or2_t* macMsg );
+LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType0or2(LoRaMacMessageReJoinType0or2_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -96,7 +95,7 @@ LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType0or2( LoRaMacMessageReJoinT
  * \param [in,out] macMsg       - Data message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerData( LoRaMacMessageData_t* macMsg );
+LoRaMacSerializerStatus_t LoRaMacSerializerData(LoRaMacMessageData_t *macMsg);
 
 /*! \} addtogroup LORAMAC */
 
@@ -105,4 +104,3 @@ LoRaMacSerializerStatus_t LoRaMacSerializerData( LoRaMacMessageData_t* macMsg );
 #endif
 
 #endif // __LORAMAC_SERIALIZER_H__
-

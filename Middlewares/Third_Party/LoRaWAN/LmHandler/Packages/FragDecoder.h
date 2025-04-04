@@ -2,8 +2,10 @@
  * \file      FragDecoder.h
  *
  * \brief     Implements the LoRa-Alliance fragmentation decoder
- *            Specification V1.0.0: https://resources.lora-alliance.org/technical-specifications/lorawan-fragmented-data-block-transport-specification-v1-0-0
- *            Specification V2.0.0: https://resources.lora-alliance.org/technical-specifications/ts004-2-0-0-fragmented-data-block-transport
+ *            Specification V1.0.0:
+ * https://resources.lora-alliance.org/technical-specifications/lorawan-fragmented-data-block-transport-specification-v1-0-0
+ *            Specification V2.0.0:
+ * https://resources.lora-alliance.org/technical-specifications/ts004-2-0-0-fragmented-data-block-transport
  *
  * \copyright Revised BSD License, see section \ref LICENSE.
  *
@@ -22,26 +24,25 @@
  * \author    Miguel Luis ( Semtech )
  */
 /**
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    FragDecoder.h
-  * @author  MCD Application Team
-  * @brief   Header for Fragmentation Decoder module
-  ******************************************************************************
-  */
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    FragDecoder.h
+ * @author  MCD Application Team
+ * @brief   Header for Fragmentation Decoder module
+ ******************************************************************************
+ */
 #ifndef __FRAG_DECODER_H__
 #define __FRAG_DECODER_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#define FRAG_SESSION_FINISHED                       ( int32_t )0
-#define FRAG_SESSION_NOT_STARTED                    ( int32_t )-2
-#define FRAG_SESSION_ONGOING                        ( int32_t )-1
+#define FRAG_SESSION_FINISHED (int32_t)0
+#define FRAG_SESSION_NOT_STARTED (int32_t) - 2
+#define FRAG_SESSION_ONGOING (int32_t) - 1
 
 typedef struct sFragDecoderStatus
 {
@@ -58,7 +59,7 @@ typedef struct sFragDecoderCallbacks
      *
      * \retval status Write operation status [0: Success, -1 Fail]
      */
-    int32_t ( *FragDecoderErase )( void );
+    int32_t (*FragDecoderErase)(void);
     /*!
      * Writes `data` buffer of `size` starting at address `addr`
      *
@@ -68,7 +69,7 @@ typedef struct sFragDecoderCallbacks
      *
      * \retval status Write operation status [0: Success, -1 Fail]
      */
-    int32_t ( *FragDecoderWrite )( uint32_t addr, uint8_t *data, uint32_t size );
+    int32_t (*FragDecoderWrite)(uint32_t addr, uint8_t *data, uint32_t size);
     /*!
      * Reads `data` buffer of `size` starting at address `addr`
      *
@@ -78,7 +79,7 @@ typedef struct sFragDecoderCallbacks
      *
      * \retval status Read operation status [0: Success, -1 Fail]
      */
-    int32_t ( *FragDecoderRead )( uint32_t addr, uint8_t *data, uint32_t size );
+    int32_t (*FragDecoderRead)(uint32_t addr, uint8_t *data, uint32_t size);
 } FragDecoderCallbacks_t;
 
 /*!
@@ -89,14 +90,17 @@ typedef struct sFragDecoderCallbacks
  * \param [in] callbacks  Pointer to the Write/Read functions.
  * \param [in] fragPVer   Fragmentation Package version to adapt the LDPC matrix usage
  */
-void FragDecoderInit( uint16_t fragNb, uint8_t fragSize, FragDecoderCallbacks_t *callbacks, uint8_t fragPVer );
+void FragDecoderInit(uint16_t fragNb,
+                     uint8_t fragSize,
+                     FragDecoderCallbacks_t *callbacks,
+                     uint8_t fragPVer);
 
 /*!
  * \brief Gets the maximum file size that can be received
  *
  * \retval size FileSize
  */
-uint32_t FragDecoderGetMaxFileSize( void );
+uint32_t FragDecoderGetMaxFileSize(void);
 
 /*!
  * \brief Function to decode and reconstruct the binary file
@@ -109,14 +113,14 @@ uint32_t FragDecoderGetMaxFileSize( void );
  *                                          FRAG_SESSION_FINISHED or
  *                                          FragDecoder.Status.FragNbLost]
  */
-int32_t FragDecoderProcess( uint16_t fragCounter, uint8_t *rawData );
+int32_t FragDecoderProcess(uint16_t fragCounter, uint8_t *rawData);
 
 /*!
  * \brief Gets the current fragmentation status
  *
  * \retval status Fragmentation decoder status
  */
-FragDecoderStatus_t FragDecoderGetStatus( void );
+FragDecoderStatus_t FragDecoderGetStatus(void);
 
 #ifdef __cplusplus
 }

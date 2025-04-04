@@ -38,28 +38,28 @@ extern "C" {
 #include <stdint.h>
 
 #if 1
-#  define AES_ENC_PREKEYED  /* AES encryption with a precomputed key schedule  */
+#define AES_ENC_PREKEYED /* AES encryption with a precomputed key schedule  */
 #endif
 #if 0
-#  define AES_DEC_PREKEYED  /* AES decryption with a precomputed key schedule  */
+#define AES_DEC_PREKEYED /* AES decryption with a precomputed key schedule  */
 #endif
 #if 0
-#  define AES_ENC_128_OTFK  /* AES encryption with 'on the fly' 128 bit keying */
+#define AES_ENC_128_OTFK /* AES encryption with 'on the fly' 128 bit keying */
 #endif
 #if 0
-#  define AES_DEC_128_OTFK  /* AES decryption with 'on the fly' 128 bit keying */
+#define AES_DEC_128_OTFK /* AES decryption with 'on the fly' 128 bit keying */
 #endif
 #if 0
-#  define AES_ENC_256_OTFK  /* AES encryption with 'on the fly' 256 bit keying */
+#define AES_ENC_256_OTFK /* AES encryption with 'on the fly' 256 bit keying */
 #endif
 #if 0
-#  define AES_DEC_256_OTFK  /* AES decryption with 'on the fly' 256 bit keying */
+#define AES_DEC_256_OTFK /* AES decryption with 'on the fly' 256 bit keying */
 #endif
 
-#define N_ROW                   4
-#define N_COL                   4
-#define N_BLOCK   (N_ROW * N_COL)
-#define N_MAX_ROUNDS           14
+#define N_ROW 4
+#define N_COL 4
+#define N_BLOCK (N_ROW * N_COL)
+#define N_MAX_ROUNDS 14
 
 typedef uint8_t return_type;
 
@@ -70,7 +70,8 @@ typedef uint8_t return_type;
 typedef uint8_t length_type;
 
 typedef struct
-{   uint8_t ksch[(N_MAX_ROUNDS + 1) * N_BLOCK];
+{
+    uint8_t ksch[(N_MAX_ROUNDS + 1) * N_BLOCK];
     uint8_t rnd;
 } lorawan_aes_context;
 
@@ -82,37 +83,37 @@ typedef struct
     128, 192, 16, 24 and 32).
 */
 
-#if defined( AES_ENC_PREKEYED ) || defined( AES_DEC_PREKEYED )
+#if defined(AES_ENC_PREKEYED) || defined(AES_DEC_PREKEYED)
 
-return_type lorawan_aes_set_key( const uint8_t key[],
-                         length_type keylen,
-                         lorawan_aes_context ctx[1] );
+return_type lorawan_aes_set_key(const uint8_t key[],
+                                length_type keylen,
+                                lorawan_aes_context ctx[1]);
 #endif
 
-#if defined( AES_ENC_PREKEYED )
+#if defined(AES_ENC_PREKEYED)
 
-return_type lorawan_aes_encrypt( const uint8_t in[N_BLOCK],
-                         uint8_t out[N_BLOCK],
-                         const lorawan_aes_context ctx[1] );
+return_type lorawan_aes_encrypt(const uint8_t in[N_BLOCK],
+                                uint8_t out[N_BLOCK],
+                                const lorawan_aes_context ctx[1]);
 
-return_type lorawan_aes_cbc_encrypt( const uint8_t *in,
-                         uint8_t *out,
-                         int32_t n_block,
-                         uint8_t iv[N_BLOCK],
-                         const lorawan_aes_context ctx[1] );
+return_type lorawan_aes_cbc_encrypt(const uint8_t *in,
+                                    uint8_t *out,
+                                    int32_t n_block,
+                                    uint8_t iv[N_BLOCK],
+                                    const lorawan_aes_context ctx[1]);
 #endif
 
-#if defined( AES_DEC_PREKEYED )
+#if defined(AES_DEC_PREKEYED)
 
-return_type lorawan_aes_decrypt( const uint8_t in[N_BLOCK],
-                         uint8_t out[N_BLOCK],
-                         const lorawan_aes_context ctx[1] );
+return_type lorawan_aes_decrypt(const uint8_t in[N_BLOCK],
+                                uint8_t out[N_BLOCK],
+                                const lorawan_aes_context ctx[1]);
 
-return_type lorawan_aes_cbc_decrypt( const uint8_t *in,
-                         uint8_t *out,
-                         int32_t n_block,
-                         uint8_t iv[N_BLOCK],
-                         const lorawan_aes_context ctx[1] );
+return_type lorawan_aes_cbc_decrypt(const uint8_t *in,
+                                    uint8_t *out,
+                                    int32_t n_block,
+                                    uint8_t iv[N_BLOCK],
+                                    const lorawan_aes_context ctx[1]);
 #endif
 
 /*  The following calls are for 'on the fly' keying.  In this case the
@@ -135,32 +136,32 @@ return_type lorawan_aes_cbc_decrypt( const uint8_t *in,
     modes.
 */
 
-#if defined( AES_ENC_128_OTFK )
-void lorawan_aes_encrypt_128( const uint8_t in[N_BLOCK],
-                      uint8_t out[N_BLOCK],
-                      const uint8_t key[N_BLOCK],
-                      uint8_t o_key[N_BLOCK] );
+#if defined(AES_ENC_128_OTFK)
+void lorawan_aes_encrypt_128(const uint8_t in[N_BLOCK],
+                             uint8_t out[N_BLOCK],
+                             const uint8_t key[N_BLOCK],
+                             uint8_t o_key[N_BLOCK]);
 #endif
 
-#if defined( AES_DEC_128_OTFK )
-void lorawan_aes_decrypt_128( const uint8_t in[N_BLOCK],
-                      uint8_t out[N_BLOCK],
-                      const uint8_t key[N_BLOCK],
-                      uint8_t o_key[N_BLOCK] );
+#if defined(AES_DEC_128_OTFK)
+void lorawan_aes_decrypt_128(const uint8_t in[N_BLOCK],
+                             uint8_t out[N_BLOCK],
+                             const uint8_t key[N_BLOCK],
+                             uint8_t o_key[N_BLOCK]);
 #endif
 
-#if defined( AES_ENC_256_OTFK )
-void lorawan_aes_encrypt_256( const uint8_t in[N_BLOCK],
-                      uint8_t out[N_BLOCK],
-                      const uint8_t key[2 * N_BLOCK],
-                      uint8_t o_key[2 * N_BLOCK] );
+#if defined(AES_ENC_256_OTFK)
+void lorawan_aes_encrypt_256(const uint8_t in[N_BLOCK],
+                             uint8_t out[N_BLOCK],
+                             const uint8_t key[2 * N_BLOCK],
+                             uint8_t o_key[2 * N_BLOCK]);
 #endif
 
-#if defined( AES_DEC_256_OTFK )
-void lorawan_aes_decrypt_256( const uint8_t in[N_BLOCK],
-                      uint8_t out[N_BLOCK],
-                      const uint8_t key[2 * N_BLOCK],
-                      uint8_t o_key[2 * N_BLOCK] );
+#if defined(AES_DEC_256_OTFK)
+void lorawan_aes_decrypt_256(const uint8_t in[N_BLOCK],
+                             uint8_t out[N_BLOCK],
+                             const uint8_t key[2 * N_BLOCK],
+                             uint8_t o_key[2 * N_BLOCK]);
 #endif
 
 #ifdef __cplusplus

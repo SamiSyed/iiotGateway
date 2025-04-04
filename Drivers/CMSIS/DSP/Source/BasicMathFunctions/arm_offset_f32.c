@@ -60,13 +60,9 @@
   @return        none
  */
 
-void arm_offset_f32(
-  const float32_t * pSrc,
-        float32_t offset,
-        float32_t * pDst,
-        uint32_t blockSize)
+void arm_offset_f32(const float32_t *pSrc, float32_t offset, float32_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+    uint32_t blkCnt; /* Loop counter */
 
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
     float32x4_t vec1;
@@ -78,16 +74,16 @@ void arm_offset_f32(
     while (blkCnt > 0U)
     {
         /* C = A + offset */
- 
+
         /* Add offset and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrc);
-        res = vaddq_f32(vec1,vdupq_n_f32(offset));
+        res = vaddq_f32(vec1, vdupq_n_f32(offset));
         vst1q_f32(pDst, res);
 
         /* Increment pointers */
         pSrc += 4;
         pDst += 4;
-        
+
         /* Decrement the loop counter */
         blkCnt--;
     }
@@ -96,50 +92,49 @@ void arm_offset_f32(
     blkCnt = blockSize & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A + offset */
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
 
-    /* Add offset and store result in destination buffer. */
-    *pDst++ = (*pSrc++) + offset;
+        /* Add offset and store result in destination buffer. */
+        *pDst++ = (*pSrc++) + offset;
 
-    *pDst++ = (*pSrc++) + offset;
+        *pDst++ = (*pSrc++) + offset;
 
-    *pDst++ = (*pSrc++) + offset;
+        *pDst++ = (*pSrc++) + offset;
 
-    *pDst++ = (*pSrc++) + offset;
+        *pDst++ = (*pSrc++) + offset;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON_EXPERIMENTAL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A + offset */
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
 
-    /* Add offset and store result in destination buffer. */
-    *pDst++ = (*pSrc++) + offset;
+        /* Add offset and store result in destination buffer. */
+        *pDst++ = (*pSrc++) + offset;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 }
 
 /**

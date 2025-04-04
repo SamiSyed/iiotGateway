@@ -1,4 +1,4 @@
- /*******************************************************************************
+/*******************************************************************************
  * File Name          : stm32_timer_if.c
  * Description        : This file provides the ll driver for  the time server
  ******************************************************************************
@@ -15,8 +15,8 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include <math.h>
 #include "stm32_timer_if.h"
+#include <math.h>
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -24,23 +24,22 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Exported variables ---------------------------------------------------------*/
-const UTIL_TIMER_Driver_s UTIL_TimerDriver =
-{
+const UTIL_TIMER_Driver_s UTIL_TimerDriver = {
     PPP_Init,
     PPP_DeInit,
-    
+
     PPP_StartTimer,
-    PPP_StopTimer, 
-    
+    PPP_StopTimer,
+
     PPP_SetTimerContext,
     PPP_GetTimerContext,
-    
+
     PPP_GetTimerElapsedTime,
     PPP_GetTimerValue,
     PPP_GetMinimumTimeout,
-    
+
     PPP_ms2Tick,
-    PPP_Tick2ms, 
+    PPP_Tick2ms,
 };
 
 /*!
@@ -49,9 +48,9 @@ const UTIL_TIMER_Driver_s UTIL_TimerDriver =
  * @param none
  * @retval none
  */
-UTIL_TIMER_Status_t PPP_Init( void )
+UTIL_TIMER_Status_t PPP_Init(void)
 {
-  return UTIL_TIMER_OK;
+    return UTIL_TIMER_OK;
 }
 
 /*!
@@ -60,9 +59,9 @@ UTIL_TIMER_Status_t PPP_Init( void )
  * @param none
  * @retval none
  */
-UTIL_TIMER_Status_t PPP_DeInit( void )
+UTIL_TIMER_Status_t PPP_DeInit(void)
 {
-  return UTIL_TIMER_OK;
+    return UTIL_TIMER_OK;
 }
 
 /*!
@@ -70,9 +69,9 @@ UTIL_TIMER_Status_t PPP_DeInit( void )
  * @note The timer is set at now (read in this function) + timeout
  * @param timeout Duration of the Timer ticks
  */
-UTIL_TIMER_Status_t PPP_StartTimer( uint32_t timeout )
+UTIL_TIMER_Status_t PPP_StartTimer(uint32_t timeout)
 {
-  return UTIL_TIMER_OK;
+    return UTIL_TIMER_OK;
 }
 
 /*!
@@ -80,9 +79,9 @@ UTIL_TIMER_Status_t PPP_StartTimer( uint32_t timeout )
  * @param none
  * @retval none
  */
-UTIL_TIMER_Status_t PPP_StopTimer( void )
+UTIL_TIMER_Status_t PPP_StopTimer(void)
 {
-  return UTIL_TIMER_OK;
+    return UTIL_TIMER_OK;
 }
 
 /*!
@@ -90,9 +89,9 @@ UTIL_TIMER_Status_t PPP_StopTimer( void )
  * @param none
  * @retval wake up time in ticks
  */
-uint32_t PPP_GetMinimumTimeout( void )
+uint32_t PPP_GetMinimumTimeout(void)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -100,9 +99,9 @@ uint32_t PPP_GetMinimumTimeout( void )
  * @param [IN] time in milliseconds
  * @retval returns time in timer ticks
  */
-uint32_t PPP_ms2Tick( uint32_t timeMicroSec )
+uint32_t PPP_ms2Tick(uint32_t timeMicroSec)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -110,9 +109,9 @@ uint32_t PPP_ms2Tick( uint32_t timeMicroSec )
  * @param [IN] time in timer ticks
  * @retval returns time in milliseconds
  */
-uint32_t PPP_Tick2ms( uint32_t tick )
+uint32_t PPP_Tick2ms(uint32_t tick)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -120,9 +119,9 @@ uint32_t PPP_Tick2ms( uint32_t tick )
  * @param none
  * @retval PPP Elapsed time in ticks
  */
-uint32_t PPP_GetTimerElapsedTime( void )
+uint32_t PPP_GetTimerElapsedTime(void)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -130,9 +129,9 @@ uint32_t PPP_GetTimerElapsedTime( void )
  * @param none
  * @retval PPP Timer value in ticks
  */
-uint32_t PPP_GetTimerValue( void )
+uint32_t PPP_GetTimerValue(void)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -140,18 +139,17 @@ uint32_t PPP_GetTimerValue( void )
  * @param none
  * @retval none
  */
-void PPP_IrqHandler ( void )
-{
-}
+void PPP_IrqHandler(void)
+{}
 
 /*!
  * @brief set Time Reference set also the sDate and sTime
  * @param none
  * @retval Timer Value
  */
-uint32_t PPP_SetTimerContext( void )
+uint32_t PPP_SetTimerContext(void)
 {
-  return ( 0 );
+    return (0);
 }
 
 /*!
@@ -159,8 +157,7 @@ uint32_t PPP_SetTimerContext( void )
  * @param none
  * @retval Timer Value in  Ticks
  */
-uint32_t PPP_GetTimerContext( void )
+uint32_t PPP_GetTimerContext(void)
 {
-  return ( 0 );
+    return (0);
 }
-

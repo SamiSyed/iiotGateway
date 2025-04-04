@@ -64,21 +64,20 @@
  *            LoRaWAN class A/B/C application example for the SKiM980A.
  */
 /**
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    LoRaMac.h
-  * @author  MCD Application Team
-  * @brief   Header for LoRa MAC Layer
-  ******************************************************************************
-  */
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    LoRaMac.h
+ * @author  MCD Application Team
+ * @brief   Header for LoRa MAC Layer
+ ******************************************************************************
+ */
 #ifndef __LORAMAC_H__
 #define __LORAMAC_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LoRaMacInterfaces.h"
@@ -86,67 +85,67 @@ extern "C"
 /*!
  * Maximum number of times the MAC layer tries to get an acknowledge.
  */
-#define MAX_ACK_RETRIES                             8
+#define MAX_ACK_RETRIES 8
 
 /*!
  * Frame direction definition for up-link communications
  */
-#define UP_LINK                                     0
+#define UP_LINK 0
 
 /*!
  * Frame direction definition for down-link communications
  */
-#define DOWN_LINK                                   1
+#define DOWN_LINK 1
 
 /*!
  * LoRaMac MLME-Confirm queue length
  */
-#define LORA_MAC_MLME_CONFIRM_QUEUE_LEN             5
+#define LORA_MAC_MLME_CONFIRM_QUEUE_LEN 5
 
 /*!
  * Maximum MAC commands buffer size
  */
-#define LORA_MAC_COMMAND_MAX_LENGTH                 128
+#define LORA_MAC_COMMAND_MAX_LENGTH 128
 
 /*!
  * Bitmap value
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_NONE                0x00
+#define LORAMAC_NVM_NOTIFY_FLAG_NONE 0x00
 
 /*!
  * Bitmap value for the NVM group crypto.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_CRYPTO              0x01
+#define LORAMAC_NVM_NOTIFY_FLAG_CRYPTO 0x01
 
 /*!
  * Bitmap value for the NVM group MAC 1.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_MAC_GROUP1          0x02
+#define LORAMAC_NVM_NOTIFY_FLAG_MAC_GROUP1 0x02
 
 /*!
  * Bitmap value for the NVM group MAC 2.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_MAC_GROUP2          0x04
+#define LORAMAC_NVM_NOTIFY_FLAG_MAC_GROUP2 0x04
 
 /*!
  * Bitmap value for the NVM group secure element.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_SECURE_ELEMENT      0x08
+#define LORAMAC_NVM_NOTIFY_FLAG_SECURE_ELEMENT 0x08
 
 /*!
  * Bitmap value for the NVM group 1 region.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_REGION_GROUP1       0x10
+#define LORAMAC_NVM_NOTIFY_FLAG_REGION_GROUP1 0x10
 
 /*!
  * Bitmap value for the NVM group 2 region.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_REGION_GROUP2       0x20
+#define LORAMAC_NVM_NOTIFY_FLAG_REGION_GROUP2 0x20
 
 /*!
  * Bitmap value for the NVM group class b.
  */
-#define LORAMAC_NVM_NOTIFY_FLAG_CLASS_B             0x40
+#define LORAMAC_NVM_NOTIFY_FLAG_CLASS_B 0x40
 
 /*!
  * LoRaWAN compliance certification protocol port number.
@@ -177,7 +176,9 @@ extern "C"
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
  *          \ref LORAMAC_STATUS_REGION_NOT_SUPPORTED.
  */
-LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t* primitives, LoRaMacCallback_t* callbacks, LoRaMacRegion_t region );
+LoRaMacStatus_t LoRaMacInitialization(LoRaMacPrimitives_t *primitives,
+                                      LoRaMacCallback_t *callbacks,
+                                      LoRaMacRegion_t region);
 
 /*!
  * \brief   Starts LoRaMAC layer
@@ -186,7 +187,7 @@ LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t* primitives, LoRaMacC
  *          returns are:
  *          \ref LORAMAC_STATUS_OK,
  */
-LoRaMacStatus_t LoRaMacStart( void );
+LoRaMacStatus_t LoRaMacStart(void);
 
 /*!
  * \brief   Stops LoRaMAC layer
@@ -195,30 +196,30 @@ LoRaMacStatus_t LoRaMacStart( void );
  *          returns are:
  *          \ref LORAMAC_STATUS_OK,
  */
-LoRaMacStatus_t LoRaMacStop( void );
+LoRaMacStatus_t LoRaMacStop(void);
 
-LoRaMacStatus_t LoRaMacHalt( void );
+LoRaMacStatus_t LoRaMacHalt(void);
 
 /*!
  * \brief Returns a value indicating if the MAC layer is busy or not.
  *
  * \retval isBusy Mac layer is busy.
  */
-bool LoRaMacIsBusy( void );
+bool LoRaMacIsBusy(void);
 
 /*!
  * \brief Returns a value indicating if the MAC layer is stopped
  *
  * \retval isStopped Mac layer is stopped.
  */
-bool LoRaMacIsStopped( void );
+bool LoRaMacIsStopped(void);
 
 /*!
  * Processes the LoRaMac events.
  *
  * \remark This function must be called in the main loop.
  */
-void LoRaMacProcess( void );
+void LoRaMacProcess(void);
 
 /*!
  * \brief   Queries the LoRaMAC if it is possible to send the next frame with
@@ -245,14 +246,15 @@ void LoRaMacProcess( void );
  *          In case the query is valid, and the LoRaMAC is able to send the frame,
  *          the function returns \ref LORAMAC_STATUS_OK.
  */
-LoRaMacStatus_t LoRaMacQueryTxPossible( uint8_t size, LoRaMacTxInfo_t* txInfo );
+LoRaMacStatus_t LoRaMacQueryTxPossible(uint8_t size, LoRaMacTxInfo_t *txInfo);
 
 /*!
  * \brief   LoRaMAC channel add service
  *
  * \details Adds a new channel to the channel list and activates the id in
  *          the channel mask. Please note that this functionality is not available
- *          on all regions. Information about allowed ranges are available at the LoRaWAN Regional Parameters V1.0.2rB
+ *          on all regions. Information about allowed ranges are available at the LoRaWAN Regional
+ * Parameters V1.0.2rB
  *
  * \param   [in] id - Id of the channel.
  *
@@ -263,7 +265,7 @@ LoRaMacStatus_t LoRaMacQueryTxPossible( uint8_t size, LoRaMacTxInfo_t* txInfo );
  *          \ref LORAMAC_STATUS_BUSY,
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacChannelAdd( uint8_t id, ChannelParams_t params );
+LoRaMacStatus_t LoRaMacChannelAdd(uint8_t id, ChannelParams_t params);
 
 /*!
  * \brief   LoRaMAC channel remove service
@@ -277,7 +279,7 @@ LoRaMacStatus_t LoRaMacChannelAdd( uint8_t id, ChannelParams_t params );
  *          \ref LORAMAC_STATUS_BUSY,
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacChannelRemove( uint8_t id );
+LoRaMacStatus_t LoRaMacChannelRemove(uint8_t id);
 
 /*!
  * \brief   LoRaMAC multicast channel setup service
@@ -292,7 +294,7 @@ LoRaMacStatus_t LoRaMacChannelRemove( uint8_t id );
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
  *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelSetup( McChannelParams_t *channel );
+LoRaMacStatus_t LoRaMacMcChannelSetup(McChannelParams_t *channel);
 
 /*!
  * \brief   LoRaMAC multicast channel removal service
@@ -306,7 +308,7 @@ LoRaMacStatus_t LoRaMacMcChannelSetup( McChannelParams_t *channel );
  *          \ref LORAMAC_STATUS_BUSY,
  *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelDelete( AddressIdentifier_t groupID );
+LoRaMacStatus_t LoRaMacMcChannelDelete(AddressIdentifier_t groupID);
 
 /*!
  * \brief   LoRaMAC multicast channel get groupId from MC address.
@@ -316,7 +318,7 @@ LoRaMacStatus_t LoRaMacMcChannelDelete( AddressIdentifier_t groupID );
  * \retval  groupID           Multicast channel ID associated to the address.
  *                            Returns 0xFF if the address isn't found.
  */
-uint8_t LoRaMacMcChannelGetGroupId( uint32_t mcAddress );
+uint8_t LoRaMacMcChannelGetGroupId(uint32_t mcAddress);
 
 /*!
  * \brief   LoRaMAC multicast channel Rx parameters setup service
@@ -333,7 +335,9 @@ uint8_t LoRaMacMcChannelGetGroupId( uint32_t mcAddress );
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID,
  *          \ref LORAMAC_STATUS_MC_GROUP_UNDEFINED.
  */
-LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRxParams_t *rxParams, uint8_t *status );
+LoRaMacStatus_t LoRaMacMcChannelSetupRxParams(AddressIdentifier_t groupID,
+                                              McRxParams_t *rxParams,
+                                              uint8_t *status);
 
 /*!
  * \brief   LoRaMAC MIB-Get
@@ -361,7 +365,7 @@ LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRx
  *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
+LoRaMacStatus_t LoRaMacMibGetRequestConfirm(MibRequestConfirm_t *mibGet);
 
 /*!
  * \brief   LoRaMAC MIB-Set
@@ -392,7 +396,7 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet );
  *          \ref LORAMAC_STATUS_SERVICE_UNKNOWN,
  *          \ref LORAMAC_STATUS_PARAMETER_INVALID.
  */
-LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
+LoRaMacStatus_t LoRaMacMibSetRequestConfirm(MibRequestConfirm_t *mibSet);
 
 /*!
  * \brief   LoRaMAC MLME-Request
@@ -425,7 +429,7 @@ LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet );
  *          \ref LORAMAC_STATUS_NO_NETWORK_JOINED,
  *          \ref LORAMAC_STATUS_LENGTH_ERROR,
  */
-LoRaMacStatus_t LoRaMacMlmeRequest( MlmeReq_t* mlmeRequest );
+LoRaMacStatus_t LoRaMacMlmeRequest(MlmeReq_t *mlmeRequest);
 
 /*!
  * \brief   LoRaMAC MCPS-Request
@@ -460,7 +464,7 @@ LoRaMacStatus_t LoRaMacMlmeRequest( MlmeReq_t* mlmeRequest );
  *          \ref LORAMAC_STATUS_NO_NETWORK_JOINED,
  *          \ref LORAMAC_STATUS_LENGTH_ERROR,
  */
-LoRaMacStatus_t LoRaMacMcpsRequest( McpsReq_t* mcpsRequest, bool allowDelayedTx );
+LoRaMacStatus_t LoRaMacMcpsRequest(McpsReq_t *mcpsRequest, bool allowDelayedTx);
 
 /*!
  * \brief   LoRaMAC deinitialization
@@ -472,9 +476,14 @@ LoRaMacStatus_t LoRaMacMcpsRequest( McpsReq_t* mcpsRequest, bool allowDelayedTx 
  *          \ref LORAMAC_STATUS_OK,
  *          \ref LORAMAC_STATUS_BUSY
  */
-LoRaMacStatus_t LoRaMacDeInitialization( void );
+LoRaMacStatus_t LoRaMacDeInitialization(void);
 
-LoRaMacStatus_t LoRaMacProcessMicForDatablock( uint8_t *buffer, uint32_t size, uint16_t sessionCnt, uint8_t fragIndex, uint32_t descriptor, uint32_t *mic );
+LoRaMacStatus_t LoRaMacProcessMicForDatablock(uint8_t *buffer,
+                                              uint32_t size,
+                                              uint16_t sessionCnt,
+                                              uint8_t fragIndex,
+                                              uint32_t descriptor,
+                                              uint32_t *mic);
 
 /*! \} defgroup LORAMAC */
 

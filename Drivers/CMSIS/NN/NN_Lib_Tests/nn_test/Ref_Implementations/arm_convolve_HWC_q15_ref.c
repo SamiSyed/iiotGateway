@@ -18,24 +18,27 @@
 
 #include "ref_functions.h"
 
-void arm_convolve_HWC_q15_ref(const q15_t * Im_in,  // input image
-                              const uint16_t dim_im_in, // input image dimention
-                              const uint16_t ch_im_in,  // number of input image channels
-                              const q15_t * wt, // kernel weights 
-                              const uint16_t ch_im_out, // number of filters, i.e., output image channels
-                              const uint16_t dim_kernel,    // filter kernel size
-                              const uint16_t padding,   // padding sizes
-                              const uint16_t stride,    // stride
-                              const q15_t * bias,   // bias
-                              const uint16_t bias_shift, const uint16_t out_shift, q15_t * Im_out,  // output image
-                              const uint16_t dim_im_out,    // output image dimension
-                              q15_t * bufferA,  //buffer space for input
-                              q7_t * bufferB    //buffer space for output
-    )
+void arm_convolve_HWC_q15_ref(const q15_t *Im_in,        // input image
+                              const uint16_t dim_im_in,  // input image dimention
+                              const uint16_t ch_im_in,   // number of input image channels
+                              const q15_t *wt,           // kernel weights
+                              const uint16_t ch_im_out,  // number of filters, i.e., output image
+                                                         // channels
+                              const uint16_t dim_kernel, // filter kernel size
+                              const uint16_t padding,    // padding sizes
+                              const uint16_t stride,     // stride
+                              const q15_t *bias,         // bias
+                              const uint16_t bias_shift,
+                              const uint16_t out_shift,
+                              q15_t *Im_out,             // output image
+                              const uint16_t dim_im_out, // output image dimension
+                              q15_t *bufferA,            // buffer space for input
+                              q7_t *bufferB              // buffer space for output
+)
 {
-    int       i, j, k, l, m, n;
-    int       conv_out;
-    int       in_row, in_col;
+    int i, j, k, l, m, n;
+    int conv_out;
+    int in_row, in_col;
 
     for (i = 0; i < ch_im_out; i++)
     {
@@ -58,13 +61,15 @@ void arm_convolve_HWC_q15_ref(const q15_t * Im_in,  // input image
                         {
                             for (l = 0; l < ch_im_in; l++)
                             {
-                                conv_out += Im_in[(in_row * dim_im_in + in_col) * ch_im_in + l] *
-                                    wt[i * ch_im_in * dim_kernel * dim_kernel + (m * dim_kernel + n) * ch_im_in + l];
+                                conv_out += Im_in[(in_row * dim_im_in + in_col) * ch_im_in + l]
+                                            * wt[i * ch_im_in * dim_kernel * dim_kernel
+                                                 + (m * dim_kernel + n) * ch_im_in + l];
                             }
                         }
                     }
                 }
-                Im_out[i + (j * dim_im_out + k) * ch_im_out] = (q15_t) __SSAT((conv_out >> out_shift), 16);
+                Im_out[i + (j * dim_im_out + k) * ch_im_out]
+                    = (q15_t)__SSAT((conv_out >> out_shift), 16);
             }
         }
     }

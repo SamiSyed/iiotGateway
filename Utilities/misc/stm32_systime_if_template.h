@@ -1,27 +1,27 @@
 /**
-  ******************************************************************************
-  * @file    stm32_systime_if_template.h
-  * @author  MCD Application Team
-  * @brief   This file provides the ll driver for  the time server
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32_systime_if_template.h
+ * @author  MCD Application Team
+ * @brief   This file provides the ll driver for  the time server
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2019 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32_SYSTIME_IF_H__
 #define __STM32_SYSTIME_IF_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
 #include "stm32_systime.h"
@@ -70,7 +70,6 @@ void PPP_BkUp_Write_SubSeconds(uint32_t SubSeconds);
  * @retval Time in SubSeconds
  */
 uint32_t PPP_BkUp_Read_SubSeconds(void);
-
 
 #ifdef __cplusplus
 }

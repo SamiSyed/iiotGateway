@@ -69,28 +69,27 @@
   @return        none
  */
 
-void arm_cmplx_mult_real_f32(
-  const float32_t * pSrcCmplx,
-  const float32_t * pSrcReal,
-        float32_t * pCmplxDst,
-        uint32_t numSamples)
+void arm_cmplx_mult_real_f32(const float32_t *pSrcCmplx,
+                             const float32_t *pSrcReal,
+                             float32_t *pCmplxDst,
+                             uint32_t numSamples)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        float32_t in;                                  /* Temporary variable */
+    uint32_t blkCnt; /* Loop counter */
+    float32_t in;    /* Temporary variable */
 
 #if defined(ARM_MATH_NEON)
     float32x4_t r;
-    float32x4x2_t ab,outCplx;
+    float32x4x2_t ab, outCplx;
 
     /* Compute 4 outputs at a time */
     blkCnt = numSamples >> 2U;
 
     while (blkCnt > 0U)
     {
-        ab = vld2q_f32(pSrcCmplx);  // load & separate real/imag pSrcA (de-interleave 2)
-        r = vld1q_f32(pSrcReal);  // load & separate real/imag pSrcB
+        ab = vld2q_f32(pSrcCmplx); // load & separate real/imag pSrcA (de-interleave 2)
+        r = vld1q_f32(pSrcReal);   // load & separate real/imag pSrcB
 
-	/* Increment pointers */
+        /* Increment pointers */
         pSrcCmplx += 8;
         pSrcReal += 4;
 
@@ -106,62 +105,61 @@ void arm_cmplx_mult_real_f32(
     /* Tail */
     blkCnt = numSamples & 3;
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = numSamples >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = numSamples >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C[2 * i    ] = A[2 * i    ] * B[i]. */
-    /* C[2 * i + 1] = A[2 * i + 1] * B[i]. */
+    while (blkCnt > 0U)
+    {
+        /* C[2 * i    ] = A[2 * i    ] * B[i]. */
+        /* C[2 * i + 1] = A[2 * i + 1] * B[i]. */
 
-    in = *pSrcReal++;
-    /* store result in destination buffer. */
-    *pCmplxDst++ = *pSrcCmplx++ * in;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
+        in = *pSrcReal++;
+        /* store result in destination buffer. */
+        *pCmplxDst++ = *pSrcCmplx++ * in;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
 
-    in = *pSrcReal++;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
+        in = *pSrcReal++;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
 
-    in = *pSrcReal++;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
+        in = *pSrcReal++;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
 
-    in = *pSrcReal++;
-    *pCmplxDst++ = *pSrcCmplx++* in;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
+        in = *pSrcReal++;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = numSamples % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = numSamples % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = numSamples;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON) */
 
-  while (blkCnt > 0U)
-  {
-    /* C[2 * i    ] = A[2 * i    ] * B[i]. */
-    /* C[2 * i + 1] = A[2 * i + 1] * B[i]. */
+    while (blkCnt > 0U)
+    {
+        /* C[2 * i    ] = A[2 * i    ] * B[i]. */
+        /* C[2 * i + 1] = A[2 * i + 1] * B[i]. */
 
-    in = *pSrcReal++;
-    /* store result in destination buffer. */
-    *pCmplxDst++ = *pSrcCmplx++ * in;
-    *pCmplxDst++ = *pSrcCmplx++ * in;
+        in = *pSrcReal++;
+        /* store result in destination buffer. */
+        *pCmplxDst++ = *pSrcCmplx++ * in;
+        *pCmplxDst++ = *pSrcCmplx++ * in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 }
 
 /**

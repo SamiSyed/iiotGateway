@@ -22,8 +22,7 @@
 #define __LMHP_COMPLIANCE__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LmhPackage.h"
@@ -34,9 +33,9 @@ extern "C"
  *
  * \remark This value must be unique amongst the packages
  */
-#define PACKAGE_ID_COMPLIANCE                       0
+#define PACKAGE_ID_COMPLIANCE 0
 
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01000300 ))
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01000300))
 /*!
  * Compliance test protocol handler parameters
  */
@@ -47,10 +46,10 @@ typedef struct LmhpComplianceParams_s
      */
     bool AdrEnabled;
     /*!
-    * LoRaWAN ETSI duty cycle control enable/disable
-    *
-    * \remark Please note that ETSI mandates duty cycled transmissions. Use only for test purposes
-    */
+     * LoRaWAN ETSI duty cycle control enable/disable
+     *
+     * \remark Please note that ETSI mandates duty cycled transmissions. Use only for test purposes
+     */
     bool DutyCycleEnabled;
     /*!
      * Stops unnecessary peripherals.
@@ -58,16 +57,17 @@ typedef struct LmhpComplianceParams_s
      * \remark Use for the compliance tests protocol handling in order to
      *         reduce the power consumption.
      */
-    void ( *StopPeripherals )( void );
+    void (*StopPeripherals)(void);
     /*!
      * Starts previously stopped peripherals.
      *
      * \remark Use for the compliance tests protocol handling in order to
      *         reduce the power consumption.
      */
-    void ( *StartPeripherals )( void );
+    void (*StartPeripherals)(void);
 } LmhpComplianceParams_t;
-#elif (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
+#elif (defined(LORAMAC_VERSION)                                                                    \
+       && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
 /*!
  * Compliance test protocol handler parameters
  */
@@ -80,19 +80,19 @@ typedef struct LmhpComplianceParams_s
     /*!
      *
      */
-    void ( *OnTxPeriodicityChanged )( uint32_t periodicity );
+    void (*OnTxPeriodicityChanged)(uint32_t periodicity);
     /*!
      *
      */
-    void ( *OnTxFrameCtrlChanged )( LmHandlerMsgTypes_t isTxConfirmed );
+    void (*OnTxFrameCtrlChanged)(LmHandlerMsgTypes_t isTxConfirmed);
     /*!
      *
      */
-    void ( *OnPingSlotPeriodicityChanged )( uint8_t pingSlotPeriodicity );
+    void (*OnPingSlotPeriodicityChanged)(uint8_t pingSlotPeriodicity);
 } LmhpComplianceParams_t;
 #endif /* LORAMAC_VERSION */
 
-LmhPackage_t *LmhpCompliancePackageFactory( void );
+LmhPackage_t *LmhpCompliancePackageFactory(void);
 
 #ifdef __cplusplus
 }

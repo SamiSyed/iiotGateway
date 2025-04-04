@@ -59,12 +59,9 @@
   @return        none
  */
 
-void arm_negate_f32(
-  const float32_t * pSrc,
-        float32_t * pDst,
-        uint32_t blockSize)
+void arm_negate_f32(const float32_t *pSrc, float32_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+    uint32_t blkCnt; /* Loop counter */
 
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
     float32x4_t vec1;
@@ -77,7 +74,7 @@ void arm_negate_f32(
     {
         /* C = -A */
 
-    	/* Negate and then store the results in the destination buffer. */
+        /* Negate and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrc);
         res = vnegq_f32(vec1);
         vst1q_f32(pDst, res);
@@ -85,7 +82,7 @@ void arm_negate_f32(
         /* Increment pointers */
         pSrc += 4;
         pDst += 4;
-        
+
         /* Decrement the loop counter */
         blkCnt--;
     }
@@ -94,50 +91,49 @@ void arm_negate_f32(
     blkCnt = blockSize & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = -A */
+    while (blkCnt > 0U)
+    {
+        /* C = -A */
 
-    /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+        /* Negate and store result in destination buffer. */
+        *pDst++ = -*pSrc++;
 
-    *pDst++ = -*pSrc++;
+        *pDst++ = -*pSrc++;
 
-    *pDst++ = -*pSrc++;
+        *pDst++ = -*pSrc++;
 
-    *pDst++ = -*pSrc++;
+        *pDst++ = -*pSrc++;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON_EXPERIMENTAL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = -A */
+    while (blkCnt > 0U)
+    {
+        /* C = -A */
 
-    /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+        /* Negate and store result in destination buffer. */
+        *pDst++ = -*pSrc++;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 }
 
 /**

@@ -30,13 +30,13 @@
  *
  * \{
  */
-#include "RegionCN470.h"
-#include "RegionBaseUS.h"
 #include "RegionCN470A26.h"
+#include "RegionBaseUS.h"
+#include "RegionCN470.h"
 
 /* The HYBRID_DEFAULT_MASKx define the enabled channels in Hybrid mode*/
 /* Note: they can be redefined in lorawan_conf.h*/
-#ifndef HYBRID_DEFAULT_MASK0 /*enabled channels from channel 15 down to channel 0*/
+#ifndef HYBRID_DEFAULT_MASK0        /*enabled channels from channel 15 down to channel 0*/
 #define HYBRID_DEFAULT_MASK0 0x00FF /*channel 7 down to channel 0  enabled*/
 #endif
 #ifndef HYBRID_DEFAULT_MASK1 /*enabled channels from channel 31 down to channel 16*/
@@ -55,27 +55,31 @@
 #define HYBRID_DEFAULT_MASK5 0x0000
 #endif
 
-uint32_t RegionCN470A26GetDownlinkFrequency( uint8_t channel, uint8_t joinChannelIndex, bool isPingSlot )
+uint32_t RegionCN470A26GetDownlinkFrequency(uint8_t channel,
+                                            uint8_t joinChannelIndex,
+                                            bool isPingSlot)
 {
     return CN470_A26_BEACON_FREQ;
 }
 
-uint8_t RegionCN470A26GetBeaconChannelOffset( uint8_t joinChannelIndex )
+uint8_t RegionCN470A26GetBeaconChannelOffset(uint8_t joinChannelIndex)
 {
     return 0;
 }
 
-uint8_t RegionCN470A26LinkAdrChMaskUpdate( uint16_t* channelsMask, uint8_t chMaskCntl,
-                                              uint16_t chanMask, ChannelParams_t* channels )
+uint8_t RegionCN470A26LinkAdrChMaskUpdate(uint16_t *channelsMask,
+                                          uint8_t chMaskCntl,
+                                          uint16_t chanMask,
+                                          ChannelParams_t *channels)
 {
     uint8_t status = 0x07;
 
-    if( ( chMaskCntl == 5 ) || ( chMaskCntl == 6 ) || ( chMaskCntl == 7 ) )
+    if ((chMaskCntl == 5) || (chMaskCntl == 6) || (chMaskCntl == 7))
     {
         // RFU
         status &= 0xFE; // Channel mask KO
     }
-    else if( chMaskCntl == 3 )
+    else if (chMaskCntl == 3)
     {
         // Enable all channels
         channelsMask[0] = 0xFFFF;
@@ -85,7 +89,7 @@ uint8_t RegionCN470A26LinkAdrChMaskUpdate( uint16_t* channelsMask, uint8_t chMas
         channelsMask[4] = 0x0000;
         channelsMask[5] = 0x0000;
     }
-    else if( chMaskCntl == 4 )
+    else if (chMaskCntl == 4)
     {
         // Disable all channels
         channelsMask[0] = 0x0000;
@@ -98,45 +102,46 @@ uint8_t RegionCN470A26LinkAdrChMaskUpdate( uint16_t* channelsMask, uint8_t chMas
     else
     {
         // chMaskCntl 0 to 2
-        for( uint8_t i = 0; i < 16; i++ )
+        for (uint8_t i = 0; i < 16; i++)
         {
-            if( ( ( chanMask & ( 1 << i ) ) != 0 ) &&
-                ( channels[chMaskCntl * 16 + i].Frequency == 0 ) )
-            {// Trying to enable an undefined channel
+            if (((chanMask & (1 << i)) != 0) && (channels[chMaskCntl * 16 + i].Frequency == 0))
+            {                   // Trying to enable an undefined channel
                 status &= 0xFE; // Channel mask KO
             }
         }
-            channelsMask[chMaskCntl] = chanMask;
+        channelsMask[chMaskCntl] = chanMask;
     }
     return status;
 }
 
-bool RegionCN470A26VerifyRfFreq( uint32_t freq )
+bool RegionCN470A26VerifyRfFreq(uint32_t freq)
 {
     // Downstream group 1
-    if( RegionBaseUSVerifyFrequencyGroup( freq, CN470_A26_FIRST_RX_CHANNEL,
-                                          CN470_A26_LAST_RX_CHANNEL,
-                                          CN470_A26_STEPWIDTH_RX_CHANNEL ) == false )
+    if (RegionBaseUSVerifyFrequencyGroup(freq,
+                                         CN470_A26_FIRST_RX_CHANNEL,
+                                         CN470_A26_LAST_RX_CHANNEL,
+                                         CN470_A26_STEPWIDTH_RX_CHANNEL)
+        == false)
     {
         return false;
     }
     return true;
 }
 
-void RegionCN470A26InitializeChannels( ChannelParams_t* channels )
+void RegionCN470A26InitializeChannels(ChannelParams_t *channels)
 {
     // Upstream group 1
-    for( uint8_t i = 0; i < 48; i++ )
+    for (uint8_t i = 0; i < 48; i++)
     {
         channels[i].Frequency = CN470_A26_FIRST_TX_CHANNEL + i * CN470_A26_STEPWIDTH_RX_CHANNEL;
-        channels[i].DrRange.Value = ( CN470_TX_MAX_DATARATE << 4 ) | CN470_TX_MIN_DATARATE;
+        channels[i].DrRange.Value = (CN470_TX_MAX_DATARATE << 4) | CN470_TX_MIN_DATARATE;
         channels[i].Band = 0;
     }
 }
 
-void RegionCN470A26InitializeChannelsMask( uint16_t* channelsDefaultMask )
+void RegionCN470A26InitializeChannelsMask(uint16_t *channelsDefaultMask)
 {
-#if ( HYBRID_ENABLED == 1 )
+#if (HYBRID_ENABLED == 1)
     channelsDefaultMask[0] = HYBRID_DEFAULT_MASK0;
     channelsDefaultMask[1] = HYBRID_DEFAULT_MASK1;
     channelsDefaultMask[2] = HYBRID_DEFAULT_MASK2;
@@ -154,12 +159,12 @@ void RegionCN470A26InitializeChannelsMask( uint16_t* channelsDefaultMask )
 #endif /* HYBRID_ENABLED == 1 */
 }
 
-uint32_t RegionCN470A26GetRx1Frequency( uint8_t channel )
+uint32_t RegionCN470A26GetRx1Frequency(uint8_t channel)
 {
-    return ( CN470_A26_FIRST_RX_CHANNEL + ( ( channel % 24 ) * CN470_A26_STEPWIDTH_RX_CHANNEL ) );
+    return (CN470_A26_FIRST_RX_CHANNEL + ((channel % 24) * CN470_A26_STEPWIDTH_RX_CHANNEL));
 }
 
-uint32_t RegionCN470A26GetRx2Frequency( uint8_t joinChannelIndex, bool isOtaaDevice )
+uint32_t RegionCN470A26GetRx2Frequency(uint8_t joinChannelIndex, bool isOtaaDevice)
 {
     return CN470_A26_RX_WND_2_FREQ;
 }

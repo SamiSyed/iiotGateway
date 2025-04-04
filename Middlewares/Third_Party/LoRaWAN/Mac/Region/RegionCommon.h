@@ -35,25 +35,24 @@
  * \{
  */
 /**
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    RegionCommon.h
-  * @author  MCD Application Team
-  * @brief   Region independent implementations which are common to all regions.
-  ******************************************************************************
-  */
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    RegionCommon.h
+ * @author  MCD Application Team
+ * @brief   Region independent implementations which are common to all regions.
+ ******************************************************************************
+ */
 #ifndef __REGIONCOMMON_H__
 #define __REGIONCOMMON_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "LoRaMacInterfaces.h"
 #include "LoRaMacHeaderTypes.h"
+#include "LoRaMacInterfaces.h"
 #include "RegionNvm.h"
 #include "RegionVersion.h"
 
@@ -62,71 +61,71 @@ extern "C"
 /*!
  * Receive delay of 1 second.
  */
-#define REGION_COMMON_DEFAULT_RECEIVE_DELAY1            1000
+#define REGION_COMMON_DEFAULT_RECEIVE_DELAY1 1000
 
 /*!
  * Receive delay of 2 seconds.
  */
-#define REGION_COMMON_DEFAULT_RECEIVE_DELAY2            ( REGION_COMMON_DEFAULT_RECEIVE_DELAY1 + 1000 )
+#define REGION_COMMON_DEFAULT_RECEIVE_DELAY2 (REGION_COMMON_DEFAULT_RECEIVE_DELAY1 + 1000)
 
 /*!
  * Join accept delay of 5 seconds.
  */
-#define REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY1        5000
+#define REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY1 5000
 
 /*!
  * Join accept delay of 6 seconds.
  */
-#define REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY2        ( REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY1 + 1000 )
+#define REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY2 (REGION_COMMON_DEFAULT_JOIN_ACCEPT_DELAY1 + 1000)
 
 /*!
  * ADR ack limit.
  */
-#define REGION_COMMON_DEFAULT_ADR_ACK_LIMIT             64
+#define REGION_COMMON_DEFAULT_ADR_ACK_LIMIT 64
 
 /*!
  * ADR ack delay.
  */
-#define REGION_COMMON_DEFAULT_ADR_ACK_DELAY             32
+#define REGION_COMMON_DEFAULT_ADR_ACK_DELAY 32
 
-#if (defined( REGION_VERSION ) && ( REGION_VERSION == 0x01010003 ))
+#if (defined(REGION_VERSION) && (REGION_VERSION == 0x01010003))
 /*!
  * Maximum frame counter gap
  */
-#define REGION_COMMON_DEFAULT_MAX_FCNT_GAP              16384
+#define REGION_COMMON_DEFAULT_MAX_FCNT_GAP 16384
 
 /*!
  * Retransmission timeout for ACK in milliseconds.
  */
-#define REGION_COMMON_DEFAULT_ACK_TIMEOUT               2000
+#define REGION_COMMON_DEFAULT_ACK_TIMEOUT 2000
 
 /*!
  * Rounding limit for generating random retransmission timeout for ACK.
  * In milliseconds.
  */
-#define REGION_COMMON_DEFAULT_ACK_TIMEOUT_RND           1000
-#elif (defined( REGION_VERSION ) && ( REGION_VERSION == 0x02010001 ))
+#define REGION_COMMON_DEFAULT_ACK_TIMEOUT_RND 1000
+#elif (defined(REGION_VERSION) && (REGION_VERSION == 0x02010001))
 /*!
  * Retransmission timeout for ACK in milliseconds.
  */
-#define REGION_COMMON_DEFAULT_RETRANSMIT_TIMEOUT        2000
+#define REGION_COMMON_DEFAULT_RETRANSMIT_TIMEOUT 2000
 
 /*!
  * Rounding limit for generating random retransmission timeout for ACK.
  * In milliseconds.
  */
-#define REGION_COMMON_DEFAULT_RETRANSMIT_TIMEOUT_RND    1000
+#define REGION_COMMON_DEFAULT_RETRANSMIT_TIMEOUT_RND 1000
 #endif /* REGION_VERSION */
 
 /*!
  * Default Rx1 receive datarate offset
  */
-#define REGION_COMMON_DEFAULT_RX1_DR_OFFSET             0
+#define REGION_COMMON_DEFAULT_RX1_DR_OFFSET 0
 
 /*!
  * Default downlink dwell time configuration
  */
-#define REGION_COMMON_DEFAULT_DOWNLINK_DWELL_TIME       0
+#define REGION_COMMON_DEFAULT_DOWNLINK_DWELL_TIME 0
 
 typedef struct sRegionCommonLinkAdrParams
 {
@@ -150,7 +149,7 @@ typedef struct sRegionCommonLinkAdrParams
      * Channels mask field.
      */
     uint16_t ChMask;
-}RegionCommonLinkAdrParams_t;
+} RegionCommonLinkAdrParams_t;
 
 typedef struct sRegionCommonLinkAdrReqVerifyParams
 {
@@ -197,7 +196,7 @@ typedef struct sRegionCommonLinkAdrReqVerifyParams
     /*!
      * Pointer to the first element of the channels mask.
      */
-    uint16_t* ChannelsMask;
+    uint16_t *ChannelsMask;
     /*!
      * The minimum possible datarate.
      */
@@ -209,7 +208,7 @@ typedef struct sRegionCommonLinkAdrReqVerifyParams
     /*!
      * Pointer to the channels.
      */
-    ChannelParams_t* Channels;
+    ChannelParams_t *Channels;
     /*!
      * The minimum possible TX power.
      */
@@ -218,14 +217,14 @@ typedef struct sRegionCommonLinkAdrReqVerifyParams
      * The maximum possible TX power.
      */
     int8_t MaxTxPower;
-}RegionCommonLinkAdrReqVerifyParams_t;
+} RegionCommonLinkAdrReqVerifyParams_t;
 
 typedef struct sRegionCommonRxBeaconSetupParams
 {
     /*!
      * A pointer to the available datarates.
      */
-    const uint8_t* Datarates;
+    const uint8_t *Datarates;
     /*!
      * Frequency
      */
@@ -250,7 +249,7 @@ typedef struct sRegionCommonRxBeaconSetupParams
      * The symbol timeout of the RX procedure.
      */
     uint16_t SymbolTimeout;
-}RegionCommonRxBeaconSetupParams_t;
+} RegionCommonRxBeaconSetupParams_t;
 
 typedef struct sRegionCommonCountNbOfEnabledChannelsParams
 {
@@ -265,15 +264,15 @@ typedef struct sRegionCommonCountNbOfEnabledChannelsParams
     /*!
      * A pointer to the channels mask to verify.
      */
-    uint16_t* ChannelsMask;
+    uint16_t *ChannelsMask;
     /*!
      * A pointer to the channels.
      */
-    ChannelParams_t* Channels;
+    ChannelParams_t *Channels;
     /*!
      * A pointer to the bands.
      */
-    Band_t* Bands;
+    Band_t *Bands;
     /*!
      * The number of available channels.
      */
@@ -283,8 +282,8 @@ typedef struct sRegionCommonCountNbOfEnabledChannelsParams
      * join channels. Shall have the same dimension as the
      * ChannelsMask with a number of MaxNbChannels channels.
      */
-    uint16_t* JoinChannels;
-}RegionCommonCountNbOfEnabledChannelsParams_t;
+    uint16_t *JoinChannels;
+} RegionCommonCountNbOfEnabledChannelsParams_t;
 
 typedef struct sRegionCommonIdentifyChannelsParam
 {
@@ -319,8 +318,8 @@ typedef struct sRegionCommonIdentifyChannelsParam
     /*!
      * Pointer to a structure of RegionCommonCountNbOfEnabledChannelsParams_t.
      */
-    RegionCommonCountNbOfEnabledChannelsParams_t* CountNbOfEnabledChannelsParam;
-}RegionCommonIdentifyChannelsParam_t;
+    RegionCommonCountNbOfEnabledChannelsParams_t *CountNbOfEnabledChannelsParam;
+} RegionCommonIdentifyChannelsParam_t;
 
 typedef struct sRegionCommonSetDutyCycleParams
 {
@@ -335,8 +334,8 @@ typedef struct sRegionCommonSetDutyCycleParams
     /*!
      * A pointer to the bands.
      */
-    Band_t* Bands;
-}RegionCommonSetDutyCycleParams_t;
+    Band_t *Bands;
+} RegionCommonSetDutyCycleParams_t;
 
 typedef struct sRegionCommonGetNextLowerTxDrParams
 {
@@ -344,9 +343,9 @@ typedef struct sRegionCommonGetNextLowerTxDrParams
     int8_t MaxDr;
     int8_t MinDr;
     uint8_t NbChannels;
-    uint16_t* ChannelsMask;
-    ChannelParams_t* Channels;
-}RegionCommonGetNextLowerTxDrParams_t;
+    uint16_t *ChannelsMask;
+    ChannelParams_t *Channels;
+} RegionCommonGetNextLowerTxDrParams_t;
 
 /*!
  * \brief Verifies, if a value is in a given range.
@@ -360,7 +359,7 @@ typedef struct sRegionCommonGetNextLowerTxDrParams
  *
  * \retval Returns 1 if the value is in range, otherwise 0.
  */
-uint8_t RegionCommonValueInRange( int8_t value, int8_t min, int8_t max );
+uint8_t RegionCommonValueInRange(int8_t value, int8_t min, int8_t max);
 
 /*!
  * \brief Verifies, if a datarate is available on an active channel.
@@ -380,8 +379,12 @@ uint8_t RegionCommonValueInRange( int8_t value, int8_t min, int8_t max );
  *
  * \retval Returns true if the datarate is supported, false if not.
  */
-bool RegionCommonChanVerifyDr( uint8_t nbChannels, uint16_t* channelsMask, int8_t dr,
-                            int8_t minDr, int8_t maxDr, ChannelParams_t* channels );
+bool RegionCommonChanVerifyDr(uint8_t nbChannels,
+                              uint16_t *channelsMask,
+                              int8_t dr,
+                              int8_t minDr,
+                              int8_t maxDr,
+                              ChannelParams_t *channels);
 
 /*!
  * \brief Disables a channel in a given channels mask.
@@ -395,7 +398,7 @@ bool RegionCommonChanVerifyDr( uint8_t nbChannels, uint16_t* channelsMask, int8_
  *
  * \retval Returns true if the channel could be disabled, false if not.
  */
-bool RegionCommonChanDisable( uint16_t* channelsMask, uint8_t id, uint8_t maxChannels );
+bool RegionCommonChanDisable(uint16_t *channelsMask, uint8_t id, uint8_t maxChannels);
 
 /*!
  * \brief Counts the number of active channels in a given channels mask.
@@ -409,7 +412,7 @@ bool RegionCommonChanDisable( uint16_t* channelsMask, uint8_t id, uint8_t maxCha
  *
  * \retval Returns the number of active channels.
  */
-uint8_t RegionCommonCountChannels( uint16_t* channelsMask, uint8_t startIdx, uint8_t stopIdx );
+uint8_t RegionCommonCountChannels(uint16_t *channelsMask, uint8_t startIdx, uint8_t stopIdx);
 
 /*!
  * \brief Copy a channels mask.
@@ -421,7 +424,7 @@ uint8_t RegionCommonCountChannels( uint16_t* channelsMask, uint8_t startIdx, uin
  *
  * \param [in] len The index length to copy.
  */
-void RegionCommonChanMaskCopy( uint16_t* channelsMaskDest, uint16_t* channelsMaskSrc, uint8_t len );
+void RegionCommonChanMaskCopy(uint16_t *channelsMaskDest, uint16_t *channelsMaskSrc, uint8_t len);
 
 /*!
  * \brief Sets the last tx done property.
@@ -435,7 +438,10 @@ void RegionCommonChanMaskCopy( uint16_t* channelsMaskDest, uint16_t* channelsMas
  *
  * \param [in] elapsedTimeSinceStartup Elapsed time since initialization.
  */
-void RegionCommonSetBandTxDone( Band_t* band, TimerTime_t lastTxAirTime, bool joined, SysTime_t elapsedTimeSinceStartup );
+void RegionCommonSetBandTxDone(Band_t *band,
+                               TimerTime_t lastTxAirTime,
+                               bool joined,
+                               SysTime_t elapsedTimeSinceStartup);
 
 /*!
  * \brief Updates the time-offs of the bands.
@@ -457,10 +463,13 @@ void RegionCommonSetBandTxDone( Band_t* band, TimerTime_t lastTxAirTime, bool jo
  *
  * \retval Returns the time which must be waited to perform the next uplink.
  */
-TimerTime_t RegionCommonUpdateBandTimeOff( bool joined, Band_t* bands,
-                                           uint8_t nbBands, bool dutyCycleEnabled,
-                                           bool lastTxIsJoinRequest, SysTime_t elapsedTimeSinceStartup,
-                                           TimerTime_t expectedTimeOnAir );
+TimerTime_t RegionCommonUpdateBandTimeOff(bool joined,
+                                          Band_t *bands,
+                                          uint8_t nbBands,
+                                          bool dutyCycleEnabled,
+                                          bool lastTxIsJoinRequest,
+                                          SysTime_t elapsedTimeSinceStartup,
+                                          TimerTime_t expectedTimeOnAir);
 
 /*!
  * \brief Parses the parameter of an LinkAdrRequest.
@@ -474,7 +483,7 @@ TimerTime_t RegionCommonUpdateBandTimeOff( bool joined, Band_t* bands,
  * \retval Returns the length of the ADR request, if a request was found. Otherwise, the
  *         function returns 0.
  */
-uint8_t RegionCommonParseLinkAdrReq( uint8_t* payload, RegionCommonLinkAdrParams_t* parseLinkAdr );
+uint8_t RegionCommonParseLinkAdrReq(uint8_t *payload, RegionCommonLinkAdrParams_t *parseLinkAdr);
 
 /*!
  * \brief Verifies and updates the datarate, the TX power and the number of repetitions
@@ -490,7 +499,10 @@ uint8_t RegionCommonParseLinkAdrReq( uint8_t* payload, RegionCommonLinkAdrParams
  *
  * \retval Returns the status according to the LinkAdrRequest definition.
  */
-uint8_t RegionCommonLinkAdrReqVerifyParams( RegionCommonLinkAdrReqVerifyParams_t* verifyParams, int8_t* dr, int8_t* txPow, uint8_t* nbRep );
+uint8_t RegionCommonLinkAdrReqVerifyParams(RegionCommonLinkAdrReqVerifyParams_t *verifyParams,
+                                           int8_t *dr,
+                                           int8_t *txPow,
+                                           uint8_t *nbRep);
 
 /*!
  * \brief Computes the symbol time for LoRa modulation.
@@ -501,7 +513,7 @@ uint8_t RegionCommonLinkAdrReqVerifyParams( RegionCommonLinkAdrReqVerifyParams_t
  *
  * \retval Returns the symbol time in microseconds.
  */
-uint32_t RegionCommonComputeSymbolTimeLoRa( uint8_t phyDr, uint32_t bandwidthInHz );
+uint32_t RegionCommonComputeSymbolTimeLoRa(uint8_t phyDr, uint32_t bandwidthInHz);
 
 /*!
  * \brief Computes the symbol time for FSK modulation.
@@ -510,7 +522,7 @@ uint32_t RegionCommonComputeSymbolTimeLoRa( uint8_t phyDr, uint32_t bandwidthInH
  *
  * \retval Returns the symbol time in microseconds.
  */
-uint32_t RegionCommonComputeSymbolTimeFsk( uint8_t phyDrInKbps );
+uint32_t RegionCommonComputeSymbolTimeFsk(uint8_t phyDrInKbps);
 
 /*!
  * \brief Computes the RX window timeout and the RX window offset.
@@ -520,7 +532,8 @@ uint32_t RegionCommonComputeSymbolTimeFsk( uint8_t phyDrInKbps );
  * \param [in] minRxSymbols Minimum required number of symbols to detect an Rx frame.
  *
  * \param [in] rxErrorInMs System maximum timing error of the receiver. In milliseconds
- *                     The receiver will turn on in a [-rxErrorInMs : +rxErrorInMs] ms interval around RxOffset.
+ *                     The receiver will turn on in a [-rxErrorInMs : +rxErrorInMs] ms interval
+ * around RxOffset.
  *
  * \param [in] wakeUpTimeInMs Wakeup time of the system.
  *
@@ -528,7 +541,12 @@ uint32_t RegionCommonComputeSymbolTimeFsk( uint8_t phyDrInKbps );
  *
  * \param [out] windowOffsetInMs RX window time offset to be applied to the RX delay.
  */
-void RegionCommonComputeRxWindowParameters( uint32_t tSymbolInUs, uint8_t minRxSymbols, uint32_t rxErrorInMs, uint32_t wakeUpTimeInMs, uint32_t* windowTimeoutInSymbols, int32_t* windowOffsetInMs );
+void RegionCommonComputeRxWindowParameters(uint32_t tSymbolInUs,
+                                           uint8_t minRxSymbols,
+                                           uint32_t rxErrorInMs,
+                                           uint32_t wakeUpTimeInMs,
+                                           uint32_t *windowTimeoutInSymbols,
+                                           int32_t *windowOffsetInMs);
 
 /*!
  * \brief Computes the txPower, based on the max EIRP and the antenna gain.
@@ -545,14 +563,14 @@ void RegionCommonComputeRxWindowParameters( uint32_t tSymbolInUs, uint8_t minRxS
  *
  * \retval Returns the physical TX power.
  */
-int8_t RegionCommonComputeTxPower( int8_t txPowerIndex, float maxEirp, float antennaGain );
+int8_t RegionCommonComputeTxPower(int8_t txPowerIndex, float maxEirp, float antennaGain);
 
 /*!
  * \brief Sets up the radio into RX beacon mode.
  *
  * \param [in] rxBeaconSetupParams A pointer to the input parameters.
  */
-void RegionCommonRxBeaconSetup( RegionCommonRxBeaconSetupParams_t* rxBeaconSetupParams );
+void RegionCommonRxBeaconSetup(RegionCommonRxBeaconSetupParams_t *rxBeaconSetupParams);
 
 /*!
  * \brief Counts the number of enabled channels.
@@ -567,8 +585,11 @@ void RegionCommonRxBeaconSetup( RegionCommonRxBeaconSetupParams_t* rxBeaconSetup
  * \param [out] nbRestrictedChannels It contains the number of channel
  *                      which are available, but restricted due to duty cycle.
  */
-void RegionCommonCountNbOfEnabledChannels( RegionCommonCountNbOfEnabledChannelsParams_t* countNbOfEnabledChannelsParams,
-                                           uint8_t* enabledChannels, uint8_t* nbEnabledChannels, uint8_t* nbRestrictedChannels );
+void RegionCommonCountNbOfEnabledChannels(
+    RegionCommonCountNbOfEnabledChannelsParams_t *countNbOfEnabledChannelsParams,
+    uint8_t *enabledChannels,
+    uint8_t *nbEnabledChannels,
+    uint8_t *nbRestrictedChannels);
 
 /*!
  * \brief Identifies all channels which are available currently.
@@ -591,19 +612,23 @@ void RegionCommonCountNbOfEnabledChannels( RegionCommonCountNbOfEnabledChannelsP
  *
  *\retval Status of the operation.
  */
-LoRaMacStatus_t RegionCommonIdentifyChannels( RegionCommonIdentifyChannelsParam_t* identifyChannelsParam,
-                                              TimerTime_t* aggregatedTimeOff, uint8_t* enabledChannels,
-                                              uint8_t* nbEnabledChannels, uint8_t* nbRestrictedChannels,
-                                              TimerTime_t* nextTxDelay );
+LoRaMacStatus_t RegionCommonIdentifyChannels(
+    RegionCommonIdentifyChannelsParam_t *identifyChannelsParam,
+    TimerTime_t *aggregatedTimeOff,
+    uint8_t *enabledChannels,
+    uint8_t *nbEnabledChannels,
+    uint8_t *nbRestrictedChannels,
+    TimerTime_t *nextTxDelay);
 
 /*!
  * \brief Selects the next lower datarate.
  *
- * \param [in] params Data structure providing parameters based on \ref RegionCommonGetNextLowerTxDrParams_t
+ * \param [in] params Data structure providing parameters based on \ref
+ * RegionCommonGetNextLowerTxDrParams_t
  *
  * \retval The next lower datarate.
  */
-int8_t RegionCommonGetNextLowerTxDr( RegionCommonGetNextLowerTxDrParams_t *params );
+int8_t RegionCommonGetNextLowerTxDr(RegionCommonGetNextLowerTxDrParams_t *params);
 
 /*!
  * \brief Limits the TX power.
@@ -614,7 +639,7 @@ int8_t RegionCommonGetNextLowerTxDr( RegionCommonGetNextLowerTxDrParams_t *param
  *
  * \retval Limited TX power.
  */
-int8_t RegionCommonLimitTxPower( int8_t txPower, int8_t maxBandTxPower );
+int8_t RegionCommonLimitTxPower(int8_t txPower, int8_t maxBandTxPower);
 
 /*!
  * \brief Gets the bandwidth.
@@ -625,7 +650,7 @@ int8_t RegionCommonLimitTxPower( int8_t txPower, int8_t maxBandTxPower );
  *
  * \retval Bandwidth.
  */
-uint32_t RegionCommonGetBandwidth( uint32_t drIndex, const uint32_t* bandwidths );
+uint32_t RegionCommonGetBandwidth(uint32_t drIndex, const uint32_t *bandwidths);
 
 /*!
  * \brief Print the current RX configuration
@@ -637,9 +662,7 @@ uint32_t RegionCommonGetBandwidth( uint32_t drIndex, const uint32_t* bandwidths 
  * \param [in] dr datarate
  *
  */
-void RegionCommonRxConfigPrint(LoRaMacRxSlot_t rxSlot,
-                               uint32_t frequency,
-                               int8_t dr);
+void RegionCommonRxConfigPrint(LoRaMacRxSlot_t rxSlot, uint32_t frequency, int8_t dr);
 
 /*!
  * \brief Print the current TX configuration

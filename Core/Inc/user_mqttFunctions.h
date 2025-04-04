@@ -1,9 +1,10 @@
 #include "user_system.h"
 
-typedef struct {
-  char topic[MQTT_TOPIC_SIZE];
-  char value[MQTT_MESSAGE_SIZE];
-  // timestamp
+typedef struct
+{
+    char topic[MQTT_TOPIC_SIZE];
+    char value[MQTT_MESSAGE_SIZE];
+    // timestamp
 } MqttMessage_t;
 
 void prepareMqttMessageStruct(uint8_t sensorIndex);

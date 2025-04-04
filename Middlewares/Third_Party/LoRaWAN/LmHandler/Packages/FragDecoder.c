@@ -2,8 +2,10 @@
  * \file      FragDecoder.c
  *
  * \brief     Implements the LoRa-Alliance fragmentation decoder
- *            Specification V1.0.0: https://resources.lora-alliance.org/technical-specifications/lorawan-fragmented-data-block-transport-specification-v1-0-0
- *            Specification V2.0.0: https://resources.lora-alliance.org/technical-specifications/ts004-2-0-0-fragmented-data-block-transport
+ *            Specification V1.0.0:
+ * https://resources.lora-alliance.org/technical-specifications/lorawan-fragmented-data-block-transport-specification-v1-0-0
+ *            Specification V2.0.0:
+ * https://resources.lora-alliance.org/technical-specifications/ts004-2-0-0-fragmented-data-block-transport
  *
  * \copyright Revised BSD License, see section \ref LICENSE.
  *
@@ -22,18 +24,18 @@
  * \author    Miguel Luis ( Semtech )
  */
 /**
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    FragDecoder.c
-  * @author  MCD Application Team
-  * @brief   Fragmentation Decoder definition
-  ******************************************************************************
-  */
-#include "utilities.h"
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    FragDecoder.c
+ * @author  MCD Application Team
+ * @brief   Fragmentation Decoder definition
+ ******************************************************************************
+ */
 #include "FragDecoder.h"
 #include "frag_decoder_if.h"
+#include "utilities.h"
 
 /*
  *=============================================================================
@@ -48,21 +50,21 @@ typedef struct
     uint8_t FragSize;
 
     uint32_t M2BLine;
-    uint8_t MatrixM2B[( ( FRAG_MAX_REDUNDANCY >> 3 ) + 1 ) * FRAG_MAX_REDUNDANCY];
+    uint8_t MatrixM2B[((FRAG_MAX_REDUNDANCY >> 3) + 1) * FRAG_MAX_REDUNDANCY];
     uint16_t FragNbMissingIndex[FRAG_MAX_NB];
 
-    uint8_t S[( FRAG_MAX_REDUNDANCY >> 3 ) + 1];
+    uint8_t S[(FRAG_MAX_REDUNDANCY >> 3) + 1];
 
     FragDecoderStatus_t Status;
 } FragDecoder_t;
 
 /*
  * Global variables
-*/
-static uint8_t matrixRow[( FRAG_MAX_NB >> 3 ) + 1];
+ */
+static uint8_t matrixRow[(FRAG_MAX_NB >> 3) + 1];
 static uint8_t matrixDataTemp[FRAG_MAX_SIZE];
-static uint8_t dataTempVector[( FRAG_MAX_REDUNDANCY >> 3 ) + 1];
-static uint8_t dataTempVector2[( FRAG_MAX_REDUNDANCY >> 3 ) + 1];
+static uint8_t dataTempVector[(FRAG_MAX_REDUNDANCY >> 3) + 1];
+static uint8_t dataTempVector2[(FRAG_MAX_REDUNDANCY >> 3) + 1];
 
 /*!
  * \brief Sets a row from source into file destination
@@ -71,7 +73,7 @@ static uint8_t dataTempVector2[( FRAG_MAX_REDUNDANCY >> 3 ) + 1];
  * \param [in] row  Destination index of the row to be copied
  * \param [in] size Source number of bytes to be copied
  */
-static void SetRow( uint8_t *src, uint16_t row, uint16_t size );
+static void SetRow(uint8_t *src, uint16_t row, uint16_t size);
 
 /*!
  * \brief Gets a row from source and stores it into file destination
@@ -80,7 +82,7 @@ static void SetRow( uint8_t *src, uint16_t row, uint16_t size );
  * \param [in] row  Source index of the row to be copied
  * \param [in] size Source number of bytes to be copied
  */
-static void GetRow( uint8_t *src, uint16_t row, uint16_t size );
+static void GetRow(uint8_t *src, uint16_t row, uint16_t size);
 
 /*!
  * \brief Gets the parity value from a given row of the parity matrix
@@ -90,7 +92,7 @@ static void GetRow( uint8_t *src, uint16_t row, uint16_t size );
  *
  * \retval parity         Parity value at the given index
  */
-static uint8_t GetParity( uint16_t index, uint8_t *matrixRow );
+static uint8_t GetParity(uint16_t index, uint8_t *matrixRow);
 
 /*!
  * \brief Sets the parity value on the given row of the parity matrix
@@ -99,7 +101,7 @@ static uint8_t GetParity( uint16_t index, uint8_t *matrixRow );
  * \param [in,out] matrixRow Pointer to the parity matrix.
  * \param [in]     parity    The parity value to be set in the parity matrix
  */
-static void SetParity( uint16_t index, uint8_t *matrixRow, uint8_t parity );
+static void SetParity(uint16_t index, uint8_t *matrixRow, uint8_t parity);
 
 /*!
  * \brief Check if the provided value is a power of 2
@@ -108,7 +110,7 @@ static void SetParity( uint16_t index, uint8_t *matrixRow, uint8_t parity );
  *
  * \retval status Return true if frame is a power of two
  */
-static bool IsPowerOfTwo( uint32_t x );
+static bool IsPowerOfTwo(uint32_t x);
 
 /*!
  * \brief XOrs two data lines
@@ -119,7 +121,7 @@ static bool IsPowerOfTwo( uint32_t x );
  *
  * \note result XOR( line1, line2 ) result stored in line1
  */
-static void XorDataLine( uint8_t *line1, uint8_t *line2, int32_t size );
+static void XorDataLine(uint8_t *line1, uint8_t *line2, int32_t size);
 
 /*!
  * \brief XORs two parity lines
@@ -130,7 +132,7 @@ static void XorDataLine( uint8_t *line1, uint8_t *line2, int32_t size );
  *
  * \note result XOR( line1, line2 ) result stored in line1
  */
-static void XorParityLine( uint8_t *line1, uint8_t *line2, int32_t size );
+static void XorParityLine(uint8_t *line1, uint8_t *line2, int32_t size);
 
 /*!
  * \brief Generates a pseudo random number : PRBS23
@@ -139,7 +141,7 @@ static void XorParityLine( uint8_t *line1, uint8_t *line2, int32_t size );
  *
  * \retval nextValue Returns the next pseudo random number
  */
-static int32_t FragPrbs23( int32_t value );
+static int32_t FragPrbs23(int32_t value);
 
 /*!
  * \brief Gets and fills the parity matrix
@@ -148,7 +150,7 @@ static int32_t FragPrbs23( int32_t value );
  * \param [in]  m         Fragment number
  * \param [out] matrixRow Parity matrix
  */
-static void FragGetParityMatrixRow( int32_t n, int32_t m, uint8_t *matrixRow );
+static void FragGetParityMatrixRow(int32_t n, int32_t m, uint8_t *matrixRow);
 
 /*!
  * \brief Finds the index of the first one in a bit array
@@ -157,7 +159,7 @@ static void FragGetParityMatrixRow( int32_t n, int32_t m, uint8_t *matrixRow );
  * \param [in] size     Bit array size
  * \retval index        The index of the first 1 in the bit array
  */
-static uint16_t BitArrayFindFirstOne( uint8_t *bitArray, uint16_t size );
+static uint16_t BitArrayFindFirstOne(uint8_t *bitArray, uint16_t size);
 
 /*!
  * \brief Checks if the provided bit array only contains zeros
@@ -166,7 +168,7 @@ static uint16_t BitArrayFindFirstOne( uint8_t *bitArray, uint16_t size );
  * \param [in] size     Bit array size
  * \retval isAllZeros   [0: Contains ones, 1: Contains all zeros]
  */
-static uint8_t BitArrayIsAllZeros( uint8_t *bitArray, uint16_t  size );
+static uint8_t BitArrayIsAllZeros(uint8_t *bitArray, uint16_t size);
 
 /*!
  * \brief Finds & marks missing fragments
@@ -174,7 +176,7 @@ static uint8_t BitArrayIsAllZeros( uint8_t *bitArray, uint16_t  size );
  * \param [in]  counter Current fragment counter
  * \note FragDecoder.FragNbMissingIndex[] array is updated in place
  */
-static void FragFindMissingFrags( uint16_t counter );
+static void FragFindMissingFrags(uint16_t counter);
 
 /*!
  * \brief Finds the index (frag counter) of the x th missing frag
@@ -183,7 +185,7 @@ static void FragFindMissingFrags( uint16_t counter );
  *
  * \retval counter The counter value associated to the x th missing frag
  */
-static uint16_t FragFindMissingIndex( uint16_t x );
+static uint16_t FragFindMissingIndex(uint16_t x);
 
 /*!
  * \brief Extracts a row from the binary matrix and expands it to a bitArray
@@ -192,7 +194,9 @@ static uint16_t FragFindMissingIndex( uint16_t x );
  * \param [in] rowIndex  Matrix row index
  * \param [in] bitsInRow Number of bits in one row
  */
-static void FragExtractLineFromBinaryMatrix( uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow );
+static void FragExtractLineFromBinaryMatrix(uint8_t *bitArray,
+                                            uint16_t rowIndex,
+                                            uint16_t bitsInRow);
 
 /*!
  * \brief Collapses and Pushs a row of a bit array to the matrix
@@ -201,7 +205,7 @@ static void FragExtractLineFromBinaryMatrix( uint8_t *bitArray, uint16_t rowInde
  * \param [in] rowIndex  Matrix row index
  * \param [in] bitsInRow Number of bits in one row
  */
-static void FragPushLineToBinaryMatrix( uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow );
+static void FragPushLineToBinaryMatrix(uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow);
 
 /*
  *=============================================================================
@@ -213,35 +217,38 @@ static FragDecoder_t FragDecoder;
 
 static uint8_t FragmentationPackageVersion = 0;
 
-void FragDecoderInit( uint16_t fragNb, uint8_t fragSize, FragDecoderCallbacks_t *callbacks, uint8_t fragPVer )
+void FragDecoderInit(uint16_t fragNb,
+                     uint8_t fragSize,
+                     FragDecoderCallbacks_t *callbacks,
+                     uint8_t fragPVer)
 {
     FragmentationPackageVersion = fragPVer;
     FragDecoder.Callbacks = callbacks;
-    FragDecoder.FragNb = fragNb;                                /* FragNb = FRAG_MAX_SIZE */
-    FragDecoder.FragSize = fragSize;                            /* number of byte on a row */
+    FragDecoder.FragNb = fragNb;     /* FragNb = FRAG_MAX_SIZE */
+    FragDecoder.FragSize = fragSize; /* number of byte on a row */
     FragDecoder.Status.FragNbLastRx = 0;
     FragDecoder.Status.FragNbLost = 0;
     FragDecoder.M2BLine = 0;
 
     /* Initialize missing fragments index array */
-    for( uint16_t i = 0; i < FRAG_MAX_NB; i++ )
+    for (uint16_t i = 0; i < FRAG_MAX_NB; i++)
     {
         FragDecoder.FragNbMissingIndex[i] = 1;
     }
 
     /* Initialize parity matrix */
-    for( uint32_t i = 0; i < ( ( FRAG_MAX_REDUNDANCY >> 3 ) + 1 ); i++ )
+    for (uint32_t i = 0; i < ((FRAG_MAX_REDUNDANCY >> 3) + 1); i++)
     {
         FragDecoder.S[i] = 0;
     }
 
-    for( uint32_t i = 0; i < ( ( ( FRAG_MAX_REDUNDANCY >> 3 ) + 1 ) * FRAG_MAX_REDUNDANCY ); i++ )
+    for (uint32_t i = 0; i < (((FRAG_MAX_REDUNDANCY >> 3) + 1) * FRAG_MAX_REDUNDANCY); i++)
     {
         FragDecoder.MatrixM2B[i] = 0xFF;
     }
 
     /* Initialize final uncoded data buffer ( FRAG_MAX_NB * FRAG_MAX_SIZE ) */
-    if( FragDecoder.Callbacks->FragDecoderErase != NULL )
+    if (FragDecoder.Callbacks->FragDecoderErase != NULL)
     {
         FragDecoder.Callbacks->FragDecoderErase();
     }
@@ -249,49 +256,49 @@ void FragDecoderInit( uint16_t fragNb, uint8_t fragSize, FragDecoderCallbacks_t 
     FragDecoder.Status.FragNbLastRx = 0;
 }
 
-uint32_t FragDecoderGetMaxFileSize( void )
+uint32_t FragDecoderGetMaxFileSize(void)
 {
     return FRAG_MAX_NB * FRAG_MAX_SIZE;
 }
 
-int32_t FragDecoderProcess( uint16_t fragCounter, uint8_t *rawData )
+int32_t FragDecoderProcess(uint16_t fragCounter, uint8_t *rawData)
 {
     uint16_t firstOneInRow = 0;
     int32_t first = 0;
     int32_t noInfo = 0;
 
-    memset1( matrixRow, 0, ( FRAG_MAX_NB >> 3 ) + 1 );
-    memset1( matrixDataTemp, 0, FRAG_MAX_SIZE );
-    memset1( dataTempVector, 0, ( FRAG_MAX_REDUNDANCY >> 3 ) + 1 );
-    memset1( dataTempVector2, 0, ( FRAG_MAX_REDUNDANCY >> 3 ) + 1 );
+    memset1(matrixRow, 0, (FRAG_MAX_NB >> 3) + 1);
+    memset1(matrixDataTemp, 0, FRAG_MAX_SIZE);
+    memset1(dataTempVector, 0, (FRAG_MAX_REDUNDANCY >> 3) + 1);
+    memset1(dataTempVector2, 0, (FRAG_MAX_REDUNDANCY >> 3) + 1);
 
     FragDecoder.Status.FragNbRx = fragCounter;
 
-    if( fragCounter < FragDecoder.Status.FragNbLastRx )
+    if (fragCounter < FragDecoder.Status.FragNbLastRx)
     {
-        return FRAG_SESSION_ONGOING;  /* Drop frame out of order */
+        return FRAG_SESSION_ONGOING; /* Drop frame out of order */
     }
 
     /* The M (FragNb) first packets aren't encoded or in other words they are */
     /* encoded with the unitary matrix */
-    if( fragCounter < ( FragDecoder.FragNb + 1 ) )
+    if (fragCounter < (FragDecoder.FragNb + 1))
     {
         /* The M first frame are not encoded store them */
-        SetRow( rawData, fragCounter - 1, FragDecoder.FragSize );
+        SetRow(rawData, fragCounter - 1, FragDecoder.FragSize);
 
         FragDecoder.FragNbMissingIndex[fragCounter - 1] = 0;
 
         /* Update the FragDecoder.FragNbMissingIndex with the losing frame */
-        FragFindMissingFrags( fragCounter );
+        FragFindMissingFrags(fragCounter);
 
-        if( ( fragCounter == FragDecoder.FragNb ) && ( FragDecoder.Status.FragNbLost == 0U ) )
+        if ((fragCounter == FragDecoder.FragNb) && (FragDecoder.Status.FragNbLost == 0U))
         {
             return FRAG_SESSION_FINISHED;
         }
     }
     else
     {
-        if( FragDecoder.Status.FragNbLost > FRAG_MAX_REDUNDANCY )
+        if (FragDecoder.Status.FragNbLost > FRAG_MAX_REDUNDANCY)
         {
             FragDecoder.Status.MatrixError = 1;
             return FRAG_SESSION_FINISHED;
@@ -300,33 +307,33 @@ int32_t FragDecoderProcess( uint16_t fragCounter, uint8_t *rawData )
         /* is well known: FragDecoder.FragNbLost - 1; */
 
         /* In case of the end of true data is missing */
-        FragFindMissingFrags( fragCounter );
+        FragFindMissingFrags(fragCounter);
 
-        if( FragDecoder.Status.FragNbLost == 0 )
+        if (FragDecoder.Status.FragNbLost == 0)
         {
             /* the case : all the M(FragNb) first rows have been transmitted with no error */
             return FragDecoder.Status.FragNbLost;
         }
 
         /* fragCounter - FragDecoder.FragNb */
-        FragGetParityMatrixRow( fragCounter - FragDecoder.FragNb, FragDecoder.FragNb, matrixRow );
+        FragGetParityMatrixRow(fragCounter - FragDecoder.FragNb, FragDecoder.FragNb, matrixRow);
 
-        for( int32_t i = 0; i < FragDecoder.FragNb; i++ )
+        for (int32_t i = 0; i < FragDecoder.FragNb; i++)
         {
-            if( GetParity( i, matrixRow ) == 1 )
+            if (GetParity(i, matrixRow) == 1)
             {
-                if( FragDecoder.FragNbMissingIndex[i] == 0 )
+                if (FragDecoder.FragNbMissingIndex[i] == 0)
                 {
                     /* XOR with already receive frag */
-                    SetParity( i, matrixRow, 0 );
-                    GetRow( matrixDataTemp, i, FragDecoder.FragSize );
-                    XorDataLine( rawData, matrixDataTemp, FragDecoder.FragSize );
+                    SetParity(i, matrixRow, 0);
+                    GetRow(matrixDataTemp, i, FragDecoder.FragSize);
+                    XorDataLine(rawData, matrixDataTemp, FragDecoder.FragSize);
                 }
                 else
                 {
                     /* Fill the "little" boolean matrix m2b */
-                    SetParity( FragDecoder.FragNbMissingIndex[i] - 1, dataTempVector, 1 );
-                    if( first == 0 )
+                    SetParity(FragDecoder.FragNbMissingIndex[i] - 1, dataTempVector, 1);
+                    if (first == 0)
                     {
                         first = 1;
                     }
@@ -334,67 +341,77 @@ int32_t FragDecoderProcess( uint16_t fragCounter, uint8_t *rawData )
             }
         }
 
-        firstOneInRow = BitArrayFindFirstOne( dataTempVector, FragDecoder.Status.FragNbLost );
+        firstOneInRow = BitArrayFindFirstOne(dataTempVector, FragDecoder.Status.FragNbLost);
 
-        if( first > 0 )
+        if (first > 0)
         {
             int32_t li;
             int32_t lj;
 
             /* Manage a new line in MatrixM2B */
-            while( GetParity( firstOneInRow, FragDecoder.S ) == 1 )
+            while (GetParity(firstOneInRow, FragDecoder.S) == 1)
             {
                 /* Row already diagonalized exist & ( FragDecoder.MatrixM2B[firstOneInRow][0] ) */
-                FragExtractLineFromBinaryMatrix( dataTempVector2, firstOneInRow, FragDecoder.Status.FragNbLost );
-                XorParityLine( dataTempVector, dataTempVector2, FragDecoder.Status.FragNbLost );
+                FragExtractLineFromBinaryMatrix(dataTempVector2,
+                                                firstOneInRow,
+                                                FragDecoder.Status.FragNbLost);
+                XorParityLine(dataTempVector, dataTempVector2, FragDecoder.Status.FragNbLost);
                 /* Have to store it in the mi th position of the missing frag */
-                li = FragFindMissingIndex( firstOneInRow );
-                GetRow( matrixDataTemp, li, FragDecoder.FragSize );
-                XorDataLine( rawData, matrixDataTemp, FragDecoder.FragSize );
-                if( BitArrayIsAllZeros( dataTempVector, FragDecoder.Status.FragNbLost ) )
+                li = FragFindMissingIndex(firstOneInRow);
+                GetRow(matrixDataTemp, li, FragDecoder.FragSize);
+                XorDataLine(rawData, matrixDataTemp, FragDecoder.FragSize);
+                if (BitArrayIsAllZeros(dataTempVector, FragDecoder.Status.FragNbLost))
                 {
                     noInfo = 1;
                     break;
                 }
-                firstOneInRow = BitArrayFindFirstOne( dataTempVector, FragDecoder.Status.FragNbLost );
+                firstOneInRow = BitArrayFindFirstOne(dataTempVector, FragDecoder.Status.FragNbLost);
             }
 
-            if( noInfo == 0 )
+            if (noInfo == 0)
             {
-                FragPushLineToBinaryMatrix( dataTempVector, firstOneInRow, FragDecoder.Status.FragNbLost );
-                li = FragFindMissingIndex( firstOneInRow );
-                SetRow( rawData, li, FragDecoder.FragSize );
-                SetParity( firstOneInRow, FragDecoder.S, 1 );
+                FragPushLineToBinaryMatrix(dataTempVector,
+                                           firstOneInRow,
+                                           FragDecoder.Status.FragNbLost);
+                li = FragFindMissingIndex(firstOneInRow);
+                SetRow(rawData, li, FragDecoder.FragSize);
+                SetParity(firstOneInRow, FragDecoder.S, 1);
                 FragDecoder.M2BLine++;
             }
 
-            if( FragDecoder.M2BLine == FragDecoder.Status.FragNbLost )
+            if (FragDecoder.M2BLine == FragDecoder.Status.FragNbLost)
             {
                 /* Then last step diagonalized */
-                if( FragDecoder.Status.FragNbLost > 1 )
+                if (FragDecoder.Status.FragNbLost > 1)
                 {
                     int32_t i;
                     int32_t j;
 
-                    for( i = ( FragDecoder.Status.FragNbLost - 2 ); i >= 0 ; i-- )
+                    for (i = (FragDecoder.Status.FragNbLost - 2); i >= 0; i--)
                     {
-                        li = FragFindMissingIndex( i );
-                        GetRow( matrixDataTemp, li, FragDecoder.FragSize );
-                        for( j = ( FragDecoder.Status.FragNbLost - 1 ); j > i; j-- )
+                        li = FragFindMissingIndex(i);
+                        GetRow(matrixDataTemp, li, FragDecoder.FragSize);
+                        for (j = (FragDecoder.Status.FragNbLost - 1); j > i; j--)
                         {
-                            FragExtractLineFromBinaryMatrix( dataTempVector2, i, FragDecoder.Status.FragNbLost );
-                            FragExtractLineFromBinaryMatrix( dataTempVector, j, FragDecoder.Status.FragNbLost );
-                            if( GetParity( j, dataTempVector2 ) == 1 )
+                            FragExtractLineFromBinaryMatrix(dataTempVector2,
+                                                            i,
+                                                            FragDecoder.Status.FragNbLost);
+                            FragExtractLineFromBinaryMatrix(dataTempVector,
+                                                            j,
+                                                            FragDecoder.Status.FragNbLost);
+                            if (GetParity(j, dataTempVector2) == 1)
                             {
-                                XorParityLine( dataTempVector2, dataTempVector, FragDecoder.Status.FragNbLost );
+                                XorParityLine(dataTempVector2,
+                                              dataTempVector,
+                                              FragDecoder.Status.FragNbLost);
 
-                                lj = FragFindMissingIndex( j );
+                                lj = FragFindMissingIndex(j);
 
-                                GetRow( rawData, lj, FragDecoder.FragSize );
-                                XorDataLine( matrixDataTemp, rawData, FragDecoder.FragSize );
+                                GetRow(rawData, lj, FragDecoder.FragSize);
+                                XorDataLine(matrixDataTemp, rawData, FragDecoder.FragSize);
                             }
                         }
-                        SetRow( matrixDataTemp, li, FragDecoder.FragSize );
+                        SetRow(matrixDataTemp, li, FragDecoder.FragSize);
                     }
                     return FragDecoder.Status.FragNbLost;
                 }
@@ -409,7 +426,7 @@ int32_t FragDecoderProcess( uint16_t fragCounter, uint8_t *rawData )
     return FRAG_SESSION_ONGOING;
 }
 
-FragDecoderStatus_t FragDecoderGetStatus( void )
+FragDecoderStatus_t FragDecoderGetStatus(void)
 {
     return FragDecoder.Status;
 }
@@ -420,83 +437,83 @@ FragDecoderStatus_t FragDecoderGetStatus( void )
  *=============================================================================
  */
 
-static void SetRow( uint8_t *src, uint16_t row, uint16_t size )
+static void SetRow(uint8_t *src, uint16_t row, uint16_t size)
 {
-    if( ( FragDecoder.Callbacks != NULL ) && ( FragDecoder.Callbacks->FragDecoderWrite != NULL ) )
+    if ((FragDecoder.Callbacks != NULL) && (FragDecoder.Callbacks->FragDecoderWrite != NULL))
     {
-        FragDecoder.Callbacks->FragDecoderWrite( row * size, src, size );
+        FragDecoder.Callbacks->FragDecoderWrite(row * size, src, size);
     }
 }
 
-static void GetRow( uint8_t *dst, uint16_t row, uint16_t size )
+static void GetRow(uint8_t *dst, uint16_t row, uint16_t size)
 {
-    if( ( FragDecoder.Callbacks != NULL ) && ( FragDecoder.Callbacks->FragDecoderRead != NULL ) )
+    if ((FragDecoder.Callbacks != NULL) && (FragDecoder.Callbacks->FragDecoderRead != NULL))
     {
-        FragDecoder.Callbacks->FragDecoderRead( row * size, dst, size );
+        FragDecoder.Callbacks->FragDecoderRead(row * size, dst, size);
     }
 }
 
-static uint8_t GetParity( uint16_t index, uint8_t *matrixRow )
+static uint8_t GetParity(uint16_t index, uint8_t *matrixRow)
 {
     uint8_t parity;
     parity = matrixRow[index >> 3];
-    parity = ( parity >> ( 7 - ( index % 8 ) ) ) & 0x01;
+    parity = (parity >> (7 - (index % 8))) & 0x01;
     return parity;
 }
 
-static void SetParity( uint16_t index, uint8_t *matrixRow, uint8_t parity )
+static void SetParity(uint16_t index, uint8_t *matrixRow, uint8_t parity)
 {
-    uint8_t mask = 0xFF - ( 1 << ( 7 - ( index % 8 ) ) );
-    parity = parity << ( 7 - ( index % 8 ) );
-    matrixRow[index >> 3] = ( matrixRow[index >> 3] & mask ) + parity;
+    uint8_t mask = 0xFF - (1 << (7 - (index % 8)));
+    parity = parity << (7 - (index % 8));
+    matrixRow[index >> 3] = (matrixRow[index >> 3] & mask) + parity;
 }
 
-static bool IsPowerOfTwo( uint32_t x )
+static bool IsPowerOfTwo(uint32_t x)
 {
     uint8_t sumBit = 0;
 
-    for( uint8_t i = 0; i < 32; i++ )
+    for (uint8_t i = 0; i < 32; i++)
     {
-        sumBit += ( x & ( 1 << i ) ) >> i;
+        sumBit += (x & (1 << i)) >> i;
     }
-    if( sumBit == 1 )
+    if (sumBit == 1)
     {
         return true;
     }
     return false;
 }
 
-static void XorDataLine( uint8_t *line1, uint8_t *line2, int32_t size )
+static void XorDataLine(uint8_t *line1, uint8_t *line2, int32_t size)
 {
-    for( int32_t i = 0; i < size; i++ )
+    for (int32_t i = 0; i < size; i++)
     {
         line1[i] = line1[i] ^ line2[i];
     }
 }
 
-static void XorParityLine( uint8_t *line1, uint8_t *line2, int32_t size )
+static void XorParityLine(uint8_t *line1, uint8_t *line2, int32_t size)
 {
-    for( int32_t i = 0; i < size; i++ )
+    for (int32_t i = 0; i < size; i++)
     {
-        SetParity( i, line1, ( GetParity( i, line1 ) ^ GetParity( i, line2 ) ) );
+        SetParity(i, line1, (GetParity(i, line1) ^ GetParity(i, line2)));
     }
 }
 
-static int32_t FragPrbs23( int32_t value )
+static int32_t FragPrbs23(int32_t value)
 {
     int32_t b0 = value & 0x01;
-    int32_t b1 = ( value & 0x20 ) >> 5;
-    return ( value >> 1 ) + ( ( b0 ^ b1 ) << 22 );
+    int32_t b1 = (value & 0x20) >> 5;
+    return (value >> 1) + ((b0 ^ b1) << 22);
 }
 
-static void FragGetParityMatrixRow( int32_t n, int32_t m, uint8_t *matrixRow )
+static void FragGetParityMatrixRow(int32_t n, int32_t m, uint8_t *matrixRow)
 {
     int32_t mTemp;
     int32_t x;
     int32_t nbCoeff = 0;
     int32_t r;
 
-    if( IsPowerOfTwo( m ) != false )
+    if (IsPowerOfTwo(m) != false)
     {
         mTemp = 1;
     }
@@ -505,34 +522,34 @@ static void FragGetParityMatrixRow( int32_t n, int32_t m, uint8_t *matrixRow )
         mTemp = 0;
     }
 
-    x = 1 + ( 1001 * n );
-    for( uint16_t i = 0; i < ( ( m >> 3 ) + 1 ); i++ )
+    x = 1 + (1001 * n);
+    for (uint16_t i = 0; i < ((m >> 3) + 1); i++)
     {
         matrixRow[i] = 0;
     }
-    while( nbCoeff < ( m >> 1 ) )
+    while (nbCoeff < (m >> 1))
     {
         r = 1 << 16;
-        while( r >= m )
+        while (r >= m)
         {
-            x = FragPrbs23( x );
-            r = x % ( m + mTemp );
+            x = FragPrbs23(x);
+            r = x % (m + mTemp);
         }
 
         /* FEC algorithm optimization in V2.0.0 */
-        if( ( GetParity( r, matrixRow ) == 0 ) || ( FragmentationPackageVersion == 1U ) )
+        if ((GetParity(r, matrixRow) == 0) || (FragmentationPackageVersion == 1U))
         {
-            SetParity( r, matrixRow, 1 );
+            SetParity(r, matrixRow, 1);
             nbCoeff += 1;
         }
     }
 }
 
-static uint16_t BitArrayFindFirstOne( uint8_t *bitArray, uint16_t size )
+static uint16_t BitArrayFindFirstOne(uint8_t *bitArray, uint16_t size)
 {
-    for( uint16_t i = 0; i < size; i++ )
+    for (uint16_t i = 0; i < size; i++)
     {
-        if( GetParity( i, bitArray ) == 1 )
+        if (GetParity(i, bitArray) == 1)
         {
             return i;
         }
@@ -540,11 +557,11 @@ static uint16_t BitArrayFindFirstOne( uint8_t *bitArray, uint16_t size )
     return 0;
 }
 
-static uint8_t BitArrayIsAllZeros( uint8_t *bitArray, uint16_t  size )
+static uint8_t BitArrayIsAllZeros(uint8_t *bitArray, uint16_t size)
 {
-    for( uint16_t i = 0; i < size; i++ )
+    for (uint16_t i = 0; i < size; i++)
     {
-        if( GetParity( i, bitArray ) == 1 )
+        if (GetParity(i, bitArray) == 1)
         {
             return 0;
         }
@@ -552,18 +569,18 @@ static uint8_t BitArrayIsAllZeros( uint8_t *bitArray, uint16_t  size )
     return 1;
 }
 
-static void FragFindMissingFrags( uint16_t counter )
+static void FragFindMissingFrags(uint16_t counter)
 {
     int32_t i;
-    for( i = FragDecoder.Status.FragNbLastRx; i < ( counter - 1 ); i++ )
+    for (i = FragDecoder.Status.FragNbLastRx; i < (counter - 1); i++)
     {
-        if( i < FragDecoder.FragNb )
+        if (i < FragDecoder.FragNb)
         {
             FragDecoder.Status.FragNbLost++;
             FragDecoder.FragNbMissingIndex[i] = FragDecoder.Status.FragNbLost;
         }
     }
-    if( i < FragDecoder.FragNb )
+    if (i < FragDecoder.FragNb)
     {
         FragDecoder.Status.FragNbLastRx = counter;
     }
@@ -573,11 +590,11 @@ static void FragFindMissingFrags( uint16_t counter )
     }
 }
 
-static uint16_t FragFindMissingIndex( uint16_t x )
+static uint16_t FragFindMissingIndex(uint16_t x)
 {
-    for( uint16_t i = 0; i < FragDecoder.FragNb; i++ )
+    for (uint16_t i = 0; i < FragDecoder.FragNb; i++)
     {
-        if( FragDecoder.FragNbMissingIndex[i] == ( x + 1 ) )
+        if (FragDecoder.FragNbMissingIndex[i] == (x + 1))
         {
             return i;
         }
@@ -585,31 +602,31 @@ static uint16_t FragFindMissingIndex( uint16_t x )
     return 0;
 }
 
-static void FragExtractLineFromBinaryMatrix( uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow )
+static void FragExtractLineFromBinaryMatrix(uint8_t *bitArray,
+                                            uint16_t rowIndex,
+                                            uint16_t bitsInRow)
 {
     uint32_t findByte = 0;
     uint32_t findBitInByte = 0;
 
-    if( rowIndex > 0 )
+    if (rowIndex > 0)
     {
-        findByte      = ( rowIndex * bitsInRow - ( ( rowIndex * ( rowIndex - 1 ) ) >> 1 ) ) >> 3;
-        findBitInByte = ( rowIndex * bitsInRow - ( ( rowIndex * ( rowIndex - 1 ) ) >> 1 ) ) % 8;
+        findByte = (rowIndex * bitsInRow - ((rowIndex * (rowIndex - 1)) >> 1)) >> 3;
+        findBitInByte = (rowIndex * bitsInRow - ((rowIndex * (rowIndex - 1)) >> 1)) % 8;
     }
-    if( rowIndex > 0 )
+    if (rowIndex > 0)
     {
-        for( uint16_t i = 0; i < rowIndex; i++ )
+        for (uint16_t i = 0; i < rowIndex; i++)
         {
-            SetParity( i, bitArray, 0 );
+            SetParity(i, bitArray, 0);
         }
     }
-    for( uint16_t i = rowIndex; i < bitsInRow; i++ )
+    for (uint16_t i = rowIndex; i < bitsInRow; i++)
     {
-        SetParity( i,
-                   bitArray,
-                   ( FragDecoder.MatrixM2B[findByte] >> ( 7 - findBitInByte ) ) & 0x01 );
+        SetParity(i, bitArray, (FragDecoder.MatrixM2B[findByte] >> (7 - findBitInByte)) & 0x01);
 
         findBitInByte++;
-        if( findBitInByte == 8 )
+        if (findBitInByte == 8)
         {
             findBitInByte = 0;
             findByte++;
@@ -617,25 +634,25 @@ static void FragExtractLineFromBinaryMatrix( uint8_t *bitArray, uint16_t rowInde
     }
 }
 
-static void FragPushLineToBinaryMatrix( uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow )
+static void FragPushLineToBinaryMatrix(uint8_t *bitArray, uint16_t rowIndex, uint16_t bitsInRow)
 {
     uint32_t findByte = 0;
     uint32_t findBitInByte = 0;
 
-    if( rowIndex > 0 )
+    if (rowIndex > 0)
     {
-        findByte      = ( rowIndex * bitsInRow - ( ( rowIndex * ( rowIndex - 1 ) ) >> 1 ) ) >> 3;
-        findBitInByte = ( rowIndex * bitsInRow - ( ( rowIndex * ( rowIndex - 1 ) ) >> 1 ) ) % 8;
-
+        findByte = (rowIndex * bitsInRow - ((rowIndex * (rowIndex - 1)) >> 1)) >> 3;
+        findBitInByte = (rowIndex * bitsInRow - ((rowIndex * (rowIndex - 1)) >> 1)) % 8;
     }
-    for( uint16_t i = rowIndex; i < bitsInRow; i++ )
+    for (uint16_t i = rowIndex; i < bitsInRow; i++)
     {
-        if( GetParity( i, bitArray ) == 0 )
+        if (GetParity(i, bitArray) == 0)
         {
-            FragDecoder.MatrixM2B[findByte] = FragDecoder.MatrixM2B[findByte] & ( 0xFF - ( 1 << ( 7 - findBitInByte ) ) );
+            FragDecoder.MatrixM2B[findByte]
+                = FragDecoder.MatrixM2B[findByte] & (0xFF - (1 << (7 - findBitInByte)));
         }
         findBitInByte++;
-        if( findBitInByte == 8 )
+        if (findBitInByte == 8)
         {
             findBitInByte = 0;
             findByte++;

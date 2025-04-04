@@ -31,12 +31,15 @@
  * \author    Johannes Bruder ( STACKFORCE )
  */
 
-#include "Region.h"
 #include "LoRaMacAdr.h"
 #include "LoRaMacVersion.h"
+#include "Region.h"
 
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01000300 ))
-static bool CalcNextV10X( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut, uint32_t* adrAckCounter )
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01000300))
+static bool CalcNextV10X(CalcNextAdrParams_t *adrNext,
+                         int8_t *drOut,
+                         int8_t *txPowOut,
+                         uint32_t *adrAckCounter)
 {
     bool adrAckReq = false;
     int8_t datarate = adrNext->Datarate;
@@ -48,23 +51,23 @@ static bool CalcNextV10X( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* t
     // Report back the adr ack counter
     *adrAckCounter = adrNext->AdrAckCounter;
 
-    if( adrNext->AdrEnabled == true )
+    if (adrNext->AdrEnabled == true)
     {
         // Query minimum TX Datarate
         getPhy.Attribute = PHY_MIN_TX_DR;
         getPhy.UplinkDwellTime = adrNext->UplinkDwellTime;
-        phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+        phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
         minTxDatarate = phyParam.Value;
-        datarate = MAX( datarate, minTxDatarate );
+        datarate = MAX(datarate, minTxDatarate);
 
-        if( datarate == minTxDatarate )
+        if (datarate == minTxDatarate)
         {
             *adrAckCounter = 0;
             adrAckReq = false;
         }
         else
         {
-            if( adrNext->AdrAckCounter >=  adrNext->AdrAckLimit )
+            if (adrNext->AdrAckCounter >= adrNext->AdrAckLimit)
             {
                 adrAckReq = true;
             }
@@ -72,31 +75,31 @@ static bool CalcNextV10X( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* t
             {
                 adrAckReq = false;
             }
-            if( adrNext->AdrAckCounter >= ( adrNext->AdrAckLimit + adrNext->AdrAckDelay ) )
+            if (adrNext->AdrAckCounter >= (adrNext->AdrAckLimit + adrNext->AdrAckDelay))
             {
                 // Set TX Power to maximum
                 getPhy.Attribute = PHY_MAX_TX_POWER;
-                phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+                phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
                 txPower = phyParam.Value;
 
-                if( ( adrNext->AdrAckCounter % adrNext->AdrAckDelay ) == 1 )
+                if ((adrNext->AdrAckCounter % adrNext->AdrAckDelay) == 1)
                 {
                     // Decrease the datarate
                     getPhy.Attribute = PHY_NEXT_LOWER_TX_DR;
                     getPhy.Datarate = datarate;
                     getPhy.UplinkDwellTime = adrNext->UplinkDwellTime;
-                    phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+                    phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
                     datarate = phyParam.Value;
 
-                    if( datarate == minTxDatarate )
+                    if (datarate == minTxDatarate)
                     {
                         // We must set adrAckReq to false as soon as we reach the lowest datarate
                         adrAckReq = false;
-                        if( adrNext->UpdateChanMask == true )
+                        if (adrNext->UpdateChanMask == true)
                         {
                             InitDefaultsParams_t params;
                             params.Type = INIT_TYPE_ACTIVATE_DEFAULT_CHANNELS;
-                            RegionInitDefaults( adrNext->Region, &params );
+                            RegionInitDefaults(adrNext->Region, &params);
                         }
                     }
                 }
@@ -122,17 +125,24 @@ static bool CalcNextV10X( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* t
  *
  * \retval Returns true, if an ADR request should be performed.
  */
-bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut, uint32_t* adrAckCounter )
+bool LoRaMacAdrCalcNext(CalcNextAdrParams_t *adrNext,
+                        int8_t *drOut,
+                        int8_t *txPowOut,
+                        uint32_t *adrAckCounter)
 {
-    if( adrNext->Version.Fields.Minor == 0 )
+    if (adrNext->Version.Fields.Minor == 0)
     {
-        return CalcNextV10X( adrNext, drOut, txPowOut, adrAckCounter );
+        return CalcNextV10X(adrNext, drOut, txPowOut, adrAckCounter);
     }
     return false;
 }
-#elif (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
-bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut,
-                         uint8_t* nbTransOut, uint32_t* adrAckCounter )
+#elif (defined(LORAMAC_VERSION)                                                                    \
+       && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+bool LoRaMacAdrCalcNext(CalcNextAdrParams_t *adrNext,
+                        int8_t *drOut,
+                        int8_t *txPowOut,
+                        uint8_t *nbTransOut,
+                        uint32_t *adrAckCounter)
 {
     bool adrAckReq = false;
     int8_t datarate = adrNext->Datarate;
@@ -145,44 +155,45 @@ bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* tx
     // Report back the adr ack counter
     *adrAckCounter = adrNext->AdrAckCounter;
 
-    if( adrNext->AdrEnabled == true )
+    if (adrNext->AdrEnabled == true)
     {
         // Query minimum TX Datarate
         getPhy.Attribute = PHY_MIN_TX_DR;
         getPhy.UplinkDwellTime = adrNext->UplinkDwellTime;
-        phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+        phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
         minTxDatarate = phyParam.Value;
-        datarate = MAX( datarate, minTxDatarate );
+        datarate = MAX(datarate, minTxDatarate);
 
         // Verify if ADR ack req bit needs to be set.
-        if( adrNext->AdrAckCounter >= adrNext->AdrAckLimit )
+        if (adrNext->AdrAckCounter >= adrNext->AdrAckLimit)
         {
             adrAckReq = true;
         }
 
         // Verify, if we need to set the TX power to default
-        if( adrNext->AdrAckCounter >= ( adrNext->AdrAckLimit + adrNext->AdrAckDelay ) )
+        if (adrNext->AdrAckCounter >= (adrNext->AdrAckLimit + adrNext->AdrAckDelay))
         {
             // Set TX Power to default
             getPhy.Attribute = PHY_DEF_TX_POWER;
-            phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+            phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
             txPower = phyParam.Value;
         }
 
         // Verify, if we need to decrease the data rate
-        if( adrNext->AdrAckCounter >= ( uint32_t )( adrNext->AdrAckLimit + ( adrNext->AdrAckDelay << 1 ) ) )
+        if (adrNext->AdrAckCounter
+            >= (uint32_t)(adrNext->AdrAckLimit + (adrNext->AdrAckDelay << 1)))
         {
             // Perform actions with every adrNext->AdrAckDelay only
-            if( ( ( adrNext->AdrAckCounter - adrNext->AdrAckLimit ) % adrNext->AdrAckDelay ) == 0 )
+            if (((adrNext->AdrAckCounter - adrNext->AdrAckLimit) % adrNext->AdrAckDelay) == 0)
             {
-                if( datarate == minTxDatarate )
+                if (datarate == minTxDatarate)
                 {
                     // Restore the channel mask
-                    if( adrNext->UpdateChanMask == true )
+                    if (adrNext->UpdateChanMask == true)
                     {
                         InitDefaultsParams_t params;
                         params.Type = INIT_TYPE_ACTIVATE_DEFAULT_CHANNELS;
-                        RegionInitDefaults( adrNext->Region, &params );
+                        RegionInitDefaults(adrNext->Region, &params);
                     }
 
                     // Restore NbTrans
@@ -193,7 +204,7 @@ bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* tx
                 getPhy.Attribute = PHY_NEXT_LOWER_TX_DR;
                 getPhy.Datarate = datarate;
                 getPhy.UplinkDwellTime = adrNext->UplinkDwellTime;
-                phyParam = RegionGetPhyParam( adrNext->Region, &getPhy );
+                phyParam = RegionGetPhyParam(adrNext->Region, &getPhy);
                 datarate = phyParam.Value;
             }
         }

@@ -38,8 +38,7 @@
 #define __LORAMACADR_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*! \} defgroup LORAMACADR */
@@ -49,7 +48,7 @@ extern "C"
  */
 typedef struct sCalcNextAdrParams
 {
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01000300 ))
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01000300))
     /*!
      * LoRaWAN Minor Version 1.X
      */
@@ -83,7 +82,8 @@ typedef struct sCalcNextAdrParams
      * TX power used currently.
      */
     int8_t TxPower;
-#if (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
+#if (defined(LORAMAC_VERSION)                                                                      \
+     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
     /*!
      * NbTrans counter used currently.
      */
@@ -97,9 +97,9 @@ typedef struct sCalcNextAdrParams
      * Region
      */
     LoRaMacRegion_t Region;
-}CalcNextAdrParams_t;
+} CalcNextAdrParams_t;
 
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01000300 ))
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01000300))
 /*!
  * \brief Calculates the next datarate to set, when ADR is on or off.
  *
@@ -113,8 +113,12 @@ typedef struct sCalcNextAdrParams
  *
  * \retval Returns true, if an ADR request should be performed.
  */
-bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut, uint32_t* adrAckCounter );
-#elif (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
+bool LoRaMacAdrCalcNext(CalcNextAdrParams_t *adrNext,
+                        int8_t *drOut,
+                        int8_t *txPowOut,
+                        uint32_t *adrAckCounter);
+#elif (defined(LORAMAC_VERSION)                                                                    \
+       && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
 /*!
  * \brief Calculates the next datarate to set, when ADR is on or off.
  *
@@ -140,8 +144,11 @@ bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* tx
  *
  * \retval Returns true, if an ADR request should be performed.
  */
-bool LoRaMacAdrCalcNext( CalcNextAdrParams_t* adrNext, int8_t* drOut, int8_t* txPowOut,
-                         uint8_t* nbTransOut, uint32_t* adrAckCounter );
+bool LoRaMacAdrCalcNext(CalcNextAdrParams_t *adrNext,
+                        int8_t *drOut,
+                        int8_t *txPowOut,
+                        uint8_t *nbTransOut,
+                        uint32_t *adrAckCounter);
 #endif /* LORAMAC_VERSION */
 
 #ifdef __cplusplus

@@ -34,12 +34,11 @@
 #define __LORAMAC_CRYPTO_NVM_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "utilities.h"
 #include "LoRaMacTypes.h"
+#include "utilities.h"
 
 /*!
  * LoRaWAN Frame counter list.
@@ -69,14 +68,14 @@ typedef struct sFCntList
      * Multicast downlink counters
      */
     uint32_t McFCntDown[LORAMAC_MAX_MC_CTX];
-#if (defined( LORAMAC_VERSION ) && ( LORAMAC_VERSION == 0x01010100 ))
+#if (defined(LORAMAC_VERSION) && (LORAMAC_VERSION == 0x01010100))
     /*!
      * RJcount1 is a counter incremented with every Rejoin request Type 1
      * frame transmitted.
      */
     uint16_t RJcount1;
 #endif /* LORAMAC_VERSION */
-}FCntList_t;
+} FCntList_t;
 
 /*!
  * LoRaMac Crypto Non Volatile Context structure
@@ -112,7 +111,7 @@ typedef struct sLoRaMacCryptoNvmData
      * CRC32 value of the Crypto data structure.
      */
     uint32_t Crc32;
-}LoRaMacCryptoNvmData_t;
+} LoRaMacCryptoNvmData_t;
 
 /*! \} addtogroup LORAMAC */
 

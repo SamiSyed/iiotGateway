@@ -38,8 +38,7 @@
 #define __LORAMAC_MESSAGE_TYPES_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LoRaMacHeaderTypes.h"
@@ -52,7 +51,7 @@ typedef struct sLoRaMacMessageJoinRequest
     /*!
      * Serialized message buffer
      */
-    uint8_t* Buffer;
+    uint8_t *Buffer;
     /*!
      * Size of serialized message buffer
      */
@@ -77,7 +76,7 @@ typedef struct sLoRaMacMessageJoinRequest
      * Message integrity code (MIC)
      */
     uint32_t MIC;
-}LoRaMacMessageJoinRequest_t;
+} LoRaMacMessageJoinRequest_t;
 
 /*!
  * LoRaMac type for rejoin-request type 1 message
@@ -87,7 +86,7 @@ typedef struct sLoRaMacMessageReJoinType1
     /*!
      * Serialized message buffer
      */
-    uint8_t* Buffer;
+    uint8_t *Buffer;
     /*!
      * Size of serialized message buffer
      */
@@ -116,7 +115,7 @@ typedef struct sLoRaMacMessageReJoinType1
      * Message integrity code (MIC)
      */
     uint32_t MIC;
-}LoRaMacMessageReJoinType1_t;
+} LoRaMacMessageReJoinType1_t;
 
 /*!
  * LoRaMac type for rejoin-request type 0 or 2 message
@@ -126,7 +125,7 @@ typedef struct sLoRaMacMessageReJoinType0or2
     /*!
      * Serialized message buffer
      */
-    uint8_t* Buffer;
+    uint8_t *Buffer;
     /*!
      * Size of serialized message buffer
      */
@@ -155,7 +154,7 @@ typedef struct sLoRaMacMessageReJoinType0or2
      * Message integrity code (MIC)
      */
     uint32_t MIC;
-}LoRaMacMessageReJoinType0or2_t;
+} LoRaMacMessageReJoinType0or2_t;
 
 /*!
  * LoRaMac type for Join-accept message
@@ -165,7 +164,7 @@ typedef struct sLoRaMacMessageJoinAccept
     /*!
      * Serialized message buffer
      */
-    uint8_t* Buffer;
+    uint8_t *Buffer;
     /*!
      * Size of serialized message buffer
      */
@@ -202,7 +201,7 @@ typedef struct sLoRaMacMessageJoinAccept
      * Message integrity code (MIC)
      */
     uint32_t MIC;
-}LoRaMacMessageJoinAccept_t;
+} LoRaMacMessageJoinAccept_t;
 
 /*!
  * LoRaMac type for Data MAC messages
@@ -213,7 +212,7 @@ typedef struct sLoRaMacMessageData
     /*!
      * Serialized message buffer
      */
-    uint8_t* Buffer;
+    uint8_t *Buffer;
     /*!
      * Size of serialized message buffer
      */
@@ -233,7 +232,7 @@ typedef struct sLoRaMacMessageData
     /*!
      * Frame payload may contain MAC commands or data (opt.)
      */
-    uint8_t* FRMPayload;
+    uint8_t *FRMPayload;
     /*!
      * Size of frame payload (not included in LoRaMac messages)
      */
@@ -242,7 +241,7 @@ typedef struct sLoRaMacMessageData
      * Message integrity code (MIC)
      */
     uint32_t MIC;
-}LoRaMacMessageData_t;
+} LoRaMacMessageData_t;
 
 /*!
  * LoRaMac message type enumerator
@@ -273,7 +272,7 @@ typedef enum eLoRaMacMessageType
      * Undefined message type
      */
     LORAMAC_MSG_TYPE_UNDEF,
-}LoRaMacMessageType_t;
+} LoRaMacMessageType_t;
 
 /*!
  * LoRaMac general message type
@@ -281,15 +280,14 @@ typedef enum eLoRaMacMessageType
 typedef struct sLoRaMacMessage
 {
     LoRaMacMessageType_t Type;
-    union uMessage
-    {
+    union uMessage {
         LoRaMacMessageJoinRequest_t JoinReq;
         LoRaMacMessageReJoinType1_t ReJoin1;
         LoRaMacMessageReJoinType0or2_t ReJoin0or2;
         LoRaMacMessageJoinAccept_t JoinAccept;
         LoRaMacMessageData_t Data;
-    }Message;
-}LoRaMacMessage_t;
+    } Message;
+} LoRaMacMessage_t;
 
 /*! \} addtogroup LORAMAC */
 

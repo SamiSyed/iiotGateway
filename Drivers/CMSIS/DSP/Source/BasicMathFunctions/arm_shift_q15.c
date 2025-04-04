@@ -40,7 +40,8 @@
 /**
   @brief         Shifts the elements of a Q15 vector a specified number of bits
   @param[in]     pSrc       points to the input vector
-  @param[in]     shiftBits  number of bits to shift.  A positive value shifts left; a negative value shifts right.
+  @param[in]     shiftBits  number of bits to shift.  A positive value shifts left; a negative value
+  shifts right.
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
   @return        none
@@ -50,150 +51,145 @@
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
 
-void arm_shift_q15(
-  const q15_t * pSrc,
-        int8_t shiftBits,
-        q15_t * pDst,
-        uint32_t blockSize)
+void arm_shift_q15(const q15_t *pSrc, int8_t shiftBits, q15_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        uint8_t sign = (shiftBits & 0x80);             /* Sign of shiftBits */
+    uint32_t blkCnt;                   /* Loop counter */
+    uint8_t sign = (shiftBits & 0x80); /* Sign of shiftBits */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-#if defined (ARM_MATH_DSP)
-  q15_t in1, in2;                                /* Temporary input variables */
+#if defined(ARM_MATH_DSP)
+    q15_t in1, in2; /* Temporary input variables */
 #endif
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+    /* Loop unrolling: Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
 
-  /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0U)
-  {
-    while (blkCnt > 0U)
+    /* If the shift value is positive then do right shift else left shift */
+    if (sign == 0U)
     {
-      /* C = A << shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A << shiftBits */
 
-#if defined (ARM_MATH_DSP)
-      /* read 2 samples from source */
-      in1 = *pSrc++;
-      in2 = *pSrc++;
+#if defined(ARM_MATH_DSP)
+            /* read 2 samples from source */
+            in1 = *pSrc++;
+            in2 = *pSrc++;
 
-      /* Shift the inputs and then store the results in the destination buffer. */
+            /* Shift the inputs and then store the results in the destination buffer. */
 #ifndef ARM_MATH_BIG_ENDIAN
-      write_q15x2_ia (&pDst, __PKHBT(__SSAT((in1 << shiftBits), 16),
-                                     __SSAT((in2 << shiftBits), 16), 16));
+            write_q15x2_ia(
+                &pDst,
+                __PKHBT(__SSAT((in1 << shiftBits), 16), __SSAT((in2 << shiftBits), 16), 16));
 #else
-      write_q15x2_ia (&pDst, __PKHBT(__SSAT((in2 << shiftBits), 16),
-                                      __SSAT((in1 << shiftBits), 16), 16));
+            write_q15x2_ia(
+                &pDst,
+                __PKHBT(__SSAT((in2 << shiftBits), 16), __SSAT((in1 << shiftBits), 16), 16));
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
-      /* read 2 samples from source */
-      in1 = *pSrc++;
-      in2 = *pSrc++;
+            /* read 2 samples from source */
+            in1 = *pSrc++;
+            in2 = *pSrc++;
 
 #ifndef ARM_MATH_BIG_ENDIAN
-      write_q15x2_ia (&pDst, __PKHBT(__SSAT((in1 << shiftBits), 16),
-                                     __SSAT((in2 << shiftBits), 16), 16));
+            write_q15x2_ia(
+                &pDst,
+                __PKHBT(__SSAT((in1 << shiftBits), 16), __SSAT((in2 << shiftBits), 16), 16));
 #else
-      write_q15x2_ia (&pDst, __PKHBT(__SSAT((in2 << shiftBits), 16),
-                                     __SSAT((in1 << shiftBits), 16), 16));
+            write_q15x2_ia(
+                &pDst,
+                __PKHBT(__SSAT((in2 << shiftBits), 16), __SSAT((in1 << shiftBits), 16), 16));
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
 #else
-      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+            *pDst++ = __SSAT(((q31_t)*pSrc++ << shiftBits), 16);
+            *pDst++ = __SSAT(((q31_t)*pSrc++ << shiftBits), 16);
+            *pDst++ = __SSAT(((q31_t)*pSrc++ << shiftBits), 16);
+            *pDst++ = __SSAT(((q31_t)*pSrc++ << shiftBits), 16);
 #endif
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-  else
-  {
-    while (blkCnt > 0U)
+    else
     {
-      /* C = A >> shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A >> shiftBits */
 
-#if defined (ARM_MATH_DSP)
-      /* read 2 samples from source */
-      in1 = *pSrc++;
-      in2 = *pSrc++;
+#if defined(ARM_MATH_DSP)
+            /* read 2 samples from source */
+            in1 = *pSrc++;
+            in2 = *pSrc++;
 
-      /* Shift the inputs and then store the results in the destination buffer. */
+            /* Shift the inputs and then store the results in the destination buffer. */
 #ifndef ARM_MATH_BIG_ENDIAN
-      write_q15x2_ia (&pDst, __PKHBT((in1 >> -shiftBits),
-                                     (in2 >> -shiftBits), 16));
+            write_q15x2_ia(&pDst, __PKHBT((in1 >> -shiftBits), (in2 >> -shiftBits), 16));
 #else
-      write_q15x2_ia (&pDst, __PKHBT((in2 >> -shiftBits),
-                                     (in1 >> -shiftBits), 16));
+            write_q15x2_ia(&pDst, __PKHBT((in2 >> -shiftBits), (in1 >> -shiftBits), 16));
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
-      /* read 2 samples from source */
-      in1 = *pSrc++;
-      in2 = *pSrc++;
+            /* read 2 samples from source */
+            in1 = *pSrc++;
+            in2 = *pSrc++;
 
 #ifndef ARM_MATH_BIG_ENDIAN
-      write_q15x2_ia (&pDst, __PKHBT((in1 >> -shiftBits),
-                                     (in2 >> -shiftBits), 16));
+            write_q15x2_ia(&pDst, __PKHBT((in1 >> -shiftBits), (in2 >> -shiftBits), 16));
 #else
-      write_q15x2_ia (&pDst, __PKHBT((in2 >> -shiftBits),
-                                     (in1 >> -shiftBits), 16));
+            write_q15x2_ia(&pDst, __PKHBT((in2 >> -shiftBits), (in1 >> -shiftBits), 16));
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
 #else
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
-      *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
+            *pDst++ = (*pSrc++ >> -shiftBits);
 #endif
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0U)
-  {
-    while (blkCnt > 0U)
+    /* If the shift value is positive then do right shift else left shift */
+    if (sign == 0U)
     {
-      /* C = A << shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A << shiftBits */
 
-      /* Shift input and store result in destination buffer. */
-      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+            /* Shift input and store result in destination buffer. */
+            *pDst++ = __SSAT(((q31_t)*pSrc++ << shiftBits), 16);
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-  else
-  {
-    while (blkCnt > 0U)
+    else
     {
-      /* C = A >> shiftBits */
+        while (blkCnt > 0U)
+        {
+            /* C = A >> shiftBits */
 
-      /* Shift input and store result in destination buffer. */
-      *pDst++ = (*pSrc++ >> -shiftBits);
+            /* Shift input and store result in destination buffer. */
+            *pDst++ = (*pSrc++ >> -shiftBits);
 
-      /* Decrement loop counter */
-      blkCnt--;
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
-  }
-
 }
 
 /**

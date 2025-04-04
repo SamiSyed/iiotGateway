@@ -50,4 +50,3 @@ void subghzRx(void);
 #endif
 
 #endif /* __SUBGHZ_H__ */
-

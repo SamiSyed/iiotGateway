@@ -34,8 +34,7 @@
 #define __LORAMACCLASSBNVM_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "LoRaMacVersion.h"
@@ -51,12 +50,12 @@ typedef struct sLoRaMacClassBPingSlotNvmData
         /*!
          * Set when the server assigned a ping slot to the node
          */
-        uint8_t Assigned         : 1;
+        uint8_t Assigned : 1;
         /*!
          * Set when a custom frequency is used
          */
-        uint8_t CustomFreq       : 1;
-    }Ctrl;
+        uint8_t CustomFreq : 1;
+    } Ctrl;
     /*!
      * Number of ping slots
      */
@@ -73,7 +72,8 @@ typedef struct sLoRaMacClassBPingSlotNvmData
      * Datarate of the ping slot
      */
     int8_t Datarate;
-#if (defined( LORAMAC_VERSION ) && (( LORAMAC_VERSION == 0x01000400 ) || ( LORAMAC_VERSION == 0x01010100 )))
+#if (defined(LORAMAC_VERSION)                                                                      \
+     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
     /*!
      * Set to 1, if the FPending bit is set
      */
@@ -92,8 +92,8 @@ typedef struct sLoRaMacClassBBeaconNvmData
         /*!
          * Set if the node has a custom frequency for beaconing and ping slots
          */
-        uint8_t CustomFreq          : 1;
-    }Ctrl;
+        uint8_t CustomFreq : 1;
+    } Ctrl;
     /*!
      * Beacon reception frequency
      */

@@ -30,6 +30,7 @@
 /* USER CODE BEGIN Includes */
 #include "iwdg.h"
 #include "stm32wlxx.h"
+#include "subghz_phy_app.h"
 
 #include "user_mqttFunctions.h"
 #include "user_system.h"
@@ -74,18 +75,22 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int _write(int fd, unsigned char *buf, int len) {
-  if (fd == 1 || fd == 2) { // stdout or stderr ?
-    // HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
-    uart2status =
-        HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
-    // Orange wire => RX2
-    // Yellow wire => TX2
-  }
-  return len;
+int _write(int fd, unsigned char *buf, int len)
+{
+    if (fd == 1 || fd == 2)
+    { // stdout or stderr ?
+        // HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
+        uart2status = HAL_UART_Transmit(&huart1, buf, len, 999); // Print to the UART
+                                                                 // Orange wire => RX2
+                                                                 // Yellow wire => TX2
+    }
+    return len;
 }
 
-uint64_t mg_millis(void) { return HAL_GetTick(); }
+uint64_t mg_millis(void)
+{
+    return HAL_GetTick();
+}
 
 /* USER CODE END 0 */
 
@@ -93,186 +98,200 @@ uint64_t mg_millis(void) { return HAL_GetTick(); }
  * @brief  The application entry point.
  * @retval int
  */
-int main(void) {
-  /* USER CODE BEGIN 1 */
+int main(void)
+{
+    /* USER CODE BEGIN 1 */
 
-  /* USER CODE END 1 */
+    /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+    /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick.
-   */
-  HAL_Init();
+    /* Reset of all peripherals, Initializes the Flash interface and the Systick.
+     */
+    HAL_Init();
 
-  /* USER CODE BEGIN Init */
+    /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
+    /* USER CODE END Init */
 
-  /* Configure the system clock */
-  SystemClock_Config();
+    /* Configure the system clock */
+    SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
+    /* USER CODE BEGIN SysInit */
 
-  /* USER CODE END SysInit */
+    /* USER CODE END SysInit */
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_USART1_UART_Init();
-  MX_RTC_Init();
-  MX_SubGHz_Phy_Init();
-  MX_USART2_UART_Init();
-  MX_ADC_Init();
-  MX_TIM2_Init();
-  /* USER CODE BEGIN 2 */
+    /* Initialize all configured peripherals */
+    MX_GPIO_Init();
+    MX_DMA_Init();
+    MX_USART1_UART_Init();
+    MX_RTC_Init();
+    MX_SubGHz_Phy_Init();
+    MX_USART2_UART_Init();
+    MX_ADC_Init();
+    MX_TIM2_Init();
+    /* USER CODE BEGIN 2 */
 
-  /* Init ticks */
-  HAL_TIM_Base_Start_IT(&htim2);
-  initDelayCustomTimer();
-  /* Long delay is given to spot if the gate way got reset */
-  // Delay_CustomTimer(40000);
-  timer2sStatus = getTick_CustomTimer_Sec();
-  timer5sStatus = getTick_CustomTimer_Sec();
-  timer20sStatus = getTick_CustomTimer_Sec();
-  dataOkStatus = getTick_CustomTimer_Sec();
-  loraRecieveOkStatus = getTick_CustomTimer_Sec();
+    /* Init ticks */
+    HAL_TIM_Base_Start_IT(&htim2);
+    initDelayCustomTimer();
+    /* Long delay is given to spot if the gate way got reset */
+    // Delay_CustomTimer(40000);
+    timer2sStatus = getTick_CustomTimer_Sec();
+    timer5sStatus = getTick_CustomTimer_Sec();
+    timer20sStatus = getTick_CustomTimer_Sec();
+    dataOkStatus = getTick_CustomTimer_Sec();
+    loraRecieveOkStatus = getTick_CustomTimer_Sec();
 
-  printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
-  initUart();
-  // setLastCommandOK(true);
-  Delay_CustomTimer(1000);
-  sendATCommand("AT", "", AT_OK, NO_AT);
+    printf("\r\n\r\n**********IOT Gateway**********\r\n\r\n");
+    initUart();
+    // setLastCommandOK(true);
+    Delay_CustomTimer(1000);
+    sendATCommand("AT", "", AT_OK, NO_AT);
 
-  // gsmInit();
-  initSensorFilter();
-  setMqttTopic();
-  /* USER CODE END 2 */
+    // gsmInit();
+    initSensorFilter();
+    setMqttTopic();
+    /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
+    /* Infinite loop */
+    /* USER CODE BEGIN WHILE */
+    printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
 
-  /* Init IWDG */
-  initIwdg();
+    /* Init IWDG */
+    initIwdg();
 
-  while (1) {
-    /* USER CODE END WHILE */
+    while (1)
+    {
+        /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-    listenForLoraNodes(LORA_LISTENING_DURATION);
+        /* USER CODE BEGIN 3 */
+        listenForLoraNodes();
 
-    if (isLoraReceived()) {
-      processIncomingLoraMessage();
-      setLoraReceived(false);
-    }
-    
-    /* Run filter in Data received through LoRa. rawDataReceived flag is set in
-     * the LoRa interrupt callback OnRxDone() */
-    if (isRawDataReceived()) {
-      runAllFilter();
-      setRawDataReceived(false);
-      loraRecieveOkStatus = getTick_CustomTimer_Sec();
-    }
-
-    if (getTick_CustomTimer_Sec() - timer20sStatus >
-        MQTT_DATA_SEND_MAIN_INTERVAL) {
-      sendMqttData = true;
-      timer20sStatus = getTick_CustomTimer_Sec();
-    }
-
-    if (sendMqttData) {
-      if (getTick_CustomTimer_Sec() - timer5sStatus > MQTT_DATA_SEND_INTERVAL) {
-        prepareMqttMessageStruct(mqttMessageCounter);
-        if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR) {
-          printf("Error sending data to MQTT Broker\r\n");
-        } else {
-          dataOkStatus = getTick_CustomTimer_Sec();
+        if (isLoraReceived())
+        {
+            processIncomingLoraMessage();
+            setLoraReceived(false);
         }
 
-        /* MQTT Send counter updated based on NUMBER_OF_SENSORS */
-        mqttMessageCounter++;
-        mqttMessageCounter = mqttMessageCounter % NUMBER_OF_SENSORS;
+        /* Run filter in Data received through LoRa. rawDataReceived flag is set in
+         * the LoRa interrupt callback OnRxDone() */
+        if (isRawDataReceived())
+        {
+            runAllFilter();
+            setRawDataReceived(false);
+            loraRecieveOkStatus = getTick_CustomTimer_Sec();
+        }
 
-        /* Update last tick */
-        timer5sStatus = getTick_CustomTimer_Sec();
-      }
-      if (mqttMessageCounter == 0) {
-        sendMqttData = false;
-      }
+        if (getTick_CustomTimer_Sec() - timer20sStatus > MQTT_DATA_SEND_MAIN_INTERVAL)
+        {
+            sendMqttData = true;
+            timer20sStatus = getTick_CustomTimer_Sec();
+        }
+
+        if (sendMqttData)
+        {
+            if (getTick_CustomTimer_Sec() - timer5sStatus > MQTT_DATA_SEND_INTERVAL)
+            {
+                prepareMqttMessageStruct(mqttMessageCounter);
+                if (sendDataToMqttBroker(mqttMessageCounter) != NO_ERROR)
+                {
+                    printf("Error sending data to MQTT Broker\r\n");
+                }
+                else
+                {
+                    dataOkStatus = getTick_CustomTimer_Sec();
+                }
+
+                /* MQTT Send counter updated based on NUMBER_OF_SENSORS */
+                mqttMessageCounter++;
+                mqttMessageCounter = mqttMessageCounter % NUMBER_OF_SENSORS;
+
+                /* Update last tick */
+                timer5sStatus = getTick_CustomTimer_Sec();
+            }
+            if (mqttMessageCounter == 0)
+            {
+                sendMqttData = false;
+            }
+        }
+
+        if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT)
+        {
+            printf("**MQTT data cannot be send for 2 min**\r\n");
+            NVIC_SystemReset();
+        }
+
+        if (getTick_CustomTimer_Sec() - loraRecieveOkStatus > MAX_TIME_LORA_INCOMING_MISSING)
+        {
+            printf("**LoRa data not receiving for 2 min**\r\n");
+            NVIC_SystemReset();
+        }
+
+        if (getTick_CustomTimer_Sec() - timer2sStatus > 1)
+        {
+            getDataFromEndNode(sensorID_0 + loraGetMsgCounter);
+            loraGetMsgCounter++;
+            loraGetMsgCounter = loraGetMsgCounter % NUMBER_OF_SENSORS;
+
+            timer2sStatus = getTick_CustomTimer_Sec();
+        }
+
+        setLastCommandOK(true);
+        cleanAllBuffers();
+
+        refreshIwdg();
     }
-
-    if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT) {
-      printf("**MQTT data cannot be send for 2 min**\r\n");
-      NVIC_SystemReset();
-    }
-
-    if (getTick_CustomTimer_Sec() - loraRecieveOkStatus >
-        MAX_TIME_LORA_INCOMING_MISSING) {
-      printf("**LoRa data not receiving for 2 min**\r\n");
-      NVIC_SystemReset();
-    }
-
-    if (getTick_CustomTimer_Sec() - timer2sStatus > 1) {
-      getDataFromEndNode(sensorID_0 + loraGetMsgCounter);
-      loraGetMsgCounter++;
-      loraGetMsgCounter = loraGetMsgCounter % NUMBER_OF_SENSORS;
-
-      timer2sStatus = getTick_CustomTimer_Sec();
-    }
-
-    setLastCommandOK(true);
-    cleanAllBuffers();
-
-    refreshIwdg();
-  }
-  /* USER CODE END 3 */
+    /* USER CODE END 3 */
 }
 
 /**
  * @brief System Clock Configuration
  * @retval None
  */
-void SystemClock_Config(void) {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+void SystemClock_Config(void)
+{
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+    /** Configure the main internal regulator output voltage
+     */
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_OscInitStruct.OscillatorType =
-      RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS_PWR;
-  RCC_OscInitStruct.LSIDiv = RCC_LSI_DIV1;
-  RCC_OscInitStruct.HSEDiv = RCC_HSE_DIV1;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
-    Error_Handler();
-  }
+    /** Initializes the CPU, AHB and APB buses clocks
+     */
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS_PWR;
+    RCC_OscInitStruct.LSIDiv = RCC_LSI_DIV1;
+    RCC_OscInitStruct.HSEDiv = RCC_HSE_DIV1;
+    RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-  /** Configure the SYSCLKSource, HCLK, PCLK1 and PCLK2 clocks dividers
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK3 | RCC_CLOCKTYPE_HCLK |
-                                RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 |
-                                RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.AHBCLK3Divider = RCC_SYSCLK_DIV1;
+    /** Configure the SYSCLKSource, HCLK, PCLK1 and PCLK2 clocks dividers
+     */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK3 | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                  | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+    RCC_ClkInitStruct.AHBCLK3Divider = RCC_SYSCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK) {
-    Error_Handler();
-  }
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+    {
+        Error_Handler();
+    }
 }
 
 /* USER CODE BEGIN 4 */
-void resetAllTimerState(void) {
-  loraRecieveOkStatus = getTick_CustomTimer_Sec();
-  dataOkStatus = getTick_CustomTimer_Sec();
+void resetAllTimerState(void)
+{
+    loraRecieveOkStatus = getTick_CustomTimer_Sec();
+    dataOkStatus = getTick_CustomTimer_Sec();
 }
 /* USER CODE END 4 */
 
@@ -280,13 +299,14 @@ void resetAllTimerState(void) {
  * @brief  This function is executed in case of error occurrence.
  * @retval None
  */
-void Error_Handler(void) {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1) {
-  }
-  /* USER CODE END Error_Handler_Debug */
+void Error_Handler(void)
+{
+    /* USER CODE BEGIN Error_Handler_Debug */
+    /* User can add his own implementation to report the HAL error return state */
+    __disable_irq();
+    while (1)
+    {}
+    /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef USE_FULL_ASSERT
@@ -297,11 +317,12 @@ void Error_Handler(void) {
  * @param  line: assert_param error line source number
  * @retval None
  */
-void assert_failed(uint8_t *file, uint32_t line) {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line
-     number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+    /* USER CODE BEGIN 6 */
+    /* User can add his own implementation to report the file name and line
+       number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

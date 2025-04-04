@@ -46,9 +46,9 @@
  */
 
 /**
- * @brief uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier
- *        and input channels. Unless specified otherwise, arguments are mandatory. Both square and non-square inputs
- *        are accepted.
+ * @brief uint8 depthwise convolution function with asymmetric quantization for even number of
+ * channel multiplier and input channels. Unless specified otherwise, arguments are mandatory. Both
+ * square and non-square inputs are accepted.
  *
  * @param[in]     input     Pointer to input tensor
  * @param[in]     input_x   Width of input tensor
@@ -114,7 +114,7 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
                                             const int32_t out_mult)
 {
     arm_status status = ARM_MATH_SUCCESS;
- #if defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     int i_out = 0;
     (void)dilation_x;
     (void)dilation_y;
@@ -161,14 +161,18 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
                                 /* Range check for first input */
                                 if (idx_x >= 0 && idx_x < input_x)
                                 {
-                                    const int32_t idx_0 = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
+                                    const int32_t idx_0
+                                        = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
 
-                                    const int32_t ker_idx_0 =
-                                        (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult) + idx_out_ch;
+                                    const int32_t ker_idx_0
+                                        = (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult)
+                                          + idx_out_ch;
                                     const int32_t ker_idx_1 = ker_idx_0 + input_ch * ch_mult;
 
-                                    int32_t input_pkd = input[idx_0] | (input[idx_0 + input_ch] << 16);
-                                    int32_t kernel_pkd = kernel[ker_idx_0] | (kernel[ker_idx_1] << 16);
+                                    int32_t input_pkd
+                                        = input[idx_0] | (input[idx_0 + input_ch] << 16);
+                                    int32_t kernel_pkd
+                                        = kernel[ker_idx_0] | (kernel[ker_idx_1] << 16);
 
                                     input_pkd = __SADD16(input_pkd, input_offset_pkd);
                                     kernel_pkd = __SADD16(kernel_pkd, kernel_offset_pkd);
@@ -179,7 +183,8 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
                                     }
                                     acc_0 = __SMLAD(input_pkd, kernel_pkd, acc_0);
 
-                                    kernel_pkd = kernel[ker_idx_0 + 1] | (kernel[ker_idx_1 + 1] << 16);
+                                    kernel_pkd
+                                        = kernel[ker_idx_0 + 1] | (kernel[ker_idx_1 + 1] << 16);
                                     kernel_pkd = __SADD16(kernel_pkd, kernel_offset_pkd);
                                     acc_1 = __SMLAD(input_pkd, kernel_pkd, acc_1);
                                 }
@@ -188,9 +193,10 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
                     }
 
                     /* Requantize and clamp output to provided range */
-                    acc_0 = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(
-                                                              acc_0 * (1 << LEFT_SHIFT(out_shift)), out_mult),
-                                                          RIGHT_SHIFT(out_shift));
+                    acc_0 = arm_nn_divide_by_power_of_two(
+                        arm_nn_sat_doubling_high_mult(acc_0 * (1 << LEFT_SHIFT(out_shift)),
+                                                      out_mult),
+                        RIGHT_SHIFT(out_shift));
 
                     acc_0 += output_offset;
 
@@ -206,9 +212,10 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
                     output[i_out++] = acc_0;
 
                     /* Requantize and clamp output to provided range */
-                    acc_1 = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(
-                                                              acc_1 * (1 << LEFT_SHIFT(out_shift)), out_mult),
-                                                          RIGHT_SHIFT(out_shift));
+                    acc_1 = arm_nn_divide_by_power_of_two(
+                        arm_nn_sat_doubling_high_mult(acc_1 * (1 << LEFT_SHIFT(out_shift)),
+                                                      out_mult),
+                        RIGHT_SHIFT(out_shift));
                     acc_1 += output_offset;
 
                     if (output_activation_min > acc_1)
@@ -235,5 +242,3 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
 /**
  * @} end of NNConv group
  */
-
-

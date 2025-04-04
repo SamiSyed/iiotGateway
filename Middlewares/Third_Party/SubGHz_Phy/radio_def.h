@@ -21,14 +21,14 @@
  * \author    Gregory Cristian ( Semtech )
  */
 /*!
-  ******************************************************************************
-  *
-  *          Portions COPYRIGHT 2020 STMicroelectronics
-  *
-  * @file    radio_def.h
-  * @author  MCD Application Team
-  * @brief   Radio driver API definition
-  ******************************************************************************
+ ******************************************************************************
+ *
+ *          Portions COPYRIGHT 2020 STMicroelectronics
+ *
+ * @file    radio_def.h
+ * @author  MCD Application Team
+ * @brief   Radio driver API definition
+ ******************************************************************************
  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -36,13 +36,12 @@
 #define __RADIO_DEF_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /* Public typedef -----------------------------------------------------------*/
 
@@ -68,7 +67,7 @@ typedef enum
     MODEM_BPSK,
     MODEM_SIGFOX_TX,
     MODEM_SIGFOX_RX,
-}RadioModems_t;
+} RadioModems_t;
 
 /*!
  * \brief Radio driver callback functions
@@ -78,11 +77,11 @@ typedef struct
     /*!
      * \brief  Tx Done callback prototype.
      */
-    void    ( *TxDone )( void );
+    void (*TxDone)(void);
     /*!
      * \brief  Tx Timeout callback prototype.
      */
-    void    ( *TxTimeout )( void );
+    void (*TxTimeout)(void);
     /*!
      * \brief Rx Done callback prototype.
      *
@@ -93,28 +92,28 @@ typedef struct
      *                     FSK : Carrier Frequency Offset in kHz
      *                     LoRa: SNR value in dB
      */
-    void    ( *RxDone )( uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo );
+    void (*RxDone)(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo);
     /*!
      * \brief  Rx Timeout callback prototype.
      */
-    void    ( *RxTimeout )( void );
+    void (*RxTimeout)(void);
     /*!
      * \brief Rx Error callback prototype.
      */
-    void    ( *RxError )( void );
+    void (*RxError)(void);
     /*!
      * \brief  FHSS Change Channel callback prototype.
      *
      * \param [in] currentChannel   Index number of the current channel
      */
-    void ( *FhssChangeChannel )( uint8_t currentChannel );
+    void (*FhssChangeChannel)(uint8_t currentChannel);
     /*!
      * \brief CAD Done callback prototype.
      *
      * \param [in] channelDetected    Channel Activity detected during the CAD
      */
-    void ( *CadDone ) ( bool channelActivityDetected );
-}RadioEvents_t;
+    void (*CadDone)(bool channelActivityDetected);
+} RadioEvents_t;
 
 #ifdef __cplusplus
 }

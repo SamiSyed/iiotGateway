@@ -34,15 +34,14 @@
 #define __REGIONNVM_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "lorawan_conf.h"
 #include "LoRaMacTypes.h"
 #include "RegionVersion.h"
+#include "lorawan_conf.h"
 
-#if (defined( REGION_VERSION ) && ( REGION_VERSION == 0x02010001 ))
+#if (defined(REGION_VERSION) && (REGION_VERSION == 0x02010001))
 /*!
  * Channel plan for region CN470
  */
@@ -53,41 +52,41 @@ typedef enum eRegionCN470ChannelPlan
     CHANNEL_PLAN_20MHZ_TYPE_B,
     CHANNEL_PLAN_26MHZ_TYPE_A,
     CHANNEL_PLAN_26MHZ_TYPE_B
-}RegionCN470ChannelPlan_t;
+} RegionCN470ChannelPlan_t;
 
 // Selection of REGION_NVM_MAX_NB_CHANNELS ( MAX = REGION_US915 | REGION_AU915 )
-#define REGION_NVM_MAX_NB_CHANNELS                 72
+#define REGION_NVM_MAX_NB_CHANNELS 72
 
 #else
 // Selection of REGION_NVM_MAX_NB_CHANNELS ( MAX = REGION_CN470 )
-#define REGION_NVM_MAX_NB_CHANNELS                 96
+#define REGION_NVM_MAX_NB_CHANNELS 96
 
 #endif /* REGION_VERSION */
 
 // Selection of REGION_NVM_MAX_NB_BANDS
-#define REGION_NVM_MAX_NB_BANDS                    6
+#define REGION_NVM_MAX_NB_BANDS 6
 
 // Selection of REGION_NVM_CHANNELS_MASK_SIZE
-#define REGION_NVM_CHANNELS_MASK_SIZE              6
+#define REGION_NVM_CHANNELS_MASK_SIZE 6
 
 /*!
  * Region specific data which must be stored in the NVM.
  */
 typedef struct sRegionNvmDataGroup1
 {
-#if (defined( REGION_VERSION ) && ( REGION_VERSION == 0x01010003 ))
+#if (defined(REGION_VERSION) && (REGION_VERSION == 0x01010003))
     /*!
      * LoRaMac bands
      */
-    Band_t Bands[ REGION_NVM_MAX_NB_BANDS ];
+    Band_t Bands[REGION_NVM_MAX_NB_BANDS];
 #endif /* REGION_VERSION */
-#if defined( REGION_US915 ) || defined( REGION_AU915 ) || defined( REGION_CN470 )
+#if defined(REGION_US915) || defined(REGION_AU915) || defined(REGION_CN470)
     /*!
      * LoRaMac channels remaining
      */
-    uint16_t ChannelsMaskRemaining[ REGION_NVM_CHANNELS_MASK_SIZE ];
+    uint16_t ChannelsMaskRemaining[REGION_NVM_CHANNELS_MASK_SIZE];
 #endif
-#if defined( REGION_US915 ) || defined( REGION_AU915 )
+#if defined(REGION_US915) || defined(REGION_AU915)
     /*!
      * Index of current in use 8 bit group (0: bit 0 - 7, 1: bit 8 - 15, ...,
      * 7: bit 56 - 63)
@@ -102,7 +101,7 @@ typedef struct sRegionNvmDataGroup1
      * CRC32 value of the Region data structure.
      */
     uint32_t Crc32;
-}RegionNvmDataGroup1_t;
+} RegionNvmDataGroup1_t;
 
 /*!
  * Region specific data which must be stored in the NVM.
@@ -113,17 +112,17 @@ typedef struct sRegionNvmDataGroup2
     /*!
      * LoRaMAC channels
      */
-    ChannelParams_t Channels[ REGION_NVM_MAX_NB_CHANNELS ];
+    ChannelParams_t Channels[REGION_NVM_MAX_NB_CHANNELS];
     /*!
      * LoRaMac channels mask
      */
-    uint16_t ChannelsMask[ REGION_NVM_CHANNELS_MASK_SIZE ];
+    uint16_t ChannelsMask[REGION_NVM_CHANNELS_MASK_SIZE];
     /*!
      * LoRaMac channels default mask
      */
-    uint16_t ChannelsDefaultMask[ REGION_NVM_CHANNELS_MASK_SIZE ];
-#if (defined( REGION_VERSION ) && ( REGION_VERSION == 0x02010001 ))
-#if defined( REGION_CN470 )
+    uint16_t ChannelsDefaultMask[REGION_NVM_CHANNELS_MASK_SIZE];
+#if (defined(REGION_VERSION) && (REGION_VERSION == 0x02010001))
+#if defined(REGION_CN470)
     /*!
      * Holds the channel plan.
      */
@@ -140,15 +139,15 @@ typedef struct sRegionNvmDataGroup2
     bool IsOtaaDevice;
 #endif /* REGION_CN470 */
 #endif /* REGION_VERSION */
-#if defined( REGION_KR920 ) || defined( REGION_AS923 )
+#if defined(REGION_KR920) || defined(REGION_AS923)
     /*!
-    * RSSI threshold for a free channel [dBm]
-    */
+     * RSSI threshold for a free channel [dBm]
+     */
     int16_t RssiFreeThreshold;
 
     /*!
-    * Specifies the time the node performs a carrier sense
-    */
+     * Specifies the time the node performs a carrier sense
+     */
     uint32_t CarrierSenseTime;
 #endif /* REGION_KR920 || REGION_AS923 */
 
@@ -156,7 +155,7 @@ typedef struct sRegionNvmDataGroup2
      * CRC32 value of the Region data structure.
      */
     uint32_t Crc32;
-}RegionNvmDataGroup2_t;
+} RegionNvmDataGroup2_t;
 
 /*! \} addtogroup REGIONCOMMON */
 

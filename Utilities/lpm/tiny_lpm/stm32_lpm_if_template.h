@@ -5,7 +5,7 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
+ * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
  * All rights reserved.</center></h2>
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -26,8 +26,8 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 
 /** @defgroup TINY_LPM_IF TINY LPM IF
-  * @{
-  */
+ * @{
+ */
 
 /* Exported Functions ------------------------------------------------------------------*/
 
@@ -36,32 +36,32 @@ extern "C" {
  */
 
 /**
-  * @brief Enters Low Power Off Mode
-  */
-void PWR_EnterOffMode( void );
+ * @brief Enters Low Power Off Mode
+ */
+void PWR_EnterOffMode(void);
 /**
-  * @brief Exits Low Power Off Mode
-  */
-void PWR_ExitOffMode( void );
+ * @brief Exits Low Power Off Mode
+ */
+void PWR_ExitOffMode(void);
 
 /**
-  * @brief Enters Low Power Stop Mode
-  */
-void PWR_EnterStopMode( void );
+ * @brief Enters Low Power Stop Mode
+ */
+void PWR_EnterStopMode(void);
 /**
-  * @brief Exits Low Power Stop Mode
-  */
-void PWR_ExitStopMode( void );
+ * @brief Exits Low Power Stop Mode
+ */
+void PWR_ExitStopMode(void);
 
 /**
-  * @brief Enters Low Power Sleep Mode
-  */
-void PWR_EnterSleepMode( void );
+ * @brief Enters Low Power Sleep Mode
+ */
+void PWR_EnterSleepMode(void);
 
 /**
-  * @brief Exits Low Power Sleep Mode
-  */
-void PWR_ExitSleepMode( void );
+ * @brief Exits Low Power Sleep Mode
+ */
+void PWR_ExitSleepMode(void);
 
 /**
  * @}
@@ -76,4 +76,3 @@ void PWR_ExitSleepMode( void );
 #endif
 
 #endif /* STM32_TINY_LPM_IF_H */
-

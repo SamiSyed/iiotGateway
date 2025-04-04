@@ -26,9 +26,9 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
 #include "arm_common_tables.h"
 #include "arm_const_structs.h"
+#include "arm_math.h"
 
 /**
   @addtogroup RealFFT
@@ -47,97 +47,107 @@
                    - value = 1: enables bit reversal of output
   @return        execution status
                    - \ref ARM_MATH_SUCCESS        : Operation successful
-                   - \ref ARM_MATH_ARGUMENT_ERROR : <code>fftLenReal</code> is not a supported length
+                   - \ref ARM_MATH_ARGUMENT_ERROR : <code>fftLenReal</code> is not a supported
+  length
 
   @par           Details
                    The parameter <code>fftLenReal</code> specifies length of RFFT/RIFFT Process.
                    Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192.
   @par
-                   The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.
-                   Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
+                   The parameter <code>ifftFlagR</code> controls whether a forward or inverse
+  transform is computed. Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
   @par
-                   The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
-                   Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
+                   The parameter <code>bitReverseFlag</code> controls whether output is in normal
+  order or bit reversed order. Set(=1) bitReverseFlag for output to be in normal order otherwise
+  output is in bit reversed order.
   @par
                    This function also initializes Twiddle factor table.
  */
 
-arm_status arm_rfft_init_q15(
-    arm_rfft_instance_q15 * S,
-    uint32_t fftLenReal,
-    uint32_t ifftFlagR,
-    uint32_t bitReverseFlag)
+arm_status arm_rfft_init_q15(arm_rfft_instance_q15 *S,
+                             uint32_t fftLenReal,
+                             uint32_t ifftFlagR,
+                             uint32_t bitReverseFlag)
 {
     /*  Initialise the default arm status */
     arm_status status = ARM_MATH_SUCCESS;
 
     /*  Initialize the Real FFT length */
-    S->fftLenReal = (uint16_t) fftLenReal;
+    S->fftLenReal = (uint16_t)fftLenReal;
 
     /*  Initialize the Twiddle coefficientA pointer */
-    S->pTwiddleAReal = (q15_t *) realCoefAQ15;
+    S->pTwiddleAReal = (q15_t *)realCoefAQ15;
 
     /*  Initialize the Twiddle coefficientB pointer */
-    S->pTwiddleBReal = (q15_t *) realCoefBQ15;
+    S->pTwiddleBReal = (q15_t *)realCoefBQ15;
 
     /*  Initialize the Flag for selection of RFFT or RIFFT */
-    S->ifftFlagR = (uint8_t) ifftFlagR;
+    S->ifftFlagR = (uint8_t)ifftFlagR;
 
     /*  Initialize the Flag for calculation Bit reversal or not */
-    S->bitReverseFlagR = (uint8_t) bitReverseFlag;
+    S->bitReverseFlagR = (uint8_t)bitReverseFlag;
 
     /*  Initialization of coef modifier depending on the FFT length */
     switch (S->fftLenReal)
     {
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_4096) && defined(ARM_TABLE_BITREVIDX_FXT_4096))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_4096) && defined(ARM_TABLE_BITREVIDX_FXT_4096))
     case 8192U:
         S->twidCoefRModifier = 1U;
         S->pCfft = &arm_cfft_sR_q15_len4096;
         break;
 #endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_2048) && defined(ARM_TABLE_BITREVIDX_FXT_2048))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_2048) && defined(ARM_TABLE_BITREVIDX_FXT_2048))
     case 4096U:
         S->twidCoefRModifier = 2U;
         S->pCfft = &arm_cfft_sR_q15_len2048;
         break;
 #endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_1024) && defined(ARM_TABLE_BITREVIDX_FXT_1024))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_1024) && defined(ARM_TABLE_BITREVIDX_FXT_1024))
     case 2048U:
         S->twidCoefRModifier = 4U;
         S->pCfft = &arm_cfft_sR_q15_len1024;
         break;
-#endif 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_512) && defined(ARM_TABLE_BITREVIDX_FXT_512))
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_512) && defined(ARM_TABLE_BITREVIDX_FXT_512))
     case 1024U:
         S->twidCoefRModifier = 8U;
         S->pCfft = &arm_cfft_sR_q15_len512;
         break;
-#endif 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_256) && defined(ARM_TABLE_BITREVIDX_FXT_256))
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_256) && defined(ARM_TABLE_BITREVIDX_FXT_256))
     case 512U:
         S->twidCoefRModifier = 16U;
         S->pCfft = &arm_cfft_sR_q15_len256;
         break;
 #endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_128) && defined(ARM_TABLE_BITREVIDX_FXT_128))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_128) && defined(ARM_TABLE_BITREVIDX_FXT_128))
     case 256U:
         S->twidCoefRModifier = 32U;
         S->pCfft = &arm_cfft_sR_q15_len128;
         break;
 #endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_64) && defined(ARM_TABLE_BITREVIDX_FXT_64))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_64) && defined(ARM_TABLE_BITREVIDX_FXT_64))
     case 128U:
         S->twidCoefRModifier = 64U;
         S->pCfft = &arm_cfft_sR_q15_len64;
         break;
-#endif 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_32) && defined(ARM_TABLE_BITREVIDX_FXT_32))
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_32) && defined(ARM_TABLE_BITREVIDX_FXT_32))
     case 64U:
         S->twidCoefRModifier = 128U;
         S->pCfft = &arm_cfft_sR_q15_len32;
         break;
-#endif 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES)                                 \
+    || (defined(ARM_TABLE_TWIDDLECOEF_Q15_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
     case 32U:
         S->twidCoefRModifier = 256U;
         S->pCfft = &arm_cfft_sR_q15_len16;

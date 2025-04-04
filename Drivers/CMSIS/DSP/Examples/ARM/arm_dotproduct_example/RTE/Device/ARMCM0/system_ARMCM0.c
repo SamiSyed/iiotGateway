@@ -1,10 +1,14 @@
-/**************************************************************************//**
- * @file     system_ARMCM0.c
- * @brief    CMSIS Device System Source File for
- *           ARMCM0 Device
- * @version  V5.3.1
- * @date     09. July 2018
- ******************************************************************************/
+/**************************************************************************/ /**
+                                                                              * @file
+                                                                              *system_ARMCM0.c
+                                                                              * @brief    CMSIS
+                                                                              *Device System Source
+                                                                              *File for ARMCM0
+                                                                              *Device
+                                                                              * @version  V5.3.1
+                                                                              * @date     09. July
+                                                                              *2018
+                                                                              ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
@@ -28,29 +32,27 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            (50000000UL)     /* Oscillator frequency */
+#define XTAL (50000000UL) /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (XTAL / 2U)
-
+#define SYSTEM_CLOCK (XTAL / 2U)
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
-uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
-
+uint32_t SystemCoreClock = SYSTEM_CLOCK; /* System Core Clock Frequency */
 
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
+void SystemCoreClockUpdate(void)
 {
-  SystemCoreClock = SYSTEM_CLOCK;
+    SystemCoreClock = SYSTEM_CLOCK;
 }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
+void SystemInit(void)
 {
-  SystemCoreClock = SYSTEM_CLOCK;
+    SystemCoreClock = SYSTEM_CLOCK;
 }
