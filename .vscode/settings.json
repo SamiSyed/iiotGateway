@@ -11,5 +11,6 @@
         "user_mqttfunctions.h": "c",
         "tim.h": "c",
         "system_error": "c"
-    }
+    },
+    "cmake.generator": "Ninja"
 }

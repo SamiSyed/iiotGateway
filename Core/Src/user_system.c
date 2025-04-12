@@ -281,7 +281,7 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT)
             halStatus = HAL_UART_Transmit_IT(gsm_uart, (uint8_t *)p_command, strlen(p_command));
             if (HAL_OK == halStatus)
             {
-                for (uint8_t i = 0; i < 10000; i++)
+                for (uint8_t i = 0; i < 10; i++)
                 {
                     Delay_CustomTimer(50);
                     if (!getReceivingFlag())

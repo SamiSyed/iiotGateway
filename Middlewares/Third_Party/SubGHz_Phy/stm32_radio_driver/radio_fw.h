@@ -27,6 +27,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "radio_def.h"
 #include "radio_ex.h"
+#include "timer.h"
 
 /* Exported types ------------------------------------------------------------*/
 

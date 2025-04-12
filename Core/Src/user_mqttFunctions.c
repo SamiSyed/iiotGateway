@@ -24,11 +24,12 @@ SystemError sendMqttServer(MqttMessage_t mqttMessage)
 
 void setMqttTopic(void)
 {
-    char topic[MQTT_TOPIC_SIZE] = "iiot/sensorID_";
+    char topic[MQTT_TOPIC_SIZE] = "SensorReadings2024sami";
+    // char topic[MQTT_TOPIC_SIZE] = "iiot/sensorID_";
 
     for (uint8_t i = 0; i < NUMBER_OF_SENSORS; i++)
     {
-        sprintf(topic, "iiot/sensorID_%i", i);
+        // sprintf(topic, "iiot/sensorID_%i", i);
         strcpy(mqttTopic[i], topic);
 
         // printf("%s\r\n", mqttTopic[i]);
@@ -47,9 +48,29 @@ MqttMessage_t *getMqttMessageByIndex(uint8_t index)
 /* Update MQTT struct with latest value to be send */
 void prepareMqttMessageStruct(uint8_t sensorIndex)
 {
+    static bool firstTime = true;
     char data[MQTT_MESSAGE_SIZE];
+    int len = snprintf(data, sizeof(data), "{\\\"ID\\\":\\\"0129784251391295\\\",");
+    if (len < sizeof(data))
+    {
+        len += snprintf(data + len, sizeof(data) - len, "\\\"Sensor\\\":\\\"Temperature\\\",");
+    }
 
-    sprintf(data, "{\\\"value\\\":\\\"%i\\\"}", getFilteredValueByIndex(sensorIndex));
+    if (len < sizeof(data) && !firstTime)
+    {
+        len += snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"%i\\\",", getFilteredValueByIndex(sensorIndex));
+        firstTime = false;
+    }else if(len < sizeof(data) && firstTime)
+    {
+        len += snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"50\\\",");
+        firstTime = false;
+    }
+
+    if (len < sizeof(data))
+    {
+        len += snprintf(data + len, sizeof(data) - len, "\\\"Timestamp\\\":\\\"2026-01-01 10:16:05\\\"}");
+    }
+
     strcpy(mqttMessages[sensorIndex].value, data);
     strcpy(mqttMessages[sensorIndex].topic, mqttTopic[sensorIndex]);
 

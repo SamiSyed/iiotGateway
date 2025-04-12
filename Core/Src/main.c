@@ -65,6 +65,7 @@ uint8_t mqttMessageCounter = 0;
 uint8_t loraGetMsgCounter = 0;
 uint8_t debugDifference = 0;
 bool sendMqttData = false;
+bool systemResetFlag = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -149,7 +150,7 @@ int main(void)
     Delay_CustomTimer(1000);
     sendATCommand("AT", "", AT_OK, NO_AT);
 
-    // gsmInit();
+    gsmInit();
     initSensorFilter();
     setMqttTopic();
     /* USER CODE END 2 */
@@ -219,13 +220,18 @@ int main(void)
         if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT)
         {
             printf("**MQTT data cannot be send for 2 min**\r\n");
-            NVIC_SystemReset();
+            // Delay_CustomTimer(10000);
+            // NVIC_SystemReset();
+            systemResetFlag = true;
         }
 
         if (getTick_CustomTimer_Sec() - loraRecieveOkStatus > MAX_TIME_LORA_INCOMING_MISSING)
         {
-            printf("**LoRa data not receiving for 2 min**\r\n");
-            NVIC_SystemReset();
+            // printf("**LoRa data not receiving for %i min**\r\n", MAX_TIME_LORA_INCOMING_MISSING);
+            printf("**LoRa data not receiving for 5 min**\r\n");
+            // NVIC_SystemReset();
+            systemResetFlag = true;
+
         }
 
         if (getTick_CustomTimer_Sec() - timer2sStatus > 1)
@@ -237,6 +243,12 @@ int main(void)
             timer2sStatus = getTick_CustomTimer_Sec();
         }
 
+        if (systemResetFlag)
+        {
+            systemResetFlag = false;
+            printf("**System Reset**\r\n");
+            // NVIC_SystemReset();
+        }
         setLastCommandOK(true);
         cleanAllBuffers();
 
