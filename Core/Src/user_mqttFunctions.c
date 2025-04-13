@@ -59,7 +59,6 @@ void prepareMqttMessageStruct(uint8_t sensorIndex)
     if (len < sizeof(data) && !firstTime)
     {
         len += snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"%i\\\",", getFilteredValueByIndex(sensorIndex));
-        firstTime = false;
     }else if(len < sizeof(data) && firstTime)
     {
         len += snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"50\\\",");
@@ -68,7 +67,7 @@ void prepareMqttMessageStruct(uint8_t sensorIndex)
 
     if (len < sizeof(data))
     {
-        len += snprintf(data + len, sizeof(data) - len, "\\\"Timestamp\\\":\\\"2026-01-01 10:16:05\\\"}");
+        len += snprintf(data + len, sizeof(data) - len, "\\\"Timestamp\\\":\\\"2025-04-13 10:16:05\\\"}");
     }
 
     strcpy(mqttMessages[sensorIndex].value, data);

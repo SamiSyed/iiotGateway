@@ -288,7 +288,11 @@ SystemError sendATCommand(char *command, char *param, char *reply, bool addAT)
                     {
                         if (replyContains(reply))
                         {
-                            status = NO_ERROR;
+                            if(replyContains("SMPUB") && replyContains("ERROR")){
+                                status = ERROR_REPLY;
+                            }else{
+                                status = NO_ERROR;
+                            }
                         }
                         else
                         {

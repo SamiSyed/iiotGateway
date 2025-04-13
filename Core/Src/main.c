@@ -150,7 +150,7 @@ int main(void)
     Delay_CustomTimer(1000);
     sendATCommand("AT", "", AT_OK, NO_AT);
 
-    gsmInit();
+    // gsmInit();
     initSensorFilter();
     setMqttTopic();
     /* USER CODE END 2 */
@@ -220,6 +220,7 @@ int main(void)
         if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT)
         {
             printf("**MQTT data cannot be send for 2 min**\r\n");
+            printf("**Please check Network and SIM card.**\r\n");
             // Delay_CustomTimer(10000);
             // NVIC_SystemReset();
             systemResetFlag = true;
@@ -229,6 +230,7 @@ int main(void)
         {
             // printf("**LoRa data not receiving for %i min**\r\n", MAX_TIME_LORA_INCOMING_MISSING);
             printf("**LoRa data not receiving for 5 min**\r\n");
+            printf("**\r\nPlease check End nodes. Atleast one End node should be responding**\r\n");
             // NVIC_SystemReset();
             systemResetFlag = true;
 
@@ -246,8 +248,10 @@ int main(void)
         if (systemResetFlag)
         {
             systemResetFlag = false;
-            printf("**System Reset**\r\n");
-            // NVIC_SystemReset();
+            printf("\r\n****************\r\n");
+            printf("\r\n**System Reset**\r\n");
+            printf("\r\n****************\r\n");
+            NVIC_SystemReset();
         }
         setLastCommandOK(true);
         cleanAllBuffers();
