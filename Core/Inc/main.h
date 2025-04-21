@@ -70,6 +70,10 @@ void Error_Handler(void);
 #define GPRS_TX_GPIO_Port GPIOB
 #define ENABLE_3V_Pin GPIO_PIN_9
 #define ENABLE_3V_GPIO_Port GPIOA
+#define WIFI_TX_Pin GPIO_PIN_1
+#define WIFI_TX_GPIO_Port GPIOC
+#define WIFI_RX_Pin GPIO_PIN_0
+#define WIFI_RX_GPIO_Port GPIOC
 #define LED_OUT_Pin GPIO_PIN_10
 #define LED_OUT_GPIO_Port GPIOB
 #define RF_SW_CTRL1_Pin GPIO_PIN_4

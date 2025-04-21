@@ -12,9 +12,11 @@
 #define UART_RX_BUFFER_SIZE 60U
 #define LORA_LISTENING_DURATION 3000U /* UNIT ms */
 #define NUMBER_OF_SENSORS 1U
-/* MQTT_DATA_SEND_INTERVAL has to be smaller than MQTT_DATA_SEND_MAIN_INTERVAL */
+/* MQTT_DATA_SEND_INTERVAL has to be smaller than MQTT_DATA_SEND_MAIN_INTERVAL
+ */
 #define MQTT_DATA_SEND_INTERVAL 5U /* UNIT second */
-/* MQTT_DATA_SEND_MAIN_INTERVAL cannot be less than (NUMBER_OF_SENSORS * MQTT_DATA_SEND_INTERVAL) */
+/* MQTT_DATA_SEND_MAIN_INTERVAL cannot be less than (NUMBER_OF_SENSORS *
+ * MQTT_DATA_SEND_INTERVAL) */
 #define MQTT_DATA_SEND_MAIN_INTERVAL 60U /* UNIT second */
 
 #define MAX_TIME_CANNOT_SEND_MQTT 120U      /* UNIT second */
@@ -29,13 +31,15 @@
 #define LORA_END_NODE_VALUE_SIZE 4U
 
 /* Must sync with END node. Other wise LoRa communication will hang*/
-#define LORA_TX_BUFFER_SIZE                                                                        \
-    (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE + IOT_GATEWAY_MESSAGE_SIZE)
-#define LORA_RX_BUFFER_SIZE                                                                        \
-    (LORA_TX_BUFFER_SIZE + LORA_MESSAGE_DELIMITER_SIZE + LORA_END_NODE_VALUE_SIZE)
+#define LORA_TX_BUFFER_SIZE                                                    \
+  (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
+   IOT_GATEWAY_MESSAGE_SIZE)
+#define LORA_RX_BUFFER_SIZE                                                    \
+  (LORA_TX_BUFFER_SIZE + LORA_MESSAGE_DELIMITER_SIZE + LORA_END_NODE_VALUE_SIZE)
 
 #define usb_uart &huart1
 #define gsm_uart &huart2
+#define wifi_uart &hlpuart1
 
 #define AT_OK "OK"
 #define AT_SAPBR "SAPBR"
@@ -47,18 +51,18 @@
 #define MQTT_TOPIC_SIZE 50U
 #define MQTT_MESSAGE_SIZE 200U
 #define MQTT_SEND_MESSAGE_SIZE (MQTT_TOPIC_SIZE + MQTT_MESSAGE_SIZE)
+#define WIFI_SEND_MESSAGE_SIZE 100U
 
-typedef enum
-{
-    NO_ERROR,
-    ERROR_MESSAGE_QUEUE,
-    ERROR_FILTER_BUFFER_SIZE,
-    ERROR_INDEX_OUT_OF_RANGE,
-    ERROR_UART_TRANSMIT,
-    ERROR_REPLY,
-    ERROR_NO_AT_REPLY,
-    ERROR_LAST_COMMAND_FAILED,
-    ERROR_SEND_MQTT_FAILED,
+typedef enum {
+  NO_ERROR,
+  ERROR_MESSAGE_QUEUE,
+  ERROR_FILTER_BUFFER_SIZE,
+  ERROR_INDEX_OUT_OF_RANGE,
+  ERROR_UART_TRANSMIT,
+  ERROR_REPLY,
+  ERROR_NO_AT_REPLY,
+  ERROR_LAST_COMMAND_FAILED,
+  ERROR_SEND_MQTT_FAILED,
 } SystemError;
 
 /* This number of IDs should be same as the NUMBER_OF_SENSORS
@@ -66,22 +70,21 @@ typedef enum
    This IDs should be same with END node. END node reply based on comparing this
    IDs
 */
-typedef enum
-{
-    sensorID_0 = 100, /* Should start with 0 to keep the NUMBER_OF_SENSORS accurate */
-    sensorID_1,
-    sensorID_2,
-    sensorID_3,
-    sensorID_4,
+typedef enum {
+  sensorID_0 =
+      100, /* Should start with 0 to keep the NUMBER_OF_SENSORS accurate */
+  sensorID_1,
+  sensorID_2,
+  sensorID_3,
+  sensorID_4,
 
 } SensorId;
 
-typedef enum
-{
-    UART2_WAITING_TX,
-    UART2_TX_COMPLETE,
-    UART2_WAITING_RX,
-    UART2_RX_COMPLETE,
+typedef enum {
+  UART2_WAITING_TX,
+  UART2_TX_COMPLETE,
+  UART2_WAITING_RX,
+  UART2_RX_COMPLETE,
 } Uart2Status_e;
 
 void setRawDataReceived(bool status);
@@ -107,6 +110,11 @@ bool getSendingFlag(void);
 void setReceivingFlag(bool flag);
 bool getReceivingFlag(void);
 
+/* WiFi Uart Flag */
+void setDataArrived(bool status);
+bool isWaitingForRx(void);
+void sendDirectAT(char *command, char *param);
+
 /* GSM */
 SystemError gsmInit(void);
 void setGMSReadinessFlag(bool);
@@ -116,7 +124,8 @@ uint16_t GetTemperatureLevel(void);
 
 /* AT command */
 SystemError sendATCommand(char *command, char *param, char *reply, bool addAT);
-SystemError sendATCommandRetry(char *command, char *param, char *reply, bool addAT);
+SystemError sendATCommandRetry(char *command, char *param, char *reply,
+                               bool addAT);
 
 /* Custom Delay */
 void Delay_CustomTimer(uint32_t delayMs);
@@ -124,4 +133,5 @@ uint32_t getTick_CustomTimer(void);
 uint32_t getTick_CustomTimer_Sec(void);
 void initDelayCustomTimer(void);
 char *prepareLoraMessage(uint8_t sID);
+void sendRawAT(char *command, char *param);
 #endif /* SYSTEM_H */
