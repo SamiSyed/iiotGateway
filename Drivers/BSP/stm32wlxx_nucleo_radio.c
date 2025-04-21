@@ -43,47 +43,45 @@
  * @brief  Init Radio Switch
  * @retval BSP status
  */
-int32_t BSP_RADIO_Init(void)
-{
-    GPIO_InitTypeDef gpio_init_structure = {0};
+int32_t BSP_RADIO_Init(void) {
+  GPIO_InitTypeDef gpio_init_structure = {0};
 
-    /* Enable the Radio Switch Clock */
-    RF_SW_CTRL1_GPIO_CLK_ENABLE();
+  /* Enable the Radio Switch Clock */
+  RF_SW_CTRL1_GPIO_CLK_ENABLE();
 
-    /* Configure the Radio Switch pin */
-    gpio_init_structure.Pin = RF_SW_CTRL1_PIN;
-    gpio_init_structure.Mode = GPIO_MODE_OUTPUT_PP;
-    gpio_init_structure.Pull = GPIO_NOPULL;
-    gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  /* Configure the Radio Switch pin */
+  gpio_init_structure.Pin = RF_SW_CTRL1_PIN;
+  gpio_init_structure.Mode = GPIO_MODE_OUTPUT_PP;
+  gpio_init_structure.Pull = GPIO_NOPULL;
+  gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 
-    HAL_GPIO_Init(RF_SW_CTRL1_GPIO_PORT, &gpio_init_structure);
+  HAL_GPIO_Init(RF_SW_CTRL1_GPIO_PORT, &gpio_init_structure);
 
-    gpio_init_structure.Pin = RF_SW_CTRL2_PIN;
-    HAL_GPIO_Init(RF_SW_CTRL2_GPIO_PORT, &gpio_init_structure);
+  gpio_init_structure.Pin = RF_SW_CTRL2_PIN;
+  HAL_GPIO_Init(RF_SW_CTRL2_GPIO_PORT, &gpio_init_structure);
 
-    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
 
-    return BSP_ERROR_NONE;
+  return BSP_ERROR_NONE;
 }
 
 /**
  * @brief  DeInit Radio Switch
  * @retval BSP status
  */
-int32_t BSP_RADIO_DeInit(void)
-{
-    RF_SW_RX_GPIO_CLK_DISABLE();
+int32_t BSP_RADIO_DeInit(void) {
+  RF_SW_RX_GPIO_CLK_DISABLE();
 
-    /* Turn off switch */
-    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
+  /* Turn off switch */
+  HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
 
-    /* DeInit the Radio Switch pin */
-    HAL_GPIO_DeInit(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN);
-    HAL_GPIO_DeInit(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN);
+  /* DeInit the Radio Switch pin */
+  HAL_GPIO_DeInit(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN);
+  HAL_GPIO_DeInit(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN);
 
-    return BSP_ERROR_NONE;
+  return BSP_ERROR_NONE;
 }
 
 /**
@@ -96,43 +94,37 @@ int32_t BSP_RADIO_DeInit(void)
  *           @arg RADIO_SWITCH_RFO_HP
  * @retval BSP status
  */
-int32_t BSP_RADIO_ConfigRFSwitch(BSP_RADIO_Switch_TypeDef Config)
-{
-    switch (Config)
-    {
-    case RADIO_SWITCH_OFF:
-    {
-        /* Turn off switch */
-        HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
-        break;
-    }
-    case RADIO_SWITCH_RX:
-    {
-        /*Turns On in Rx Mode the RF Switch */
-        HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
-        break;
-    }
-    case RADIO_SWITCH_RFO_LP:
-    {
-        /*Turns On in Tx Low Power the RF Switch */
-        HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_SET);
-        break;
-    }
-    case RADIO_SWITCH_RFO_HP:
-    {
-        /*Turns On in Tx High Power the RF Switch */
-        HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_SET);
-        break;
-    }
-    default:
-        break;
-    }
+int32_t BSP_RADIO_ConfigRFSwitch(BSP_RADIO_Switch_TypeDef Config) {
+  switch (Config) {
+  case RADIO_SWITCH_OFF: {
+    /* Turn off switch */
+    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
+    break;
+  }
+  case RADIO_SWITCH_RX: {
+    /*Turns On in Rx Mode the RF Switch */
+    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_RESET);
+    break;
+  }
+  case RADIO_SWITCH_RFO_LP: {
+    /*Turns On in Tx Low Power the RF Switch */
+    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_SET);
+    break;
+  }
+  case RADIO_SWITCH_RFO_HP: {
+    /*Turns On in Tx High Power the RF Switch */
+    HAL_GPIO_WritePin(RF_SW_CTRL1_GPIO_PORT, RF_SW_CTRL1_PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(RF_SW_CTRL2_GPIO_PORT, RF_SW_CTRL2_PIN, GPIO_PIN_SET);
+    break;
+  }
+  default:
+    break;
+  }
 
-    return BSP_ERROR_NONE;
+  return BSP_ERROR_NONE;
 }
 
 /**
@@ -142,10 +134,7 @@ int32_t BSP_RADIO_ConfigRFSwitch(BSP_RADIO_Switch_TypeDef Config)
  *  RADIO_CONF_RFO_LP
  *  RADIO_CONF_RFO_HP
  */
-int32_t BSP_RADIO_GetTxConfig(void)
-{
-    return RADIO_CONF_RFO_HP;
-}
+int32_t BSP_RADIO_GetTxConfig(void) { return RADIO_CONF_RFO_HP; }
 
 /**
  * @brief  Get If TCXO is to be present on board
@@ -154,10 +143,7 @@ int32_t BSP_RADIO_GetTxConfig(void)
  *  RADIO_CONF_TCXO_NOT_SUPPORTED
  *  RADIO_CONF_TCXO_SUPPORTED
  */
-int32_t BSP_RADIO_IsTCXO(void)
-{
-    return RADIO_CONF_TCXO_SUPPORTED;
-}
+int32_t BSP_RADIO_IsTCXO(void) { return RADIO_CONF_TCXO_SUPPORTED; }
 
 /**
  * @brief  Get If DCDC is to be present on board
@@ -166,21 +152,15 @@ int32_t BSP_RADIO_IsTCXO(void)
  *  RADIO_CONF_DCDC_NOT_SUPPORTED
  *  RADIO_CONF_DCDC_SUPPORTED
  */
-int32_t BSP_RADIO_IsDCDC(void)
-{
-    return RADIO_CONF_DCDC_SUPPORTED;
-}
+int32_t BSP_RADIO_IsDCDC(void) { return RADIO_CONF_DCDC_SUPPORTED; }
 
-int32_t BSP_RADIO_GetRFOMaxPowerConfig(BSP_RADIO_RFOMaxPowerConfig_TypeDef Config)
-{
-    if (Config == RADIO_RFO_LP_MAXPOWER)
-    {
-        return 15; /*dBm*/
-    }
-    else
-    {
-        return 22; /*dBm*/
-    }
+int32_t
+BSP_RADIO_GetRFOMaxPowerConfig(BSP_RADIO_RFOMaxPowerConfig_TypeDef Config) {
+  if (Config == RADIO_RFO_LP_MAXPOWER) {
+    return 15; /*dBm*/
+  } else {
+    return 22; /*dBm*/
+  }
 }
 
 /**

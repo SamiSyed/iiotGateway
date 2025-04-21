@@ -29,10 +29,10 @@
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
  * \defgroup  LORAMACCONFIRMQUEUE LoRa MAC confirm queue implementation
- *            This module specifies the API implementation of the LoRaMAC confirm queue.
- *            The confirm queue is implemented with as a ring buffer. The number of
- *            elements can be defined with \ref LORA_MAC_MLME_CONFIRM_QUEUE_LEN. The
- *            current implementation does not support multiple elements of the same
+ *            This module specifies the API implementation of the LoRaMAC
+ * confirm queue. The confirm queue is implemented with as a ring buffer. The
+ * number of elements can be defined with \ref LORA_MAC_MLME_CONFIRM_QUEUE_LEN.
+ * The current implementation does not support multiple elements of the same
  *            Mlme_t type.
  * \{
  */
@@ -53,25 +53,24 @@ extern "C" {
 /*!
  * Structure to hold multiple MLME request confirm data
  */
-typedef struct sMlmeConfirmQueue
-{
-    /*!
-     * Holds the previously performed MLME-Request
-     */
-    Mlme_t Request;
-    /*!
-     * Status of the operation
-     */
-    LoRaMacEventInfoStatus_t Status;
-    /*!
-     * Set to true, if the request is ready to be handled
-     */
-    bool ReadyToHandle;
-    /*!
-     * Set to true, if it is not permitted to set the ReadyToHandle variable
-     * with a function call to LoRaMacConfirmQueueSetStatusCmn.
-     */
-    bool RestrictCommonReadyToHandle;
+typedef struct sMlmeConfirmQueue {
+  /*!
+   * Holds the previously performed MLME-Request
+   */
+  Mlme_t Request;
+  /*!
+   * Status of the operation
+   */
+  LoRaMacEventInfoStatus_t Status;
+  /*!
+   * Set to true, if the request is ready to be handled
+   */
+  bool ReadyToHandle;
+  /*!
+   * Set to true, if it is not permitted to set the ReadyToHandle variable
+   * with a function call to LoRaMacConfirmQueueSetStatusCmn.
+   */
+  bool RestrictCommonReadyToHandle;
 } MlmeConfirmQueue_t;
 
 /*!
@@ -111,7 +110,8 @@ bool LoRaMacConfirmQueueRemoveFirst(void);
  *
  * \param   [in] request - The related request to set the status.
  */
-void LoRaMacConfirmQueueSetStatus(LoRaMacEventInfoStatus_t status, Mlme_t request);
+void LoRaMacConfirmQueueSetStatus(LoRaMacEventInfoStatus_t status,
+                                  Mlme_t request);
 
 /*!
  * \brief   Gets the status of an element.
@@ -141,7 +141,8 @@ LoRaMacEventInfoStatus_t LoRaMacConfirmQueueGetStatusCmn(void);
  *
  * \param   [in] request - The request to verify.
  *
- * \retval  [true - element is in the queue, false - element is not in the queue].
+ * \retval  [true - element is in the queue, false - element is not in the
+ * queue].
  */
 bool LoRaMacConfirmQueueIsCmdActive(Mlme_t request);
 

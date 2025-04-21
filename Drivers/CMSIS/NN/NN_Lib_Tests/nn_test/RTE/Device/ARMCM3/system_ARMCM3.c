@@ -1,13 +1,9 @@
 /**************************************************************************/ /**
-                                                                              * @file
-                                                                              *system_ARMCM3.c
-                                                                              * @brief    CMSIS
-                                                                              *Device System Source
-                                                                              *File for ARMCM3
-                                                                              *Device Series
+                                                                              * @file     system_ARMCM3.c
+                                                                              * @brief    CMSIS Device System Source File for
+                                                                              *           ARMCM3 Device Series
                                                                               * @version  V5.00
-                                                                              * @date     08. April
-                                                                              *2016
+                                                                              * @date     08. April 2016
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -51,19 +47,16 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
-{
-    SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit(void)
-{
+void SystemInit(void) {
+
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1)
-    SCB->VTOR = (uint32_t)&__Vectors;
+  SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
-    SystemCoreClock = SYSTEM_CLOCK;
+  SystemCoreClock = SYSTEM_CLOCK;
 }

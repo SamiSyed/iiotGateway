@@ -39,56 +39,55 @@ extern "C" {
 /*!
  * Compliance test protocol handler parameters
  */
-typedef struct LmhpComplianceParams_s
-{
-    /*!
-     * Holds the ADR state
-     */
-    bool AdrEnabled;
-    /*!
-     * LoRaWAN ETSI duty cycle control enable/disable
-     *
-     * \remark Please note that ETSI mandates duty cycled transmissions. Use only for test purposes
-     */
-    bool DutyCycleEnabled;
-    /*!
-     * Stops unnecessary peripherals.
-     *
-     * \remark Use for the compliance tests protocol handling in order to
-     *         reduce the power consumption.
-     */
-    void (*StopPeripherals)(void);
-    /*!
-     * Starts previously stopped peripherals.
-     *
-     * \remark Use for the compliance tests protocol handling in order to
-     *         reduce the power consumption.
-     */
-    void (*StartPeripherals)(void);
+typedef struct LmhpComplianceParams_s {
+  /*!
+   * Holds the ADR state
+   */
+  bool AdrEnabled;
+  /*!
+   * LoRaWAN ETSI duty cycle control enable/disable
+   *
+   * \remark Please note that ETSI mandates duty cycled transmissions. Use only
+   * for test purposes
+   */
+  bool DutyCycleEnabled;
+  /*!
+   * Stops unnecessary peripherals.
+   *
+   * \remark Use for the compliance tests protocol handling in order to
+   *         reduce the power consumption.
+   */
+  void (*StopPeripherals)(void);
+  /*!
+   * Starts previously stopped peripherals.
+   *
+   * \remark Use for the compliance tests protocol handling in order to
+   *         reduce the power consumption.
+   */
+  void (*StartPeripherals)(void);
 } LmhpComplianceParams_t;
-#elif (defined(LORAMAC_VERSION)                                                                    \
-       && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+#elif (defined(LORAMAC_VERSION) &&                                             \
+       ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
 /*!
  * Compliance test protocol handler parameters
  */
-typedef struct LmhpComplianceParams_s
-{
-    /*!
-     * Current firmware version
-     */
-    Version_t FwVersion;
-    /*!
-     *
-     */
-    void (*OnTxPeriodicityChanged)(uint32_t periodicity);
-    /*!
-     *
-     */
-    void (*OnTxFrameCtrlChanged)(LmHandlerMsgTypes_t isTxConfirmed);
-    /*!
-     *
-     */
-    void (*OnPingSlotPeriodicityChanged)(uint8_t pingSlotPeriodicity);
+typedef struct LmhpComplianceParams_s {
+  /*!
+   * Current firmware version
+   */
+  Version_t FwVersion;
+  /*!
+   *
+   */
+  void (*OnTxPeriodicityChanged)(uint32_t periodicity);
+  /*!
+   *
+   */
+  void (*OnTxFrameCtrlChanged)(LmHandlerMsgTypes_t isTxConfirmed);
+  /*!
+   *
+   */
+  void (*OnPingSlotPeriodicityChanged)(uint8_t pingSlotPeriodicity);
 } LmhpComplianceParams_t;
 #endif /* LORAMAC_VERSION */
 

@@ -1,12 +1,8 @@
 /**************************************************************************/ /**
-                                                                              * @file mem_ARMCA5.h
-                                                                              * @brief    Memory
-                                                                              *base and size
-                                                                              *definitions (used in
-                                                                              *scatter file)
+                                                                              * @file     mem_ARMCA5.h
+                                                                              * @brief    Memory base and size definitions (used in scatter file)
                                                                               * @version  V1.00
-                                                                              * @date     10.
-                                                                              *January 2018
+                                                                              * @date     10. January 2018
                                                                               *
                                                                               * @note
                                                                               *

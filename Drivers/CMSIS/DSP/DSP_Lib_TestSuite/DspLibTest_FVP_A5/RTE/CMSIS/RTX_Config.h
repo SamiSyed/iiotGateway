@@ -70,9 +70,11 @@
 //   </e>
 
 //   <o>ISR FIFO Queue
-//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
-//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
-//     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
+//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16
+//      entries
+//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64
+//     entries <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=>
+//     256 entries
 //   <i> RTOS Functions called from ISR store requests to this buffer.
 //   <i> Default: 16 entries
 #ifndef OS_ISR_FIFO_QUEUE
@@ -97,8 +99,9 @@
 #endif
 
 //     <o>Number of user Threads <1-1000>
-//     <i> Defines maximum number of user threads that can be active at the same time.
-//     <i> Applies to user threads with system provided memory for control blocks.
+//     <i> Defines maximum number of user threads that can be active at the same
+//     time. <i> Applies to user threads with system provided memory for control
+//     blocks.
 #ifndef OS_THREAD_NUM
 #define OS_THREAD_NUM 1
 #endif
@@ -110,10 +113,11 @@
 #define OS_THREAD_DEF_STACK_NUM 0
 #endif
 
-//     <o>Total Stack size [bytes] for user Threads with user-provided Stack size <0-1073741824:8>
-//     <i> Defines the combined stack size for user threads with user-provided stack size.
-//     <i> Applies to user threads with user-provided stack size and system provided memory for
-//     stack. <i> Default: 0
+//     <o>Total Stack size [bytes] for user Threads with user-provided Stack
+//     size <0-1073741824:8> <i> Defines the combined stack size for user
+//     threads with user-provided stack size. <i> Applies to user threads with
+//     user-provided stack size and system provided memory for stack. <i>
+//     Default: 0
 #ifndef OS_THREAD_USER_STACK_SIZE
 #define OS_THREAD_USER_STACK_SIZE 0
 #endif
@@ -144,14 +148,16 @@
 
 //   <q>Stack overrun checking
 //   <i> Enables stack overrun check at thread switch.
-//   <i> Enabling this option increases slightly the execution time of a thread switch.
+//   <i> Enabling this option increases slightly the execution time of a thread
+//   switch.
 #ifndef OS_STACK_CHECK
 #define OS_STACK_CHECK 1
 #endif
 
 //   <q>Stack usage watermark
-//   <i> Initializes thread stack with watermark pattern for analyzing stack usage.
-//   <i> Enabling this option increases significantly the execution time of thread creation.
+//   <i> Initializes thread stack with watermark pattern for analyzing stack
+//   usage. <i> Enabling this option increases significantly the execution time
+//   of thread creation.
 #ifndef OS_STACK_WATERMARK
 #define OS_STACK_WATERMARK 0
 #endif
@@ -176,8 +182,9 @@
 #endif
 
 //     <o>Number of Timer objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_TIMER_NUM
 #define OS_TIMER_NUM 1
 #endif
@@ -231,8 +238,9 @@
 #endif
 
 //     <o>Number of Event Flags objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_EVFLAGS_NUM
 #define OS_EVFLAGS_NUM 1
 #endif
@@ -251,8 +259,9 @@
 #endif
 
 //     <o>Number of Mutex objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_MUTEX_NUM
 #define OS_MUTEX_NUM 1
 #endif
@@ -271,8 +280,9 @@
 #endif
 
 //     <o>Number of Semaphore objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_SEMAPHORE_NUM
 #define OS_SEMAPHORE_NUM 1
 #endif
@@ -291,8 +301,9 @@
 #endif
 
 //     <o>Number of Memory Pool objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_MEMPOOL_NUM
 #define OS_MEMPOOL_NUM 1
 #endif
@@ -319,8 +330,9 @@
 #endif
 
 //     <o>Number of Message Queue objects <1-1000>
-//     <i> Defines maximum number of objects that can be active at the same time.
-//     <i> Applies to objects with system provided memory for control blocks.
+//     <i> Defines maximum number of objects that can be active at the same
+//     time. <i> Applies to objects with system provided memory for control
+//     blocks.
 #ifndef OS_MSGQUEUE_NUM
 #define OS_MSGQUEUE_NUM 1
 #endif
@@ -493,7 +505,8 @@
 //   </e>
 
 //   <h>RTOS Event Generation
-//   <i> Enables event generation for RTX components (requires RTX source variant).
+//   <i> Enables event generation for RTX components (requires RTX source
+//   variant).
 
 //     <q>Memory Management
 //     <i> Enables Memory Management event generation.

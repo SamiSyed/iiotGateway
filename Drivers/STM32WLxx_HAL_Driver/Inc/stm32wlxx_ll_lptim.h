@@ -61,31 +61,34 @@ extern "C" {
 /**
  * @brief  LPTIM Init structure definition
  */
-typedef struct
-{
-    uint32_t ClockSource; /*!< Specifies the source of the clock used by the LPTIM instance.
-                               This parameter can be a value of @ref LPTIM_LL_EC_CLK_SOURCE.
+typedef struct {
+  uint32_t ClockSource; /*!< Specifies the source of the clock used by the LPTIM
+                           instance. This parameter can be a value of @ref
+                           LPTIM_LL_EC_CLK_SOURCE.
 
-                               This feature can be modified afterwards using unitary
-                               function @ref LL_LPTIM_SetClockSource().*/
+                             This feature can be modified afterwards using
+                           unitary function @ref LL_LPTIM_SetClockSource().*/
 
-    uint32_t Prescaler; /*!< Specifies the prescaler division ratio.
-                             This parameter can be a value of @ref LPTIM_LL_EC_PRESCALER.
+  uint32_t Prescaler; /*!< Specifies the prescaler division ratio.
+                           This parameter can be a value of @ref
+                         LPTIM_LL_EC_PRESCALER.
 
-                             This feature can be modified afterwards using using unitary
-                             function @ref LL_LPTIM_SetPrescaler().*/
+                           This feature can be modified afterwards using using
+                         unitary function @ref LL_LPTIM_SetPrescaler().*/
 
-    uint32_t Waveform; /*!< Specifies the waveform shape.
-                            This parameter can be a value of @ref LPTIM_LL_EC_OUTPUT_WAVEFORM.
+  uint32_t Waveform; /*!< Specifies the waveform shape.
+                          This parameter can be a value of @ref
+                        LPTIM_LL_EC_OUTPUT_WAVEFORM.
 
-                            This feature can be modified afterwards using unitary
-                            function @ref LL_LPTIM_ConfigOutput().*/
+                          This feature can be modified afterwards using unitary
+                          function @ref LL_LPTIM_ConfigOutput().*/
 
-    uint32_t Polarity; /*!< Specifies waveform polarity.
-                            This parameter can be a value of @ref LPTIM_LL_EC_OUTPUT_POLARITY.
+  uint32_t Polarity; /*!< Specifies waveform polarity.
+                          This parameter can be a value of @ref
+                        LPTIM_LL_EC_OUTPUT_POLARITY.
 
-                            This feature can be modified afterwards using unitary
-                            function @ref LL_LPTIM_ConfigOutput().*/
+                          This feature can be modified afterwards using unitary
+                          function @ref LL_LPTIM_ConfigOutput().*/
 } LL_LPTIM_InitTypeDef;
 
 /**
@@ -102,32 +105,44 @@ typedef struct
  * @brief    Flags defines which can be used with LL_LPTIM_ReadReg function
  * @{
  */
-#define LL_LPTIM_ISR_CMPM LPTIM_ISR_CMPM       /*!< Compare match */
-#define LL_LPTIM_ISR_CMPOK LPTIM_ISR_CMPOK     /*!< Compare register update OK */
-#define LL_LPTIM_ISR_ARRM LPTIM_ISR_ARRM       /*!< Autoreload match */
-#define LL_LPTIM_ISR_EXTTRIG LPTIM_ISR_EXTTRIG /*!< External trigger edge event */
-#define LL_LPTIM_ISR_ARROK LPTIM_ISR_ARROK     /*!< Autoreload register update OK */
-#define LL_LPTIM_ISR_UP LPTIM_ISR_UP           /*!< Counter direction change down to up */
-#define LL_LPTIM_ISR_DOWN LPTIM_ISR_DOWN       /*!< Counter direction change up to down */
-#define LL_LPTIM_ISR_UE LPTIM_ISR_UE           /*!< Update event */
-#define LL_LPTIM_ISR_REPOK LPTIM_ISR_REPOK     /*!< Repetition register update OK */
+#define LL_LPTIM_ISR_CMPM LPTIM_ISR_CMPM   /*!< Compare match */
+#define LL_LPTIM_ISR_CMPOK LPTIM_ISR_CMPOK /*!< Compare register update OK */
+#define LL_LPTIM_ISR_ARRM LPTIM_ISR_ARRM   /*!< Autoreload match */
+#define LL_LPTIM_ISR_EXTTRIG                                                   \
+  LPTIM_ISR_EXTTRIG                        /*!< External trigger edge event */
+#define LL_LPTIM_ISR_ARROK LPTIM_ISR_ARROK /*!< Autoreload register update OK  \
+                                            */
+#define LL_LPTIM_ISR_UP LPTIM_ISR_UP /*!< Counter direction change down to up  \
+                                      */
+#define LL_LPTIM_ISR_DOWN                                                      \
+  LPTIM_ISR_DOWN                     /*!< Counter direction change up to down */
+#define LL_LPTIM_ISR_UE LPTIM_ISR_UE /*!< Update event */
+#define LL_LPTIM_ISR_REPOK LPTIM_ISR_REPOK /*!< Repetition register update OK  \
+                                            */
 /**
  * @}
  */
 
 /** @defgroup LPTIM_LL_EC_IT IT Defines
- * @brief    IT defines which can be used with LL_LPTIM_ReadReg and  LL_LPTIM_WriteReg functions
+ * @brief    IT defines which can be used with LL_LPTIM_ReadReg and
+ * LL_LPTIM_WriteReg functions
  * @{
  */
-#define LL_LPTIM_IER_CMPMIE LPTIM_IER_CMPMIE       /*!< Compare match */
-#define LL_LPTIM_IER_CMPOKIE LPTIM_IER_CMPOKIE     /*!< Compare register update OK */
-#define LL_LPTIM_IER_ARRMIE LPTIM_IER_ARRMIE       /*!< Autoreload match */
-#define LL_LPTIM_IER_EXTTRIGIE LPTIM_IER_EXTTRIGIE /*!< External trigger edge event */
-#define LL_LPTIM_IER_ARROKIE LPTIM_IER_ARROKIE     /*!< Autoreload register update OK */
-#define LL_LPTIM_IER_UPIE LPTIM_IER_UPIE           /*!< Counter direction change down to up */
-#define LL_LPTIM_IER_DOWNIE LPTIM_IER_DOWNIE       /*!< Counter direction change up to down */
-#define LL_LPTIM_IER_UEIE LPTIM_IER_UEIE           /*!< Update event */
-#define LL_LPTIM_IER_REPOKIE LPTIM_IER_REPOKIE     /*!< Repetition register update OK */
+#define LL_LPTIM_IER_CMPMIE LPTIM_IER_CMPMIE /*!< Compare match */
+#define LL_LPTIM_IER_CMPOKIE                                                   \
+  LPTIM_IER_CMPOKIE                          /*!< Compare register update OK */
+#define LL_LPTIM_IER_ARRMIE LPTIM_IER_ARRMIE /*!< Autoreload match */
+#define LL_LPTIM_IER_EXTTRIGIE                                                 \
+  LPTIM_IER_EXTTRIGIE /*!< External trigger edge event */
+#define LL_LPTIM_IER_ARROKIE                                                   \
+  LPTIM_IER_ARROKIE /*!< Autoreload register update OK */
+#define LL_LPTIM_IER_UPIE                                                      \
+  LPTIM_IER_UPIE /*!< Counter direction change down to up */
+#define LL_LPTIM_IER_DOWNIE                                                    \
+  LPTIM_IER_DOWNIE /*!< Counter direction change up to down */
+#define LL_LPTIM_IER_UEIE LPTIM_IER_UEIE /*!< Update event */
+#define LL_LPTIM_IER_REPOKIE                                                   \
+  LPTIM_IER_REPOKIE /*!< Repetition register update OK */
 /**
  * @}
  */
@@ -135,9 +150,10 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_OPERATING_MODE Operating Mode
  * @{
  */
-#define LL_LPTIM_OPERATING_MODE_CONTINUOUS LPTIM_CR_CNTSTRT /*!<LP Timer starts in continuous      \
-                                                               mode*/
-#define LL_LPTIM_OPERATING_MODE_ONESHOT LPTIM_CR_SNGSTRT    /*!<LP Tilmer starts in single mode*/
+#define LL_LPTIM_OPERATING_MODE_CONTINUOUS                                     \
+  LPTIM_CR_CNTSTRT /*!<LP Timer starts in continuous mode*/
+#define LL_LPTIM_OPERATING_MODE_ONESHOT                                        \
+  LPTIM_CR_SNGSTRT /*!<LP Tilmer starts in single mode*/
 /**
  * @}
  */
@@ -145,11 +161,12 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_UPDATE_MODE Update Mode
  * @{
  */
-#define LL_LPTIM_UPDATE_MODE_IMMEDIATE                                                             \
-    0x00000000U /*!<Preload is disabled: registers are updated after each APB bus write access*/
-#define LL_LPTIM_UPDATE_MODE_ENDOFPERIOD                                                           \
-    LPTIM_CFGR_PRELOAD /*!<preload is enabled: registers are updated at the end of the current     \
-                          LPTIM period*/
+#define LL_LPTIM_UPDATE_MODE_IMMEDIATE                                         \
+  0x00000000U /*!<Preload is disabled: registers are updated after each APB    \
+                 bus write access*/
+#define LL_LPTIM_UPDATE_MODE_ENDOFPERIOD                                       \
+  LPTIM_CFGR_PRELOAD /*!<preload is enabled: registers are updated at the end  \
+                        of the current LPTIM period*/
 /**
  * @}
  */
@@ -157,11 +174,12 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_COUNTER_MODE Counter Mode
  * @{
  */
-#define LL_LPTIM_COUNTER_MODE_INTERNAL                                                             \
-    0x00000000U /*!<The counter is incremented following each internal clock pulse*/
-#define LL_LPTIM_COUNTER_MODE_EXTERNAL                                                             \
-    LPTIM_CFGR_COUNTMODE /*!<The counter is incremented following each valid clock pulse on the    \
-                            LPTIM external Input1*/
+#define LL_LPTIM_COUNTER_MODE_INTERNAL                                         \
+  0x00000000U /*!<The counter is incremented following each internal clock     \
+                 pulse*/
+#define LL_LPTIM_COUNTER_MODE_EXTERNAL                                         \
+  LPTIM_CFGR_COUNTMODE /*!<The counter is incremented following each valid     \
+                          clock pulse on the LPTIM external Input1*/
 /**
  * @}
  */
@@ -169,11 +187,12 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_OUTPUT_WAVEFORM Output Waveform Type
  * @{
  */
-#define LL_LPTIM_OUTPUT_WAVEFORM_PWM                                                               \
-    0x00000000U /*!<LPTIM  generates either a PWM waveform or a One pulse waveform depending on    \
-                   chosen operating mode CONTINUOUS or SINGLE*/
-#define LL_LPTIM_OUTPUT_WAVEFORM_SETONCE LPTIM_CFGR_WAVE /*!<LPTIM  generates a Set Once           \
-                                                            waveform*/
+#define LL_LPTIM_OUTPUT_WAVEFORM_PWM                                           \
+  0x00000000U /*!<LPTIM  generates either a PWM waveform or a One pulse        \
+                 waveform depending on chosen operating mode CONTINUOUS or     \
+                 SINGLE*/
+#define LL_LPTIM_OUTPUT_WAVEFORM_SETONCE                                       \
+  LPTIM_CFGR_WAVE /*!<LPTIM  generates a Set Once waveform*/
 /**
  * @}
  */
@@ -181,12 +200,12 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_OUTPUT_POLARITY Output Polarity
  * @{
  */
-#define LL_LPTIM_OUTPUT_POLARITY_REGULAR                                                           \
-    0x00000000U /*!<The LPTIM output reflects the compare results between LPTIMx_ARR and           \
-                   LPTIMx_CMP registers*/
-#define LL_LPTIM_OUTPUT_POLARITY_INVERSE                                                           \
-    LPTIM_CFGR_WAVPOL /*!<The LPTIM output reflects the inverse of the compare results between     \
-                         LPTIMx_ARR and LPTIMx_CMP registers*/
+#define LL_LPTIM_OUTPUT_POLARITY_REGULAR                                       \
+  0x00000000U /*!<The LPTIM output reflects the compare results between        \
+                 LPTIMx_ARR and LPTIMx_CMP registers*/
+#define LL_LPTIM_OUTPUT_POLARITY_INVERSE                                       \
+  LPTIM_CFGR_WAVPOL /*!<The LPTIM output reflects the inverse of the compare   \
+                       results between LPTIMx_ARR and LPTIMx_CMP registers*/
 /**
  * @}
  */
@@ -194,17 +213,25 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_PRESCALER Prescaler Value
  * @{
  */
-#define LL_LPTIM_PRESCALER_DIV1 0x00000000U        /*!<Prescaler division factor is set to 1*/
-#define LL_LPTIM_PRESCALER_DIV2 LPTIM_CFGR_PRESC_0 /*!<Prescaler division factor is set to 2*/
-#define LL_LPTIM_PRESCALER_DIV4 LPTIM_CFGR_PRESC_1 /*!<Prescaler division factor is set to 4*/
-#define LL_LPTIM_PRESCALER_DIV8                                                                    \
-    (LPTIM_CFGR_PRESC_1 | LPTIM_CFGR_PRESC_0)       /*!<Prescaler division factor is set to 8*/
-#define LL_LPTIM_PRESCALER_DIV16 LPTIM_CFGR_PRESC_2 /*!<Prescaler division factor is set to 16*/
-#define LL_LPTIM_PRESCALER_DIV32                                                                   \
-    (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 32*/
-#define LL_LPTIM_PRESCALER_DIV64                                                                   \
-    (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_1)      /*!<Prescaler division factor is set to 64*/
-#define LL_LPTIM_PRESCALER_DIV128 LPTIM_CFGR_PRESC /*!<Prescaler division factor is set to 128*/
+#define LL_LPTIM_PRESCALER_DIV1                                                \
+  0x00000000U /*!<Prescaler division factor is set to 1*/
+#define LL_LPTIM_PRESCALER_DIV2                                                \
+  LPTIM_CFGR_PRESC_0 /*!<Prescaler division factor is set to 2*/
+#define LL_LPTIM_PRESCALER_DIV4                                                \
+  LPTIM_CFGR_PRESC_1 /*!<Prescaler division factor is set to 4*/
+#define LL_LPTIM_PRESCALER_DIV8                                                \
+  (LPTIM_CFGR_PRESC_1 |                                                        \
+   LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 8*/
+#define LL_LPTIM_PRESCALER_DIV16                                               \
+  LPTIM_CFGR_PRESC_2 /*!<Prescaler division factor is set to 16*/
+#define LL_LPTIM_PRESCALER_DIV32                                               \
+  (LPTIM_CFGR_PRESC_2 |                                                        \
+   LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 32*/
+#define LL_LPTIM_PRESCALER_DIV64                                               \
+  (LPTIM_CFGR_PRESC_2 |                                                        \
+   LPTIM_CFGR_PRESC_1) /*!<Prescaler division factor is set to 64*/
+#define LL_LPTIM_PRESCALER_DIV128                                              \
+  LPTIM_CFGR_PRESC /*!<Prescaler division factor is set to 128*/
 /**
  * @}
  */
@@ -212,29 +239,34 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_TRIG_SOURCE Trigger Source
  * @{
  */
-#define LL_LPTIM_TRIG_SOURCE_GPIO                                                                  \
-    0x00000000U /*!<External input trigger is connected to TIMx_ETR input*/
-#define LL_LPTIM_TRIG_SOURCE_RTCALARMA                                                             \
-    LPTIM_CFGR_TRIGSEL_0 /*!<External input trigger is connected to RTC Alarm A*/
-#define LL_LPTIM_TRIG_SOURCE_RTCALARMB                                                             \
-    LPTIM_CFGR_TRIGSEL_1 /*!<External input trigger is connected to RTC Alarm B*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP1                                                              \
-    (LPTIM_CFGR_TRIGSEL_1 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC   \
-                                                     Tamper 1*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP2                                                              \
-    LPTIM_CFGR_TRIGSEL_2 /*!<External input trigger is connected to RTC Tamper 2*/
-#define LL_LPTIM_TRIG_SOURCE_RTCTAMP3                                                              \
-    (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is connected to RTC   \
-                                                     Tamper 3*/
-#define LL_LPTIM_TRIG_SOURCE_COMP1                                                                 \
-    (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_1) /*!<External input trigger is connected to COMP1 \
-                                                     output*/
-#define LL_LPTIM_TRIG_SOURCE_COMP2                                                                 \
-    LPTIM_CFGR_TRIGSEL /*!<External input trigger is connected to COMP2 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM1                                                                \
-    LPTIM_CFGR_TRIGSEL_0 /*!<External input trigger is connected to LPTIM1 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM2                                                                \
-    LPTIM_CFGR_TRIGSEL_1 /*!<External input trigger is connected to LPTIM1 output*/
+#define LL_LPTIM_TRIG_SOURCE_GPIO                                              \
+  0x00000000U /*!<External input trigger is connected to TIMx_ETR input*/
+#define LL_LPTIM_TRIG_SOURCE_RTCALARMA                                         \
+  LPTIM_CFGR_TRIGSEL_0 /*!<External input trigger is connected to RTC Alarm    \
+                          A*/
+#define LL_LPTIM_TRIG_SOURCE_RTCALARMB                                         \
+  LPTIM_CFGR_TRIGSEL_1 /*!<External input trigger is connected to RTC Alarm    \
+                          B*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP1                                          \
+  (LPTIM_CFGR_TRIGSEL_1 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is  \
+                                                   connected to RTC Tamper 1*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP2                                          \
+  LPTIM_CFGR_TRIGSEL_2 /*!<External input trigger is connected to RTC Tamper   \
+                          2*/
+#define LL_LPTIM_TRIG_SOURCE_RTCTAMP3                                          \
+  (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_0) /*!<External input trigger is  \
+                                                   connected to RTC Tamper 3*/
+#define LL_LPTIM_TRIG_SOURCE_COMP1                                             \
+  (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_1) /*!<External input trigger is  \
+                                                   connected to COMP1 output*/
+#define LL_LPTIM_TRIG_SOURCE_COMP2                                             \
+  LPTIM_CFGR_TRIGSEL /*!<External input trigger is connected to COMP2 output*/
+#define LL_LPTIM_TRIG_SOURCE_LPTIM1                                            \
+  LPTIM_CFGR_TRIGSEL_0 /*!<External input trigger is connected to LPTIM1       \
+                          output*/
+#define LL_LPTIM_TRIG_SOURCE_LPTIM2                                            \
+  LPTIM_CFGR_TRIGSEL_1 /*!<External input trigger is connected to LPTIM1       \
+                          output*/
 /**
  * @}
  */
@@ -242,17 +274,21 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_TRIG_FILTER Trigger Filter
  * @{
  */
-#define LL_LPTIM_TRIG_FILTER_NONE                                                                  \
-    0x00000000U /*!<Any trigger active level change is considered as a valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_2                                                                     \
-    LPTIM_CFGR_TRGFLT_0 /*!<Trigger active level change must be stable for at least 2 clock        \
-                           periods before it is considered as valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_4                                                                     \
-    LPTIM_CFGR_TRGFLT_1 /*!<Trigger active level change must be stable for at least 4 clock        \
-                           periods before it is considered as valid trigger*/
-#define LL_LPTIM_TRIG_FILTER_8                                                                     \
-    LPTIM_CFGR_TRGFLT /*!<Trigger active level change must be stable for at least 8 clock periods  \
-                         before it is considered as valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_NONE                                              \
+  0x00000000U /*!<Any trigger active level change is considered as a valid     \
+                 trigger*/
+#define LL_LPTIM_TRIG_FILTER_2                                                 \
+  LPTIM_CFGR_TRGFLT_0 /*!<Trigger active level change must be stable for at    \
+                         least 2 clock periods before it is considered as      \
+                         valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_4                                                 \
+  LPTIM_CFGR_TRGFLT_1 /*!<Trigger active level change must be stable for at    \
+                         least 4 clock periods before it is considered as      \
+                         valid trigger*/
+#define LL_LPTIM_TRIG_FILTER_8                                                 \
+  LPTIM_CFGR_TRGFLT /*!<Trigger active level change must be stable for at      \
+                       least 8 clock periods before it is considered as valid  \
+                       trigger*/
 /**
  * @}
  */
@@ -260,12 +296,15 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_TRIG_POLARITY Trigger Polarity
  * @{
  */
-#define LL_LPTIM_TRIG_POLARITY_RISING                                                              \
-    LPTIM_CFGR_TRIGEN_0 /*!<LPTIM counter starts when a rising edge is detected*/
-#define LL_LPTIM_TRIG_POLARITY_FALLING                                                             \
-    LPTIM_CFGR_TRIGEN_1 /*!<LPTIM counter starts when a falling edge is detected*/
-#define LL_LPTIM_TRIG_POLARITY_RISING_FALLING                                                      \
-    LPTIM_CFGR_TRIGEN /*!<LPTIM counter starts when a rising or a falling edge is detected*/
+#define LL_LPTIM_TRIG_POLARITY_RISING                                          \
+  LPTIM_CFGR_TRIGEN_0 /*!<LPTIM counter starts when a rising edge is           \
+                         detected*/
+#define LL_LPTIM_TRIG_POLARITY_FALLING                                         \
+  LPTIM_CFGR_TRIGEN_1 /*!<LPTIM counter starts when a falling edge is          \
+                         detected*/
+#define LL_LPTIM_TRIG_POLARITY_RISING_FALLING                                  \
+  LPTIM_CFGR_TRIGEN /*!<LPTIM counter starts when a rising or a falling edge   \
+                       is detected*/
 /**
  * @}
  */
@@ -273,12 +312,12 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_CLK_SOURCE Clock Source
  * @{
  */
-#define LL_LPTIM_CLK_SOURCE_INTERNAL                                                               \
-    0x00000000U /*!<LPTIM is clocked by internal clock source (APB clock or any of the embedded    \
-                   oscillators)*/
-#define LL_LPTIM_CLK_SOURCE_EXTERNAL                                                               \
-    LPTIM_CFGR_CKSEL /*!<LPTIM is clocked by an external clock source through the LPTIM external   \
-                        Input1*/
+#define LL_LPTIM_CLK_SOURCE_INTERNAL                                           \
+  0x00000000U /*!<LPTIM is clocked by internal clock source (APB clock or any  \
+                 of the embedded oscillators)*/
+#define LL_LPTIM_CLK_SOURCE_EXTERNAL                                           \
+  LPTIM_CFGR_CKSEL /*!<LPTIM is clocked by an external clock source through    \
+                      the LPTIM external Input1*/
 /**
  * @}
  */
@@ -286,17 +325,21 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_CLK_FILTER Clock Filter
  * @{
  */
-#define LL_LPTIM_CLK_FILTER_NONE                                                                   \
-    0x00000000U /*!<Any external clock signal level change is considered as a valid transition*/
-#define LL_LPTIM_CLK_FILTER_2                                                                      \
-    LPTIM_CFGR_CKFLT_0 /*!<External clock signal level change must be stable for at least 2 clock  \
-                          periods before it is considered as valid transition*/
-#define LL_LPTIM_CLK_FILTER_4                                                                      \
-    LPTIM_CFGR_CKFLT_1 /*!<External clock signal level change must be stable for at least 4 clock  \
-                          periods before it is considered as valid transition*/
-#define LL_LPTIM_CLK_FILTER_8                                                                      \
-    LPTIM_CFGR_CKFLT /*!<External clock signal level change must be stable for at least 8 clock    \
-                        periods before it is considered as valid transition*/
+#define LL_LPTIM_CLK_FILTER_NONE                                               \
+  0x00000000U /*!<Any external clock signal level change is considered as a    \
+                 valid transition*/
+#define LL_LPTIM_CLK_FILTER_2                                                  \
+  LPTIM_CFGR_CKFLT_0 /*!<External clock signal level change must be stable for \
+                        at least 2 clock periods before it is considered as    \
+                        valid transition*/
+#define LL_LPTIM_CLK_FILTER_4                                                  \
+  LPTIM_CFGR_CKFLT_1 /*!<External clock signal level change must be stable for \
+                        at least 4 clock periods before it is considered as    \
+                        valid transition*/
+#define LL_LPTIM_CLK_FILTER_8                                                  \
+  LPTIM_CFGR_CKFLT /*!<External clock signal level change must be stable for   \
+                      at least 8 clock periods before it is considered as      \
+                      valid transition*/
 /**
  * @}
  */
@@ -304,11 +347,13 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_CLK_POLARITY Clock Polarity
  * @{
  */
-#define LL_LPTIM_CLK_POLARITY_RISING                                                               \
-    0x00000000U /*!< The rising edge is the active edge used for counting*/
-#define LL_LPTIM_CLK_POLARITY_FALLING                                                              \
-    LPTIM_CFGR_CKPOL_0 /*!< The falling edge is the active edge used for counting*/
-#define LL_LPTIM_CLK_POLARITY_RISING_FALLING LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
+#define LL_LPTIM_CLK_POLARITY_RISING                                           \
+  0x00000000U /*!< The rising edge is the active edge used for counting*/
+#define LL_LPTIM_CLK_POLARITY_FALLING                                          \
+  LPTIM_CFGR_CKPOL_0 /*!< The falling edge is the active edge used for         \
+                        counting*/
+#define LL_LPTIM_CLK_POLARITY_RISING_FALLING                                   \
+  LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
 /**
  * @}
  */
@@ -316,11 +361,13 @@ typedef struct
 /** @defgroup LPTIM_LL_EC_ENCODER_MODE Encoder Mode
  * @{
  */
-#define LL_LPTIM_ENCODER_MODE_RISING                                                               \
-    0x00000000U /*!< The rising edge is the active edge used for counting*/
-#define LL_LPTIM_ENCODER_MODE_FALLING                                                              \
-    LPTIM_CFGR_CKPOL_0 /*!< The falling edge is the active edge used for counting*/
-#define LL_LPTIM_ENCODER_MODE_RISING_FALLING LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
+#define LL_LPTIM_ENCODER_MODE_RISING                                           \
+  0x00000000U /*!< The rising edge is the active edge used for counting*/
+#define LL_LPTIM_ENCODER_MODE_FALLING                                          \
+  LPTIM_CFGR_CKPOL_0 /*!< The falling edge is the active edge used for         \
+                        counting*/
+#define LL_LPTIM_ENCODER_MODE_RISING_FALLING                                   \
+  LPTIM_CFGR_CKPOL_1 /*!< Both edges are active edges*/
 /**
  * @}
  */
@@ -328,9 +375,9 @@ typedef struct
 /** @defgroup LPTIM_EC_INPUT1_SRC Input1 Source
  * @{
  */
-#define LL_LPTIM_INPUT1_SRC_GPIO 0x00000000U        /*!< For LPTIM1 and LPTIM2 */
-#define LL_LPTIM_INPUT1_SRC_COMP1 LPTIM_OR_OR_0     /*!< For LPTIM1 and LPTIM2 */
-#define LL_LPTIM_INPUT1_SRC_COMP2 LPTIM_OR_OR_1     /*!< For LPTIM2 */
+#define LL_LPTIM_INPUT1_SRC_GPIO 0x00000000U    /*!< For LPTIM1 and LPTIM2 */
+#define LL_LPTIM_INPUT1_SRC_COMP1 LPTIM_OR_OR_0 /*!< For LPTIM1 and LPTIM2 */
+#define LL_LPTIM_INPUT1_SRC_COMP2 LPTIM_OR_OR_1 /*!< For LPTIM2 */
 #define LL_LPTIM_INPUT1_SRC_COMP1_COMP2 LPTIM_OR_OR /*!< For LPTIM2 */
 /**
  * @}
@@ -365,8 +412,8 @@ typedef struct
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_LPTIM_WriteReg(__INSTANCE__, __REG__, __VALUE__)                                        \
-    WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
+#define LL_LPTIM_WriteReg(__INSTANCE__, __REG__, __VALUE__)                    \
+  WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in LPTIM register
@@ -374,7 +421,8 @@ typedef struct
  * @param  __REG__ Register to be read
  * @retval Register value
  */
-#define LL_LPTIM_ReadReg(__INSTANCE__, __REG__) READ_REG((__INSTANCE__)->__REG__)
+#define LL_LPTIM_ReadReg(__INSTANCE__, __REG__)                                \
+  READ_REG((__INSTANCE__)->__REG__)
 /**
  * @}
  */
@@ -408,7 +456,8 @@ typedef struct
 
 ErrorStatus LL_LPTIM_DeInit(LPTIM_TypeDef *LPTIMx);
 void LL_LPTIM_StructInit(LL_LPTIM_InitTypeDef *LPTIM_InitStruct);
-ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPTIM_InitStruct);
+ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx,
+                          const LL_LPTIM_InitTypeDef *LPTIM_InitStruct);
 void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx);
 /**
  * @}
@@ -427,9 +476,8 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx);
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_Enable(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->CR, LPTIM_CR_ENABLE);
+__STATIC_INLINE void LL_LPTIM_Enable(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->CR, LPTIM_CR_ENABLE);
 }
 
 /**
@@ -438,9 +486,9 @@ __STATIC_INLINE void LL_LPTIM_Enable(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabled(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->CR, LPTIM_CR_ENABLE) == LPTIM_CR_ENABLE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t LL_LPTIM_IsEnabled(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->CR, LPTIM_CR_ENABLE) == LPTIM_CR_ENABLE) ? 1UL : 0UL));
 }
 
 /**
@@ -456,9 +504,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabled(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_OPERATING_MODE_ONESHOT
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_StartCounter(LPTIM_TypeDef *LPTIMx, uint32_t OperatingMode)
-{
-    MODIFY_REG(LPTIMx->CR, LPTIM_CR_CNTSTRT | LPTIM_CR_SNGSTRT, OperatingMode);
+__STATIC_INLINE void LL_LPTIM_StartCounter(LPTIM_TypeDef *LPTIMx,
+                                           uint32_t OperatingMode) {
+  MODIFY_REG(LPTIMx->CR, LPTIM_CR_CNTSTRT | LPTIM_CR_SNGSTRT, OperatingMode);
 }
 
 /**
@@ -469,9 +517,8 @@ __STATIC_INLINE void LL_LPTIM_StartCounter(LPTIM_TypeDef *LPTIMx, uint32_t Opera
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableResetAfterRead(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->CR, LPTIM_CR_RSTARE);
+__STATIC_INLINE void LL_LPTIM_EnableResetAfterRead(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->CR, LPTIM_CR_RSTARE);
 }
 
 /**
@@ -480,9 +527,8 @@ __STATIC_INLINE void LL_LPTIM_EnableResetAfterRead(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableResetAfterRead(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->CR, LPTIM_CR_RSTARE);
+__STATIC_INLINE void LL_LPTIM_DisableResetAfterRead(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->CR, LPTIM_CR_RSTARE);
 }
 
 /**
@@ -491,9 +537,10 @@ __STATIC_INLINE void LL_LPTIM_DisableResetAfterRead(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledResetAfterRead(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->CR, LPTIM_CR_RSTARE) == LPTIM_CR_RSTARE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledResetAfterRead(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->CR, LPTIM_CR_RSTARE) == LPTIM_CR_RSTARE) ? 1UL : 0UL));
 }
 
 /**
@@ -506,9 +553,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledResetAfterRead(const LPTIM_TypeDef *L
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ResetCounter(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->CR, LPTIM_CR_COUNTRST);
+__STATIC_INLINE void LL_LPTIM_ResetCounter(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->CR, LPTIM_CR_COUNTRST);
 }
 
 /**
@@ -521,9 +567,9 @@ __STATIC_INLINE void LL_LPTIM_ResetCounter(LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_UPDATE_MODE_ENDOFPERIOD
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetUpdateMode(LPTIM_TypeDef *LPTIMx, uint32_t UpdateMode)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_PRELOAD, UpdateMode);
+__STATIC_INLINE void LL_LPTIM_SetUpdateMode(LPTIM_TypeDef *LPTIMx,
+                                            uint32_t UpdateMode) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_PRELOAD, UpdateMode);
 }
 
 /**
@@ -534,14 +580,14 @@ __STATIC_INLINE void LL_LPTIM_SetUpdateMode(LPTIM_TypeDef *LPTIMx, uint32_t Upda
  *         @arg @ref LL_LPTIM_UPDATE_MODE_IMMEDIATE
  *         @arg @ref LL_LPTIM_UPDATE_MODE_ENDOFPERIOD
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetUpdateMode(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_PRELOAD));
+__STATIC_INLINE uint32_t LL_LPTIM_GetUpdateMode(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_PRELOAD));
 }
 
 /**
  * @brief  Set the auto reload value
- * @note The LPTIMx_ARR register content must only be modified when the LPTIM is enabled
+ * @note The LPTIMx_ARR register content must only be modified when the LPTIM is
+ * enabled
  * @note After a write to the LPTIMx_ARR register a new write operation to the
  *       same register can only be performed when the previous write operation
  *       is completed. Any successive write before  the ARROK flag is set, will
@@ -552,9 +598,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetUpdateMode(const LPTIM_TypeDef *LPTIMx)
  * @param  AutoReload Value between Min_Data=0x0001 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetAutoReload(LPTIM_TypeDef *LPTIMx, uint32_t AutoReload)
-{
-    MODIFY_REG(LPTIMx->ARR, LPTIM_ARR_ARR, AutoReload);
+__STATIC_INLINE void LL_LPTIM_SetAutoReload(LPTIM_TypeDef *LPTIMx,
+                                            uint32_t AutoReload) {
+  MODIFY_REG(LPTIMx->ARR, LPTIM_ARR_ARR, AutoReload);
 }
 
 /**
@@ -563,22 +609,22 @@ __STATIC_INLINE void LL_LPTIM_SetAutoReload(LPTIM_TypeDef *LPTIMx, uint32_t Auto
  * @param  LPTIMx Low-Power Timer instance
  * @retval AutoReload Value between Min_Data=0x0001 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetAutoReload(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->ARR, LPTIM_ARR_ARR));
+__STATIC_INLINE uint32_t LL_LPTIM_GetAutoReload(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->ARR, LPTIM_ARR_ARR));
 }
 
 /**
  * @brief  Set the repetition value
- * @note The LPTIMx_RCR register content must only be modified when the LPTIM is enabled
+ * @note The LPTIMx_RCR register content must only be modified when the LPTIM is
+ * enabled
  * @rmtoll RCR          REP           LL_LPTIM_SetRepetition
  * @param  LPTIMx Low-Power Timer instance
  * @param  Repetition Value between Min_Data=0x00 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetRepetition(LPTIM_TypeDef *LPTIMx, uint32_t Repetition)
-{
-    MODIFY_REG(LPTIMx->RCR, LPTIM_RCR_REP, Repetition);
+__STATIC_INLINE void LL_LPTIM_SetRepetition(LPTIM_TypeDef *LPTIMx,
+                                            uint32_t Repetition) {
+  MODIFY_REG(LPTIMx->RCR, LPTIM_RCR_REP, Repetition);
 }
 
 /**
@@ -587,9 +633,8 @@ __STATIC_INLINE void LL_LPTIM_SetRepetition(LPTIM_TypeDef *LPTIMx, uint32_t Repe
  * @param  LPTIMx Low-Power Timer instance
  * @retval Repetition Value between Min_Data=0x00 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetRepetition(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->RCR, LPTIM_RCR_REP));
+__STATIC_INLINE uint32_t LL_LPTIM_GetRepetition(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->RCR, LPTIM_RCR_REP));
 }
 
 /**
@@ -603,9 +648,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetRepetition(const LPTIM_TypeDef *LPTIMx)
  * @param  CompareValue Value between Min_Data=0x00 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetCompare(LPTIM_TypeDef *LPTIMx, uint32_t CompareValue)
-{
-    MODIFY_REG(LPTIMx->CMP, LPTIM_CMP_CMP, CompareValue);
+__STATIC_INLINE void LL_LPTIM_SetCompare(LPTIM_TypeDef *LPTIMx,
+                                         uint32_t CompareValue) {
+  MODIFY_REG(LPTIMx->CMP, LPTIM_CMP_CMP, CompareValue);
 }
 
 /**
@@ -614,9 +659,8 @@ __STATIC_INLINE void LL_LPTIM_SetCompare(LPTIM_TypeDef *LPTIMx, uint32_t Compare
  * @param  LPTIMx Low-Power Timer instance
  * @retval CompareValue Value between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetCompare(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CMP, LPTIM_CMP_CMP));
+__STATIC_INLINE uint32_t LL_LPTIM_GetCompare(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CMP, LPTIM_CMP_CMP));
 }
 
 /**
@@ -629,9 +673,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetCompare(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval Counter value
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetCounter(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CNT, LPTIM_CNT_CNT));
+__STATIC_INLINE uint32_t LL_LPTIM_GetCounter(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CNT, LPTIM_CNT_CNT));
 }
 
 /**
@@ -644,9 +687,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetCounter(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_COUNTER_MODE_EXTERNAL
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetCounterMode(LPTIM_TypeDef *LPTIMx, uint32_t CounterMode)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_COUNTMODE, CounterMode);
+__STATIC_INLINE void LL_LPTIM_SetCounterMode(LPTIM_TypeDef *LPTIMx,
+                                             uint32_t CounterMode) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_COUNTMODE, CounterMode);
 }
 
 /**
@@ -657,9 +700,8 @@ __STATIC_INLINE void LL_LPTIM_SetCounterMode(LPTIM_TypeDef *LPTIMx, uint32_t Cou
  *         @arg @ref LL_LPTIM_COUNTER_MODE_INTERNAL
  *         @arg @ref LL_LPTIM_COUNTER_MODE_EXTERNAL
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetCounterMode(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_COUNTMODE));
+__STATIC_INLINE uint32_t LL_LPTIM_GetCounterMode(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_COUNTMODE));
 }
 
 /**
@@ -681,9 +723,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetCounterMode(const LPTIM_TypeDef *LPTIMx)
  */
 __STATIC_INLINE void LL_LPTIM_ConfigOutput(LPTIM_TypeDef *LPTIMx,
                                            uint32_t Waveform,
-                                           uint32_t Polarity)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVE | LPTIM_CFGR_WAVPOL, Waveform | Polarity);
+                                           uint32_t Polarity) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVE | LPTIM_CFGR_WAVPOL,
+             Waveform | Polarity);
 }
 
 /**
@@ -695,9 +737,9 @@ __STATIC_INLINE void LL_LPTIM_ConfigOutput(LPTIM_TypeDef *LPTIMx,
  *         @arg @ref LL_LPTIM_OUTPUT_WAVEFORM_SETONCE
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetWaveform(LPTIM_TypeDef *LPTIMx, uint32_t Waveform)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVE, Waveform);
+__STATIC_INLINE void LL_LPTIM_SetWaveform(LPTIM_TypeDef *LPTIMx,
+                                          uint32_t Waveform) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVE, Waveform);
 }
 
 /**
@@ -708,9 +750,8 @@ __STATIC_INLINE void LL_LPTIM_SetWaveform(LPTIM_TypeDef *LPTIMx, uint32_t Wavefo
  *         @arg @ref LL_LPTIM_OUTPUT_WAVEFORM_PWM
  *         @arg @ref LL_LPTIM_OUTPUT_WAVEFORM_SETONCE
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetWaveform(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_WAVE));
+__STATIC_INLINE uint32_t LL_LPTIM_GetWaveform(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_WAVE));
 }
 
 /**
@@ -722,9 +763,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetWaveform(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_OUTPUT_POLARITY_INVERSE
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetPolarity(LPTIM_TypeDef *LPTIMx, uint32_t Polarity)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVPOL, Polarity);
+__STATIC_INLINE void LL_LPTIM_SetPolarity(LPTIM_TypeDef *LPTIMx,
+                                          uint32_t Polarity) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_WAVPOL, Polarity);
 }
 
 /**
@@ -735,9 +776,8 @@ __STATIC_INLINE void LL_LPTIM_SetPolarity(LPTIM_TypeDef *LPTIMx, uint32_t Polari
  *         @arg @ref LL_LPTIM_OUTPUT_POLARITY_REGULAR
  *         @arg @ref LL_LPTIM_OUTPUT_POLARITY_INVERSE
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetPolarity(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_WAVPOL));
+__STATIC_INLINE uint32_t LL_LPTIM_GetPolarity(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_WAVPOL));
 }
 
 /**
@@ -760,9 +800,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetPolarity(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_PRESCALER_DIV128
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetPrescaler(LPTIM_TypeDef *LPTIMx, uint32_t Prescaler)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_PRESC, Prescaler);
+__STATIC_INLINE void LL_LPTIM_SetPrescaler(LPTIM_TypeDef *LPTIMx,
+                                           uint32_t Prescaler) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_PRESC, Prescaler);
 }
 
 /**
@@ -779,9 +819,8 @@ __STATIC_INLINE void LL_LPTIM_SetPrescaler(LPTIM_TypeDef *LPTIMx, uint32_t Presc
  *         @arg @ref LL_LPTIM_PRESCALER_DIV64
  *         @arg @ref LL_LPTIM_PRESCALER_DIV128
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetPrescaler(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_PRESC));
+__STATIC_INLINE uint32_t LL_LPTIM_GetPrescaler(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_PRESC));
 }
 
 /**
@@ -795,9 +834,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetPrescaler(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_INPUT1_SRC_COMP1_COMP2
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetInput1Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
-{
-    MODIFY_REG(LPTIMx->OR, LPTIM_OR_OR, Src);
+__STATIC_INLINE void LL_LPTIM_SetInput1Src(LPTIM_TypeDef *LPTIMx,
+                                           uint32_t Src) {
+  MODIFY_REG(LPTIMx->OR, LPTIM_OR_OR, Src);
 }
 
 /**
@@ -809,9 +848,9 @@ __STATIC_INLINE void LL_LPTIM_SetInput1Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
  *         @arg @ref LL_LPTIM_INPUT2_SRC_COMP2
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetInput2Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
-{
-    MODIFY_REG(LPTIMx->OR, LPTIM_OR_OR, Src);
+__STATIC_INLINE void LL_LPTIM_SetInput2Src(LPTIM_TypeDef *LPTIMx,
+                                           uint32_t Src) {
+  MODIFY_REG(LPTIMx->OR, LPTIM_OR_OR, Src);
 }
 
 /**
@@ -834,9 +873,8 @@ __STATIC_INLINE void LL_LPTIM_SetInput2Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableTimeout(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT);
+__STATIC_INLINE void LL_LPTIM_EnableTimeout(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT);
 }
 
 /**
@@ -848,9 +886,8 @@ __STATIC_INLINE void LL_LPTIM_EnableTimeout(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableTimeout(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT);
+__STATIC_INLINE void LL_LPTIM_DisableTimeout(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT);
 }
 
 /**
@@ -859,9 +896,11 @@ __STATIC_INLINE void LL_LPTIM_DisableTimeout(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledTimeout(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT) == LPTIM_CFGR_TIMOUT) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledTimeout(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT) == LPTIM_CFGR_TIMOUT)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -871,9 +910,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledTimeout(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_TrigSw(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGEN);
+__STATIC_INLINE void LL_LPTIM_TrigSw(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGEN);
 }
 
 /**
@@ -911,13 +949,11 @@ __STATIC_INLINE void LL_LPTIM_TrigSw(LPTIM_TypeDef *LPTIMx)
  * @retval None
  */
 __STATIC_INLINE void LL_LPTIM_ConfigTrigger(LPTIM_TypeDef *LPTIMx,
-                                            uint32_t Source,
-                                            uint32_t Filter,
-                                            uint32_t Polarity)
-{
-    MODIFY_REG(LPTIMx->CFGR,
-               LPTIM_CFGR_TRIGSEL | LPTIM_CFGR_TRGFLT | LPTIM_CFGR_TRIGEN,
-               Source | Filter | Polarity);
+                                            uint32_t Source, uint32_t Filter,
+                                            uint32_t Polarity) {
+  MODIFY_REG(LPTIMx->CFGR,
+             LPTIM_CFGR_TRIGSEL | LPTIM_CFGR_TRGFLT | LPTIM_CFGR_TRIGEN,
+             Source | Filter | Polarity);
 }
 
 /**
@@ -939,9 +975,9 @@ __STATIC_INLINE void LL_LPTIM_ConfigTrigger(LPTIM_TypeDef *LPTIMx,
  *         (*)  Value not defined in all devices. \n
  *
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetTriggerSource(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGSEL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_GetTriggerSource(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGSEL));
 }
 
 /**
@@ -954,9 +990,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetTriggerSource(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_TRIG_FILTER_4
  *         @arg @ref LL_LPTIM_TRIG_FILTER_8
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetTriggerFilter(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRGFLT));
+__STATIC_INLINE uint32_t
+LL_LPTIM_GetTriggerFilter(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRGFLT));
 }
 
 /**
@@ -968,9 +1004,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetTriggerFilter(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_TRIG_POLARITY_FALLING
  *         @arg @ref LL_LPTIM_TRIG_POLARITY_RISING_FALLING
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetTriggerPolarity(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGEN));
+__STATIC_INLINE uint32_t
+LL_LPTIM_GetTriggerPolarity(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TRIGEN));
 }
 
 /**
@@ -991,9 +1027,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetTriggerPolarity(const LPTIM_TypeDef *LPTIMx
  *         @arg @ref LL_LPTIM_CLK_SOURCE_EXTERNAL
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetClockSource(LPTIM_TypeDef *LPTIMx, uint32_t ClockSource)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKSEL, ClockSource);
+__STATIC_INLINE void LL_LPTIM_SetClockSource(LPTIM_TypeDef *LPTIMx,
+                                             uint32_t ClockSource) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKSEL, ClockSource);
 }
 
 /**
@@ -1004,9 +1040,8 @@ __STATIC_INLINE void LL_LPTIM_SetClockSource(LPTIM_TypeDef *LPTIMx, uint32_t Clo
  *         @arg @ref LL_LPTIM_CLK_SOURCE_INTERNAL
  *         @arg @ref LL_LPTIM_CLK_SOURCE_EXTERNAL
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetClockSource(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKSEL));
+__STATIC_INLINE uint32_t LL_LPTIM_GetClockSource(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKSEL));
 }
 
 /**
@@ -1034,9 +1069,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetClockSource(const LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE void LL_LPTIM_ConfigClock(LPTIM_TypeDef *LPTIMx,
                                           uint32_t ClockFilter,
-                                          uint32_t ClockPolarity)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKFLT | LPTIM_CFGR_CKPOL, ClockFilter | ClockPolarity);
+                                          uint32_t ClockPolarity) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKFLT | LPTIM_CFGR_CKPOL,
+             ClockFilter | ClockPolarity);
 }
 
 /**
@@ -1048,9 +1083,9 @@ __STATIC_INLINE void LL_LPTIM_ConfigClock(LPTIM_TypeDef *LPTIMx,
  *         @arg @ref LL_LPTIM_CLK_POLARITY_FALLING
  *         @arg @ref LL_LPTIM_CLK_POLARITY_RISING_FALLING
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetClockPolarity(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKPOL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_GetClockPolarity(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKPOL));
 }
 
 /**
@@ -1063,9 +1098,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetClockPolarity(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_CLK_FILTER_4
  *         @arg @ref LL_LPTIM_CLK_FILTER_8
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetClockFilter(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKFLT));
+__STATIC_INLINE uint32_t LL_LPTIM_GetClockFilter(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKFLT));
 }
 
 /**
@@ -1087,9 +1121,9 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetClockFilter(const LPTIM_TypeDef *LPTIMx)
  *         @arg @ref LL_LPTIM_ENCODER_MODE_RISING_FALLING
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_SetEncoderMode(LPTIM_TypeDef *LPTIMx, uint32_t EncoderMode)
-{
-    MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKPOL, EncoderMode);
+__STATIC_INLINE void LL_LPTIM_SetEncoderMode(LPTIM_TypeDef *LPTIMx,
+                                             uint32_t EncoderMode) {
+  MODIFY_REG(LPTIMx->CFGR, LPTIM_CFGR_CKPOL, EncoderMode);
 }
 
 /**
@@ -1101,9 +1135,8 @@ __STATIC_INLINE void LL_LPTIM_SetEncoderMode(LPTIM_TypeDef *LPTIMx, uint32_t Enc
  *         @arg @ref LL_LPTIM_ENCODER_MODE_FALLING
  *         @arg @ref LL_LPTIM_ENCODER_MODE_RISING_FALLING
  */
-__STATIC_INLINE uint32_t LL_LPTIM_GetEncoderMode(const LPTIM_TypeDef *LPTIMx)
-{
-    return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKPOL));
+__STATIC_INLINE uint32_t LL_LPTIM_GetEncoderMode(const LPTIM_TypeDef *LPTIMx) {
+  return (uint32_t)(READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_CKPOL));
 }
 
 /**
@@ -1117,9 +1150,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetEncoderMode(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableEncoderMode(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC);
+__STATIC_INLINE void LL_LPTIM_EnableEncoderMode(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC);
 }
 
 /**
@@ -1129,9 +1161,8 @@ __STATIC_INLINE void LL_LPTIM_EnableEncoderMode(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableEncoderMode(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC);
+__STATIC_INLINE void LL_LPTIM_DisableEncoderMode(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC);
 }
 
 /**
@@ -1140,9 +1171,10 @@ __STATIC_INLINE void LL_LPTIM_DisableEncoderMode(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledEncoderMode(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC) == LPTIM_CFGR_ENC) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledEncoderMode(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC) == LPTIM_CFGR_ENC) ? 1UL : 0UL));
 }
 
 /**
@@ -1159,9 +1191,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledEncoderMode(const LPTIM_TypeDef *LPTI
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_CMPM(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_CMPMCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_CMPM(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_CMPMCF);
 }
 
 /**
@@ -1170,9 +1201,10 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_CMPM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPM(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPM) == LPTIM_ISR_CMPM) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_CMPM(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPM) == LPTIM_ISR_CMPM) ? 1UL : 0UL));
 }
 
 /**
@@ -1181,9 +1213,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPM(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_ARRM(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_ARRMCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_ARRM(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_ARRMCF);
 }
 
 /**
@@ -1192,9 +1223,10 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_ARRM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARRM(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARRM) == LPTIM_ISR_ARRM) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_ARRM(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARRM) == LPTIM_ISR_ARRM) ? 1UL : 0UL));
 }
 
 /**
@@ -1203,21 +1235,22 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARRM(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_EXTTRIG(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_EXTTRIGCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_EXTTRIG(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_EXTTRIGCF);
 }
 
 /**
- * @brief  Inform application whether a valid edge on the selected external trigger input has
- * occurred.
+ * @brief  Inform application whether a valid edge on the selected external
+ * trigger input has occurred.
  * @rmtoll ISR          EXTTRIG       LL_LPTIM_IsActiveFlag_EXTTRIG
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_EXTTRIG(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_EXTTRIG) == LPTIM_ISR_EXTTRIG) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_EXTTRIG(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_EXTTRIG) == LPTIM_ISR_EXTTRIG)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1226,21 +1259,22 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_EXTTRIG(const LPTIM_TypeDef *LPTI
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_CMPOK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_CMPOKCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_CMPOK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_CMPOKCF);
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the LPTIMx_CMP register has
-  been successfully completed. If so, a new one can be initiated.
+  * @brief  Informs application whether the APB bus write operation to the
+  LPTIMx_CMP register has been successfully completed. If so, a new one can be
+  initiated.
   * @rmtoll ISR          CMPOK         LL_LPTIM_IsActiveFlag_CMPOK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPOK(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPOK) == LPTIM_ISR_CMPOK) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_CMPOK(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPOK) == LPTIM_ISR_CMPOK) ? 1UL
+                                                                       : 0UL));
 }
 
 /**
@@ -1249,21 +1283,22 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPOK(const LPTIM_TypeDef *LPTIMx
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_ARROK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_ARROKCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_ARROK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_ARROKCF);
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the LPTIMx_ARR register has
-  been successfully completed. If so, a new one can be initiated.
+  * @brief  Informs application whether the APB bus write operation to the
+  LPTIMx_ARR register has been successfully completed. If so, a new one can be
+  initiated.
   * @rmtoll ISR          ARROK         LL_LPTIM_IsActiveFlag_ARROK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARROK(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARROK) == LPTIM_ISR_ARROK) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_ARROK(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARROK) == LPTIM_ISR_ARROK) ? 1UL
+                                                                       : 0UL));
 }
 
 /**
@@ -1272,21 +1307,19 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARROK(const LPTIM_TypeDef *LPTIMx
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_UP(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_UPCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_UP(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_UPCF);
 }
 
 /**
-  * @brief  Informs the application whether the counter direction has changed from down to up (when
-  the LPTIM instance operates in encoder mode).
+  * @brief  Informs the application whether the counter direction has changed
+  from down to up (when the LPTIM instance operates in encoder mode).
   * @rmtoll ISR          UP            LL_LPTIM_IsActiveFlag_UP
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UP(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UP) == LPTIM_ISR_UP) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UP(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UP) == LPTIM_ISR_UP) ? 1UL : 0UL));
 }
 
 /**
@@ -1295,21 +1328,21 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UP(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_DOWN(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_DOWNCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_DOWN(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_DOWNCF);
 }
 
 /**
-  * @brief  Informs the application whether the counter direction has changed from up to down (when
-  the LPTIM instance operates in encoder mode).
+  * @brief  Informs the application whether the counter direction has changed
+  from up to down (when the LPTIM instance operates in encoder mode).
   * @rmtoll ISR          DOWN          LL_LPTIM_IsActiveFlag_DOWN
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_DOWN(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_DOWN) == LPTIM_ISR_DOWN) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_DOWN(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_DOWN) == LPTIM_ISR_DOWN) ? 1UL : 0UL));
 }
 
 /**
@@ -1318,21 +1351,22 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_DOWN(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_REPOK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_REPOKCF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_REPOK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_REPOKCF);
 }
 
 /**
-  * @brief  Informs application whether the APB bus write operation to the LPTIMx_RCR register has
-  been successfully completed; If so, a new one can be initiated.
+  * @brief  Informs application whether the APB bus write operation to the
+  LPTIMx_RCR register has been successfully completed; If so, a new one can be
+  initiated.
   * @rmtoll ISR          REPOK         LL_LPTIM_IsActiveFlag_REPOK
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_REPOK(const LPTIM_TypeDef *LPTIMx)
-{
-    return ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_REPOK) == (LPTIM_ISR_REPOK)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsActiveFlag_REPOK(const LPTIM_TypeDef *LPTIMx) {
+  return ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_REPOK) == (LPTIM_ISR_REPOK)) ? 1UL
+                                                                        : 0UL);
 }
 
 /**
@@ -1341,9 +1375,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_REPOK(const LPTIM_TypeDef *LPTIMx
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_ClearFlag_UE(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->ICR, LPTIM_ICR_UECF);
+__STATIC_INLINE void LL_LPTIM_ClearFlag_UE(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->ICR, LPTIM_ICR_UECF);
 }
 
 /**
@@ -1352,9 +1385,8 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_UE(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UE(const LPTIM_TypeDef *LPTIMx)
-{
-    return ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UE) == (LPTIM_ISR_UE)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UE(const LPTIM_TypeDef *LPTIMx) {
+  return ((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UE) == (LPTIM_ISR_UE)) ? 1UL : 0UL);
 }
 
 /**
@@ -1371,9 +1403,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UE(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_CMPM(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_CMPM(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE);
 }
 
 /**
@@ -1382,9 +1413,8 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_CMPM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_CMPM(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_CMPM(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE);
 }
 
 /**
@@ -1393,9 +1423,11 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_CMPM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPM(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE) == LPTIM_IER_CMPMIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_CMPM(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE) == LPTIM_IER_CMPMIE)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1404,9 +1436,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPM(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_ARRM(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_ARRM(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE);
 }
 
 /**
@@ -1415,9 +1446,8 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_ARRM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_ARRM(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_ARRM(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE);
 }
 
 /**
@@ -1426,9 +1456,11 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_ARRM(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARRM(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE) == LPTIM_IER_ARRMIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_ARRM(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE) == LPTIM_IER_ARRMIE)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1437,9 +1469,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARRM(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE);
 }
 
 /**
@@ -1448,20 +1479,22 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE);
 }
 
 /**
- * @brief  Indicates external trigger valid edge interrupt (EXTTRIGIE) is enabled.
+ * @brief  Indicates external trigger valid edge interrupt (EXTTRIGIE) is
+ * enabled.
  * @rmtoll IER          EXTTRIGIE     LL_LPTIM_IsEnabledIT_EXTTRIG
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_EXTTRIG(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE) == LPTIM_IER_EXTTRIGIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_EXTTRIG(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE) == LPTIM_IER_EXTTRIGIE)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1470,9 +1503,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_EXTTRIG(const LPTIM_TypeDef *LPTIM
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_CMPOK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_CMPOK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE);
 }
 
 /**
@@ -1481,20 +1513,22 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_CMPOK(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_CMPOK(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_CMPOK(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE);
 }
 
 /**
- * @brief  Indicates whether the compare register write completed interrupt (CMPOKIE) is enabled.
+ * @brief  Indicates whether the compare register write completed interrupt
+ * (CMPOKIE) is enabled.
  * @rmtoll IER          CMPOKIE       LL_LPTIM_IsEnabledIT_CMPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPOK(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE) == LPTIM_IER_CMPOKIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_CMPOK(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE) == LPTIM_IER_CMPOKIE)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1503,9 +1537,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPOK(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_ARROK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_ARROK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE);
 }
 
 /**
@@ -1514,20 +1547,22 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_ARROK(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_ARROK(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_ARROK(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE);
 }
 
 /**
- * @brief  Indicates whether the autoreload register write completed interrupt (ARROKIE) is enabled.
+ * @brief  Indicates whether the autoreload register write completed interrupt
+ * (ARROKIE) is enabled.
  * @rmtoll IER         ARROKIE       LL_LPTIM_IsEnabledIT_ARROK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARROK(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE) == LPTIM_IER_ARROKIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_ARROK(const LPTIM_TypeDef *LPTIMx) {
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE) == LPTIM_IER_ARROKIE)
+               ? 1UL
+               : 0UL));
 }
 
 /**
@@ -1536,9 +1571,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARROK(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_UP(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_UPIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_UP(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_UPIE);
 }
 
 /**
@@ -1547,20 +1581,20 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_UP(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_UP(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_UPIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_UP(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_UPIE);
 }
 
 /**
- * @brief  Indicates whether the direction change to up interrupt (UPIE) is enabled.
+ * @brief  Indicates whether the direction change to up interrupt (UPIE) is
+ * enabled.
  * @rmtoll IER         UPIE          LL_LPTIM_IsEnabledIT_UP
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UP(const LPTIM_TypeDef *LPTIMx)
-{
-    return (((READ_BIT(LPTIMx->IER, LPTIM_IER_UPIE) == LPTIM_IER_UPIE) ? 1UL : 0UL));
+__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UP(const LPTIM_TypeDef *LPTIMx) {
+  return (
+      ((READ_BIT(LPTIMx->IER, LPTIM_IER_UPIE) == LPTIM_IER_UPIE) ? 1UL : 0UL));
 }
 
 /**
@@ -1569,9 +1603,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UP(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_DOWN(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_DOWN(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE);
 }
 
 /**
@@ -1580,54 +1613,57 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_DOWN(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_DOWN(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_DOWN(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE);
 }
 
 /**
- * @brief  Indicates whether the direction change to down interrupt (DOWNIE) is enabled.
+ * @brief  Indicates whether the direction change to down interrupt (DOWNIE) is
+ * enabled.
  * @rmtoll IER         DOWNIE        LL_LPTIM_IsEnabledIT_DOWN
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_DOWN(const LPTIM_TypeDef *LPTIMx)
-{
-    return ((READ_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE) == LPTIM_IER_DOWNIE) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_DOWN(const LPTIM_TypeDef *LPTIMx) {
+  return ((READ_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE) == LPTIM_IER_DOWNIE) ? 1UL
+                                                                        : 0UL);
 }
 
 /**
- * @brief  Enable repetition register update successfully completed interrupt (REPOKIE).
+ * @brief  Enable repetition register update successfully completed interrupt
+ * (REPOKIE).
  * @rmtoll IER         REPOKIE       LL_LPTIM_EnableIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_REPOK(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_REPOK(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE);
 }
 
 /**
- * @brief  Disable repetition register update successfully completed interrupt (REPOKIE).
+ * @brief  Disable repetition register update successfully completed interrupt
+ * (REPOKIE).
  * @rmtoll IER         REPOKIE       LL_LPTIM_DisableIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_REPOK(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_REPOK(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE);
 }
 
 /**
- * @brief  Indicates whether the repetition register update successfully completed interrupt
- * (REPOKIE) is enabled.
+ * @brief  Indicates whether the repetition register update successfully
+ * completed interrupt (REPOKIE) is enabled.
  * @rmtoll IER         REPOKIE       LL_LPTIM_IsEnabledIT_REPOK
  * @param  LPTIMx Low-Power Timer instance
  * @retval State of bit(1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_REPOK(const LPTIM_TypeDef *LPTIMx)
-{
-    return ((READ_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE) == (LPTIM_IER_REPOKIE)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t
+LL_LPTIM_IsEnabledIT_REPOK(const LPTIM_TypeDef *LPTIMx) {
+  return ((READ_BIT(LPTIMx->IER, LPTIM_IER_REPOKIE) == (LPTIM_IER_REPOKIE))
+              ? 1UL
+              : 0UL);
 }
 
 /**
@@ -1636,9 +1672,8 @@ __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_REPOK(const LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_EnableIT_UE(LPTIM_TypeDef *LPTIMx)
-{
-    SET_BIT(LPTIMx->IER, LPTIM_IER_UEIE);
+__STATIC_INLINE void LL_LPTIM_EnableIT_UE(LPTIM_TypeDef *LPTIMx) {
+  SET_BIT(LPTIMx->IER, LPTIM_IER_UEIE);
 }
 
 /**
@@ -1647,9 +1682,8 @@ __STATIC_INLINE void LL_LPTIM_EnableIT_UE(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  * @retval None
  */
-__STATIC_INLINE void LL_LPTIM_DisableIT_UE(LPTIM_TypeDef *LPTIMx)
-{
-    CLEAR_BIT(LPTIMx->IER, LPTIM_IER_UEIE);
+__STATIC_INLINE void LL_LPTIM_DisableIT_UE(LPTIM_TypeDef *LPTIMx) {
+  CLEAR_BIT(LPTIMx->IER, LPTIM_IER_UEIE);
 }
 
 /**
@@ -1658,9 +1692,9 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_UE(LPTIM_TypeDef *LPTIMx)
  * @param  LPTIMx Low-Power Timer instance
  *@ retval State of bit(1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UE(const LPTIM_TypeDef *LPTIMx)
-{
-    return ((READ_BIT(LPTIMx->IER, LPTIM_IER_UEIE) == (LPTIM_IER_UEIE)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UE(const LPTIM_TypeDef *LPTIMx) {
+  return ((READ_BIT(LPTIMx->IER, LPTIM_IER_UEIE) == (LPTIM_IER_UEIE)) ? 1UL
+                                                                      : 0UL);
 }
 /**
  * @}

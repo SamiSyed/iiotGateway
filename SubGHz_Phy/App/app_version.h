@@ -61,9 +61,11 @@ extern "C" {
 /**
  * @brief Application version
  */
-#define APP_VERSION                                                                                \
-    ((APP_VERSION_MAIN << APP_VERSION_MAIN_SHIFT) | (APP_VERSION_SUB1 << APP_VERSION_SUB1_SHIFT)   \
-     | (APP_VERSION_SUB2 << APP_VERSION_SUB2_SHIFT) | (APP_VERSION_RC << APP_VERSION_RC_SHIFT))
+#define APP_VERSION                                                            \
+  ((APP_VERSION_MAIN << APP_VERSION_MAIN_SHIFT) |                              \
+   (APP_VERSION_SUB1 << APP_VERSION_SUB1_SHIFT) |                              \
+   (APP_VERSION_SUB2 << APP_VERSION_SUB2_SHIFT) |                              \
+   (APP_VERSION_RC << APP_VERSION_RC_SHIFT))
 
 /* USER CODE BEGIN EM */
 

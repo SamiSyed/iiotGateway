@@ -50,7 +50,8 @@ extern "C" {
 /* The SystemCoreClock variable is updated in three ways:
     1) from within HAL_Init()
     2) by calling CMSIS function SystemCoreClockUpdate()
-    3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
+    3) each time HAL_RCC_ClockConfig() is called to configure the system clock
+   frequency
 */
 
 extern uint32_t SystemCoreClock; /*!< System Clock Frequency */

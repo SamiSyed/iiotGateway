@@ -88,7 +88,8 @@ uint32_t TIMER_IF_SetTimerContext(void);
 uint32_t TIMER_IF_GetTimerContext(void);
 
 /**
- * @brief Get the timer elapsed time since timer Reference (TimerContext) was set
+ * @brief Get the timer elapsed time since timer Reference (TimerContext) was
+ * set
  * @return RTC Elapsed time in ticks
  */
 uint32_t TIMER_IF_GetTimerElapsedTime(void);

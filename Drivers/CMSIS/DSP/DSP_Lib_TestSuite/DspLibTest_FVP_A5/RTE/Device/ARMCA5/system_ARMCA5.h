@@ -46,7 +46,8 @@ extern void SystemInit(void);
 /**
   \brief  Update SystemCoreClock variable.
 
-   Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
+   Updates the SystemCoreClock with current core Clock retrieved from cpu
+  registers.
  */
 extern void SystemCoreClockUpdate(void);
 

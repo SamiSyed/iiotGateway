@@ -23,17 +23,13 @@
  *  Compare the outputs from the function under test and the reference
  *  function using SNR.
  */
-#define CONTROLLER_SNR_COMPARE_INTERFACE(block_size, output_type)                                  \
-    do                                                                                             \
-    {                                                                                              \
-        TEST_CONVERT_AND_ASSERT_SNR(controller_output_f32_ref,                                     \
-                                    (output_type *)controller_output_ref,                          \
-                                    controller_output_f32_fut,                                     \
-                                    (output_type *)controller_output_fut,                          \
-                                    block_size,                                                    \
-                                    output_type,                                                   \
-                                    CONTROLLER_SNR_THRESHOLD_##output_type);                       \
-    } while (0)
+#define CONTROLLER_SNR_COMPARE_INTERFACE(block_size, output_type)              \
+  do {                                                                         \
+    TEST_CONVERT_AND_ASSERT_SNR(                                               \
+        controller_output_f32_ref, (output_type *)controller_output_ref,       \
+        controller_output_f32_fut, (output_type *)controller_output_fut,       \
+        block_size, output_type, CONTROLLER_SNR_THRESHOLD_##output_type);      \
+  } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* TEST Templates */

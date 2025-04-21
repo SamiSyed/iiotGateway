@@ -118,134 +118,108 @@ static UTIL_LPM_bm_t OffModeDisable = UTIL_LPM_NO_BIT_SET;
 /** @addtogroup TINY_LPM_Exported_function
  * @{
  */
-void UTIL_LPM_Init(void)
-{
-    StopModeDisable = UTIL_LPM_NO_BIT_SET;
-    OffModeDisable = UTIL_LPM_NO_BIT_SET;
-    UTIL_LPM_INIT_CRITICAL_SECTION();
+void UTIL_LPM_Init(void) {
+  StopModeDisable = UTIL_LPM_NO_BIT_SET;
+  OffModeDisable = UTIL_LPM_NO_BIT_SET;
+  UTIL_LPM_INIT_CRITICAL_SECTION();
 }
 
-void UTIL_LPM_DeInit(void)
-{}
+void UTIL_LPM_DeInit(void) {}
 
-void UTIL_LPM_SetStopMode(UTIL_LPM_bm_t lpm_id_bm, UTIL_LPM_State_t state)
-{
-    UTIL_LPM_ENTER_CRITICAL_SECTION();
+void UTIL_LPM_SetStopMode(UTIL_LPM_bm_t lpm_id_bm, UTIL_LPM_State_t state) {
+  UTIL_LPM_ENTER_CRITICAL_SECTION();
 
-    switch (state)
-    {
-    case UTIL_LPM_DISABLE:
-    {
-        StopModeDisable |= lpm_id_bm;
-        break;
-    }
-    case UTIL_LPM_ENABLE:
-    {
-        StopModeDisable &= (~lpm_id_bm);
-        break;
-    }
-    default:
-    {
-        break;
-    }
-    }
+  switch (state) {
+  case UTIL_LPM_DISABLE: {
+    StopModeDisable |= lpm_id_bm;
+    break;
+  }
+  case UTIL_LPM_ENABLE: {
+    StopModeDisable &= (~lpm_id_bm);
+    break;
+  }
+  default: {
+    break;
+  }
+  }
 
-    UTIL_LPM_EXIT_CRITICAL_SECTION();
+  UTIL_LPM_EXIT_CRITICAL_SECTION();
 }
 
-void UTIL_LPM_SetOffMode(UTIL_LPM_bm_t lpm_id_bm, UTIL_LPM_State_t state)
-{
-    UTIL_LPM_ENTER_CRITICAL_SECTION();
+void UTIL_LPM_SetOffMode(UTIL_LPM_bm_t lpm_id_bm, UTIL_LPM_State_t state) {
+  UTIL_LPM_ENTER_CRITICAL_SECTION();
 
-    switch (state)
-    {
-    case UTIL_LPM_DISABLE:
-    {
-        OffModeDisable |= lpm_id_bm;
-        break;
-    }
-    case UTIL_LPM_ENABLE:
-    {
-        OffModeDisable &= (~lpm_id_bm);
-        break;
-    }
-    default:
-    {
-        break;
-    }
-    }
+  switch (state) {
+  case UTIL_LPM_DISABLE: {
+    OffModeDisable |= lpm_id_bm;
+    break;
+  }
+  case UTIL_LPM_ENABLE: {
+    OffModeDisable &= (~lpm_id_bm);
+    break;
+  }
+  default: {
+    break;
+  }
+  }
 
-    UTIL_LPM_EXIT_CRITICAL_SECTION();
+  UTIL_LPM_EXIT_CRITICAL_SECTION();
 }
 
-UTIL_LPM_Mode_t UTIL_LPM_GetMode(void)
-{
-    UTIL_LPM_Mode_t mode_selected;
+UTIL_LPM_Mode_t UTIL_LPM_GetMode(void) {
+  UTIL_LPM_Mode_t mode_selected;
 
-    UTIL_LPM_ENTER_CRITICAL_SECTION();
+  UTIL_LPM_ENTER_CRITICAL_SECTION();
 
-    if (StopModeDisable != UTIL_LPM_NO_BIT_SET)
-    {
-        /**
-         * At least one user disallows Stop Mode
-         */
-        mode_selected = UTIL_LPM_SLEEPMODE;
+  if (StopModeDisable != UTIL_LPM_NO_BIT_SET) {
+    /**
+     * At least one user disallows Stop Mode
+     */
+    mode_selected = UTIL_LPM_SLEEPMODE;
+  } else {
+    if (OffModeDisable != UTIL_LPM_NO_BIT_SET) {
+      /**
+       * At least one user disallows Off Mode
+       */
+      mode_selected = UTIL_LPM_STOPMODE;
+    } else {
+      mode_selected = UTIL_LPM_OFFMODE;
     }
-    else
-    {
-        if (OffModeDisable != UTIL_LPM_NO_BIT_SET)
-        {
-            /**
-             * At least one user disallows Off Mode
-             */
-            mode_selected = UTIL_LPM_STOPMODE;
-        }
-        else
-        {
-            mode_selected = UTIL_LPM_OFFMODE;
-        }
-    }
+  }
 
-    UTIL_LPM_EXIT_CRITICAL_SECTION();
+  UTIL_LPM_EXIT_CRITICAL_SECTION();
 
-    return mode_selected;
+  return mode_selected;
 }
 
-void UTIL_LPM_EnterLowPower(void)
-{
-    UTIL_LPM_ENTER_CRITICAL_SECTION_ELP();
+void UTIL_LPM_EnterLowPower(void) {
+  UTIL_LPM_ENTER_CRITICAL_SECTION_ELP();
 
-    if (StopModeDisable != UTIL_LPM_NO_BIT_SET)
-    {
-        /**
-         * At least one user disallows Stop Mode
-         * SLEEP mode is required
-         */
-        UTIL_PowerDriver.EnterSleepMode();
-        UTIL_PowerDriver.ExitSleepMode();
+  if (StopModeDisable != UTIL_LPM_NO_BIT_SET) {
+    /**
+     * At least one user disallows Stop Mode
+     * SLEEP mode is required
+     */
+    UTIL_PowerDriver.EnterSleepMode();
+    UTIL_PowerDriver.ExitSleepMode();
+  } else {
+    if (OffModeDisable != UTIL_LPM_NO_BIT_SET) {
+      /**
+       * At least one user disallows Off Mode
+       * STOP mode is required
+       */
+      UTIL_PowerDriver.EnterStopMode();
+      UTIL_PowerDriver.ExitStopMode();
+    } else {
+      /**
+       * OFF mode is required
+       */
+      UTIL_PowerDriver.EnterOffMode();
+      UTIL_PowerDriver.ExitOffMode();
     }
-    else
-    {
-        if (OffModeDisable != UTIL_LPM_NO_BIT_SET)
-        {
-            /**
-             * At least one user disallows Off Mode
-             * STOP mode is required
-             */
-            UTIL_PowerDriver.EnterStopMode();
-            UTIL_PowerDriver.ExitStopMode();
-        }
-        else
-        {
-            /**
-             * OFF mode is required
-             */
-            UTIL_PowerDriver.EnterOffMode();
-            UTIL_PowerDriver.ExitOffMode();
-        }
-    }
+  }
 
-    UTIL_LPM_EXIT_CRITICAL_SECTION_ELP();
+  UTIL_LPM_EXIT_CRITICAL_SECTION_ELP();
 }
 
 /**

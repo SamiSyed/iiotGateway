@@ -68,9 +68,8 @@ UTIL_ADV_TRACE_Status_t vcom_Init(void (*cb)(void *));
  * @param  RxCb callback when Rx char is received
  * @return @ref UTIL_ADV_TRACE_Status_t
  */
-UTIL_ADV_TRACE_Status_t vcom_ReceiveInit(void (*RxCb)(uint8_t *rxChar,
-                                                      uint16_t size,
-                                                      uint8_t error));
+UTIL_ADV_TRACE_Status_t
+vcom_ReceiveInit(void (*RxCb)(uint8_t *rxChar, uint16_t size, uint8_t error));
 
 /**
  * @brief  DeInit the UART and associated DMA.

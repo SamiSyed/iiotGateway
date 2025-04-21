@@ -40,22 +40,21 @@ extern "C" {
  * @{
  */
 
-/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Types RADIO LOW LEVEL Exported Types
+/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Types RADIO LOW LEVEL
+ * Exported Types
  * @{
  */
 
-typedef enum
-{
-    RADIO_SWITCH_OFF = 0,
-    RADIO_SWITCH_RX = 1,
-    RADIO_SWITCH_RFO_LP = 2,
-    RADIO_SWITCH_RFO_HP = 3,
+typedef enum {
+  RADIO_SWITCH_OFF = 0,
+  RADIO_SWITCH_RX = 1,
+  RADIO_SWITCH_RFO_LP = 2,
+  RADIO_SWITCH_RFO_HP = 3,
 } BSP_RADIO_Switch_TypeDef;
 
-typedef enum
-{
-    RADIO_RFO_LP_MAXPOWER = 0,
-    RADIO_RFO_HP_MAXPOWER,
+typedef enum {
+  RADIO_RFO_LP_MAXPOWER = 0,
+  RADIO_RFO_HP_MAXPOWER,
 } BSP_RADIO_RFOMaxPowerConfig_TypeDef;
 
 // typedef enum
@@ -68,11 +67,13 @@ typedef enum
  * @}
  */
 
-/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Constants RADIO LOW LEVEL Exported Constants
+/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Constants RADIO LOW
+ * LEVEL Exported Constants
  * @{
  */
 
-/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_RADIOCONFIG RADIO LOW LEVEL RADIO CONFIG Constants
+/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_RADIOCONFIG RADIO LOW LEVEL RADIO
+ * CONFIG Constants
  * @{
  */
 #define RADIO_CONF_RFO_LP_HP 0U
@@ -88,7 +89,8 @@ typedef enum
  * @}
  */
 
-/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_RFSWITCH RADIO LOW LEVEL RF SWITCH Constants
+/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_RFSWITCH RADIO LOW LEVEL RF
+ * SWITCH Constants
  * @{
  */
 
@@ -114,7 +116,8 @@ typedef enum
  * @}
  */
 
-/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Functions RADIO LOW LEVEL Exported Functions
+/** @defgroup STM32WLXX_NUCLEO_RADIO_LOW_LEVEL_Exported_Functions RADIO LOW
+ * LEVEL Exported Functions
  * @{
  */
 int32_t BSP_RADIO_Init(void);
@@ -123,7 +126,8 @@ int32_t BSP_RADIO_ConfigRFSwitch(BSP_RADIO_Switch_TypeDef Config);
 int32_t BSP_RADIO_GetTxConfig(void);
 int32_t BSP_RADIO_IsTCXO(void);
 int32_t BSP_RADIO_IsDCDC(void);
-int32_t BSP_RADIO_GetRFOMaxPowerConfig(BSP_RADIO_RFOMaxPowerConfig_TypeDef Config);
+int32_t
+BSP_RADIO_GetRFOMaxPowerConfig(BSP_RADIO_RFOMaxPowerConfig_TypeDef Config);
 /**
  * @}
  */

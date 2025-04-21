@@ -2,9 +2,9 @@
  ******************************************************************************
  * @file    stm32wlxx_hal_msp_template.c
  * @author  MCD Application Team
- * @brief   This file contains the HAL System and Peripheral (PPP) MSP initialization
- *          and de-initialization functions.
- *          It should be copied to the application folder and renamed into 'stm32wlxx_hal_msp.c'.
+ * @brief   This file contains the HAL System and Peripheral (PPP) MSP
+ *initialization and de-initialization functions. It should be copied to the
+ *application folder and renamed into 'stm32wlxx_hal_msp.c'.
  ******************************************************************************
  * @attention
  *
@@ -47,8 +47,7 @@
  *         level initialization (GPIOs, clock, DMA, interrupt).
  * @retval None
  */
-void HAL_MspInit(void)
-{}
+void HAL_MspInit(void) {}
 
 /**
  * @brief  DeInitializes the Global MSP.
@@ -56,26 +55,25 @@ void HAL_MspInit(void)
  *         level de-initialization (GPIOs, clock, DMA, interrupt).
  * @retval None
  */
-void HAL_MspDeInit(void)
-{}
+void HAL_MspDeInit(void) {}
 
 /**
  * @brief  Initializes the PPP MSP.
  * @note   This functiona is called from HAL_PPP_Init() function to perform
- *         peripheral(PPP) system level initialization (GPIOs, clock, DMA, interrupt)
+ *         peripheral(PPP) system level initialization (GPIOs, clock, DMA,
+ * interrupt)
  * @retval None
  */
-void HAL_PPP_MspInit(void)
-{}
+void HAL_PPP_MspInit(void) {}
 
 /**
  * @brief  DeInitializes the PPP MSP.
  * @note   This functiona is called from HAL_PPP_DeInit() function to perform
- *         peripheral(PPP) system level de-initialization (GPIOs, clock, DMA, interrupt)
+ *         peripheral(PPP) system level de-initialization (GPIOs, clock, DMA,
+ * interrupt)
  * @retval None
  */
-void HAL_PPP_MspDeInit(void)
-{}
+void HAL_PPP_MspDeInit(void) {}
 
 /**
  * @}

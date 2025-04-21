@@ -53,7 +53,8 @@
 #define PWR_PUCRH_RESET_VALUE (0x00000000)
 #define PWR_PDCRH_RESET_VALUE (0x00000000)
 #if defined(DUAL_CORE)
-#define PWR_C2CR1_RESET_VALUE (PWR_C2CR1_LPMS_2 | PWR_C2CR1_LPMS_1 | PWR_C2CR1_LPMS_0)
+#define PWR_C2CR1_RESET_VALUE                                                  \
+  (PWR_C2CR1_LPMS_2 | PWR_C2CR1_LPMS_1 | PWR_C2CR1_LPMS_0)
 #define PWR_C2CR3_RESET_VALUE (0x00000000)
 #endif
 /**
@@ -78,42 +79,42 @@
  *          - SUCCESS: PWR registers are de-initialized
  *          - ERROR: not applicable
  */
-ErrorStatus LL_PWR_DeInit(void)
-{
-    /* Apply reset values to all PWR registers */
-    LL_PWR_WriteReg(CR1, PWR_CR1_RESET_VALUE);
-    LL_PWR_WriteReg(CR2, PWR_CR2_RESET_VALUE);
-    LL_PWR_WriteReg(CR3, PWR_CR3_RESET_VALUE);
-    LL_PWR_WriteReg(CR4, PWR_CR4_RESET_VALUE);
-    LL_PWR_WriteReg(CR5, PWR_CR5_RESET_VALUE);
-    LL_PWR_WriteReg(PUCRA, PWR_PUCRA_RESET_VALUE);
-    LL_PWR_WriteReg(PDCRA, PWR_PDCRA_RESET_VALUE);
-    LL_PWR_WriteReg(PUCRB, PWR_PUCRB_RESET_VALUE);
-    LL_PWR_WriteReg(PDCRB, PWR_PDCRB_RESET_VALUE);
-    LL_PWR_WriteReg(PUCRC, PWR_PUCRC_RESET_VALUE);
-    LL_PWR_WriteReg(PDCRC, PWR_PDCRC_RESET_VALUE);
-    LL_PWR_WriteReg(PUCRH, PWR_PUCRH_RESET_VALUE);
-    LL_PWR_WriteReg(PDCRH, PWR_PDCRH_RESET_VALUE);
+ErrorStatus LL_PWR_DeInit(void) {
+  /* Apply reset values to all PWR registers */
+  LL_PWR_WriteReg(CR1, PWR_CR1_RESET_VALUE);
+  LL_PWR_WriteReg(CR2, PWR_CR2_RESET_VALUE);
+  LL_PWR_WriteReg(CR3, PWR_CR3_RESET_VALUE);
+  LL_PWR_WriteReg(CR4, PWR_CR4_RESET_VALUE);
+  LL_PWR_WriteReg(CR5, PWR_CR5_RESET_VALUE);
+  LL_PWR_WriteReg(PUCRA, PWR_PUCRA_RESET_VALUE);
+  LL_PWR_WriteReg(PDCRA, PWR_PDCRA_RESET_VALUE);
+  LL_PWR_WriteReg(PUCRB, PWR_PUCRB_RESET_VALUE);
+  LL_PWR_WriteReg(PDCRB, PWR_PDCRB_RESET_VALUE);
+  LL_PWR_WriteReg(PUCRC, PWR_PUCRC_RESET_VALUE);
+  LL_PWR_WriteReg(PDCRC, PWR_PDCRC_RESET_VALUE);
+  LL_PWR_WriteReg(PUCRH, PWR_PUCRH_RESET_VALUE);
+  LL_PWR_WriteReg(PDCRH, PWR_PDCRH_RESET_VALUE);
 #ifdef CORE_CM0PLUS
-    LL_PWR_WriteReg(C2CR1, PWR_C2CR1_RESET_VALUE);
-    LL_PWR_WriteReg(C2CR3, PWR_C2CR3_RESET_VALUE);
+  LL_PWR_WriteReg(C2CR1, PWR_C2CR1_RESET_VALUE);
+  LL_PWR_WriteReg(C2CR3, PWR_C2CR3_RESET_VALUE);
 #endif
 
-    /* Clear all flags */
+  /* Clear all flags */
 #if defined(DUAL_CORE)
-    LL_PWR_WriteReg(SCR,
-                    LL_PWR_SCR_CWUF | LL_PWR_SCR_CWRFBUSYF | LL_PWR_SCR_CWPVDF | LL_PWR_SCR_CC2HF);
+  LL_PWR_WriteReg(SCR, LL_PWR_SCR_CWUF | LL_PWR_SCR_CWRFBUSYF |
+                           LL_PWR_SCR_CWPVDF | LL_PWR_SCR_CC2HF);
 #else
-    LL_PWR_WriteReg(SCR, LL_PWR_SCR_CWUF | LL_PWR_SCR_CWRFBUSYF | LL_PWR_SCR_CWPVDF);
+  LL_PWR_WriteReg(SCR,
+                  LL_PWR_SCR_CWUF | LL_PWR_SCR_CWRFBUSYF | LL_PWR_SCR_CWPVDF);
 #endif
 
 #ifdef CORE_CM0PLUS
-    LL_PWR_WriteReg(EXTSCR, LL_PWR_EXTSCR_C2CSSF);
+  LL_PWR_WriteReg(EXTSCR, LL_PWR_EXTSCR_C2CSSF);
 #else
-    LL_PWR_WriteReg(EXTSCR, LL_PWR_EXTSCR_C1CSSF);
+  LL_PWR_WriteReg(EXTSCR, LL_PWR_EXTSCR_C1CSSF);
 #endif
 
-    return SUCCESS;
+  return SUCCESS;
 }
 
 /**

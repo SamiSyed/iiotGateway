@@ -60,7 +60,8 @@ UTIL_ADV_TRACE_Status_t UART_TransmitDMA(uint8_t *pdata, uint16_t size);
  * @param  cb callback to receive the data
  * @return @ref UTIL_ADV_TRACE_Status_t
  */
-UTIL_ADV_TRACE_Status_t UART_StartRx(void (*cb)(uint8_t *pdata, uint16_t size, uint8_t error));
+UTIL_ADV_TRACE_Status_t UART_StartRx(void (*cb)(uint8_t *pdata, uint16_t size,
+                                                uint8_t error));
 
 #ifdef __cplusplus
 }

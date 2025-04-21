@@ -43,8 +43,10 @@ extern "C" {
 /** @defgroup FLASHEx_EMPTY_CHECK FLASHEx Empty Check
  * @{
  */
-#define FLASH_PROG_NOT_EMPTY 0x00000000U /*!< 1st location in Flash is programmed */
-#define FLASH_PROG_EMPTY FLASH_ACR_EMPTY /*!< 1st location in Flash is empty      */
+#define FLASH_PROG_NOT_EMPTY                                                   \
+  0x00000000U /*!< 1st location in Flash is programmed */
+#define FLASH_PROG_EMPTY                                                       \
+  FLASH_ACR_EMPTY /*!< 1st location in Flash is empty      */
 /**
  * @}
  */
@@ -52,10 +54,11 @@ extern "C" {
 /** @defgroup FLASHEx_PRIV_MODE_CFG FLASHEx privilege mode configuration
  * @{
  */
-#define FLASH_PRIV_GRANTED                                                                         \
-    0x00000000U /*!< access to Flash registers is granted                        */
-#define FLASH_PRIV_DENIED                                                                          \
-    FLASH_ACR2_PRIVMODE /*!< access to Flash registers is denied to non-privilege access */
+#define FLASH_PRIV_GRANTED                                                     \
+  0x00000000U /*!< access to Flash registers is granted */
+#define FLASH_PRIV_DENIED                                                      \
+  FLASH_ACR2_PRIVMODE /*!< access to Flash registers is denied to              \
+                         non-privilege access */
 /**
  * @}
  */
@@ -73,7 +76,8 @@ extern "C" {
 /** @addtogroup FLASHEx_Exported_Functions_Group1
  * @{
  */
-HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
+HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
+                                    uint32_t *PageError);
 HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
 uint32_t HAL_FLASHEx_FlashEmptyCheck(void);
 void HAL_FLASHEx_ForceFlashEmpty(uint32_t FlashEmpty);
@@ -101,11 +105,11 @@ uint32_t HAL_FLASHEx_GetPrivMode(void);
 /** @defgroup FLASHEx_Private_Macros FLASHEx Private Macros
  *  @{
  */
-#define IS_FLASH_EMPTY_CHECK(__VALUE__)                                                            \
-    (((__VALUE__) == FLASH_PROG_EMPTY) || ((__VALUE__) == FLASH_PROG_NOT_EMPTY))
+#define IS_FLASH_EMPTY_CHECK(__VALUE__)                                        \
+  (((__VALUE__) == FLASH_PROG_EMPTY) || ((__VALUE__) == FLASH_PROG_NOT_EMPTY))
 
-#define IS_FLASH_CFGPRIVMODE(__VALUE__)                                                            \
-    (((__VALUE__) == FLASH_PRIV_GRANTED) || ((__VALUE__) == FLASH_PRIV_DENIED))
+#define IS_FLASH_CFGPRIVMODE(__VALUE__)                                        \
+  (((__VALUE__) == FLASH_PRIV_GRANTED) || ((__VALUE__) == FLASH_PRIV_DENIED))
 /**
  * @}
  */

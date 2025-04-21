@@ -22,9 +22,11 @@
 ARR_DESC_DECLARE(basic_math_output_fut);
 ARR_DESC_DECLARE(basic_math_output_ref);
 
-extern BASIC_MATH_BIGGEST_INPUT_TYPE basic_math_output_f32_ref[BASIC_MATH_MAX_INPUT_ELEMENTS];
+extern BASIC_MATH_BIGGEST_INPUT_TYPE
+    basic_math_output_f32_ref[BASIC_MATH_MAX_INPUT_ELEMENTS];
 
-extern BASIC_MATH_BIGGEST_INPUT_TYPE basic_math_output_f32_fut[BASIC_MATH_MAX_INPUT_ELEMENTS];
+extern BASIC_MATH_BIGGEST_INPUT_TYPE
+    basic_math_output_f32_fut[BASIC_MATH_MAX_INPUT_ELEMENTS];
 
 /* Block Sizes*/
 ARR_DESC_DECLARE(basic_math_block_sizes);

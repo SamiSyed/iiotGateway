@@ -59,18 +59,18 @@ extern "C" {
 /** @defgroup SYSTEM_LL_Private_Constants SYSTEM Private Constants
  * @{
  */
-#define LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT                                                        \
-    16U /*!< Define used to shift pin position in EXTICR register */
+#define LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT                                    \
+  16U /*!< Define used to shift pin position in EXTICR register */
 
 /**
  * @brief VREFBUF VREF_SC0 & VREF_SC1 calibration values
  */
-#define VREFBUF_SC0_CAL_ADDR                                                                       \
-    ((uint8_t *)(0x1FFF75F0UL)) /*!<  Address of VREFBUF trimming value for VRS=0,                 \
-                                      VREF_SC0 in STM32WL datasheet */
-#define VREFBUF_SC1_CAL_ADDR                                                                       \
-    ((uint8_t *)(0x1FFF7530UL)) /*!<  Address of VREFBUF trimming value for VRS=1,                 \
-                                      VREF_SC1 in STM32WL datasheet */
+#define VREFBUF_SC0_CAL_ADDR                                                   \
+  ((uint8_t *)(0x1FFF75F0UL)) /*!<  Address of VREFBUF trimming value for      \
+                                 VRS=0, VREF_SC0 in STM32WL datasheet */
+#define VREFBUF_SC1_CAL_ADDR                                                   \
+  ((uint8_t *)(0x1FFF7530UL)) /*!<  Address of VREFBUF trimming value for      \
+                                 VRS=1, VREF_SC1 in STM32WL datasheet */
 /**
  * @}
  */
@@ -86,11 +86,13 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_REMAP SYSCFG REMAP
  * @{
  */
-#define LL_SYSCFG_REMAP_FLASH 0x00000000U /*!< Main Flash memory mapped at 0x00000000   */
-#define LL_SYSCFG_REMAP_SYSTEMFLASH                                                                \
-    SYSCFG_MEMRMP_MEM_MODE_0 /*!< System Flash memory mapped at 0x00000000 */
-#define LL_SYSCFG_REMAP_SRAM                                                                       \
-    (SYSCFG_MEMRMP_MEM_MODE_1 | SYSCFG_MEMRMP_MEM_MODE_0) /*!< SRAM1 mapped at 0x00000000 */
+#define LL_SYSCFG_REMAP_FLASH                                                  \
+  0x00000000U /*!< Main Flash memory mapped at 0x00000000   */
+#define LL_SYSCFG_REMAP_SYSTEMFLASH                                            \
+  SYSCFG_MEMRMP_MEM_MODE_0 /*!< System Flash memory mapped at 0x00000000 */
+#define LL_SYSCFG_REMAP_SRAM                                                   \
+  (SYSCFG_MEMRMP_MEM_MODE_1 |                                                  \
+   SYSCFG_MEMRMP_MEM_MODE_0) /*!< SRAM1 mapped at 0x00000000               */
 /**
  * @}
  */
@@ -98,20 +100,20 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_I2C_FASTMODEPLUS SYSCFG I2C FASTMODEPLUS
  * @{
  */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_PB6                                                             \
-    SYSCFG_CFGR1_I2C_PB6_FMP /*!< Enable Fast Mode Plus on PB6       */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_PB7                                                             \
-    SYSCFG_CFGR1_I2C_PB7_FMP /*!< Enable Fast Mode Plus on PB7       */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_PB8                                                             \
-    SYSCFG_CFGR1_I2C_PB8_FMP /*!< Enable Fast Mode Plus on PB8       */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_PB9                                                             \
-    SYSCFG_CFGR1_I2C_PB9_FMP /*!< Enable Fast Mode Plus on PB9       */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C1                                                            \
-    SYSCFG_CFGR1_I2C1_FMP /*!< Enable Fast Mode Plus on I2C1 pins */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C2                                                            \
-    SYSCFG_CFGR1_I2C2_FMP /*!< Enable Fast Mode Plus on I2C2 pins */
-#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C3                                                            \
-    SYSCFG_CFGR1_I2C3_FMP /*!< Enable Fast Mode Plus on I2C3 pins */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_PB6                                         \
+  SYSCFG_CFGR1_I2C_PB6_FMP /*!< Enable Fast Mode Plus on PB6       */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_PB7                                         \
+  SYSCFG_CFGR1_I2C_PB7_FMP /*!< Enable Fast Mode Plus on PB7       */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_PB8                                         \
+  SYSCFG_CFGR1_I2C_PB8_FMP /*!< Enable Fast Mode Plus on PB8       */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_PB9                                         \
+  SYSCFG_CFGR1_I2C_PB9_FMP /*!< Enable Fast Mode Plus on PB9       */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C1                                        \
+  SYSCFG_CFGR1_I2C1_FMP /*!< Enable Fast Mode Plus on I2C1 pins */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C2                                        \
+  SYSCFG_CFGR1_I2C2_FMP /*!< Enable Fast Mode Plus on I2C2 pins */
+#define LL_SYSCFG_I2C_FASTMODEPLUS_I2C3                                        \
+  SYSCFG_CFGR1_I2C3_FMP /*!< Enable Fast Mode Plus on I2C3 pins */
 /**
  * @}
  */
@@ -130,103 +132,103 @@ extern "C" {
  * @{
  */
 #if defined(CORE_CM0PLUS)
-#define LL_SYSCFG_EXTI_LINE0                                                                       \
-    (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_0  | EXTICR[0] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE1                                                                       \
-    (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_4  | EXTICR[0] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE2                                                                       \
-    (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_8  | EXTICR[0] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE3                                                                       \
-    (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_12 |          \
-                                                                     EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE4                                                                       \
-    (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_0  | EXTICR[1] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE5                                                                       \
-    (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_4  | EXTICR[1] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE6                                                                       \
-    (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_8  | EXTICR[1] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE7                                                                       \
-    (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_12 |          \
-                                                                     EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE8                                                                       \
-    (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_0  | EXTICR[2] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE9                                                                       \
-    (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_4  | EXTICR[2] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE10                                                                      \
-    (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_8  | EXTICR[2] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE11                                                                      \
-    (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_12 |          \
-                                                                     EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE12                                                                      \
-    (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_0  | EXTICR[3] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE13                                                                      \
-    (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_4  | EXTICR[3] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE14                                                                      \
-    (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_8  | EXTICR[3] \
-                                                                  */
-#define LL_SYSCFG_EXTI_LINE15                                                                      \
-    (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_12 |          \
-                                                                     EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE0                                                   \
+  (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             0U) /*!< EXTI_POSITION_0  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE1                                                   \
+  (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             0U) /*!< EXTI_POSITION_4  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE2                                                   \
+  (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             0U) /*!< EXTI_POSITION_8  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE3                                                   \
+  (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                    \
+             0U) /*!< EXTI_POSITION_12 | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE4                                                   \
+  (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             1U) /*!< EXTI_POSITION_0  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE5                                                   \
+  (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             1U) /*!< EXTI_POSITION_4  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE6                                                   \
+  (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             1U) /*!< EXTI_POSITION_8  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE7                                                   \
+  (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                    \
+             1U) /*!< EXTI_POSITION_12 | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE8                                                   \
+  (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             2U) /*!< EXTI_POSITION_0  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE9                                                   \
+  (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             2U) /*!< EXTI_POSITION_4  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE10                                                  \
+  (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             2U) /*!< EXTI_POSITION_8  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE11                                                  \
+  (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                    \
+             2U) /*!< EXTI_POSITION_12 | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE12                                                  \
+  (uint32_t)((0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             3U) /*!< EXTI_POSITION_0  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE13                                                  \
+  (uint32_t)((4U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             3U) /*!< EXTI_POSITION_4  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE14                                                  \
+  (uint32_t)((8U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                     \
+             3U) /*!< EXTI_POSITION_8  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE15                                                  \
+  (uint32_t)((12U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                    \
+             3U) /*!< EXTI_POSITION_12 | EXTICR[3] */
 #else
-#define LL_SYSCFG_EXTI_LINE0                                                                       \
-    (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_0  |      \
-                                                                         EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE1                                                                       \
-    (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_4  |      \
-                                                                         EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE2                                                                       \
-    (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_8  |      \
-                                                                         EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE3                                                                       \
-    (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 0U) /*!< EXTI_POSITION_12 |      \
-                                                                         EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE4                                                                       \
-    (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_0  |      \
-                                                                         EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE5                                                                       \
-    (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_4  |      \
-                                                                         EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE6                                                                       \
-    (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_8  |      \
-                                                                         EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE7                                                                       \
-    (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 1U) /*!< EXTI_POSITION_12 |      \
-                                                                         EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE8                                                                       \
-    (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_0  |      \
-                                                                         EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE9                                                                       \
-    (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_4  |      \
-                                                                         EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE10                                                                      \
-    (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_8  |      \
-                                                                         EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE11                                                                      \
-    (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 2U) /*!< EXTI_POSITION_12 |      \
-                                                                         EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE12                                                                      \
-    (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_0  |      \
-                                                                         EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE13                                                                      \
-    (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_4  |      \
-                                                                         EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE14                                                                      \
-    (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_8  |      \
-                                                                         EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE15                                                                      \
-    (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) | 3U) /*!< EXTI_POSITION_12 |      \
-                                                                         EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE0                                                   \
+  (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             0U) /*!< EXTI_POSITION_0  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE1                                                   \
+  (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             0U) /*!< EXTI_POSITION_4  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE2                                                   \
+  (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             0U) /*!< EXTI_POSITION_8  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE3                                                   \
+  (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             0U) /*!< EXTI_POSITION_12 | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE4                                                   \
+  (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             1U) /*!< EXTI_POSITION_0  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE5                                                   \
+  (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             1U) /*!< EXTI_POSITION_4  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE6                                                   \
+  (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             1U) /*!< EXTI_POSITION_8  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE7                                                   \
+  (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             1U) /*!< EXTI_POSITION_12 | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE8                                                   \
+  (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             2U) /*!< EXTI_POSITION_0  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE9                                                   \
+  (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             2U) /*!< EXTI_POSITION_4  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE10                                                  \
+  (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             2U) /*!< EXTI_POSITION_8  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE11                                                  \
+  (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             2U) /*!< EXTI_POSITION_12 | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE12                                                  \
+  (uint32_t)((0x000FU << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             3U) /*!< EXTI_POSITION_0  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE13                                                  \
+  (uint32_t)((0x00F0U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             3U) /*!< EXTI_POSITION_4  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE14                                                  \
+  (uint32_t)((0x0F00U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             3U) /*!< EXTI_POSITION_8  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE15                                                  \
+  (uint32_t)((0xF000U << LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) |                \
+             3U) /*!< EXTI_POSITION_12 | EXTICR[3] */
 #endif
 /**
  * @}
@@ -235,19 +237,20 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_TIMBREAK SYSCFG TIMER BREAK
  * @{
  */
-#define LL_SYSCFG_TIMBREAK_ECC                                                                     \
-    SYSCFG_CFGR2_ECCL /*!< Enables and locks the ECC error signal                                  \
-                            with Break Input of TIM1/16/17                                */
-#define LL_SYSCFG_TIMBREAK_PVD                                                                     \
-    SYSCFG_CFGR2_PVDL /*!< Enables and locks the PVD connection                                    \
-                            with TIM1/16/17 Break Input                                            \
-                            and also the PVDE and PLS bits of the Power Control Interface */
-#define LL_SYSCFG_TIMBREAK_SRAM2_PARITY                                                            \
-    SYSCFG_CFGR2_SPL /*!< Enables and locks the SRAM2_PARITY error signal                          \
-                           with Break Input of TIM1/16/17                                */
-#define LL_SYSCFG_TIMBREAK_LOCKUP                                                                  \
-    SYSCFG_CFGR2_CLL /*!< Enables and locks the LOCKUP output of CortexM4                          \
-                           with Break Input of TIM1/16/17                                */
+#define LL_SYSCFG_TIMBREAK_ECC                                                 \
+  SYSCFG_CFGR2_ECCL /*!< Enables and locks the ECC error signal                \
+                          with Break Input of TIM1/16/17 */
+#define LL_SYSCFG_TIMBREAK_PVD                                                 \
+  SYSCFG_CFGR2_PVDL /*!< Enables and locks the PVD connection                  \
+                          with TIM1/16/17 Break Input                          \
+                          and also the PVDE and PLS bits of the Power Control  \
+                       Interface */
+#define LL_SYSCFG_TIMBREAK_SRAM2_PARITY                                        \
+  SYSCFG_CFGR2_SPL /*!< Enables and locks the SRAM2_PARITY error signal        \
+                         with Break Input of TIM1/16/17 */
+#define LL_SYSCFG_TIMBREAK_LOCKUP                                              \
+  SYSCFG_CFGR2_CLL /*!< Enables and locks the LOCKUP output of CortexM4        \
+                         with Break Input of TIM1/16/17 */
 /**
  * @}
  */
@@ -255,38 +258,70 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_SRAM2WRP SYSCFG SRAM2 WRITE PROTECTION
  * @{
  */
-#define LL_SYSCFG_SRAM2WRP_PAGE0 SYSCFG_SWPR_PAGE0   /*!< SRAM2 Write protection page 0  */
-#define LL_SYSCFG_SRAM2WRP_PAGE1 SYSCFG_SWPR_PAGE1   /*!< SRAM2 Write protection page 1  */
-#define LL_SYSCFG_SRAM2WRP_PAGE2 SYSCFG_SWPR_PAGE2   /*!< SRAM2 Write protection page 2  */
-#define LL_SYSCFG_SRAM2WRP_PAGE3 SYSCFG_SWPR_PAGE3   /*!< SRAM2 Write protection page 3  */
-#define LL_SYSCFG_SRAM2WRP_PAGE4 SYSCFG_SWPR_PAGE4   /*!< SRAM2 Write protection page 4  */
-#define LL_SYSCFG_SRAM2WRP_PAGE5 SYSCFG_SWPR_PAGE5   /*!< SRAM2 Write protection page 5  */
-#define LL_SYSCFG_SRAM2WRP_PAGE6 SYSCFG_SWPR_PAGE6   /*!< SRAM2 Write protection page 6  */
-#define LL_SYSCFG_SRAM2WRP_PAGE7 SYSCFG_SWPR_PAGE7   /*!< SRAM2 Write protection page 7  */
-#define LL_SYSCFG_SRAM2WRP_PAGE8 SYSCFG_SWPR_PAGE8   /*!< SRAM2 Write protection page 8  */
-#define LL_SYSCFG_SRAM2WRP_PAGE9 SYSCFG_SWPR_PAGE9   /*!< SRAM2 Write protection page 9  */
-#define LL_SYSCFG_SRAM2WRP_PAGE10 SYSCFG_SWPR_PAGE10 /*!< SRAM2 Write protection page 10 */
-#define LL_SYSCFG_SRAM2WRP_PAGE11 SYSCFG_SWPR_PAGE11 /*!< SRAM2 Write protection page 11 */
-#define LL_SYSCFG_SRAM2WRP_PAGE12 SYSCFG_SWPR_PAGE12 /*!< SRAM2 Write protection page 12 */
-#define LL_SYSCFG_SRAM2WRP_PAGE13 SYSCFG_SWPR_PAGE13 /*!< SRAM2 Write protection page 13 */
-#define LL_SYSCFG_SRAM2WRP_PAGE14 SYSCFG_SWPR_PAGE14 /*!< SRAM2 Write protection page 14 */
-#define LL_SYSCFG_SRAM2WRP_PAGE15 SYSCFG_SWPR_PAGE15 /*!< SRAM2 Write protection page 15 */
-#define LL_SYSCFG_SRAM2WRP_PAGE16 SYSCFG_SWPR_PAGE16 /*!< SRAM2 Write protection page 16 */
-#define LL_SYSCFG_SRAM2WRP_PAGE17 SYSCFG_SWPR_PAGE17 /*!< SRAM2 Write protection page 17 */
-#define LL_SYSCFG_SRAM2WRP_PAGE18 SYSCFG_SWPR_PAGE18 /*!< SRAM2 Write protection page 18 */
-#define LL_SYSCFG_SRAM2WRP_PAGE19 SYSCFG_SWPR_PAGE19 /*!< SRAM2 Write protection page 19 */
-#define LL_SYSCFG_SRAM2WRP_PAGE20 SYSCFG_SWPR_PAGE20 /*!< SRAM2 Write protection page 20 */
-#define LL_SYSCFG_SRAM2WRP_PAGE21 SYSCFG_SWPR_PAGE21 /*!< SRAM2 Write protection page 21 */
-#define LL_SYSCFG_SRAM2WRP_PAGE22 SYSCFG_SWPR_PAGE22 /*!< SRAM2 Write protection page 22 */
-#define LL_SYSCFG_SRAM2WRP_PAGE23 SYSCFG_SWPR_PAGE23 /*!< SRAM2 Write protection page 23 */
-#define LL_SYSCFG_SRAM2WRP_PAGE24 SYSCFG_SWPR_PAGE24 /*!< SRAM2 Write protection page 24 */
-#define LL_SYSCFG_SRAM2WRP_PAGE25 SYSCFG_SWPR_PAGE25 /*!< SRAM2 Write protection page 25 */
-#define LL_SYSCFG_SRAM2WRP_PAGE26 SYSCFG_SWPR_PAGE26 /*!< SRAM2 Write protection page 26 */
-#define LL_SYSCFG_SRAM2WRP_PAGE27 SYSCFG_SWPR_PAGE27 /*!< SRAM2 Write protection page 27 */
-#define LL_SYSCFG_SRAM2WRP_PAGE28 SYSCFG_SWPR_PAGE28 /*!< SRAM2 Write protection page 28 */
-#define LL_SYSCFG_SRAM2WRP_PAGE29 SYSCFG_SWPR_PAGE29 /*!< SRAM2 Write protection page 29 */
-#define LL_SYSCFG_SRAM2WRP_PAGE30 SYSCFG_SWPR_PAGE30 /*!< SRAM2 Write protection page 30 */
-#define LL_SYSCFG_SRAM2WRP_PAGE31 SYSCFG_SWPR_PAGE31 /*!< SRAM2 Write protection page 31 */
+#define LL_SYSCFG_SRAM2WRP_PAGE0                                               \
+  SYSCFG_SWPR_PAGE0 /*!< SRAM2 Write protection page 0  */
+#define LL_SYSCFG_SRAM2WRP_PAGE1                                               \
+  SYSCFG_SWPR_PAGE1 /*!< SRAM2 Write protection page 1  */
+#define LL_SYSCFG_SRAM2WRP_PAGE2                                               \
+  SYSCFG_SWPR_PAGE2 /*!< SRAM2 Write protection page 2  */
+#define LL_SYSCFG_SRAM2WRP_PAGE3                                               \
+  SYSCFG_SWPR_PAGE3 /*!< SRAM2 Write protection page 3  */
+#define LL_SYSCFG_SRAM2WRP_PAGE4                                               \
+  SYSCFG_SWPR_PAGE4 /*!< SRAM2 Write protection page 4  */
+#define LL_SYSCFG_SRAM2WRP_PAGE5                                               \
+  SYSCFG_SWPR_PAGE5 /*!< SRAM2 Write protection page 5  */
+#define LL_SYSCFG_SRAM2WRP_PAGE6                                               \
+  SYSCFG_SWPR_PAGE6 /*!< SRAM2 Write protection page 6  */
+#define LL_SYSCFG_SRAM2WRP_PAGE7                                               \
+  SYSCFG_SWPR_PAGE7 /*!< SRAM2 Write protection page 7  */
+#define LL_SYSCFG_SRAM2WRP_PAGE8                                               \
+  SYSCFG_SWPR_PAGE8 /*!< SRAM2 Write protection page 8  */
+#define LL_SYSCFG_SRAM2WRP_PAGE9                                               \
+  SYSCFG_SWPR_PAGE9 /*!< SRAM2 Write protection page 9  */
+#define LL_SYSCFG_SRAM2WRP_PAGE10                                              \
+  SYSCFG_SWPR_PAGE10 /*!< SRAM2 Write protection page 10 */
+#define LL_SYSCFG_SRAM2WRP_PAGE11                                              \
+  SYSCFG_SWPR_PAGE11 /*!< SRAM2 Write protection page 11 */
+#define LL_SYSCFG_SRAM2WRP_PAGE12                                              \
+  SYSCFG_SWPR_PAGE12 /*!< SRAM2 Write protection page 12 */
+#define LL_SYSCFG_SRAM2WRP_PAGE13                                              \
+  SYSCFG_SWPR_PAGE13 /*!< SRAM2 Write protection page 13 */
+#define LL_SYSCFG_SRAM2WRP_PAGE14                                              \
+  SYSCFG_SWPR_PAGE14 /*!< SRAM2 Write protection page 14 */
+#define LL_SYSCFG_SRAM2WRP_PAGE15                                              \
+  SYSCFG_SWPR_PAGE15 /*!< SRAM2 Write protection page 15 */
+#define LL_SYSCFG_SRAM2WRP_PAGE16                                              \
+  SYSCFG_SWPR_PAGE16 /*!< SRAM2 Write protection page 16 */
+#define LL_SYSCFG_SRAM2WRP_PAGE17                                              \
+  SYSCFG_SWPR_PAGE17 /*!< SRAM2 Write protection page 17 */
+#define LL_SYSCFG_SRAM2WRP_PAGE18                                              \
+  SYSCFG_SWPR_PAGE18 /*!< SRAM2 Write protection page 18 */
+#define LL_SYSCFG_SRAM2WRP_PAGE19                                              \
+  SYSCFG_SWPR_PAGE19 /*!< SRAM2 Write protection page 19 */
+#define LL_SYSCFG_SRAM2WRP_PAGE20                                              \
+  SYSCFG_SWPR_PAGE20 /*!< SRAM2 Write protection page 20 */
+#define LL_SYSCFG_SRAM2WRP_PAGE21                                              \
+  SYSCFG_SWPR_PAGE21 /*!< SRAM2 Write protection page 21 */
+#define LL_SYSCFG_SRAM2WRP_PAGE22                                              \
+  SYSCFG_SWPR_PAGE22 /*!< SRAM2 Write protection page 22 */
+#define LL_SYSCFG_SRAM2WRP_PAGE23                                              \
+  SYSCFG_SWPR_PAGE23 /*!< SRAM2 Write protection page 23 */
+#define LL_SYSCFG_SRAM2WRP_PAGE24                                              \
+  SYSCFG_SWPR_PAGE24 /*!< SRAM2 Write protection page 24 */
+#define LL_SYSCFG_SRAM2WRP_PAGE25                                              \
+  SYSCFG_SWPR_PAGE25 /*!< SRAM2 Write protection page 25 */
+#define LL_SYSCFG_SRAM2WRP_PAGE26                                              \
+  SYSCFG_SWPR_PAGE26 /*!< SRAM2 Write protection page 26 */
+#define LL_SYSCFG_SRAM2WRP_PAGE27                                              \
+  SYSCFG_SWPR_PAGE27 /*!< SRAM2 Write protection page 27 */
+#define LL_SYSCFG_SRAM2WRP_PAGE28                                              \
+  SYSCFG_SWPR_PAGE28 /*!< SRAM2 Write protection page 28 */
+#define LL_SYSCFG_SRAM2WRP_PAGE29                                              \
+  SYSCFG_SWPR_PAGE29 /*!< SRAM2 Write protection page 29 */
+#define LL_SYSCFG_SRAM2WRP_PAGE30                                              \
+  SYSCFG_SWPR_PAGE30 /*!< SRAM2 Write protection page 30 */
+#define LL_SYSCFG_SRAM2WRP_PAGE31                                              \
+  SYSCFG_SWPR_PAGE31 /*!< SRAM2 Write protection page 31 */
 /**
  * @}
  */
@@ -295,37 +330,51 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_IM SYSCFG CPU1 INTERRUPT MASK
  * @{
  */
-#define LL_SYSCFG_GRP1_RTCSTAMPTAMPLSECSS                                                          \
-    SYSCFG_IMR1_RTCSTAMPTAMPLSECSSIM /*!< Enabling of interrupt from RTCSTAMPTAMPLSECSS to CPU1 */
-#define LL_SYSCFG_GRP1_RTCSSRU                                                                     \
-    SYSCFG_IMR1_RTCSSRUIM /*!< Enabling of interrupt from RTC SSRU to CPU1                   */
-#define LL_SYSCFG_GRP1_EXTI5                                                                       \
-    SYSCFG_IMR1_EXTI5IM /*!< Enabling of interrupt from External Interrupt Line 5 to CPU1  */
-#define LL_SYSCFG_GRP1_EXTI6                                                                       \
-    SYSCFG_IMR1_EXTI6IM /*!< Enabling of interrupt from External Interrupt Line 6 to CPU1  */
-#define LL_SYSCFG_GRP1_EXTI7                                                                       \
-    SYSCFG_IMR1_EXTI7IM /*!< Enabling of interrupt from External Interrupt Line 7 to CPU1  */
-#define LL_SYSCFG_GRP1_EXTI8                                                                       \
-    SYSCFG_IMR1_EXTI8IM /*!< Enabling of interrupt from External Interrupt Line 8 to CPU1  */
-#define LL_SYSCFG_GRP1_EXTI9                                                                       \
-    SYSCFG_IMR1_EXTI9IM /*!< Enabling of interrupt from External Interrupt Line 9 to CPU1  */
-#define LL_SYSCFG_GRP1_EXTI10                                                                      \
-    SYSCFG_IMR1_EXTI10IM /*!< Enabling of interrupt from External Interrupt Line 10 to CPU1 */
-#define LL_SYSCFG_GRP1_EXTI11                                                                      \
-    SYSCFG_IMR1_EXTI11IM /*!< Enabling of interrupt from External Interrupt Line 11 to CPU1 */
-#define LL_SYSCFG_GRP1_EXTI12                                                                      \
-    SYSCFG_IMR1_EXTI12IM /*!< Enabling of interrupt from External Interrupt Line 12 to CPU1 */
-#define LL_SYSCFG_GRP1_EXTI13                                                                      \
-    SYSCFG_IMR1_EXTI13IM /*!< Enabling of interrupt from External Interrupt Line 13 to CPU1 */
-#define LL_SYSCFG_GRP1_EXTI14                                                                      \
-    SYSCFG_IMR1_EXTI14IM /*!< Enabling of interrupt from External Interrupt Line 14 to CPU1 */
-#define LL_SYSCFG_GRP1_EXTI15                                                                      \
-    SYSCFG_IMR1_EXTI15IM /*!< Enabling of interrupt from External Interrupt Line 15 to CPU1 */
+#define LL_SYSCFG_GRP1_RTCSTAMPTAMPLSECSS                                      \
+  SYSCFG_IMR1_RTCSTAMPTAMPLSECSSIM /*!< Enabling of interrupt from             \
+                                      RTCSTAMPTAMPLSECSS to CPU1  */
+#define LL_SYSCFG_GRP1_RTCSSRU                                                 \
+  SYSCFG_IMR1_RTCSSRUIM /*!< Enabling of interrupt from RTC SSRU to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI5                                                   \
+  SYSCFG_IMR1_EXTI5IM /*!< Enabling of interrupt from External Interrupt Line  \
+                         5 to CPU1  */
+#define LL_SYSCFG_GRP1_EXTI6                                                   \
+  SYSCFG_IMR1_EXTI6IM /*!< Enabling of interrupt from External Interrupt Line  \
+                         6 to CPU1  */
+#define LL_SYSCFG_GRP1_EXTI7                                                   \
+  SYSCFG_IMR1_EXTI7IM /*!< Enabling of interrupt from External Interrupt Line  \
+                         7 to CPU1  */
+#define LL_SYSCFG_GRP1_EXTI8                                                   \
+  SYSCFG_IMR1_EXTI8IM /*!< Enabling of interrupt from External Interrupt Line  \
+                         8 to CPU1  */
+#define LL_SYSCFG_GRP1_EXTI9                                                   \
+  SYSCFG_IMR1_EXTI9IM /*!< Enabling of interrupt from External Interrupt Line  \
+                         9 to CPU1  */
+#define LL_SYSCFG_GRP1_EXTI10                                                  \
+  SYSCFG_IMR1_EXTI10IM /*!< Enabling of interrupt from External Interrupt Line \
+                          10 to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI11                                                  \
+  SYSCFG_IMR1_EXTI11IM /*!< Enabling of interrupt from External Interrupt Line \
+                          11 to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI12                                                  \
+  SYSCFG_IMR1_EXTI12IM /*!< Enabling of interrupt from External Interrupt Line \
+                          12 to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI13                                                  \
+  SYSCFG_IMR1_EXTI13IM /*!< Enabling of interrupt from External Interrupt Line \
+                          13 to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI14                                                  \
+  SYSCFG_IMR1_EXTI14IM /*!< Enabling of interrupt from External Interrupt Line \
+                          14 to CPU1 */
+#define LL_SYSCFG_GRP1_EXTI15                                                  \
+  SYSCFG_IMR1_EXTI15IM /*!< Enabling of interrupt from External Interrupt Line \
+                          15 to CPU1 */
 
-#define LL_SYSCFG_GRP2_PVM3                                                                        \
-    SYSCFG_IMR2_PVM3IM /*!< Enabling of interrupt from Power Voltage Monitoring 3 to CPU1 */
-#define LL_SYSCFG_GRP2_PVD                                                                         \
-    SYSCFG_IMR2_PVDIM /*!< Enabling of interrupt from Power Voltage Detector to CPU1     */
+#define LL_SYSCFG_GRP2_PVM3                                                    \
+  SYSCFG_IMR2_PVM3IM /*!< Enabling of interrupt from Power Voltage Monitoring  \
+                        3 to CPU1 */
+#define LL_SYSCFG_GRP2_PVD                                                     \
+  SYSCFG_IMR2_PVDIM /*!< Enabling of interrupt from Power Voltage Detector to  \
+                       CPU1     */
 /**
  * @}
  */
@@ -333,100 +382,137 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_C2_IM SYSCFG CPU2 INTERRUPT MASK
  * @{
  */
-#define LL_C2_SYSCFG_GRP1_RTCSTAMP_RTCTAMP_LSECSS                                                  \
-    SYSCFG_C2IMR1_RTCSTAMPTAMPLSECSSIM /*!< Enabling of interrupt from RTC TimeStamp, RTC Tampers  \
-                                            and LSE Clock Security System to CPU2 */
-#define LL_C2_SYSCFG_GRP1_RTCALARM                                                                 \
-    SYSCFG_C2IMR1_RTCALARMIM /*!< Enabling of interrupt from RTC Alarms to CPU2 */
-#define LL_C2_SYSCFG_GRP1_RTCSSRU                                                                  \
-    SYSCFG_C2IMR1_RTCSSRUIM /*!< Enabling of interrupt from RTC SSRU to CPU2 */
-#define LL_C2_SYSCFG_GRP1_RTCWKUP                                                                  \
-    SYSCFG_C2IMR1_RTCWKUPIM /*!< Enabling of interrupt from RTC Wakeup to CPU2 */
-#define LL_C2_SYSCFG_GRP1_RCC                                                                      \
-    SYSCFG_C2IMR1_RCCIM /*!< Enabling of interrupt from RCC to CPU2                            */
-#define LL_C2_SYSCFG_GRP1_FLASH                                                                    \
-    SYSCFG_C2IMR1_FLASHIM /*!< Enabling of interrupt from FLASH to CPU2 */
-#define LL_C2_SYSCFG_GRP1_PKA                                                                      \
-    SYSCFG_C2IMR1_PKAIM /*!< Enabling of interrupt from PKA to CPU2                            */
-#define LL_C2_SYSCFG_GRP1_AES                                                                      \
-    SYSCFG_C2IMR1_AESIM /*!< Enabling of interrupt from AES to CPU2                            */
-#define LL_C2_SYSCFG_GRP1_COMP                                                                     \
-    SYSCFG_C2IMR1_COMPIM /*!< Enabling of interrupt from Comparator to CPU2                     */
-#define LL_C2_SYSCFG_GRP1_ADC                                                                      \
-    SYSCFG_C2IMR1_ADCIM /*!< Enabling of interrupt from Analog Digital Converter to CPU2       */
-#define LL_C2_SYSCFG_GRP1_DAC                                                                      \
-    SYSCFG_C2IMR1_DACIM /*!< Enabling of interrupt from Digital Analog Converter to CPU2       */
+#define LL_C2_SYSCFG_GRP1_RTCSTAMP_RTCTAMP_LSECSS                              \
+  SYSCFG_C2IMR1_RTCSTAMPTAMPLSECSSIM /*!< Enabling of interrupt from RTC       \
+                                        TimeStamp, RTC Tampers and LSE Clock                                                                 \
+                                        Security System to CPU2 */
+#define LL_C2_SYSCFG_GRP1_RTCALARM                                             \
+  SYSCFG_C2IMR1_RTCALARMIM /*!< Enabling of interrupt from RTC Alarms to CPU2  \
+                            */
+#define LL_C2_SYSCFG_GRP1_RTCSSRU                                              \
+  SYSCFG_C2IMR1_RTCSSRUIM /*!< Enabling of interrupt from RTC SSRU to CPU2 */
+#define LL_C2_SYSCFG_GRP1_RTCWKUP                                              \
+  SYSCFG_C2IMR1_RTCWKUPIM /*!< Enabling of interrupt from RTC Wakeup to CPU2   \
+                           */
+#define LL_C2_SYSCFG_GRP1_RCC                                                  \
+  SYSCFG_C2IMR1_RCCIM /*!< Enabling of interrupt from RCC to CPU2 */
+#define LL_C2_SYSCFG_GRP1_FLASH                                                \
+  SYSCFG_C2IMR1_FLASHIM /*!< Enabling of interrupt from FLASH to CPU2 */
+#define LL_C2_SYSCFG_GRP1_PKA                                                  \
+  SYSCFG_C2IMR1_PKAIM /*!< Enabling of interrupt from PKA to CPU2 */
+#define LL_C2_SYSCFG_GRP1_AES                                                  \
+  SYSCFG_C2IMR1_AESIM /*!< Enabling of interrupt from AES to CPU2 */
+#define LL_C2_SYSCFG_GRP1_COMP                                                 \
+  SYSCFG_C2IMR1_COMPIM /*!< Enabling of interrupt from Comparator to CPU2 */
+#define LL_C2_SYSCFG_GRP1_ADC                                                  \
+  SYSCFG_C2IMR1_ADCIM /*!< Enabling of interrupt from Analog Digital Converter \
+                         to CPU2       */
+#define LL_C2_SYSCFG_GRP1_DAC                                                  \
+  SYSCFG_C2IMR1_DACIM /*!< Enabling of interrupt from Digital Analog Converter \
+                         to CPU2       */
 
-#define LL_C2_SYSCFG_GRP1_EXTI0                                                                    \
-    SYSCFG_C2IMR1_EXTI0IM /*!< Enabling of interrupt from External Interrupt Line 0 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI1                                                                    \
-    SYSCFG_C2IMR1_EXTI1IM /*!< Enabling of interrupt from External Interrupt Line 1 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI2                                                                    \
-    SYSCFG_C2IMR1_EXTI2IM /*!< Enabling of interrupt from External Interrupt Line 2 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI3                                                                    \
-    SYSCFG_C2IMR1_EXTI3IM /*!< Enabling of interrupt from External Interrupt Line 3 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI4                                                                    \
-    SYSCFG_C2IMR1_EXTI4IM /*!< Enabling of interrupt from External Interrupt Line 4 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI5                                                                    \
-    SYSCFG_C2IMR1_EXTI5IM /*!< Enabling of interrupt from External Interrupt Line 5 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI6                                                                    \
-    SYSCFG_C2IMR1_EXTI6IM /*!< Enabling of interrupt from External Interrupt Line 6 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI7                                                                    \
-    SYSCFG_C2IMR1_EXTI7IM /*!< Enabling of interrupt from External Interrupt Line 7 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI8                                                                    \
-    SYSCFG_C2IMR1_EXTI8IM /*!< Enabling of interrupt from External Interrupt Line 8 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI9                                                                    \
-    SYSCFG_C2IMR1_EXTI9IM /*!< Enabling of interrupt from External Interrupt Line 9 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI10                                                                   \
-    SYSCFG_C2IMR1_EXTI10IM /*!< Enabling of interrupt from External Interrupt Line 10 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI11                                                                   \
-    SYSCFG_C2IMR1_EXTI11IM /*!< Enabling of interrupt from External Interrupt Line 11 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI12                                                                   \
-    SYSCFG_C2IMR1_EXTI12IM /*!< Enabling of interrupt from External Interrupt Line 12 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI13                                                                   \
-    SYSCFG_C2IMR1_EXTI13IM /*!< Enabling of interrupt from External Interrupt Line 13 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI14                                                                   \
-    SYSCFG_C2IMR1_EXTI14IM /*!< Enabling of interrupt from External Interrupt Line 14 to CPU2 */
-#define LL_C2_SYSCFG_GRP1_EXTI15                                                                   \
-    SYSCFG_C2IMR1_EXTI15IM /*!< Enabling of interrupt from External Interrupt Line 15 to CPU2 */
+#define LL_C2_SYSCFG_GRP1_EXTI0                                                \
+  SYSCFG_C2IMR1_EXTI0IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 0 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI1                                                \
+  SYSCFG_C2IMR1_EXTI1IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 1 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI2                                                \
+  SYSCFG_C2IMR1_EXTI2IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 2 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI3                                                \
+  SYSCFG_C2IMR1_EXTI3IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 3 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI4                                                \
+  SYSCFG_C2IMR1_EXTI4IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 4 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI5                                                \
+  SYSCFG_C2IMR1_EXTI5IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 5 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI6                                                \
+  SYSCFG_C2IMR1_EXTI6IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 6 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI7                                                \
+  SYSCFG_C2IMR1_EXTI7IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 7 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI8                                                \
+  SYSCFG_C2IMR1_EXTI8IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 8 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI9                                                \
+  SYSCFG_C2IMR1_EXTI9IM /*!< Enabling of interrupt from External Interrupt     \
+                           Line 9 to CPU2      */
+#define LL_C2_SYSCFG_GRP1_EXTI10                                               \
+  SYSCFG_C2IMR1_EXTI10IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 10 to CPU2     */
+#define LL_C2_SYSCFG_GRP1_EXTI11                                               \
+  SYSCFG_C2IMR1_EXTI11IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 11 to CPU2     */
+#define LL_C2_SYSCFG_GRP1_EXTI12                                               \
+  SYSCFG_C2IMR1_EXTI12IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 12 to CPU2     */
+#define LL_C2_SYSCFG_GRP1_EXTI13                                               \
+  SYSCFG_C2IMR1_EXTI13IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 13 to CPU2     */
+#define LL_C2_SYSCFG_GRP1_EXTI14                                               \
+  SYSCFG_C2IMR1_EXTI14IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 14 to CPU2     */
+#define LL_C2_SYSCFG_GRP1_EXTI15                                               \
+  SYSCFG_C2IMR1_EXTI15IM /*!< Enabling of interrupt from External Interrupt    \
+                            Line 15 to CPU2     */
 
-#define LL_C2_SYSCFG_GRP2_DMA1CH1                                                                  \
-    SYSCFG_C2IMR2_DMA1CH1IM /*!< Enabling of interrupt from DMA1 Channel 1 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH2                                                                  \
-    SYSCFG_C2IMR2_DMA1CH2IM /*!< Enabling of interrupt from DMA1 Channel 2 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH3                                                                  \
-    SYSCFG_C2IMR2_DMA1CH3IM /*!< Enabling of interrupt from DMA1 Channel 3 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH4                                                                  \
-    SYSCFG_C2IMR2_DMA1CH4IM /*!< Enabling of interrupt from DMA1 Channel 4 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH5                                                                  \
-    SYSCFG_C2IMR2_DMA1CH5IM /*!< Enabling of interrupt from DMA1 Channel 5 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH6                                                                  \
-    SYSCFG_C2IMR2_DMA1CH6IM /*!< Enabling of interrupt from DMA1 Channel 6 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA1CH7                                                                  \
-    SYSCFG_C2IMR2_DMA1CH7IM /*!< Enabling of interrupt from DMA1 Channel 7 to CPU2 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH1                                              \
+  SYSCFG_C2IMR2_DMA1CH1IM /*!< Enabling of interrupt from DMA1 Channel 1 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH2                                              \
+  SYSCFG_C2IMR2_DMA1CH2IM /*!< Enabling of interrupt from DMA1 Channel 2 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH3                                              \
+  SYSCFG_C2IMR2_DMA1CH3IM /*!< Enabling of interrupt from DMA1 Channel 3 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH4                                              \
+  SYSCFG_C2IMR2_DMA1CH4IM /*!< Enabling of interrupt from DMA1 Channel 4 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH5                                              \
+  SYSCFG_C2IMR2_DMA1CH5IM /*!< Enabling of interrupt from DMA1 Channel 5 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH6                                              \
+  SYSCFG_C2IMR2_DMA1CH6IM /*!< Enabling of interrupt from DMA1 Channel 6 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA1CH7                                              \
+  SYSCFG_C2IMR2_DMA1CH7IM /*!< Enabling of interrupt from DMA1 Channel 7 to    \
+                             CPU2                 */
 
-#define LL_C2_SYSCFG_GRP2_DMA2CH1                                                                  \
-    SYSCFG_C2IMR2_DMA2CH1IM /*!< Enabling of interrupt from DMA2 Channel 1 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH2                                                                  \
-    SYSCFG_C2IMR2_DMA2CH2IM /*!< Enabling of interrupt from DMA2 Channel 2 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH3                                                                  \
-    SYSCFG_C2IMR2_DMA2CH3IM /*!< Enabling of interrupt from DMA2 Channel 3 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH4                                                                  \
-    SYSCFG_C2IMR2_DMA2CH4IM /*!< Enabling of interrupt from DMA2 Channel 4 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH5                                                                  \
-    SYSCFG_C2IMR2_DMA2CH5IM /*!< Enabling of interrupt from DMA2 Channel 5 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH6                                                                  \
-    SYSCFG_C2IMR2_DMA2CH6IM /*!< Enabling of interrupt from DMA2 Channel 6 to CPU2 */
-#define LL_C2_SYSCFG_GRP2_DMA2CH7                                                                  \
-    SYSCFG_C2IMR2_DMA2CH7IM /*!< Enabling of interrupt from DMA2 Channel 7 to CPU2 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH1                                              \
+  SYSCFG_C2IMR2_DMA2CH1IM /*!< Enabling of interrupt from DMA2 Channel 1 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH2                                              \
+  SYSCFG_C2IMR2_DMA2CH2IM /*!< Enabling of interrupt from DMA2 Channel 2 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH3                                              \
+  SYSCFG_C2IMR2_DMA2CH3IM /*!< Enabling of interrupt from DMA2 Channel 3 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH4                                              \
+  SYSCFG_C2IMR2_DMA2CH4IM /*!< Enabling of interrupt from DMA2 Channel 4 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH5                                              \
+  SYSCFG_C2IMR2_DMA2CH5IM /*!< Enabling of interrupt from DMA2 Channel 5 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH6                                              \
+  SYSCFG_C2IMR2_DMA2CH6IM /*!< Enabling of interrupt from DMA2 Channel 6 to    \
+                             CPU2                 */
+#define LL_C2_SYSCFG_GRP2_DMA2CH7                                              \
+  SYSCFG_C2IMR2_DMA2CH7IM /*!< Enabling of interrupt from DMA2 Channel 7 to    \
+                             CPU2                 */
 
-#define LL_C2_SYSCFG_GRP2_DMAMUX1                                                                  \
-    SYSCFG_C2IMR2_DMAMUX1IM /*!< Enabling of interrupt from DMAMUX1 to CPU2 */
+#define LL_C2_SYSCFG_GRP2_DMAMUX1                                              \
+  SYSCFG_C2IMR2_DMAMUX1IM /*!< Enabling of interrupt from DMAMUX1 to CPU2 */
 
-#define LL_C2_SYSCFG_GRP2_PVM3                                                                     \
-    SYSCFG_C2IMR2_PVM3IM /*!< Enabling of interrupt from Power Voltage Monitoring 3 to CPU2     */
-#define LL_C2_SYSCFG_GRP2_PVD                                                                      \
-    SYSCFG_C2IMR2_PVDIM /*!< Enabling of interrupt from Power Voltage Detector to CPU2         */
+#define LL_C2_SYSCFG_GRP2_PVM3                                                 \
+  SYSCFG_C2IMR2_PVM3IM /*!< Enabling of interrupt from Power Voltage           \
+                          Monitoring 3 to CPU2     */
+#define LL_C2_SYSCFG_GRP2_PVD                                                  \
+  SYSCFG_C2IMR2_PVDIM /*!< Enabling of interrupt from Power Voltage Detector   \
+                         to CPU2         */
 /**
  * @}
  */
@@ -435,9 +521,10 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_RF_TEST_BUS_TYPE SYSCFG RF TEST BUS TYPE
  * @{
  */
-#define LL_SYSCFG_ANALOG_TEST_BUS                                                                  \
-    SYSCFG_RFDCR_RFTBSEL                       /*!< Analog test bus selected on RF_ADTB[3:0]   */
-#define LL_SYSCFG_DIGITAL_TEST_BUS 0x00000000U /*!< Digital test bus selected on RF_ADTB[3:0]  */
+#define LL_SYSCFG_ANALOG_TEST_BUS                                              \
+  SYSCFG_RFDCR_RFTBSEL /*!< Analog test bus selected on RF_ADTB[3:0]   */
+#define LL_SYSCFG_DIGITAL_TEST_BUS                                             \
+  0x00000000U /*!< Digital test bus selected on RF_ADTB[3:0]  */
 /**
  * @}
  */
@@ -447,27 +534,27 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_APB1_GRP1_STOP_IP DBGMCU CPU1 APB1 GRP1 STOP IP
  * @{
  */
-#define LL_DBGMCU_APB1_GRP1_TIM2_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is stopped when the core is       \
-                                     halted              */
-#define LL_DBGMCU_APB1_GRP1_RTC_STOP                                                               \
-    DBGMCU_APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is stopped when the core is     \
-                                    halted           */
-#define LL_DBGMCU_APB1_GRP1_WWDG_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_WWDG_STOP /*!< The watchdog counter clock is stopped when the core is      \
-                                     halted */
-#define LL_DBGMCU_APB1_GRP1_IWDG_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_IWDG_STOP /*!< The independent watchdog counter clock is stopped when the  \
-                                     core is halted */
-#define LL_DBGMCU_APB1_GRP1_I2C1_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_I2C1_STOP /*!< The I2C1 SMBus timeout is frozen */
-#define LL_DBGMCU_APB1_GRP1_I2C2_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_I2C2_STOP /*!< The I2C2 SMBus timeout is frozen */
-#define LL_DBGMCU_APB1_GRP1_I2C3_STOP                                                              \
-    DBGMCU_APB1FZR1_DBG_I2C3_STOP /*!< The I2C3 SMBus timeout is frozen */
-#define LL_DBGMCU_APB1_GRP1_LPTIM1_STOP                                                            \
-    DBGMCU_APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is stopped when the core is   \
-                                       halted            */
+#define LL_DBGMCU_APB1_GRP1_TIM2_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is stopped when \
+                                   the core is halted              */
+#define LL_DBGMCU_APB1_GRP1_RTC_STOP                                           \
+  DBGMCU_APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is stopped    \
+                                  when the core is halted           */
+#define LL_DBGMCU_APB1_GRP1_WWDG_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_WWDG_STOP /*!< The watchdog counter clock is stopped     \
+                                   when the core is halted */
+#define LL_DBGMCU_APB1_GRP1_IWDG_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_IWDG_STOP /*!< The independent watchdog counter clock is \
+                                   stopped when the core is halted */
+#define LL_DBGMCU_APB1_GRP1_I2C1_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_I2C1_STOP /*!< The I2C1 SMBus timeout is frozen */
+#define LL_DBGMCU_APB1_GRP1_I2C2_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_I2C2_STOP /*!< The I2C2 SMBus timeout is frozen */
+#define LL_DBGMCU_APB1_GRP1_I2C3_STOP                                          \
+  DBGMCU_APB1FZR1_DBG_I2C3_STOP /*!< The I2C3 SMBus timeout is frozen */
+#define LL_DBGMCU_APB1_GRP1_LPTIM1_STOP                                        \
+  DBGMCU_APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is stopped  \
+                                     when the core is halted            */
 /**
  * @}
  */
@@ -476,38 +563,38 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_C2_APB1_GRP1_STOP_IP DBGMCU CPU2 APB1 GRP1 STOP IP
  * @{
  */
-#define LL_C2_DBGMCU_APB1_GRP1_TIM2_STOP                                                           \
-    DBGMCU_C2APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is stopped when the core is     \
-                                       halted              */
-#define LL_C2_DBGMCU_APB1_GRP1_RTC_STOP                                                            \
-    DBGMCU_C2APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is stopped when the core is   \
-                                      halted           */
-#define LL_C2_DBGMCU_APB1_GRP1_IWDG_STOP                                                           \
-    DBGMCU_C2APB1FZR1_DBG_IWDG_STOP /*!< The independent watchdog counter clock is stopped when    \
-                                       the core is halted */
-#define LL_C2_DBGMCU_APB1_GRP1_I2C1_STOP                                                           \
-    DBGMCU_C2APB1FZR1_DBG_I2C1_STOP /*!< The I2C1 SMBus timeout is frozen */
-#define LL_C2_DBGMCU_APB1_GRP1_I2C2_STOP                                                           \
-    DBGMCU_C2APB1FZR1_DBG_I2C2_STOP /*!< The I2C2 SMBus timeout is frozen */
-#define LL_C2_DBGMCU_APB1_GRP1_I2C3_STOP                                                           \
-    DBGMCU_C2APB1FZR1_DBG_I2C3_STOP /*!< The I2C3 SMBus timeout is frozen */
-#define LL_C2_DBGMCU_APB1_GRP1_LPTIM1_STOP                                                         \
-    DBGMCU_C2APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is stopped when the core is \
-                                         halted            */
+#define LL_C2_DBGMCU_APB1_GRP1_TIM2_STOP                                       \
+  DBGMCU_C2APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is stopped    \
+                                     when the core is halted              */
+#define LL_C2_DBGMCU_APB1_GRP1_RTC_STOP                                        \
+  DBGMCU_C2APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is stopped  \
+                                    when the core is halted           */
+#define LL_C2_DBGMCU_APB1_GRP1_IWDG_STOP                                       \
+  DBGMCU_C2APB1FZR1_DBG_IWDG_STOP /*!< The independent watchdog counter clock  \
+                                     is stopped when the core is halted */
+#define LL_C2_DBGMCU_APB1_GRP1_I2C1_STOP                                       \
+  DBGMCU_C2APB1FZR1_DBG_I2C1_STOP /*!< The I2C1 SMBus timeout is frozen */
+#define LL_C2_DBGMCU_APB1_GRP1_I2C2_STOP                                       \
+  DBGMCU_C2APB1FZR1_DBG_I2C2_STOP /*!< The I2C2 SMBus timeout is frozen */
+#define LL_C2_DBGMCU_APB1_GRP1_I2C3_STOP                                       \
+  DBGMCU_C2APB1FZR1_DBG_I2C3_STOP /*!< The I2C3 SMBus timeout is frozen */
+#define LL_C2_DBGMCU_APB1_GRP1_LPTIM1_STOP                                     \
+  DBGMCU_C2APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is        \
+                                       stopped when the core is halted */
 /**
  * @}
  */
-#endif                                /* DUAL_CORE */
+#endif                              /* DUAL_CORE */
 
 /** @defgroup SYSTEM_LL_EC_APB1_GRP2_STOP_IP DBGMCU CPU1 APB1 GRP2 STOP IP
  * @{
  */
-#define LL_DBGMCU_APB1_GRP2_LPTIM2_STOP                                                            \
-    DBGMCU_APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is stopped when the core is   \
-                                       halted            */
-#define LL_DBGMCU_APB1_GRP2_LPTIM3_STOP                                                            \
-    DBGMCU_APB1FZR2_DBG_LPTIM3_STOP /*!< The counter clock of LPTIM3 is stopped when the core is   \
-                                       halted            */
+#define LL_DBGMCU_APB1_GRP2_LPTIM2_STOP                                        \
+  DBGMCU_APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is stopped  \
+                                     when the core is halted            */
+#define LL_DBGMCU_APB1_GRP2_LPTIM3_STOP                                        \
+  DBGMCU_APB1FZR2_DBG_LPTIM3_STOP /*!< The counter clock of LPTIM3 is stopped  \
+                                     when the core is halted            */
 /**
  * @}
  */
@@ -516,29 +603,29 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_C2_APB1_GRP2_STOP_IP DBGMCU CPU2 APB1 GRP2 STOP IP
  * @{
  */
-#define LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP                                                         \
-    DBGMCU_C2APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is stopped when the core is \
-                                         halted            */
-#define LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP                                                         \
-    DBGMCU_C2APB1FZR2_DBG_LPTIM3_STOP /*!< The counter clock of LPTIM3 is stopped when the core is \
-                                         halted            */
+#define LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP                                     \
+  DBGMCU_C2APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is        \
+                                       stopped when the core is halted */
+#define LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP                                     \
+  DBGMCU_C2APB1FZR2_DBG_LPTIM3_STOP /*!< The counter clock of LPTIM3 is        \
+                                       stopped when the core is halted */
 /**
  * @}
  */
-#endif                                /* DUAL_CORE */
+#endif                              /* DUAL_CORE */
 
 /** @defgroup SYSTEM_LL_EC_APB2_GRP1_STOP_IP DBGMCU CPU1 APB2 GRP1 STOP IP
  * @{
  */
-#define LL_DBGMCU_APB2_GRP1_TIM1_STOP                                                              \
-    DBGMCU_APB2FZR_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped when the core is halted \
-                                  */
-#define LL_DBGMCU_APB2_GRP1_TIM16_STOP                                                             \
-    DBGMCU_APB2FZR_DBG_TIM16_STOP /*!< The counter clock of TIM16 is stopped when the core is      \
-                                     halted             */
-#define LL_DBGMCU_APB2_GRP1_TIM17_STOP                                                             \
-    DBGMCU_APB2FZR_DBG_TIM17_STOP /*!< The counter clock of TIM17 is stopped when the core is      \
-                                     halted             */
+#define LL_DBGMCU_APB2_GRP1_TIM1_STOP                                          \
+  DBGMCU_APB2FZR_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped when  \
+                                  the core is halted              */
+#define LL_DBGMCU_APB2_GRP1_TIM16_STOP                                         \
+  DBGMCU_APB2FZR_DBG_TIM16_STOP /*!< The counter clock of TIM16 is stopped     \
+                                   when the core is halted             */
+#define LL_DBGMCU_APB2_GRP1_TIM17_STOP                                         \
+  DBGMCU_APB2FZR_DBG_TIM17_STOP /*!< The counter clock of TIM17 is stopped     \
+                                   when the core is halted             */
 /**
  * @}
  */
@@ -547,19 +634,19 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_C2_APB2_GRP1_STOP_IP DBGMCU CPU2 APB2 GRP1 STOP IP
  * @{
  */
-#define LL_C2_DBGMCU_APB2_GRP1_TIM1_STOP                                                           \
-    DBGMCU_C2APB2FZR_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped when the core is      \
-                                      halted              */
-#define LL_C2_DBGMCU_APB2_GRP1_TIM16_STOP                                                          \
-    DBGMCU_C2APB2FZR_DBG_TIM16_STOP /*!< The counter clock of TIM16 is stopped when the core is    \
-                                       halted             */
-#define LL_C2_DBGMCU_APB2_GRP1_TIM17_STOP                                                          \
-    DBGMCU_C2APB2FZR_DBG_TIM17_STOP /*!< The counter clock of TIM17 is stopped when the core is    \
-                                       halted             */
+#define LL_C2_DBGMCU_APB2_GRP1_TIM1_STOP                                       \
+  DBGMCU_C2APB2FZR_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped     \
+                                    when the core is halted              */
+#define LL_C2_DBGMCU_APB2_GRP1_TIM16_STOP                                      \
+  DBGMCU_C2APB2FZR_DBG_TIM16_STOP /*!< The counter clock of TIM16 is stopped   \
+                                     when the core is halted             */
+#define LL_C2_DBGMCU_APB2_GRP1_TIM17_STOP                                      \
+  DBGMCU_C2APB2FZR_DBG_TIM17_STOP /*!< The counter clock of TIM17 is stopped   \
+                                     when the core is halted             */
 /**
  * @}
  */
-#endif                              /* DUAL_CORE */
+#endif                            /* DUAL_CORE */
 
 #endif
 
@@ -567,8 +654,10 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_VOLTAGE VREFBUF VOLTAGE
  * @{
  */
-#define LL_VREFBUF_VOLTAGE_SCALE0 0x00000000U     /*!< Voltage reference scale 0 (VREF_OUT1) */
-#define LL_VREFBUF_VOLTAGE_SCALE1 VREFBUF_CSR_VRS /*!< Voltage reference scale 1 (VREF_OUT2) */
+#define LL_VREFBUF_VOLTAGE_SCALE0                                              \
+  0x00000000U /*!< Voltage reference scale 0 (VREF_OUT1) */
+#define LL_VREFBUF_VOLTAGE_SCALE1                                              \
+  VREFBUF_CSR_VRS /*!< Voltage reference scale 1 (VREF_OUT2) */
 /**
  * @}
  */
@@ -608,9 +697,8 @@ extern "C" {
  *         @arg @ref LL_SYSCFG_REMAP_SRAM
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
-{
-    MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory);
+__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory) {
+  MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory);
 }
 
 /**
@@ -621,9 +709,8 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
  *         @arg @ref LL_SYSCFG_REMAP_SYSTEMFLASH
  *         @arg @ref LL_SYSCFG_REMAP_SRAM
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
-{
-    return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE));
+__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void) {
+  return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE));
 }
 
 /**
@@ -640,9 +727,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_EnableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void)
-{
-    SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+__STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void) {
+  SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
 }
 
 /**
@@ -659,16 +745,16 @@ __STATIC_INLINE void LL_SYSCFG_EnableAnalogBooster(void)
  * @rmtoll SYSCFG_CFGR1 BOOSTEN       LL_SYSCFG_DisableAnalogBooster
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void)
-{
-    CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
+__STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) {
+  CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
 }
 
 /**
  * @brief  Enable the I2C fast mode plus driving capability.
  * @rmtoll SYSCFG_CFGR1 I2C_PBx_FMP   LL_SYSCFG_EnableFastModePlus\n
  *         SYSCFG_CFGR1 I2Cx_FMP      LL_SYSCFG_EnableFastModePlus
- * @param  ConfigFastModePlus This parameter can be a combination of the following values:
+ * @param  ConfigFastModePlus This parameter can be a combination of the
+ * following values:
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB6
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB7
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB8
@@ -678,16 +764,16 @@ __STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void)
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_I2C3
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
-{
-    SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) {
+  SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
 }
 
 /**
  * @brief  Disable the I2C fast mode plus driving capability.
  * @rmtoll SYSCFG_CFGR1 I2C_PBx_FMP   LL_SYSCFG_DisableFastModePlus\n
  *         SYSCFG_CFGR1 I2Cx_FMP      LL_SYSCFG_DisableFastModePlus
- * @param  ConfigFastModePlus This parameter can be a combination of the following values:
+ * @param  ConfigFastModePlus This parameter can be a combination of the
+ * following values:
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB6
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB7
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_PB8
@@ -697,9 +783,9 @@ __STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
  *         @arg @ref LL_SYSCFG_I2C_FASTMODEPLUS_I2C3
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
-{
-    CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
+__STATIC_INLINE void
+LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus) {
+  CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
 }
 
 /**
@@ -732,17 +818,18 @@ __STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
  *         @arg @ref LL_SYSCFG_EXTI_LINE15
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
-{
+__STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line) {
 #if defined(CORE_CM0PLUS)
-    MODIFY_REG(SYSCFG->EXTICR[Line & 0x03U],
-               SYSCFG_EXTICR1_EXTI0 << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL),
-               (Port << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL)));
+  MODIFY_REG(SYSCFG->EXTICR[Line & 0x03U],
+             SYSCFG_EXTICR1_EXTI0
+                 << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL),
+             (Port << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL)));
 #else
-    MODIFY_REG(
-        SYSCFG->EXTICR[Line & 0x03U],
-        (Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT),
-        (Port << ((POSITION_VAL((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT))) & 0x0000000FUL)));
+  MODIFY_REG(
+      SYSCFG->EXTICR[Line & 0x03U],
+      (Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT),
+      (Port << ((POSITION_VAL((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT))) &
+                0x0000000FUL)));
 #endif
 }
 
@@ -774,29 +861,30 @@ __STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
  *         @arg @ref LL_SYSCFG_EXTI_PORTB
  *         @arg @ref LL_SYSCFG_EXTI_PORTC
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource(uint32_t Line)
-{
+__STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource(uint32_t Line) {
 #if defined(CORE_CM0PLUS)
-    return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U],
-                               (SYSCFG_EXTICR1_EXTI0
-                                << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL)))
-                      >> ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL));
+  return (
+      uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U],
+                         (SYSCFG_EXTICR1_EXTI0
+                          << ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) &
+                              12UL))) >>
+                ((Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT) & 12UL));
 #else
-    return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U],
-                               (Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT))
-                      >> POSITION_VAL(Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT));
+  return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U],
+                             (Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT)) >>
+                    POSITION_VAL(Line >> LL_SYSCFG_EXTI_REGISTER_PINPOS_SHFT));
 #endif
 }
 
 /**
  * @brief  Start a hardware SRAM2 erase operation.
  * @rmtoll SYSCFG_SCSR SRAM2ER   LL_SYSCFG_EnableSRAM2Erase\n
- * @note   This operation can be done only once SRAM2 page write protection unlocked
+ * @note   This operation can be done only once SRAM2 page write protection
+ * unlocked
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableSRAM2Erase(void)
-{
-    SET_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2ER);
+__STATIC_INLINE void LL_SYSCFG_EnableSRAM2Erase(void) {
+  SET_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2ER);
 }
 
 /**
@@ -804,9 +892,10 @@ __STATIC_INLINE void LL_SYSCFG_EnableSRAM2Erase(void)
  * @rmtoll SYSCFG_SCSR SRAMBSY LL_SYSCFG_IsSRAMEraseOngoing
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAMEraseOngoing(void)
-{
-    return ((READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAMBSY) == (SYSCFG_SCSR_SRAMBSY)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAMEraseOngoing(void) {
+  return ((READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAMBSY) == (SYSCFG_SCSR_SRAMBSY))
+              ? 1UL
+              : 0UL);
 }
 
 /**
@@ -814,10 +903,11 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsSRAMEraseOngoing(void)
  * @rmtoll SYSCFG_SCSR PKASRAMBSY LL_SYSCFG_IsPKASRAMEraseOngoing
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsPKASRAMEraseOngoing(void)
-{
-    return ((READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_PKASRAMBSY) == (SYSCFG_SCSR_PKASRAMBSY)) ? 1UL
-                                                                                         : 0UL);
+__STATIC_INLINE uint32_t LL_SYSCFG_IsPKASRAMEraseOngoing(void) {
+  return ((READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_PKASRAMBSY) ==
+           (SYSCFG_SCSR_PKASRAMBSY))
+              ? 1UL
+              : 0UL);
 }
 
 /**
@@ -833,11 +923,11 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsPKASRAMEraseOngoing(void)
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
-{
-    MODIFY_REG(SYSCFG->CFGR2,
-               SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL,
-               Break);
+__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) {
+  MODIFY_REG(SYSCFG->CFGR2,
+             SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL |
+                 SYSCFG_CFGR2_ECCL,
+             Break);
 }
 
 /**
@@ -852,11 +942,10 @@ __STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
  *         @arg @ref LL_SYSCFG_TIMBREAK_SRAM2_PARITY
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void)
-{
-    return (uint32_t)(READ_BIT(SYSCFG->CFGR2,
-                               SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL
-                                   | SYSCFG_CFGR2_ECCL));
+__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void) {
+  return (uint32_t)(READ_BIT(SYSCFG->CFGR2,
+                             SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL |
+                                 SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL));
 }
 
 /**
@@ -864,9 +953,10 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void)
  * @rmtoll SYSCFG_CFGR2 SPF           LL_SYSCFG_IsActiveFlag_SP
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void)
-{
-    return ((READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void) {
+  return ((READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF))
+              ? 1UL
+              : 0UL);
 }
 
 /**
@@ -874,9 +964,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void)
  * @rmtoll SYSCFG_CFGR2 SPF           LL_SYSCFG_ClearFlag_SP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void)
-{
-    SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF);
+__STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void) {
+  SET_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF);
 }
 
 /**
@@ -920,9 +1009,8 @@ __STATIC_INLINE void LL_SYSCFG_ClearFlag_SP(void)
  */
 /* Legacy define */
 #define LL_SYSCFG_EnableSRAM2PageWRP LL_SYSCFG_EnableSRAM2PageWRP_0_31
-__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP)
-{
-    SET_BIT(SYSCFG->SWPR, SRAM2WRP);
+__STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP) {
+  SET_BIT(SYSCFG->SWPR, SRAM2WRP);
 }
 
 /**
@@ -930,10 +1018,9 @@ __STATIC_INLINE void LL_SYSCFG_EnableSRAM2PageWRP_0_31(uint32_t SRAM2WRP)
  * @rmtoll SYSCFG_SKR   KEY           LL_SYSCFG_LockSRAM2WRP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_LockSRAM2WRP(void)
-{
-    /* Writing a wrong key reactivates the write protection */
-    WRITE_REG(SYSCFG->SKR, 0x00U);
+__STATIC_INLINE void LL_SYSCFG_LockSRAM2WRP(void) {
+  /* Writing a wrong key reactivates the write protection */
+  WRITE_REG(SYSCFG->SKR, 0x00U);
 }
 
 /**
@@ -941,11 +1028,10 @@ __STATIC_INLINE void LL_SYSCFG_LockSRAM2WRP(void)
  * @rmtoll SYSCFG_SKR   KEY           LL_SYSCFG_UnlockSRAM2WRP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void)
-{
-    /* unlock the write protection of the SRAM2ER bit */
-    WRITE_REG(SYSCFG->SKR, 0xCAU);
-    WRITE_REG(SYSCFG->SKR, 0x53U);
+__STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void) {
+  /* unlock the write protection of the SRAM2ER bit */
+  WRITE_REG(SYSCFG->SKR, 0xCAU);
+  WRITE_REG(SYSCFG->SKR, 0x53U);
 }
 
 #if defined(DUAL_CORE)
@@ -954,7 +1040,8 @@ __STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void)
  * @rmtoll SYSCFG_IMR1  RTCSTAMPTAMPLSECSS1IM   LL_SYSCFG_GRP1_EnableIT\n
  *         SYSCFG_IMR1  RTCSSRUIM               LL_SYSCFG_GRP1_EnableIT\n
  *         SYSCFG_IMR1  EXTIxIM                 LL_SYSCFG_GRP1_EnableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_SYSCFG_GRP1_RTCSTAMPTAMPLSECSS
  *         @arg @ref LL_SYSCFG_GRP1_RTCSSRU
  *         @arg @ref LL_SYSCFG_GRP1_EXTI5
@@ -970,23 +1057,22 @@ __STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void)
  *         @arg @ref LL_SYSCFG_GRP1_EXTI15
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_GRP1_EnableIT(uint32_t Interrupt)
-{
-    CLEAR_BIT(SYSCFG->IMR1, Interrupt);
+__STATIC_INLINE void LL_SYSCFG_GRP1_EnableIT(uint32_t Interrupt) {
+  CLEAR_BIT(SYSCFG->IMR1, Interrupt);
 }
 
 /**
  * @brief  Enable CPU1 Interrupt Mask
  * @rmtoll SYSCFG_IMR1  PVM3IM      LL_SYSCFG_GRP2_EnableIT\n
  *         SYSCFG_IMR1  PVDIM       LL_SYSCFG_GRP2_EnableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_SYSCFG_GRP2_PVM3
  *         @arg @ref LL_SYSCFG_GRP2_PVD
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
-{
-    CLEAR_BIT(SYSCFG->IMR2, Interrupt);
+__STATIC_INLINE void LL_SYSCFG_GRP2_EnableIT(uint32_t Interrupt) {
+  CLEAR_BIT(SYSCFG->IMR2, Interrupt);
 }
 
 /**
@@ -994,7 +1080,8 @@ __STATIC_INLINE void LL_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
  * @rmtoll SYSCFG_IMR1  RTCSTAMPTAMPLSECSS1IM      LL_SYSCFG_GRP1_DisableIT\n
  *         SYSCFG_IMR1  RTCSSRUIM     LL_SYSCFG_GRP1_DisableIT\n
  *         SYSCFG_IMR1  EXTIxIM     LL_SYSCFG_GRP1_DisableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_SYSCFG_GRP1_RTCSTAMPTAMPLSECSS
  *         @arg @ref LL_SYSCFG_GRP1_RTCSSRU
  *         @arg @ref LL_SYSCFG_GRP1_EXTI5
@@ -1010,23 +1097,22 @@ __STATIC_INLINE void LL_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
  *         @arg @ref LL_SYSCFG_GRP1_EXTI15
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_GRP1_DisableIT(uint32_t Interrupt)
-{
-    SET_BIT(SYSCFG->IMR1, Interrupt);
+__STATIC_INLINE void LL_SYSCFG_GRP1_DisableIT(uint32_t Interrupt) {
+  SET_BIT(SYSCFG->IMR1, Interrupt);
 }
 
 /**
  * @brief  Disable CPU1 Interrupt Mask
  * @rmtoll SYSCFG_IMR2  PVM3IM      LL_SYSCFG_GRP2_DisableIT\n
  *         SYSCFG_IMR2  PVDIM       LL_SYSCFG_GRP2_DisableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_SYSCFG_GRP2_PVM3
  *         @arg @ref LL_SYSCFG_GRP2_PVD
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_GRP2_DisableIT(uint32_t Interrupt)
-{
-    SET_BIT(SYSCFG->IMR2, Interrupt);
+__STATIC_INLINE void LL_SYSCFG_GRP2_DisableIT(uint32_t Interrupt) {
+  SET_BIT(SYSCFG->IMR2, Interrupt);
 }
 
 /**
@@ -1050,9 +1136,8 @@ __STATIC_INLINE void LL_SYSCFG_GRP2_DisableIT(uint32_t Interrupt)
  *         @arg @ref LL_SYSCFG_GRP1_EXTI15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt)
-{
-    return ((READ_BIT(SYSCFG->IMR1, Interrupt) != (Interrupt)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt) {
+  return ((READ_BIT(SYSCFG->IMR1, Interrupt) != (Interrupt)) ? 1UL : 0UL);
 }
 
 /**
@@ -1064,9 +1149,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt)
  *         @arg @ref LL_SYSCFG_GRP2_PVD
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt)
-{
-    return ((READ_BIT(SYSCFG->IMR2, Interrupt) != (Interrupt)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt) {
+  return ((READ_BIT(SYSCFG->IMR2, Interrupt) != (Interrupt)) ? 1UL : 0UL);
 }
 
 /**
@@ -1083,7 +1167,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR1  COMPIM      LL_C2_SYSCFG_GRP1_EnableIT\n
  *         SYSCFG_C2IMR1  ADCIM       LL_C2_SYSCFG_GRP1_EnableIT\n
  *         SYSCFG_C2IMR1  EXTIxIM     LL_C2_SYSCFG_GRP1_EnableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSTAMP_RTCTAMP_LSECSS
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCALARM
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSSRU
@@ -1113,9 +1198,8 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP1_EXTI15
  * @retval None
  */
-__STATIC_INLINE void LL_C2_SYSCFG_GRP1_EnableIT(uint32_t Interrupt)
-{
-    CLEAR_BIT(SYSCFG->C2IMR1, Interrupt);
+__STATIC_INLINE void LL_C2_SYSCFG_GRP1_EnableIT(uint32_t Interrupt) {
+  CLEAR_BIT(SYSCFG->C2IMR1, Interrupt);
 }
 
 /**
@@ -1125,7 +1209,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP1_EnableIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR2  DMAMUX1IM   LL_C2_SYSCFG_GRP2_EnableIT\n
  *         SYSCFG_C2IMR2  PVM3IM      LL_C2_SYSCFG_GRP2_EnableIT\n
  *         SYSCFG_C2IMR2  PVDIM       LL_C2_SYSCFG_GRP2_EnableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH1
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH2
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH3
@@ -1145,9 +1230,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP1_EnableIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP2_PVD
  * @retval None
  */
-__STATIC_INLINE void LL_C2_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
-{
-    CLEAR_BIT(SYSCFG->C2IMR2, Interrupt);
+__STATIC_INLINE void LL_C2_SYSCFG_GRP2_EnableIT(uint32_t Interrupt) {
+  CLEAR_BIT(SYSCFG->C2IMR2, Interrupt);
 }
 
 /**
@@ -1164,7 +1248,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR1  COMPIM      LL_C2_SYSCFG_GRP1_DisableIT\n
  *         SYSCFG_C2IMR1  ADCIM       LL_C2_SYSCFG_GRP1_DisableIT\n
  *         SYSCFG_C2IMR1  EXTIxIM     LL_C2_SYSCFG_GRP1_DisableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSTAMP_RTCTAMP_LSECSS
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCALARM
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSSRU
@@ -1193,9 +1278,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP2_EnableIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP1_EXTI15
  * @retval None
  */
-__STATIC_INLINE void LL_C2_SYSCFG_GRP1_DisableIT(uint32_t Interrupt)
-{
-    SET_BIT(SYSCFG->C2IMR1, Interrupt);
+__STATIC_INLINE void LL_C2_SYSCFG_GRP1_DisableIT(uint32_t Interrupt) {
+  SET_BIT(SYSCFG->C2IMR1, Interrupt);
 }
 
 /**
@@ -1205,7 +1289,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP1_DisableIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR2  DMAMUX1IM   LL_C2_SYSCFG_GRP2_DisableIT\n
  *         SYSCFG_C2IMR2  PVM3IM      LL_C2_SYSCFG_GRP2_DisableIT\n
  *         SYSCFG_C2IMR2  PVDIM       LL_C2_SYSCFG_GRP2_DisableIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH1
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH2
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH3
@@ -1225,14 +1310,13 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP1_DisableIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP2_PVD
  * @retval None
  */
-__STATIC_INLINE void LL_C2_SYSCFG_GRP2_DisableIT(uint32_t Interrupt)
-{
-    SET_BIT(SYSCFG->C2IMR2, Interrupt);
+__STATIC_INLINE void LL_C2_SYSCFG_GRP2_DisableIT(uint32_t Interrupt) {
+  SET_BIT(SYSCFG->C2IMR2, Interrupt);
 }
 
 /**
  * @brief  Indicate if CPU2 Interrupt Mask is enabled
- * @rmtoll SYSCFG_C2IMR1  RTCSTAMPTAMPLSECSS      LL_C2_SYSCFG_GRP1_IsEnabledIT\n
+ * @rmtoll SYSCFG_C2IMR1  RTCSTAMPTAMPLSECSS LL_C2_SYSCFG_GRP1_IsEnabledIT\n
  *         SYSCFG_C2IMR1  RTCALARMIM  LL_C2_SYSCFG_GRP1_IsEnabledIT\n
  *         SYSCFG_C2IMR1  RTCSSRUIM   LL_C2_SYSCFG_GRP1_IsEnabledIT\n
  *         SYSCFG_C2IMR1  RTCWKUPIM   LL_C2_SYSCFG_GRP1_IsEnabledIT\n
@@ -1244,7 +1328,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP2_DisableIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR1  COMPIM      LL_C2_SYSCFG_GRP1_IsEnabledIT\n
  *         SYSCFG_C2IMR1  ADCIM       LL_C2_SYSCFG_GRP1_IsEnabledIT\n
  *         SYSCFG_C2IMR1  EXTIxIM     LL_C2_SYSCFG_GRP1_IsEnabledIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSTAMP_RTCTAMP_LSECSS
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCALARM
  *         @arg @ref LL_C2_SYSCFG_GRP1_RTCSSRU
@@ -1274,9 +1359,8 @@ __STATIC_INLINE void LL_C2_SYSCFG_GRP2_DisableIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP1_EXTI15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt)
-{
-    return ((READ_BIT(SYSCFG->C2IMR1, Interrupt) != (Interrupt)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt) {
+  return ((READ_BIT(SYSCFG->C2IMR1, Interrupt) != (Interrupt)) ? 1UL : 0UL);
 }
 
 /**
@@ -1286,7 +1370,8 @@ __STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt)
  *         SYSCFG_C2IMR2  DMAMUX1IM   LL_C2_SYSCFG_GRP2_IsEnabledIT\n
  *         SYSCFG_C2IMR2  PVM3IM      LL_C2_SYSCFG_GRP2_IsEnabledIT\n
  *         SYSCFG_C2IMR2  PVDIM       LL_C2_SYSCFG_GRP2_IsEnabledIT
- * @param  Interrupt This parameter can be a combination of the following values:
+ * @param  Interrupt This parameter can be a combination of the following
+ * values:
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH1
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH2
  *         @arg @ref LL_C2_SYSCFG_GRP2_DMA1CH3
@@ -1306,9 +1391,8 @@ __STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP1_IsEnabledIT(uint32_t Interrupt)
  *         @arg @ref LL_C2_SYSCFG_GRP2_PVD
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt)
-{
-    return ((READ_BIT(SYSCFG->C2IMR2, Interrupt) != (Interrupt)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt) {
+  return ((READ_BIT(SYSCFG->C2IMR2, Interrupt) != (Interrupt)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -1320,9 +1404,9 @@ __STATIC_INLINE uint32_t LL_C2_SYSCFG_GRP2_IsEnabledIT(uint32_t Interrupt)
  *         @arg @ref LL_SYSCFG_DIGITAL_TEST_BUS
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetRadioDebugTestBus(uint32_t RadioDebugTestBus)
-{
-    MODIFY_REG(SYSCFG->RFDCR, SYSCFG_RFDCR_RFTBSEL, RadioDebugTestBus);
+__STATIC_INLINE void
+LL_SYSCFG_SetRadioDebugTestBus(uint32_t RadioDebugTestBus) {
+  MODIFY_REG(SYSCFG->RFDCR, SYSCFG_RFDCR_RFTBSEL, RadioDebugTestBus);
 }
 
 /**
@@ -1332,9 +1416,8 @@ __STATIC_INLINE void LL_SYSCFG_SetRadioDebugTestBus(uint32_t RadioDebugTestBus)
  *         @arg @ref LL_SYSCFG_ANALOG_TEST_BUS
  *         @arg @ref LL_SYSCFG_DIGITAL_TEST_BUS
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetRadioDebugTestBus(void)
-{
-    return (uint32_t)(READ_BIT(SYSCFG->RFDCR, SYSCFG_RFDCR_RFTBSEL));
+__STATIC_INLINE uint32_t LL_SYSCFG_GetRadioDebugTestBus(void) {
+  return (uint32_t)(READ_BIT(SYSCFG->RFDCR, SYSCFG_RFDCR_RFTBSEL));
 }
 /**
  * @}
@@ -1353,11 +1436,11 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRadioDebugTestBus(void)
  * @brief  Return the device identifier
  * @note   For STM32WLxxxx devices, the device ID is 0x497
  * @rmtoll DBGMCU_IDCODE DEV_ID        LL_DBGMCU_GetDeviceID
- * @retval Values between Min_Data=0x00 and Max_Data=0xFFF (ex: device ID is 0x497)
+ * @retval Values between Min_Data=0x00 and Max_Data=0xFFF (ex: device ID is
+ * 0x497)
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
-{
-    return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
+__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) {
+  return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
 }
 
 /**
@@ -1366,9 +1449,9 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
  * @rmtoll DBGMCU_IDCODE REV_ID        LL_DBGMCU_GetRevisionID
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
-{
-    return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
+__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void) {
+  return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >>
+                    DBGMCU_IDCODE_REV_ID_Pos);
 }
 
 /**
@@ -1376,9 +1459,8 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
  * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_EnableDBGSleepMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void)
-{
-    SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void) {
+  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
 }
 
 /**
@@ -1386,9 +1468,8 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void)
  * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_DisableDBGSleepMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void)
-{
-    CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void) {
+  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
 }
 
 /**
@@ -1398,9 +1479,8 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void)
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_EnableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
-{
-    SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void) {
+  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
 }
 
 /**
@@ -1408,9 +1488,8 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
  * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_DisableDBGStopMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
-{
-    CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void) {
+  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
 }
 
 /**
@@ -1420,9 +1499,8 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_EnableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
-{
-    SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void) {
+  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
 }
 
 /**
@@ -1430,9 +1508,8 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
  * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_DisableDBGStandbyMode
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
-{
-    CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void) {
+  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
 }
 
 /**
@@ -1449,9 +1526,8 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
  *         @arg @ref LL_DBGMCU_APB1_GRP1_LPTIM1_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->APB1FZR1, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->APB1FZR1, Periphs);
 }
 
 #if defined(DUAL_CORE)
@@ -1468,39 +1544,38 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP1_LPTIM1_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->C2APB1FZR1, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->C2APB1FZR1, Periphs);
 }
 #endif /* DUAL_CORE */
 
 /**
  * @brief  Freeze CPU1 APB1 peripherals (group2 peripherals)
- * @rmtoll DBGMCU_APB1FZR2 LL_DBGMCU_APB1_GRP2_LPTIM2_STOP  LL_DBGMCU_APB1_GRP2_FreezePeriph
- *         DBGMCU_APB1FZR2 LL_DBGMCU_APB1_GRP2_LPTIM3_STOP  LL_DBGMCU_APB1_GRP2_FreezePeriph
+ * @rmtoll DBGMCU_APB1FZR2 LL_DBGMCU_APB1_GRP2_LPTIM2_STOP
+ * LL_DBGMCU_APB1_GRP2_FreezePeriph DBGMCU_APB1FZR2
+ * LL_DBGMCU_APB1_GRP2_LPTIM3_STOP  LL_DBGMCU_APB1_GRP2_FreezePeriph
  * @param  Periphs This parameter can be a combination of the following values:
  *         @arg @ref LL_DBGMCU_APB1_GRP2_LPTIM2_STOP
  *         @arg @ref LL_DBGMCU_APB1_GRP2_LPTIM3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->APB1FZR2, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->APB1FZR2, Periphs);
 }
 
 #if defined(DUAL_CORE)
 /**
  * @brief  Freeze CPU2 APB1 peripherals (group2 peripherals)
- * @rmtoll DBGMCU_APB1FZR2 LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP  LL_C2_DBGMCU_APB1_GRP2_FreezePeriph
- *         DBGMCU_APB1FZR2 LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP  LL_C2_DBGMCU_APB1_GRP2_FreezePeriph
+ * @rmtoll DBGMCU_APB1FZR2 LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP
+ * LL_C2_DBGMCU_APB1_GRP2_FreezePeriph DBGMCU_APB1FZR2
+ * LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP  LL_C2_DBGMCU_APB1_GRP2_FreezePeriph
  * @param  Periphs This parameter can be a combination of the following values:
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->C2APB1FZR2, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->C2APB1FZR2, Periphs);
 }
 #endif /* DUAL_CORE */
 
@@ -1517,15 +1592,14 @@ __STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_FreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_DBGMCU_APB1_GRP1_LPTIM1_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->APB1FZR1, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->APB1FZR1, Periphs);
 }
 
 #if defined(DUAL_CORE)
 /**
  * @brief  Unfreeze CPU2 APB1 peripherals (group1 peripherals)
- * @rmtoll DBGMCU_C2APB1FZR1 DBG_xxxx_STOP  LL_C2_DBGMCU_APB1_GRP1_UnFreezePeriph
+ * @rmtoll DBGMCU_C2APB1FZR1 DBG_xxxx_STOP LL_C2_DBGMCU_APB1_GRP1_UnFreezePeriph
  * @param  Periphs This parameter can be a combination of the following values:
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP1_TIM2_STOP
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP1_RTC_STOP
@@ -1535,9 +1609,8 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP1_LPTIM1_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->C2APB1FZR1, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->C2APB1FZR1, Periphs);
 }
 #endif /* DUAL_CORE */
 
@@ -1549,23 +1622,21 @@ __STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_DBGMCU_APB1_GRP2_LPTIM3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->APB1FZR2, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->APB1FZR2, Periphs);
 }
 
 #if defined(DUAL_CORE)
 /**
  * @brief  Unfreeze CPU2 APB1 peripherals (group2 peripherals)
- * @rmtoll DBGMCU_C2APB1FZR2 DBG_xxxx_STOP  LL_C2_DBGMCU_APB1_GRP2_UnFreezePeriph
+ * @rmtoll DBGMCU_C2APB1FZR2 DBG_xxxx_STOP LL_C2_DBGMCU_APB1_GRP2_UnFreezePeriph
  * @param  Periphs This parameter can be a combination of the following values:
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP2_LPTIM2_STOP
  *         @arg @ref LL_C2_DBGMCU_APB1_GRP2_LPTIM3_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->C2APB1FZR2, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->C2APB1FZR2, Periphs);
 }
 #endif /* DUAL_CORE */
 
@@ -1578,9 +1649,8 @@ __STATIC_INLINE void LL_C2_DBGMCU_APB1_GRP2_UnFreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->APB2FZR, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->APB2FZR, Periphs);
 }
 
 #if defined(DUAL_CORE)
@@ -1593,9 +1663,8 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_C2_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
-{
-    SET_BIT(DBGMCU->C2APB2FZR, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs) {
+  SET_BIT(DBGMCU->C2APB2FZR, Periphs);
 }
 #endif /* DUAL_CORE */
 
@@ -1608,9 +1677,8 @@ __STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->APB2FZR, Periphs);
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->APB2FZR, Periphs);
 }
 
 #if defined(DUAL_CORE)
@@ -1623,9 +1691,8 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
  *         @arg @ref LL_C2_DBGMCU_APB2_GRP1_TIM17_STOP
  * @retval None
  */
-__STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
-{
-    CLEAR_BIT(DBGMCU->C2APB2FZR, Periphs);
+__STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs) {
+  CLEAR_BIT(DBGMCU->C2APB2FZR, Periphs);
 }
 #endif /* DUAL_CORE */
 
@@ -1644,9 +1711,8 @@ __STATIC_INLINE void LL_C2_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Enable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Enable(void)
-{
-    SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+__STATIC_INLINE void LL_VREFBUF_Enable(void) {
+  SET_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
 }
 
 /**
@@ -1654,9 +1720,8 @@ __STATIC_INLINE void LL_VREFBUF_Enable(void)
  * @rmtoll VREFBUF_CSR  ENVR          LL_VREFBUF_Disable
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_Disable(void)
-{
-    CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
+__STATIC_INLINE void LL_VREFBUF_Disable(void) {
+  CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
 }
 
 /**
@@ -1664,20 +1729,18 @@ __STATIC_INLINE void LL_VREFBUF_Disable(void)
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_EnableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void)
-{
-    SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+__STATIC_INLINE void LL_VREFBUF_EnableHIZ(void) {
+  SET_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
 }
 
 /**
- * @brief  Disable high impedance (VREF+pin is internally connected to the voltage reference buffer
- * output)
+ * @brief  Disable high impedance (VREF+pin is internally connected to the
+ * voltage reference buffer output)
  * @rmtoll VREFBUF_CSR  HIZ           LL_VREFBUF_DisableHIZ
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void)
-{
-    CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
+__STATIC_INLINE void LL_VREFBUF_DisableHIZ(void) {
+  CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_HIZ);
 }
 
 /**
@@ -1688,9 +1751,8 @@ __STATIC_INLINE void LL_VREFBUF_DisableHIZ(void)
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE1
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale)
-{
-    MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale);
+__STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) {
+  MODIFY_REG(VREFBUF->CSR, VREFBUF_CSR_VRS, Scale);
 }
 
 /**
@@ -1700,27 +1762,24 @@ __STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale)
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE0
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE1
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void)
-{
-    return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS));
+__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void) {
+  return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS));
 }
 
 /**
  * @brief  Get the VREFBUF trimming value for VRS=0 (VREF_SC0)
  * @retval Between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_SC0_GetCalibration(void)
-{
-    return (uint32_t)(*VREFBUF_SC0_CAL_ADDR);
+__STATIC_INLINE uint32_t LL_VREFBUF_SC0_GetCalibration(void) {
+  return (uint32_t)(*VREFBUF_SC0_CAL_ADDR);
 }
 
 /**
  * @brief  Get the VREFBUF trimming value for VRS=1 (VREF_SC1)
  * @retval Between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_SC1_GetCalibration(void)
-{
-    return (uint32_t)(*VREFBUF_SC1_CAL_ADDR);
+__STATIC_INLINE uint32_t LL_VREFBUF_SC1_GetCalibration(void) {
+  return (uint32_t)(*VREFBUF_SC1_CAL_ADDR);
 }
 
 /**
@@ -1728,9 +1787,9 @@ __STATIC_INLINE uint32_t LL_VREFBUF_SC1_GetCalibration(void)
  * @rmtoll VREFBUF_CSR  VRR           LL_VREFBUF_IsVREFReady
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void)
-{
-    return ((READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void) {
+  return ((READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR)) ? 1UL
+                                                                         : 0UL);
 }
 
 /**
@@ -1738,26 +1797,24 @@ __STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void)
  * @rmtoll VREFBUF_CCR  TRIM          LL_VREFBUF_GetTrimming
  * @retval Between 0 and 0x3F
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void)
-{
-    return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM));
+__STATIC_INLINE uint32_t LL_VREFBUF_GetTrimming(void) {
+  return (uint32_t)(READ_BIT(VREFBUF->CCR, VREFBUF_CCR_TRIM));
 }
 
 /**
- * @brief  Set the trimming code for VREFBUF calibration (Tune the internal reference buffer
- * voltage)
- * @note   Each VrefBuf voltage scale is calibrated in production for each device,
- *         data stored in flash memory.
- *         Functions @ref LL_VREFBUF_SC0_GetCalibration and
+ * @brief  Set the trimming code for VREFBUF calibration (Tune the internal
+ * reference buffer voltage)
+ * @note   Each VrefBuf voltage scale is calibrated in production for each
+ * device, data stored in flash memory. Functions @ref
+ * LL_VREFBUF_SC0_GetCalibration and
  *         @ref LL_VREFBUF_SC0_GetCalibration can be used to retrieve
  *         these calibration data.
  * @rmtoll VREFBUF_CCR  TRIM          LL_VREFBUF_SetTrimming
  * @param  Value Between 0 and 0x3F
  * @retval None
  */
-__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value)
-{
-    WRITE_REG(VREFBUF->CCR, Value);
+__STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value) {
+  WRITE_REG(VREFBUF->CCR, Value);
 }
 
 /**
@@ -1778,9 +1835,8 @@ __STATIC_INLINE void LL_VREFBUF_SetTrimming(uint32_t Value)
  *         @arg @ref LL_FLASH_LATENCY_2
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
-{
-    MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency);
+__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency) {
+  MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency);
 }
 
 /**
@@ -1791,9 +1847,8 @@ __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
  *         @arg @ref LL_FLASH_LATENCY_1
  *         @arg @ref LL_FLASH_LATENCY_2
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
-{
-    return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY));
+__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void) {
+  return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY));
 }
 
 /**
@@ -1801,12 +1856,11 @@ __STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
  * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_EnablePrefetch
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnablePrefetch(void)
-{
+__STATIC_INLINE void LL_FLASH_EnablePrefetch(void) {
 #if defined(CORE_CM0PLUS)
-    SET_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN);
+  SET_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN);
 #else
-    SET_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+  SET_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
 #endif
 }
 
@@ -1816,12 +1870,11 @@ __STATIC_INLINE void LL_FLASH_EnablePrefetch(void)
  * @rmtoll FLASH_C2ACR  PRFTEN        LL_FLASH_DisablePrefetch
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisablePrefetch(void)
-{
+__STATIC_INLINE void LL_FLASH_DisablePrefetch(void) {
 #if defined(CORE_CM0PLUS)
-    CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN);
+  CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN);
 #else
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
 #endif
 }
 
@@ -1831,12 +1884,14 @@ __STATIC_INLINE void LL_FLASH_DisablePrefetch(void)
  * @rmtoll FLASH_C2ACR  C2PRFTEN      LL_FLASH_IsPrefetchEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
-{
+__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void) {
 #if defined(CORE_CM0PLUS)
-    return ((READ_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN) == (FLASH_C2ACR_PRFTEN)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->C2ACR, FLASH_C2ACR_PRFTEN) == (FLASH_C2ACR_PRFTEN))
+              ? 1UL
+              : 0UL);
 #else
-    return ((READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN)) ? 1UL
+                                                                         : 0UL);
 #endif
 }
 
@@ -1846,12 +1901,11 @@ __STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
  * @rmtoll FLASH_C2ACR  ICEN          LL_FLASH_EnableInstCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableInstCache(void)
-{
+__STATIC_INLINE void LL_FLASH_EnableInstCache(void) {
 #if defined(CORE_CM0PLUS)
-    SET_BIT(FLASH->C2ACR, FLASH_C2ACR_ICEN);
+  SET_BIT(FLASH->C2ACR, FLASH_C2ACR_ICEN);
 #else
-    SET_BIT(FLASH->ACR, FLASH_ACR_ICEN);
+  SET_BIT(FLASH->ACR, FLASH_ACR_ICEN);
 #endif
 }
 
@@ -1861,12 +1915,11 @@ __STATIC_INLINE void LL_FLASH_EnableInstCache(void)
  * @rmtoll FLASH_C2ACR  ICEN          LL_FLASH_DisableInstCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableInstCache(void)
-{
+__STATIC_INLINE void LL_FLASH_DisableInstCache(void) {
 #if defined(CORE_CM0PLUS)
-    CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_ICEN);
+  CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_ICEN);
 #else
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICEN);
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICEN);
 #endif
 }
 
@@ -1877,9 +1930,8 @@ __STATIC_INLINE void LL_FLASH_DisableInstCache(void)
  * @rmtoll FLASH_ACR    DCEN          LL_FLASH_EnableDataCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableDataCache(void)
-{
-    SET_BIT(FLASH->ACR, FLASH_ACR_DCEN);
+__STATIC_INLINE void LL_FLASH_EnableDataCache(void) {
+  SET_BIT(FLASH->ACR, FLASH_ACR_DCEN);
 }
 
 /**
@@ -1887,9 +1939,8 @@ __STATIC_INLINE void LL_FLASH_EnableDataCache(void)
  * @rmtoll FLASH_ACR    DCEN          LL_FLASH_DisableDataCache
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableDataCache(void)
-{
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCEN);
+__STATIC_INLINE void LL_FLASH_DisableDataCache(void) {
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCEN);
 }
 #endif
 
@@ -1900,12 +1951,11 @@ __STATIC_INLINE void LL_FLASH_DisableDataCache(void)
  * @rmtoll FLASH_C2ACR  ICRST         LL_FLASH_EnableInstCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableInstCacheReset(void)
-{
+__STATIC_INLINE void LL_FLASH_EnableInstCacheReset(void) {
 #if defined(CORE_CM0PLUS)
-    SET_BIT(FLASH->C2ACR, FLASH_C2ACR_ICRST);
+  SET_BIT(FLASH->C2ACR, FLASH_C2ACR_ICRST);
 #else
-    SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);
+  SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);
 #endif
 }
 
@@ -1915,12 +1965,11 @@ __STATIC_INLINE void LL_FLASH_EnableInstCacheReset(void)
  * @rmtoll FLASH_C2ACR  ICRST         LL_FLASH_DisableInstCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void)
-{
+__STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void) {
 #if defined(CORE_CM0PLUS)
-    CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_ICRST);
+  CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_ICRST);
 #else
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);
 #endif
 }
 
@@ -1932,9 +1981,8 @@ __STATIC_INLINE void LL_FLASH_DisableInstCacheReset(void)
  * @rmtoll FLASH_ACR    DCRST         LL_FLASH_EnableDataCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_EnableDataCacheReset(void)
-{
-    SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);
+__STATIC_INLINE void LL_FLASH_EnableDataCacheReset(void) {
+  SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);
 }
 
 /**
@@ -1942,78 +1990,78 @@ __STATIC_INLINE void LL_FLASH_EnableDataCacheReset(void)
  * @rmtoll FLASH_ACR    DCRST         LL_FLASH_DisableDataCacheReset
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_DisableDataCacheReset(void)
-{
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);
+__STATIC_INLINE void LL_FLASH_DisableDataCacheReset(void) {
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);
 }
 #endif
 
 /**
  * @brief  Suspend new program or erase operation request
- * @note   Any new Flash program and erase operation on both CPU side will be suspended
- *         until this bit and the same bit in Flash CPU2 access control register (FLASH_C2ACR) are
- *         cleared. The PESD bit in both the Flash status register (FLASH_SR) and Flash
- *         CPU2 status register (FLASH_C2SR) register will be set when at least one PES
- *         bit in FLASH_ACR or FLASH_C2ACR is set.
+ * @note   Any new Flash program and erase operation on both CPU side will be
+ * suspended until this bit and the same bit in Flash CPU2 access control
+ * register (FLASH_C2ACR) are cleared. The PESD bit in both the Flash status
+ * register (FLASH_SR) and Flash CPU2 status register (FLASH_C2SR) register will
+ * be set when at least one PES bit in FLASH_ACR or FLASH_C2ACR is set.
  * @rmtoll FLASH_ACR    PES         LL_FLASH_SuspendOperation
  * @rmtoll FLASH_C2ACR  PES         LL_FLASH_SuspendOperation
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_SuspendOperation(void)
-{
+__STATIC_INLINE void LL_FLASH_SuspendOperation(void) {
 #if defined(CORE_CM0PLUS)
-    SET_BIT(FLASH->C2ACR, FLASH_C2ACR_PES);
+  SET_BIT(FLASH->C2ACR, FLASH_C2ACR_PES);
 #else
-    SET_BIT(FLASH->ACR, FLASH_ACR_PES);
+  SET_BIT(FLASH->ACR, FLASH_ACR_PES);
 #endif
 }
 
 /**
  * @brief  Allow new program or erase operation request
- * @note   Any new Flash program and erase operation on both CPU side will be allowed
- *         until one of this bit or the same bit in Flash CPU2 access control register (FLASH_C2ACR)
- * is set. The PESD bit in both the Flash status register (FLASH_SR) and Flash CPU2 status register
- * (FLASH_C2SR) register will be clear when both PES bit in FLASH_ACR or FLASH_C2ACR is cleared.
+ * @note   Any new Flash program and erase operation on both CPU side will be
+ * allowed until one of this bit or the same bit in Flash CPU2 access control
+ * register (FLASH_C2ACR) is set. The PESD bit in both the Flash status register
+ * (FLASH_SR) and Flash CPU2 status register (FLASH_C2SR) register will be clear
+ * when both PES bit in FLASH_ACR or FLASH_C2ACR is cleared.
  * @rmtoll FLASH_ACR    PES      LL_FLASH_AllowOperation
  * @rmtoll FLASH_C2ACR  PES      LL_FLASH_AllowOperation
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_AllowOperation(void)
-{
+__STATIC_INLINE void LL_FLASH_AllowOperation(void) {
 #if defined(CORE_CM0PLUS)
-    CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_PES);
+  CLEAR_BIT(FLASH->C2ACR, FLASH_C2ACR_PES);
 #else
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_PES);
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_PES);
 #endif
 }
 
 /**
- * @brief  Check if new program or erase operation request from CPU2 is suspended
+ * @brief  Check if new program or erase operation request from CPU2 is
+ * suspended
  * @rmtoll FLASH_ACR    PES         LL_FLASH_IsOperationSuspended
  * @rmtoll FLASH_C2ACR  PES         LL_FLASH_IsOperationSuspended
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsOperationSuspended(void)
-{
+__STATIC_INLINE uint32_t LL_FLASH_IsOperationSuspended(void) {
 #if defined(CORE_CM0PLUS)
-    return ((READ_BIT(FLASH->C2ACR, FLASH_C2ACR_PES) == (FLASH_C2ACR_PES)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->C2ACR, FLASH_C2ACR_PES) == (FLASH_C2ACR_PES)) ? 1UL
+                                                                         : 0UL);
 #else
-    return ((READ_BIT(FLASH->ACR, FLASH_ACR_PES) == (FLASH_ACR_PES)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->ACR, FLASH_ACR_PES) == (FLASH_ACR_PES)) ? 1UL : 0UL);
 #endif
 }
 
 /**
- * @brief  Check if new program or erase operation request from CPU1 or CPU2 is suspended
+ * @brief  Check if new program or erase operation request from CPU1 or CPU2 is
+ * suspended
  * @rmtoll FLASH_SR      PESD         LL_FLASH_IsActiveFlag_OperationSuspended
  * @rmtoll FLASH_C2SR    PESD         LL_FLASH_IsActiveFlag_OperationSuspended
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsActiveFlag_OperationSuspended(void)
-{
+__STATIC_INLINE uint32_t LL_FLASH_IsActiveFlag_OperationSuspended(void) {
 #if defined(CORE_CM0PLUS)
-    return ((READ_BIT(FLASH->C2SR, FLASH_C2SR_PESD) == (FLASH_C2SR_PESD)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->C2SR, FLASH_C2SR_PESD) == (FLASH_C2SR_PESD)) ? 1UL
+                                                                        : 0UL);
 #else
-    return ((READ_BIT(FLASH->SR, FLASH_SR_PESD) == (FLASH_SR_PESD)) ? 1UL : 0UL);
+  return ((READ_BIT(FLASH->SR, FLASH_SR_PESD) == (FLASH_SR_PESD)) ? 1UL : 0UL);
 #endif
 }
 
@@ -2022,9 +2070,8 @@ __STATIC_INLINE uint32_t LL_FLASH_IsActiveFlag_OperationSuspended(void)
  * @rmtoll FLASH_ACR    EMPTY      LL_FLASH_SetEmptyFlag
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_SetEmptyFlag(void)
-{
-    SET_BIT(FLASH->ACR, FLASH_ACR_EMPTY);
+__STATIC_INLINE void LL_FLASH_SetEmptyFlag(void) {
+  SET_BIT(FLASH->ACR, FLASH_ACR_EMPTY);
 }
 
 /**
@@ -2032,9 +2079,8 @@ __STATIC_INLINE void LL_FLASH_SetEmptyFlag(void)
  * @rmtoll FLASH_ACR    EMPTY      LL_FLASH_ClearEmptyFlag
  * @retval None
  */
-__STATIC_INLINE void LL_FLASH_ClearEmptyFlag(void)
-{
-    CLEAR_BIT(FLASH->ACR, FLASH_ACR_EMPTY);
+__STATIC_INLINE void LL_FLASH_ClearEmptyFlag(void) {
+  CLEAR_BIT(FLASH->ACR, FLASH_ACR_EMPTY);
 }
 
 /**
@@ -2042,9 +2088,9 @@ __STATIC_INLINE void LL_FLASH_ClearEmptyFlag(void)
  * @rmtoll FLASH_ACR    EMPTY      LL_FLASH_IsEmptyFlag
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsEmptyFlag(void)
-{
-    return ((READ_BIT(FLASH->ACR, FLASH_ACR_EMPTY) == FLASH_ACR_EMPTY) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_FLASH_IsEmptyFlag(void) {
+  return ((READ_BIT(FLASH->ACR, FLASH_ACR_EMPTY) == FLASH_ACR_EMPTY) ? 1UL
+                                                                     : 0UL);
 }
 
 #if defined(DUAL_CORE)
@@ -2053,9 +2099,8 @@ __STATIC_INLINE uint32_t LL_FLASH_IsEmptyFlag(void)
  * @rmtoll FLASH_IPCCBR    IPCCDBA       LL_FLASH_GetIPCCBufferAddr
  * @retval IPCC data buffer base address offset
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetIPCCBufferAddr(void)
-{
-    return (uint32_t)(READ_BIT(FLASH->IPCCBR, FLASH_IPCCBR_IPCCDBA));
+__STATIC_INLINE uint32_t LL_FLASH_GetIPCCBufferAddr(void) {
+  return (uint32_t)(READ_BIT(FLASH->IPCCBR, FLASH_IPCCBR_IPCCDBA));
 }
 #endif /* DUAL_CORE */
 
@@ -2065,9 +2110,8 @@ __STATIC_INLINE uint32_t LL_FLASH_GetIPCCBufferAddr(void)
  * @rmtoll FLASH_SRRVR    SBRV       LL_FLASH_GetC2BootResetVect
  * @retval CPU2 boot reset vector
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetC2BootResetVect(void)
-{
-    return (uint32_t)(READ_BIT(FLASH->SRRVR, FLASH_SRRVR_SBRV));
+__STATIC_INLINE uint32_t LL_FLASH_GetC2BootResetVect(void) {
+  return (uint32_t)(READ_BIT(FLASH->SRRVR, FLASH_SRRVR_SBRV));
 }
 #endif /* DUAL_CORE */
 
@@ -2075,29 +2119,28 @@ __STATIC_INLINE uint32_t LL_FLASH_GetC2BootResetVect(void)
  * @brief  Return the Unique Device Number
  * @retval Values between Min_Data=0x00000000 and Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetUDN(void)
-{
-    return (READ_REG(*((uint32_t *)UID64_BASE)));
+__STATIC_INLINE uint32_t LL_FLASH_GetUDN(void) {
+  return (READ_REG(*((uint32_t *)UID64_BASE)));
 }
 
 /**
  * @brief  Return the Device ID
  *         For STM32WLxxxx devices, the device ID is 0x15
- * @retval Values between Min_Data=0x00 and Max_Data=0xFF (ex: Device ID is 0x15)
+ * @retval Values between Min_Data=0x00 and Max_Data=0xFF (ex: Device ID is
+ * 0x15)
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetDeviceID(void)
-{
-    return ((READ_REG(*((uint32_t *)UID64_BASE + 1U))) & 0x000000FFU);
+__STATIC_INLINE uint32_t LL_FLASH_GetDeviceID(void) {
+  return ((READ_REG(*((uint32_t *)UID64_BASE + 1U))) & 0x000000FFU);
 }
 
 /**
  * @brief  Return the ST Company ID
  * @note   For STM32WLxxxx devices, the ST Company ID is 0x0080E1
- * @retval Values between Min_Data=0x00 and Max_Data=0xFFFFFF (ex: ST Company ID is 0x0080E1)
+ * @retval Values between Min_Data=0x00 and Max_Data=0xFFFFFF (ex: ST Company ID
+ * is 0x0080E1)
  */
-__STATIC_INLINE uint32_t LL_FLASH_GetSTCompanyID(void)
-{
-    return (((READ_REG(*((uint32_t *)UID64_BASE + 1U))) >> 8U) & 0x00FFFFFFU);
+__STATIC_INLINE uint32_t LL_FLASH_GetSTCompanyID(void) {
+  return (((READ_REG(*((uint32_t *)UID64_BASE + 1U))) >> 8U) & 0x00FFFFFFU);
 }
 /**
  * @}
@@ -2111,7 +2154,8 @@ __STATIC_INLINE uint32_t LL_FLASH_GetSTCompanyID(void)
  * @}
  */
 
-#endif /* defined (FLASH) || defined (SYSCFG) || defined (DBGMCU) || defined (VREFBUF) */
+#endif /* defined (FLASH) || defined (SYSCFG) || defined (DBGMCU) || defined   \
+          (VREFBUF) */
 
 /**
  * @}

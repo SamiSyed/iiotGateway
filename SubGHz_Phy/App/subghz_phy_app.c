@@ -82,7 +82,8 @@ static void OnTxDone(void);
  * @param  rssi
  * @param  LoraSnr_FskCfo
  */
-static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo);
+static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
+                     int8_t LoraSnr_FskCfo);
 
 /**
  * @brief Function executed on Radio Tx Timeout event
@@ -105,60 +106,41 @@ static void OnRxError(void);
 
 /* Exported functions
  * ---------------------------------------------------------*/
-void SubghzApp_Init(void)
-{
-    /* USER CODE BEGIN SubghzApp_Init_1 */
+void SubghzApp_Init(void) {
+  /* USER CODE BEGIN SubghzApp_Init_1 */
 
-    /* USER CODE END SubghzApp_Init_1 */
+  /* USER CODE END SubghzApp_Init_1 */
 
-    /* Radio initialization */
-    RadioEvents.TxDone = OnTxDone;
-    RadioEvents.RxDone = OnRxDone;
-    RadioEvents.TxTimeout = OnTxTimeout;
-    RadioEvents.RxTimeout = OnRxTimeout;
-    RadioEvents.RxError = OnRxError;
+  /* Radio initialization */
+  RadioEvents.TxDone = OnTxDone;
+  RadioEvents.RxDone = OnRxDone;
+  RadioEvents.TxTimeout = OnTxTimeout;
+  RadioEvents.RxTimeout = OnRxTimeout;
+  RadioEvents.RxError = OnRxError;
 
-    Radio.Init(&RadioEvents);
+  Radio.Init(&RadioEvents);
 
-    /* USER CODE BEGIN SubghzApp_Init_2 */
-    static int32_t random_delay;
-    random_delay = (Radio.Random()) >> 22; /*10bits random e.g. from 0 to 1023 ms*/
+  /* USER CODE BEGIN SubghzApp_Init_2 */
+  static int32_t random_delay;
+  random_delay =
+      (Radio.Random()) >> 22; /*10bits random e.g. from 0 to 1023 ms*/
 
-    /* Radio Set frequency */
-    Radio.SetChannel(RF_FREQUENCY);
+  /* Radio Set frequency */
+  Radio.SetChannel(RF_FREQUENCY);
 
-    Radio.SetTxConfig(MODEM_LORA,
-                      TX_OUTPUT_POWER,
-                      0,
-                      LORA_BANDWIDTH,
-                      LORA_SPREADING_FACTOR,
-                      LORA_CODINGRATE,
-                      LORA_PREAMBLE_LENGTH,
-                      LORA_FIX_LENGTH_PAYLOAD_ON,
-                      false,
-                      0,
-                      0,
-                      LORA_IQ_INVERSION_ON,
-                      3000);
+  Radio.SetTxConfig(MODEM_LORA, TX_OUTPUT_POWER, 0, LORA_BANDWIDTH,
+                    LORA_SPREADING_FACTOR, LORA_CODINGRATE,
+                    LORA_PREAMBLE_LENGTH, LORA_FIX_LENGTH_PAYLOAD_ON, false, 0,
+                    0, LORA_IQ_INVERSION_ON, 3000);
 
-    Radio.SetRxConfig(MODEM_LORA,
-                      LORA_BANDWIDTH,
-                      LORA_SPREADING_FACTOR,
-                      LORA_CODINGRATE,
-                      0,
-                      LORA_PREAMBLE_LENGTH,
-                      LORA_SYMBOL_TIMEOUT,
-                      LORA_FIX_LENGTH_PAYLOAD_ON,
-                      0,
-                      false,
-                      0,
-                      0,
-                      LORA_IQ_INVERSION_ON,
-                      true);
+  Radio.SetRxConfig(MODEM_LORA, LORA_BANDWIDTH, LORA_SPREADING_FACTOR,
+                    LORA_CODINGRATE, 0, LORA_PREAMBLE_LENGTH,
+                    LORA_SYMBOL_TIMEOUT, LORA_FIX_LENGTH_PAYLOAD_ON, 0, false,
+                    0, 0, LORA_IQ_INVERSION_ON, true);
 
-    Radio.SetMaxPayloadLength(MODEM_LORA, 255);
+  Radio.SetMaxPayloadLength(MODEM_LORA, 255);
 
-    /* USER CODE END SubghzApp_Init_2 */
+  /* USER CODE END SubghzApp_Init_2 */
 }
 
 /* USER CODE BEGIN EF */
@@ -166,109 +148,91 @@ void SubghzApp_Init(void)
 /* USER CODE END EF */
 
 /* Private functions ---------------------------------------------------------*/
-static void OnTxDone(void)
-{
-    /* USER CODE BEGIN OnTxDone */
-    // printf("LORA: OnTxDone(void) : Called\r\n");
+static void OnTxDone(void) {
+  /* USER CODE BEGIN OnTxDone */
+  // printf("LORA: OnTxDone(void) : Called\r\n");
 
-    /* USER CODE END OnTxDone */
+  /* USER CODE END OnTxDone */
 }
 
-static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t LoraSnr_FskCfo)
-{
-    /* USER CODE BEGIN OnRxDone */
-    // printf("\r\n===> OnRxDone(void)\r\n");
+static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi,
+                     int8_t LoraSnr_FskCfo) {
+  /* USER CODE BEGIN OnRxDone */
+  // printf("\r\n===> OnRxDone(void)\r\n");
 
-    /* Clear BufferRx*/
-    memset(BufferRx, 0, LORA_RX_BUFFER_SIZE);
+  /* Clear BufferRx*/
+  memset(BufferRx, 0, LORA_RX_BUFFER_SIZE);
 
-    /* Record payload size*/
-    memcpy(BufferRx, payload, LORA_RX_BUFFER_SIZE);
-    setLoraReceived(true);
-    // printf("LORA: BufferRx (%i): %s\r\n", size, BufferRx);
+  /* Record payload size*/
+  memcpy(BufferRx, payload, LORA_RX_BUFFER_SIZE);
+  setLoraReceived(true);
+  // printf("LORA: BufferRx (%i): %s\r\n", size, BufferRx);
 
-    /* Check buffer */
+  /* Check buffer */
 
-    // printf("Received Payload Size : %i\r\n", RxBufferSize);
-    // printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
+  // printf("Received Payload Size : %i\r\n", RxBufferSize);
+  // printf("LORA: Received Payload : %i\r\n", BufferRx[0]);
 
-    // printf("<=== OnRxDone(void)\r\n\r\n");
+  // printf("<=== OnRxDone(void)\r\n\r\n");
 
-    /* USER CODE END OnRxDone */
+  /* USER CODE END OnRxDone */
 }
 
-static void OnTxTimeout(void)
-{
-    /* USER CODE BEGIN OnTxTimeout */
-    /* USER CODE END OnTxTimeout */
+static void OnTxTimeout(void) {
+  /* USER CODE BEGIN OnTxTimeout */
+  /* USER CODE END OnTxTimeout */
 }
 
-static void OnRxTimeout(void)
-{
-    /* USER CODE BEGIN OnRxTimeout */
-    /* USER CODE END OnRxTimeout */
+static void OnRxTimeout(void) {
+  /* USER CODE BEGIN OnRxTimeout */
+  /* USER CODE END OnRxTimeout */
 }
 
-static void OnRxError(void)
-{
-    /* USER CODE BEGIN OnRxError */
-    // printf("LORA: OnRxError(void) :\r\n");
-    /* USER CODE END OnRxError */
+static void OnRxError(void) {
+  /* USER CODE BEGIN OnRxError */
+  // printf("LORA: OnRxError(void) :\r\n");
+  /* USER CODE END OnRxError */
 }
 
 /* USER CODE BEGIN PrFD */
-void getDataFromEndNode(SensorId sensorID)
-{
-    // HAL_Delay(Radio.GetWakeupTime() + 200);
+void getDataFromEndNode(SensorId sensorID) {
+  // HAL_Delay(Radio.GetWakeupTime() + 200);
 
-    char *loraMessage_p = prepareLoraMessage(sensorID);
-    status = Radio.Send(loraMessage_p, LORA_TX_BUFFER_SIZE);
-    /* After sending any length of LORA message, MAX_PAYLOAD_LENGTH updates with
-     * the same for receiving. Hence need to reset with following code. */
-    Radio.SetMaxPayloadLength(MODEM_LORA, LORA_RX_BUFFER_SIZE);
+  char *loraMessage_p = prepareLoraMessage(sensorID);
+  status = Radio.Send(loraMessage_p, LORA_TX_BUFFER_SIZE);
+  /* After sending any length of LORA message, MAX_PAYLOAD_LENGTH updates with
+   * the same for receiving. Hence need to reset with following code. */
+  Radio.SetMaxPayloadLength(MODEM_LORA, LORA_RX_BUFFER_SIZE);
 
-    printf("\r\nLORA: TO END NODE: %s\r\n", loraMessage_p);
+  printf("\r\nLORA: TO END NODE: %s\r\n", loraMessage_p);
 }
 
-void listenForLoraNodes(void)
-{
-    if (Radio.GetStatus() == RF_IDLE)
-    {
-        Radio.Rx(LORA_LISTENING_DURATION);
-        // printf("LORA: Radio.Rx() : RF_IDLE\r\n");
+void listenForLoraNodes(void) {
+  if (Radio.GetStatus() == RF_IDLE) {
+    Radio.Rx(LORA_LISTENING_DURATION);
+    // printf("LORA: Radio.Rx() : RF_IDLE\r\n");
+  }
+}
+
+void processIncomingLoraMessage(void) {
+  char *message;
+  message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
+  if (strstr(message, IOT_GATEWAY_KEY) != NULL) {
+    message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+    uint8_t sID = atoi(message);
+    if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS)) {
+      message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+      uint8_t sValue = atoi(message);
+      printf("Correct Message :-) %i\r\n", sValue);
+      setNewValueBuffer(sValue, sID);
+      setRawDataReceived(true);
     }
+  } else {
+    printf("END NODE Key mismatch :-(\r\n");
+  }
 }
+void setLoraReceived(bool status) { loraReceived = status; }
 
-void processIncomingLoraMessage(void)
-{
-    char *message;
-    message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
-    if (strstr(message, IOT_GATEWAY_KEY) != NULL)
-    {
-        message = strtok(NULL, LORA_MESSAGE_DELIMITER);
-        uint8_t sID = atoi(message);
-        if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS))
-        {
-            message = strtok(NULL, LORA_MESSAGE_DELIMITER);
-            uint8_t sValue = atoi(message);
-            printf("Correct Message :-) %i\r\n", sValue);
-            setNewValueBuffer(sValue, sID);
-            setRawDataReceived(true);
-        }
-    }
-    else
-    {
-        printf("END NODE Key mismatch :-(\r\n");
-    }
-}
-void setLoraReceived(bool status)
-{
-    loraReceived = status;
-}
-
-bool isLoraReceived(void)
-{
-    return loraReceived;
-}
+bool isLoraReceived(void) { return loraReceived; }
 
 /* USER CODE END PrFD */

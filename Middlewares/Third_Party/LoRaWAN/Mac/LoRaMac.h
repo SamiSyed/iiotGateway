@@ -163,10 +163,12 @@ extern "C" {
  *          set to a valid callback function.
  *
  * \param   [in] primitives - Pointer to a structure defining the LoRaMAC
- *                            event functions. Refer to \ref LoRaMacPrimitives_t.
+ *                            event functions. Refer to \ref
+ * LoRaMacPrimitives_t.
  *
  * \param   [in] callbacks  - Pointer to a structure defining the LoRaMAC
- *                            callback functions. Refer to \ref LoRaMacCallback_t.
+ *                            callback functions. Refer to \ref
+ * LoRaMacCallback_t.
  *
  * \param   [in] region     - The region to start.
  *
@@ -224,7 +226,8 @@ void LoRaMacProcess(void);
 /*!
  * \brief   Queries the LoRaMAC if it is possible to send the next frame with
  *          a given application data payload size. The LoRaMAC takes scheduled
- *          MAC commands into account and reports, when the frame can be send or not.
+ *          MAC commands into account and reports, when the frame can be send or
+ * not.
  *
  * \param   [in] size - Size of application data payload to be send next
  *
@@ -235,16 +238,16 @@ void LoRaMacProcess(void);
  *                         size, taking the scheduled MAC commands into account.
  *
  * \retval  LoRaMacStatus_t Status of the operation. When the parameters are
- *          not valid, the function returns \ref LORAMAC_STATUS_PARAMETER_INVALID.
- *          In case of a length error caused by the application data payload in combination
- *          with the MAC commands, the function returns \ref LORAMAC_STATUS_LENGTH_ERROR.
- *          In this case its recommended to send a frame without application data to flush
- *          the MAC commands. Otherwise the LoRaMAC will prioritize the MAC commands and
- *          if needed it will skip the application data. Please note that if MAC commands do
- *          not fit at all into the payload size on the related datarate, the LoRaMAC will
- *          automatically clip the MAC commands.
- *          In case the query is valid, and the LoRaMAC is able to send the frame,
- *          the function returns \ref LORAMAC_STATUS_OK.
+ *          not valid, the function returns \ref
+ * LORAMAC_STATUS_PARAMETER_INVALID. In case of a length error caused by the
+ * application data payload in combination with the MAC commands, the function
+ * returns \ref LORAMAC_STATUS_LENGTH_ERROR. In this case its recommended to
+ * send a frame without application data to flush the MAC commands. Otherwise
+ * the LoRaMAC will prioritize the MAC commands and if needed it will skip the
+ * application data. Please note that if MAC commands do not fit at all into the
+ * payload size on the related datarate, the LoRaMAC will automatically clip the
+ * MAC commands. In case the query is valid, and the LoRaMAC is able to send the
+ * frame, the function returns \ref LORAMAC_STATUS_OK.
  */
 LoRaMacStatus_t LoRaMacQueryTxPossible(uint8_t size, LoRaMacTxInfo_t *txInfo);
 
@@ -252,9 +255,9 @@ LoRaMacStatus_t LoRaMacQueryTxPossible(uint8_t size, LoRaMacTxInfo_t *txInfo);
  * \brief   LoRaMAC channel add service
  *
  * \details Adds a new channel to the channel list and activates the id in
- *          the channel mask. Please note that this functionality is not available
- *          on all regions. Information about allowed ranges are available at the LoRaWAN Regional
- * Parameters V1.0.2rB
+ *          the channel mask. Please note that this functionality is not
+ * available on all regions. Information about allowed ranges are available at
+ * the LoRaWAN Regional Parameters V1.0.2rB
  *
  * \param   [in] id - Id of the channel.
  *
@@ -327,7 +330,8 @@ uint8_t LoRaMacMcChannelGetGroupId(uint32_t mcAddress);
  *
  * \param   [in]  groupID  - Multicast channel ID
  * \param   [in]  rxParams - Reception parameters
- * \param   [out] status   - Status mask [UNDEF_ID | FREQ_ERR | DR_ERR | GROUP_ID]
+ * \param   [out] status   - Status mask [UNDEF_ID | FREQ_ERR | DR_ERR |
+ * GROUP_ID]
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -358,7 +362,8 @@ LoRaMacStatus_t LoRaMacMcChannelSetupRxParams(AddressIdentifier_t groupID,
  * }
  * \endcode
  *
- * \param   [in] mibGet - MIB-GET-Request to perform. Refer to \ref MibRequestConfirm_t.
+ * \param   [in] mibGet - MIB-GET-Request to perform. Refer to \ref
+ * MibRequestConfirm_t.
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -388,7 +393,8 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm(MibRequestConfirm_t *mibGet);
  * }
  * \endcode
  *
- * \param   [in] mibSet - MIB-SET-Request to perform. Refer to \ref MibRequestConfirm_t.
+ * \param   [in] mibSet - MIB-SET-Request to perform. Refer to \ref
+ * MibRequestConfirm_t.
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -469,8 +475,8 @@ LoRaMacStatus_t LoRaMacMcpsRequest(McpsReq_t *mcpsRequest, bool allowDelayedTx);
 /*!
  * \brief   LoRaMAC deinitialization
  *
- * \details This function stops the timers, re-initializes MAC & regional parameters to default
- *          and sets radio into sleep state.
+ * \details This function stops the timers, re-initializes MAC & regional
+ * parameters to default and sets radio into sleep state.
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -478,8 +484,7 @@ LoRaMacStatus_t LoRaMacMcpsRequest(McpsReq_t *mcpsRequest, bool allowDelayedTx);
  */
 LoRaMacStatus_t LoRaMacDeInitialization(void);
 
-LoRaMacStatus_t LoRaMacProcessMicForDatablock(uint8_t *buffer,
-                                              uint32_t size,
+LoRaMacStatus_t LoRaMacProcessMicForDatablock(uint8_t *buffer, uint32_t size,
                                               uint16_t sessionCnt,
                                               uint8_t fragIndex,
                                               uint32_t descriptor,

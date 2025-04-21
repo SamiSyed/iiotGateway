@@ -153,8 +153,7 @@ uint8_t RegionCN470A26GetBeaconChannelOffset(uint8_t joinChannelIndex);
  * \retval Status of the operation. Return 0x07 if the channels mask is valid.
  */
 uint8_t RegionCN470A26LinkAdrChMaskUpdate(uint16_t *channelsMask,
-                                          uint8_t chMaskCntl,
-                                          uint16_t chanMask,
+                                          uint8_t chMaskCntl, uint16_t chanMask,
                                           ChannelParams_t *channels);
 
 /*!
@@ -203,7 +202,8 @@ uint32_t RegionCN470A26GetRx1Frequency(uint8_t channel);
  *
  * \retval Returns the frequency which shall be used.
  */
-uint32_t RegionCN470A26GetRx2Frequency(uint8_t joinChannelIndex, bool isOtaaDevice);
+uint32_t RegionCN470A26GetRx2Frequency(uint8_t joinChannelIndex,
+                                       bool isOtaaDevice);
 
 /*! \} defgroup REGIONCN470 */
 

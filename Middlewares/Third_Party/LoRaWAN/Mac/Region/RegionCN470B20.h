@@ -153,10 +153,8 @@ extern "C" {
  * when its an OTAA device.
  * Channel plan type B, 20MHz.
  */
-#define CN470_B20_RX_WND_2_FREQ_OTAA                                                               \
-    {                                                                                              \
-        478300000, 498300000                                                                       \
-    }
+#define CN470_B20_RX_WND_2_FREQ_OTAA                                           \
+  { 478300000, 498300000 }
 
 /*!
  * \brief Calculation of the beacon frequency.
@@ -198,8 +196,7 @@ uint8_t RegionCN470B20GetBeaconChannelOffset(uint8_t joinChannelIndex);
  * \retval Status of the operation. Return 0x07 if the channels mask is valid.
  */
 uint8_t RegionCN470B20LinkAdrChMaskUpdate(uint16_t *channelsMask,
-                                          uint8_t chMaskCntl,
-                                          uint16_t chanMask,
+                                          uint8_t chMaskCntl, uint16_t chanMask,
                                           ChannelParams_t *channels);
 
 /*!
@@ -248,7 +245,8 @@ uint32_t RegionCN470B20GetRx1Frequency(uint8_t channel);
  *
  * \retval Returns the frequency which shall be used.
  */
-uint32_t RegionCN470B20GetRx2Frequency(uint8_t joinChannelIndex, bool isOtaaDevice);
+uint32_t RegionCN470B20GetRx2Frequency(uint8_t joinChannelIndex,
+                                       bool isOtaaDevice);
 
 /*! \} defgroup REGIONCN470 */
 

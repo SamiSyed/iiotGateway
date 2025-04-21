@@ -249,13 +249,11 @@ extern "C" {
 
 /*!
  * Band 0 definition
- * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, LastMaxCreditAssignTime, TimeCredits,
- * MaxTimeCredits, ReadyForTransmission }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, LastMaxCreditAssignTime,
+ * TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define CN470_BAND0                                                                                \
-    {                                                                                              \
-        1, CN470_MAX_TX_POWER, 0, 0, 0, 0, 0                                                       \
-    } //  100.0 %
+#define CN470_BAND0                                                            \
+  { 1, CN470_MAX_TX_POWER, 0, 0, 0, 0, 0 } //  100.0 %
 
 /*!
  * Defines the first channel for RX window 1 for CN470 band
@@ -273,107 +271,104 @@ extern "C" {
 #define CN470_STEPWIDTH_RX1_CHANNEL ((uint32_t)200000)
 
 #if (defined(REGION_VERSION) && (REGION_VERSION == 0x02010001))
-#define CN470_DEFAULT_DR_RANGE                                                                     \
-    {                                                                                              \
-        .Value = (CN470_TX_MAX_DATARATE << 4) | CN470_TX_MIN_DATARATE                              \
-    }
+#define CN470_DEFAULT_DR_RANGE                                                 \
+  { .Value = (CN470_TX_MAX_DATARATE << 4) | CN470_TX_MIN_DATARATE }
 
-#define CN470_COMMON_JOIN_CHANNELS                                                                 \
-    {                                                                                              \
-        {.Frequency = 470900000, .Rx1Frequency = 484500000, CN470_DEFAULT_DR_RANGE, .Band = 0},    \
-            {.Frequency = 472500000,                                                               \
-             .Rx1Frequency = 486100000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 474100000,                                                               \
-             .Rx1Frequency = 487700000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 475700000,                                                               \
-             .Rx1Frequency = 489300000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 504100000,                                                               \
-             .Rx1Frequency = 490900000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 505700000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 507300000,                                                               \
-             .Rx1Frequency = 494100000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 508900000,                                                               \
-             .Rx1Frequency = 495700000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-                                                                                                   \
-            {.Frequency = 479900000,                                                               \
-             .Rx1Frequency = 479900000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 499900000,                                                               \
-             .Rx1Frequency = 499900000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-                                                                                                   \
-            {.Frequency = 470300000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 472300000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 474300000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 476300000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 478300000,                                                               \
-             .Rx1Frequency = 492500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-                                                                                                   \
-            {.Frequency = 480300000,                                                               \
-             .Rx1Frequency = 502500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 482300000,                                                               \
-             .Rx1Frequency = 502500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 484300000,                                                               \
-             .Rx1Frequency = 502500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 486300000,                                                               \
-             .Rx1Frequency = 502500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-            {.Frequency = 488300000,                                                               \
-             .Rx1Frequency = 502500000,                                                            \
-             CN470_DEFAULT_DR_RANGE,                                                               \
-             .Band = 0},                                                                           \
-    }
+#define CN470_COMMON_JOIN_CHANNELS                                             \
+  {                                                                            \
+    {.Frequency = 470900000,                                                   \
+     .Rx1Frequency = 484500000,                                                \
+     CN470_DEFAULT_DR_RANGE,                                                   \
+     .Band = 0},                                                               \
+        {.Frequency = 472500000,                                               \
+         .Rx1Frequency = 486100000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 474100000,                                               \
+         .Rx1Frequency = 487700000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 475700000,                                               \
+         .Rx1Frequency = 489300000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 504100000,                                               \
+         .Rx1Frequency = 490900000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 505700000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 507300000,                                               \
+         .Rx1Frequency = 494100000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 508900000,                                               \
+         .Rx1Frequency = 495700000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+                                                                               \
+        {.Frequency = 479900000,                                               \
+         .Rx1Frequency = 479900000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 499900000,                                               \
+         .Rx1Frequency = 499900000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+                                                                               \
+        {.Frequency = 470300000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 472300000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 474300000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 476300000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 478300000,                                               \
+         .Rx1Frequency = 492500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+                                                                               \
+        {.Frequency = 480300000,                                               \
+         .Rx1Frequency = 502500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 482300000,                                               \
+         .Rx1Frequency = 502500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 484300000,                                               \
+         .Rx1Frequency = 502500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 486300000,                                               \
+         .Rx1Frequency = 502500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+        {.Frequency = 488300000,                                               \
+         .Rx1Frequency = 502500000,                                            \
+         CN470_DEFAULT_DR_RANGE,                                               \
+         .Band = 0},                                                           \
+  }
 
 #define CN470_COMMON_JOIN_CHANNELS_SIZE 20
 
 #if (HYBRID_ENABLED == 1)
-#define CN470_JOIN_CHANNELS                                                                        \
-    {                                                                                              \
-        0x0001, 0x0000                                                                             \
-    }
+#define CN470_JOIN_CHANNELS                                                    \
+  { 0x0001, 0x0000 }
 #else
-#define CN470_JOIN_CHANNELS                                                                        \
-    {                                                                                              \
-        0xFFFF, 0x000F                                                                             \
-    }
+#define CN470_JOIN_CHANNELS                                                    \
+  { 0xFFFF, 0x000F }
 #endif /* HYBRID_ENABLED */
 #endif /* REGION_VERSION */
 
@@ -386,17 +381,21 @@ static const uint8_t DataratesCN470[] = {12, 11, 10, 9, 8, 7};
 /*!
  * Bandwidths table definition in Hz
  */
-static const uint32_t BandwidthsCN470[] = {125000, 125000, 125000, 125000, 125000, 125000};
+static const uint32_t BandwidthsCN470[] = {125000, 125000, 125000,
+                                           125000, 125000, 125000};
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index. Cannot operate with
+ * repeater.
  */
 static const uint8_t MaxPayloadOfDatarateCN470[] = {51, 51, 51, 115, 242, 242};
 
 /*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
+ * Maximum payload with respect to the datarate index. Can operate with
+ * repeater.
  */
-static const uint8_t MaxPayloadOfDatarateRepeaterCN470[] = {51, 51, 51, 115, 222, 222};
+static const uint8_t MaxPayloadOfDatarateRepeaterCN470[] = {51,  51,  51,
+                                                            115, 222, 222};
 #elif (defined(REGION_VERSION) && (REGION_VERSION == 0x02010001))
 /*!
  * Data rates table definition
@@ -406,8 +405,8 @@ static const uint8_t DataratesCN470[] = {12, 11, 10, 9, 8, 7, 7, 50};
 /*!
  * Bandwidths table definition in Hz
  */
-static const uint32_t BandwidthsCN470[]
-    = {125000, 125000, 125000, 125000, 125000, 125000, 500000, 0};
+static const uint32_t BandwidthsCN470[] = {125000, 125000, 125000, 125000,
+                                           125000, 125000, 500000, 0};
 
 /*!
  * Up/Down link data rates offset definition
@@ -424,14 +423,18 @@ static const int8_t DatarateOffsetsCN470[8][6] = {
 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index. Cannot operate with
+ * repeater.
  */
-static const uint8_t MaxPayloadOfDatarateCN470[] = {0, 23, 86, 184, 242, 242, 242, 242};
+static const uint8_t MaxPayloadOfDatarateCN470[] = {0,   23,  86,  184,
+                                                    242, 242, 242, 242};
 
 /*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
+ * Maximum payload with respect to the datarate index. Can operate with
+ * repeater.
  */
-static const uint8_t MaxPayloadOfDatarateRepeaterCN470[] = {0, 23, 86, 164, 222, 222, 222, 222};
+static const uint8_t MaxPayloadOfDatarateRepeaterCN470[] = {0,   23,  86,  164,
+                                                            222, 222, 222, 222};
 #endif /* REGION_VERSION */
 
 /*!
@@ -490,16 +493,17 @@ bool RegionCN470ChanMaskSet(ChanMaskSetParams_t *chanMaskSet);
  *
  * \param [in] datarate     Rx window datarate index to be used
  *
- * \param [in] minRxSymbols Minimum required number of symbols to detect an Rx frame.
+ * \param [in] minRxSymbols Minimum required number of symbols to detect an Rx
+ * frame.
  *
- * \param [in] rxError      System maximum timing error of the receiver. In milliseconds
- *                          The receiver will turn on in a [-rxError : +rxError] ms
- *                          interval around RxOffset
+ * \param [in] rxError      System maximum timing error of the receiver. In
+ * milliseconds The receiver will turn on in a [-rxError : +rxError] ms interval
+ * around RxOffset
  *
- * \param [out] rxConfigParams Returns updated WindowTimeout and WindowOffset fields.
+ * \param [out] rxConfigParams Returns updated WindowTimeout and WindowOffset
+ * fields.
  */
-void RegionCN470ComputeRxWindowParameters(int8_t datarate,
-                                          uint8_t minRxSymbols,
+void RegionCN470ComputeRxWindowParameters(int8_t datarate, uint8_t minRxSymbols,
                                           uint32_t rxError,
                                           RxConfigParams_t *rxConfigParams);
 
@@ -525,7 +529,8 @@ bool RegionCN470RxConfig(RxConfigParams_t *rxConfig, int8_t *datarate);
  *
  * \retval Returns true, if the configuration was applied successfully.
  */
-bool RegionCN470TxConfig(TxConfigParams_t *txConfig, int8_t *txPower, TimerTime_t *txTimeOnAir);
+bool RegionCN470TxConfig(TxConfigParams_t *txConfig, int8_t *txPower,
+                         TimerTime_t *txTimeOnAir);
 
 /*!
  * \brief The function processes a Link ADR Request.
@@ -540,12 +545,11 @@ bool RegionCN470TxConfig(TxConfigParams_t *txConfig, int8_t *txPower, TimerTime_
  *
  * \param [out] nbBytesParsed The number bytes which were parsed.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
-uint8_t RegionCN470LinkAdrReq(LinkAdrReqParams_t *linkAdrReq,
-                              int8_t *drOut,
-                              int8_t *txPowOut,
-                              uint8_t *nbRepOut,
+uint8_t RegionCN470LinkAdrReq(LinkAdrReqParams_t *linkAdrReq, int8_t *drOut,
+                              int8_t *txPowOut, uint8_t *nbRepOut,
                               uint8_t *nbBytesParsed);
 
 /*!
@@ -553,7 +557,8 @@ uint8_t RegionCN470LinkAdrReq(LinkAdrReqParams_t *linkAdrReq,
  *
  * \param [in] rxParamSetupReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 uint8_t RegionCN470RxParamSetupReq(RxParamSetupReqParams_t *rxParamSetupReq);
 
@@ -562,7 +567,8 @@ uint8_t RegionCN470RxParamSetupReq(RxParamSetupReqParams_t *rxParamSetupReq);
  *
  * \param [in] newChannelReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 int8_t RegionCN470NewChannelReq(NewChannelReqParams_t *newChannelReq);
 
@@ -571,9 +577,9 @@ int8_t RegionCN470NewChannelReq(NewChannelReqParams_t *newChannelReq);
  *
  * \param [in] txParamSetupReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
- *         Returns -1, if the functionality is not implemented. In this case, the end node
- *         shall not process the command.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification. Returns -1, if the functionality is not implemented. In this
+ * case, the end node shall not process the command.
  */
 int8_t RegionCN470TxParamSetupReq(TxParamSetupReqParams_t *txParamSetupReq);
 
@@ -582,7 +588,8 @@ int8_t RegionCN470TxParamSetupReq(TxParamSetupReqParams_t *txParamSetupReq);
  *
  * \param [in] dlChannelReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 int8_t RegionCN470DlChannelReq(DlChannelReqParams_t *dlChannelReq);
 
@@ -604,16 +611,16 @@ int8_t RegionCN470AlternateDr(int8_t currentDr, AlternateDrType_t type);
  *
  * \param [out] channel Next channel to use for TX.
  *
- * \param [out] time Time to wait for the next transmission according to the duty
- *              cycle.
+ * \param [out] time Time to wait for the next transmission according to the
+ * duty cycle.
  *
  * \param [out] aggregatedTimeOff Updates the aggregated time off.
  *
- * \retval Function status [1: OK, 0: Unable to find a channel on the current datarate]
+ * \retval Function status [1: OK, 0: Unable to find a channel on the current
+ * datarate]
  */
 LoRaMacStatus_t RegionCN470NextChannel(NextChanParams_t *nextChanParams,
-                                       uint8_t *channel,
-                                       TimerTime_t *time,
+                                       uint8_t *channel, TimerTime_t *time,
                                        TimerTime_t *aggregatedTimeOff);
 
 /*!
@@ -646,7 +653,8 @@ void RegionCN470SetContinuousWave(ContinuousWaveParams_t *continuousWave);
 /*!
  * \brief Computes new datarate according to the given offset
  *
- * \param [in] downlinkDwellTime Downlink dwell time configuration. 0: No limit, 1: 400ms
+ * \param [in] downlinkDwellTime Downlink dwell time configuration. 0: No limit,
+ * 1: 400ms
  *
  * \param [in] dr Current datarate
  *
@@ -654,7 +662,8 @@ void RegionCN470SetContinuousWave(ContinuousWaveParams_t *continuousWave);
  *
  * \retval newDr Computed datarate.
  */
-uint8_t RegionCN470ApplyDrOffset(uint8_t downlinkDwellTime, int8_t dr, int8_t drOffset);
+uint8_t RegionCN470ApplyDrOffset(uint8_t downlinkDwellTime, int8_t dr,
+                                 int8_t drOffset);
 
 /*!
  * \brief Sets the radio into beacon reception mode

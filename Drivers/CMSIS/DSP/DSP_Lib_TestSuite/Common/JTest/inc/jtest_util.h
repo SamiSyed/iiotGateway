@@ -18,10 +18,9 @@
 /**
  *  Set the value of the attribute in the struct to by struct_ptr to value.
  */
-#define JTEST_SET_STRUCT_ATTRIBUTE(struct_ptr, attribute, value)                                   \
-    do                                                                                             \
-    {                                                                                              \
-        (struct_ptr)->attribute = (value);                                                         \
-    } while (0)
+#define JTEST_SET_STRUCT_ATTRIBUTE(struct_ptr, attribute, value)               \
+  do {                                                                         \
+    (struct_ptr)->attribute = (value);                                         \
+  } while (0)
 
 #endif /* _JTEST_UTIL_H_ */

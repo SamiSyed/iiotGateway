@@ -66,7 +66,8 @@ extern "C" {
 #define SE_EUI_SIZE 8
 
 /*!
- * Secure-element NVM EUI size in bytes (size of SecureElementNvmDevJoinAddrKey_t)
+ * Secure-element NVM EUI size in bytes (size of
+ * SecureElementNvmDevJoinAddrKey_t)
  */
 #define SE_NVM_EUI_SIZE 24
 
@@ -92,72 +93,69 @@ extern "C" {
 /*!
  * Key structure definition for the soft-se
  */
-typedef struct sKey
-{
-    /*!
-     * Key identifier
-     */
-    KeyIdentifier_t KeyID;
+typedef struct sKey {
+  /*!
+   * Key identifier
+   */
+  KeyIdentifier_t KeyID;
 #if (!defined(LORAWAN_KMS) || (LORAWAN_KMS == 0))
-    /*!
-     * Key value
-     */
-    uint8_t KeyValue[SE_KEY_SIZE];
+  /*!
+   * Key value
+   */
+  uint8_t KeyValue[SE_KEY_SIZE];
 #else  /* LORAWAN_KMS == 1 */
-    /*!
-     * Key object index in the above list
-     */
-    CK_OBJECT_HANDLE Object_Index;
+  /*!
+   * Key object index in the above list
+   */
+  CK_OBJECT_HANDLE Object_Index;
 #endif /* LORAWAN_KMS */
 } Key_t;
 
 /*!
  * Identifiers structure definition for the soft-se
  */
-typedef struct SecureElementNvmDevJoinAddrKey
-{
-    /** OTAA */
-    /*!
-     * DevEUI storage
-     */
-    uint8_t DevEui[SE_EUI_SIZE];
-    /*!
-     * Join EUI storage
-     */
-    uint8_t JoinEui[SE_EUI_SIZE];
-    /*!
-     * DevAddr storage for OTA Activation
-     */
-    uint32_t DevAddrOTAA;
-    /** ABP */
-    /*!
-     * DevAddr storage for ABP Activation
-     */
-    uint32_t DevAddrABP;
+typedef struct SecureElementNvmDevJoinAddrKey {
+  /** OTAA */
+  /*!
+   * DevEUI storage
+   */
+  uint8_t DevEui[SE_EUI_SIZE];
+  /*!
+   * Join EUI storage
+   */
+  uint8_t JoinEui[SE_EUI_SIZE];
+  /*!
+   * DevAddr storage for OTA Activation
+   */
+  uint32_t DevAddrOTAA;
+  /** ABP */
+  /*!
+   * DevAddr storage for ABP Activation
+   */
+  uint32_t DevAddrABP;
 } SecureElementNvmDevJoinAddrKey_t;
 
 /*!
  * Key/Identifiers data which must be stored in the NVM.
  */
-typedef struct sSecureElementNvCtx
-{
+typedef struct sSecureElementNvCtx {
 #if (!defined(LORAWAN_KMS) || (LORAWAN_KMS == 0))
-    /*!
-     * The ID list for the soft-se
-     */
-    SecureElementNvmDevJoinAddrKey_t SeNvmDevJoinKey;
-    /*!
-     * The key list is required for the soft-se only. All other secure-elements
-     * handle the storage on their own.
-     */
-    Key_t KeyList[NUM_OF_KEYS];
+  /*!
+   * The ID list for the soft-se
+   */
+  SecureElementNvmDevJoinAddrKey_t SeNvmDevJoinKey;
+  /*!
+   * The key list is required for the soft-se only. All other secure-elements
+   * handle the storage on their own.
+   */
+  Key_t KeyList[NUM_OF_KEYS];
 #else
-    uint32_t reserved;
+  uint32_t reserved;
 #endif /* LORAWAN_KMS */
-    /*!
-     * CRC32 value of the SecureElement data structure.
-     */
-    uint32_t Crc32;
+  /*!
+   * CRC32 value of the SecureElement data structure.
+   */
+  uint32_t Crc32;
 } SecureElementNvmData_t;
 
 /*! \} addtogroup SECUREELEMENT */

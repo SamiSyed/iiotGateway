@@ -54,23 +54,27 @@ extern "C" {
 /** @defgroup EXTI_LL_ES_INIT EXTI Exported Init structure
  * @{
  */
-typedef struct
-{
-    uint32_t Line_0_31; /*!< Specifies the EXTI lines to be enabled or disabled for Lines in range 0
-                           to 31 This parameter can be any combination of @ref EXTI_LL_EC_LINE */
+typedef struct {
 
-    uint32_t Line_32_63; /*!< Specifies the EXTI lines to be enabled or disabled for Lines in range
-                            32 to 63 This parameter can be any combination of @ref EXTI_LL_EC_LINE
-                          */
+  uint32_t Line_0_31; /*!< Specifies the EXTI lines to be enabled or disabled
+                         for Lines in range 0 to 31 This parameter can be any
+                         combination of @ref EXTI_LL_EC_LINE */
 
-    FunctionalState LineCommand; /*!< Specifies the new state of the selected EXTI lines.
-                                      This parameter can be set either to ENABLE or DISABLE */
+  uint32_t
+      Line_32_63; /*!< Specifies the EXTI lines to be enabled or disabled for
+                     Lines in range 32 to 63 This parameter can be any
+                     combination of @ref EXTI_LL_EC_LINE */
 
-    uint8_t Mode; /*!< Specifies the mode for the EXTI lines.
-                       This parameter can be a value of @ref EXTI_LL_EC_MODE. */
+  FunctionalState
+      LineCommand; /*!< Specifies the new state of the selected EXTI lines.
+                        This parameter can be set either to ENABLE or DISABLE */
 
-    uint8_t Trigger; /*!< Specifies the trigger signal active edge for the EXTI lines.
-                          This parameter can be a value of @ref EXTI_LL_EC_TRIGGER. */
+  uint8_t Mode; /*!< Specifies the mode for the EXTI lines.
+                     This parameter can be a value of @ref EXTI_LL_EC_MODE. */
+
+  uint8_t
+      Trigger; /*!< Specifies the trigger signal active edge for the EXTI lines.
+                    This parameter can be a value of @ref EXTI_LL_EC_TRIGGER. */
 } LL_EXTI_InitTypeDef;
 
 /**
@@ -118,7 +122,8 @@ typedef struct
 #define LL_EXTI_LINE_29 EXTI_IMR1_IM29    /*!< Extended line 29 */
 #define LL_EXTI_LINE_30 EXTI_IMR1_IM30    /*!< Extended line 30 */
 #define LL_EXTI_LINE_31 EXTI_IMR1_IM31    /*!< Extended line 31 */
-#define LL_EXTI_LINE_ALL_0_31 0xFFFFFFFFU /*!< All Extended line not reserved*/
+#define LL_EXTI_LINE_ALL_0_31 0xFFFFFFFFU /*!< All Extended line not           \
+                                             reserved*/
 
 #define LL_EXTI_LINE_34 EXTI_IMR2_IM34 /*!< Extended line 34 */
 #if defined(DUAL_CORE)
@@ -137,15 +142,17 @@ typedef struct
 #define LL_EXTI_LINE_45 EXTI_IMR2_IM45 /*!< Extended line 45 */
 #define LL_EXTI_LINE_46 EXTI_IMR2_IM46 /*!< Extended line 46 */
 #if defined(DUAL_CORE)
-#define LL_EXTI_LINE_ALL_32_63                                                                     \
-    (EXTI_IMR2_IM34 | EXTI_IMR2_IM36 | EXTI_IMR2_IM37 | EXTI_IMR2_IM38 | EXTI_IMR2_IM39            \
-     | EXTI_IMR2_IM40 | EXTI_IMR2_IM41 | EXTI_IMR2_IM42 | EXTI_IMR2_IM43 | EXTI_IMR2_IM44          \
-     | EXTI_IMR2_IM45 | EXTI_IMR2_IM46) /*!< All Extended line not reserved*/
+#define LL_EXTI_LINE_ALL_32_63                                                 \
+  (EXTI_IMR2_IM34 | EXTI_IMR2_IM36 | EXTI_IMR2_IM37 | EXTI_IMR2_IM38 |         \
+   EXTI_IMR2_IM39 | EXTI_IMR2_IM40 | EXTI_IMR2_IM41 | EXTI_IMR2_IM42 |         \
+   EXTI_IMR2_IM43 | EXTI_IMR2_IM44 | EXTI_IMR2_IM45 |                          \
+   EXTI_IMR2_IM46) /*!< All Extended line not reserved*/
 #else
-#define LL_EXTI_LINE_ALL_32_63                                                                     \
-    (EXTI_IMR2_IM34 | EXTI_IMR2_IM38 | EXTI_IMR2_IM42 | EXTI_IMR2_IM43 | EXTI_IMR2_IM44            \
-     | EXTI_IMR2_IM45 | EXTI_IMR2_IM46) /*!< All Extended line not reserved*/
-#endif                                  /* DUAL_CORE */
+#define LL_EXTI_LINE_ALL_32_63                                                 \
+  (EXTI_IMR2_IM34 | EXTI_IMR2_IM38 | EXTI_IMR2_IM42 | EXTI_IMR2_IM43 |         \
+   EXTI_IMR2_IM44 | EXTI_IMR2_IM45 |                                           \
+   EXTI_IMR2_IM46) /*!< All Extended line not reserved*/
+#endif             /* DUAL_CORE */
 
 #if defined(USE_FULL_LL_DRIVER)
 #define LL_EXTI_LINE_NONE (0x00000000U) /*!< None Extended line */
@@ -168,10 +175,11 @@ typedef struct
 /** @defgroup EXTI_LL_EC_TRIGGER Edge Trigger
  * @{
  */
-#define LL_EXTI_TRIGGER_NONE ((uint8_t)0x00U)           /*!< No Trigger Mode */
-#define LL_EXTI_TRIGGER_RISING ((uint8_t)0x01U)         /*!< Trigger Rising Mode */
-#define LL_EXTI_TRIGGER_FALLING ((uint8_t)0x02U)        /*!< Trigger Falling Mode */
-#define LL_EXTI_TRIGGER_RISING_FALLING ((uint8_t)0x03U) /*!< Trigger Rising & Falling Mode */
+#define LL_EXTI_TRIGGER_NONE ((uint8_t)0x00U)    /*!< No Trigger Mode */
+#define LL_EXTI_TRIGGER_RISING ((uint8_t)0x01U)  /*!< Trigger Rising Mode */
+#define LL_EXTI_TRIGGER_FALLING ((uint8_t)0x02U) /*!< Trigger Falling Mode */
+#define LL_EXTI_TRIGGER_RISING_FALLING                                         \
+  ((uint8_t)0x03U) /*!< Trigger Rising & Falling Mode */
 /**
  * @}
  */
@@ -196,7 +204,8 @@ typedef struct
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_EXTI_WriteReg(__REG__, __VALUE__) WRITE_REG(EXTI->__REG__, (__VALUE__))
+#define LL_EXTI_WriteReg(__REG__, __VALUE__)                                   \
+  WRITE_REG(EXTI->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in EXTI register
@@ -259,9 +268,8 @@ typedef struct
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableIT_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->IMR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableIT_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->IMR1, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
@@ -304,9 +312,8 @@ __STATIC_INLINE void LL_EXTI_EnableIT_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_EnableIT_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->C2IMR1, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_EnableIT_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->C2IMR1, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -330,14 +337,14 @@ __STATIC_INLINE void LL_C2_EXTI_EnableIT_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableIT_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->IMR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableIT_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->IMR2, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Enable ExtiLine Interrupt request for Lines in range 32 to 63 for cpu2
+ * @brief  Enable ExtiLine Interrupt request for Lines in range 32 to 63 for
+ * cpu2
  * @rmtoll C2IMR2         IMx           LL_C2_EXTI_EnableIT_32_63
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_34
@@ -356,9 +363,8 @@ __STATIC_INLINE void LL_EXTI_EnableIT_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_EnableIT_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->C2IMR2, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_EnableIT_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->C2IMR2, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -401,14 +407,14 @@ __STATIC_INLINE void LL_C2_EXTI_EnableIT_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableIT_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->IMR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableIT_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->IMR1, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Disable ExtiLine Interrupt request for Lines in range 0 to 31 for cpu2
+ * @brief  Disable ExtiLine Interrupt request for Lines in range 0 to 31 for
+ * cpu2
  * @rmtoll C2IMR1         IMx           LL_C2_EXTI_DisableIT_0_31
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -446,9 +452,8 @@ __STATIC_INLINE void LL_EXTI_DisableIT_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_DisableIT_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->C2IMR1, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_DisableIT_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->C2IMR1, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -472,14 +477,14 @@ __STATIC_INLINE void LL_C2_EXTI_DisableIT_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableIT_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->IMR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableIT_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->IMR2, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Disable ExtiLine Interrupt request for Lines in range 32 to 63 for cpu2
+ * @brief  Disable ExtiLine Interrupt request for Lines in range 32 to 63 for
+ * cpu2
  * @rmtoll C2IMR2         IMx           LL_C2_EXTI_DisableIT_32_63
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_34
@@ -498,14 +503,14 @@ __STATIC_INLINE void LL_EXTI_DisableIT_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_DisableIT_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->C2IMR2, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_DisableIT_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->C2IMR2, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
 /**
- * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range 0 to 31
+ * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range
+ * 0 to 31
  * @rmtoll IMR1         IMx           LL_EXTI_IsEnabledIT_0_31
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -543,14 +548,14 @@ __STATIC_INLINE void LL_C2_EXTI_DisableIT_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range 0 to 31 for cpu2
+ * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range
+ * 0 to 31 for cpu2
  * @rmtoll C2IMR1         IMx           LL_C2_EXTI_IsEnabledIT_0_31
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -588,14 +593,14 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_ALL_0_31
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->C2IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->C2IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
 /**
- * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range 32 to 63
+ * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range
+ * 32 to 63
  * @rmtoll IMR2         IMx           LL_EXTI_IsEnabledIT_32_63
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_34
@@ -614,14 +619,14 @@ __STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->IMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->IMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range 32 to 63 for cpu2
+ * @brief  Indicate if ExtiLine Interrupt request is enabled for Lines in range
+ * 32 to 63 for cpu2
  * @rmtoll C2IMR2         IMx           LL_C2_EXTI_IsEnabledIT_32_63
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_34
@@ -640,9 +645,8 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->C2IMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->C2IMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -681,9 +685,8 @@ __STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledIT_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableEvent_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->EMR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableEvent_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->EMR1, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
@@ -714,9 +717,8 @@ __STATIC_INLINE void LL_EXTI_EnableEvent_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_EnableEvent_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->C2EMR1, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_EnableEvent_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->C2EMR1, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -729,9 +731,8 @@ __STATIC_INLINE void LL_C2_EXTI_EnableEvent_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableEvent_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->EMR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableEvent_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->EMR2, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
@@ -744,9 +745,8 @@ __STATIC_INLINE void LL_EXTI_EnableEvent_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_EnableEvent_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->C2EMR2, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_EnableEvent_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->C2EMR2, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -777,9 +777,8 @@ __STATIC_INLINE void LL_C2_EXTI_EnableEvent_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableEvent_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->EMR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableEvent_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->EMR1, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
@@ -810,9 +809,8 @@ __STATIC_INLINE void LL_EXTI_DisableEvent_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_DisableEvent_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->C2EMR1, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_DisableEvent_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->C2EMR1, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
@@ -825,9 +823,8 @@ __STATIC_INLINE void LL_C2_EXTI_DisableEvent_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableEvent_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->EMR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableEvent_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->EMR2, ExtiLine);
 }
 
 #if defined(DUAL_CORE)
@@ -840,14 +837,14 @@ __STATIC_INLINE void LL_EXTI_DisableEvent_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_C2_EXTI_DisableEvent_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->C2EMR2, ExtiLine);
+__STATIC_INLINE void LL_C2_EXTI_DisableEvent_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->C2EMR2, ExtiLine);
 }
 #endif /* DUAL_CORE */
 
 /**
- * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 0 to 31
+ * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 0 to
+ * 31
  * @rmtoll EMR1         EMx           LL_EXTI_IsEnabledEvent_0_31
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -873,14 +870,14 @@ __STATIC_INLINE void LL_C2_EXTI_DisableEvent_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 0 to 31 for cpu2
+ * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 0 to
+ * 31 for cpu2
  * @rmtoll C2EMR1         EMx           LL_C2_EXTI_IsEnabledEvent_0_31
  * @param  ExtiLine This parameter can be one of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -906,14 +903,14 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->C2EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->C2EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
 /**
- * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 32 to 63
+ * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 32
+ * to 63
  * @rmtoll EMR2         EMx           LL_EXTI_IsEnabledEvent_32_63
  * @param  ExtiLine This parameter can be a combination of the following values:
  *         @arg @ref LL_EXTI_LINE_40 (*)
@@ -921,14 +918,14 @@ __STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->EMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->EMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 #if defined(DUAL_CORE)
 /**
- * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 32 to 63 for cpu2
+ * @brief  Indicate if ExtiLine Event request is enabled for Lines in range 32
+ * to 63 for cpu2
  * @rmtoll EMR2         EMx           LL_C2_EXTI_IsEnabledEvent_32_63
  * @param  ExtiLine This parameter can be a combination of the following values:
  *         @arg @ref LL_EXTI_LINE_40 (*)
@@ -936,9 +933,8 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine)
  *         (*) value not defined in all devices
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->C2EMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->C2EMR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -953,8 +949,8 @@ __STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine)
 /**
  * @brief  Enable ExtiLine Rising Edge Trigger for Lines in range 0 to 31
  * @note   The configurable wakeup lines are edge-triggered. No glitch must be
- *         generated on these lines. If a rising edge on a configurable interrupt
- *         line occurs during a write operation in the EXTI_RTSR register, the
+ *         generated on these lines. If a rising edge on a configurable
+ * interrupt line occurs during a write operation in the EXTI_RTSR register, the
  *         pending bit is not set.
  *         Rising and falling edge triggers can be set for
  *         the same interrupt line. In this case, both generate a trigger
@@ -983,9 +979,8 @@ __STATIC_INLINE uint32_t LL_C2_EXTI_IsEnabledEvent_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableRisingTrig_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->RTSR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableRisingTrig_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->RTSR1, ExtiLine);
 }
 
 /**
@@ -1004,9 +999,8 @@ __STATIC_INLINE void LL_EXTI_EnableRisingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableRisingTrig_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->RTSR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableRisingTrig_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->RTSR2, ExtiLine);
 }
 
 /**
@@ -1042,9 +1036,8 @@ __STATIC_INLINE void LL_EXTI_EnableRisingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableRisingTrig_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->RTSR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableRisingTrig_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->RTSR1, ExtiLine);
 }
 
 /**
@@ -1064,9 +1057,8 @@ __STATIC_INLINE void LL_EXTI_DisableRisingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableRisingTrig_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->RTSR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableRisingTrig_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->RTSR2, ExtiLine);
 }
 
 /**
@@ -1095,9 +1087,8 @@ __STATIC_INLINE void LL_EXTI_DisableRisingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->RTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->RTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
@@ -1110,9 +1101,8 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->RTSR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->RTSR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
@@ -1156,9 +1146,8 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableFallingTrig_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->FTSR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableFallingTrig_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->FTSR1, ExtiLine);
 }
 
 /**
@@ -1178,9 +1167,8 @@ __STATIC_INLINE void LL_EXTI_EnableFallingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_EnableFallingTrig_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->FTSR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_EnableFallingTrig_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->FTSR2, ExtiLine);
 }
 
 /**
@@ -1189,8 +1177,8 @@ __STATIC_INLINE void LL_EXTI_EnableFallingTrig_32_63(uint32_t ExtiLine)
  *       generated on these lines. If a Falling edge on a configurable interrupt
  *       line occurs during a write operation in the EXTI_FTSR register, the
  *       pending bit is not set.
- *       Rising and falling edge triggers can be set for the same interrupt line.
- *       In this case, both generate a trigger condition.
+ *       Rising and falling edge triggers can be set for the same interrupt
+ * line. In this case, both generate a trigger condition.
  * @rmtoll FTSR1        FTx           LL_EXTI_DisableFallingTrig_0_31
  * @param  ExtiLine This parameter can be a combination of the following values:
  *         @arg @ref LL_EXTI_LINE_0
@@ -1215,9 +1203,8 @@ __STATIC_INLINE void LL_EXTI_EnableFallingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableFallingTrig_0_31(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->FTSR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableFallingTrig_0_31(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->FTSR1, ExtiLine);
 }
 
 /**
@@ -1226,8 +1213,8 @@ __STATIC_INLINE void LL_EXTI_DisableFallingTrig_0_31(uint32_t ExtiLine)
  *       generated on these lines. If a Falling edge on a configurable interrupt
  *       line occurs during a write operation in the EXTI_FTSR register, the
  *       pending bit is not set.
- *       Rising and falling edge triggers can be set for the same interrupt line.
- *       In this case, both generate a trigger condition.
+ *       Rising and falling edge triggers can be set for the same interrupt
+ * line. In this case, both generate a trigger condition.
  * @rmtoll FTSR2        FTx           LL_EXTI_DisableFallingTrig_32_63
  * @param  ExtiLine This parameter can be a combination of the following values:
  *         @arg @ref LL_EXTI_LINE_34
@@ -1236,9 +1223,8 @@ __STATIC_INLINE void LL_EXTI_DisableFallingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_DisableFallingTrig_32_63(uint32_t ExtiLine)
-{
-    CLEAR_BIT(EXTI->FTSR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_DisableFallingTrig_32_63(uint32_t ExtiLine) {
+  CLEAR_BIT(EXTI->FTSR2, ExtiLine);
 }
 
 /**
@@ -1267,9 +1253,8 @@ __STATIC_INLINE void LL_EXTI_DisableFallingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->FTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->FTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
@@ -1282,23 +1267,23 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->FTSR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->FTSR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
  * @}
  */
 
-/** @defgroup EXTI_LL_EF_Software_Interrupt_Management Software_Interrupt_Management
+/** @defgroup EXTI_LL_EF_Software_Interrupt_Management
+ * Software_Interrupt_Management
  * @{
  */
 
 /**
  * @brief  Generate a software Interrupt Event for Lines in range 0 to 31
- * @note If the interrupt is enabled on this line in the EXTI_IMR1, writing a 1 to
- *       this bit when it is at '0' sets the corresponding pending bit in EXTI_PR1
+ * @note If the interrupt is enabled on this line in the EXTI_IMR1, writing a 1
+ * to this bit when it is at '0' sets the corresponding pending bit in EXTI_PR1
  *       resulting in an interrupt request generation.
  *       This bit is cleared by clearing the corresponding bit in the EXTI_PR1
  *       register (by writing a 1 into the bit)
@@ -1326,15 +1311,14 @@ __STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_GenerateSWI_0_31(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->SWIER1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_GenerateSWI_0_31(uint32_t ExtiLine) {
+  SET_BIT(EXTI->SWIER1, ExtiLine);
 }
 
 /**
  * @brief  Generate a software Interrupt Event for Lines in range 32 to 63
- * @note If the interrupt is enabled on this line in the EXTI_IMR2, writing a 1 to
- *       this bit when it is at '0' sets the corresponding pending bit in EXTI_PR2
+ * @note If the interrupt is enabled on this line in the EXTI_IMR2, writing a 1
+ * to this bit when it is at '0' sets the corresponding pending bit in EXTI_PR2
  *       resulting in an interrupt request generation.
  *       This bit is cleared by clearing the corresponding bit in the EXTI_PR2
  *       register (by writing a 1 into the bit)
@@ -1346,9 +1330,8 @@ __STATIC_INLINE void LL_EXTI_GenerateSWI_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_GenerateSWI_32_63(uint32_t ExtiLine)
-{
-    SET_BIT(EXTI->SWIER2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_GenerateSWI_32_63(uint32_t ExtiLine) {
+  SET_BIT(EXTI->SWIER2, ExtiLine);
 }
 
 /**
@@ -1387,9 +1370,8 @@ __STATIC_INLINE void LL_EXTI_GenerateSWI_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_0_31(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->PR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_0_31(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->PR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
@@ -1404,9 +1386,8 @@ __STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_32_63(uint32_t ExtiLine)
-{
-    return ((READ_BIT(EXTI->PR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_32_63(uint32_t ExtiLine) {
+  return ((READ_BIT(EXTI->PR2, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
 }
 
 /**
@@ -1436,11 +1417,11 @@ __STATIC_INLINE uint32_t LL_EXTI_IsActiveFlag_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_17
  *         @arg @ref LL_EXTI_LINE_21
  *         @arg @ref LL_EXTI_LINE_22
- * @retval @note This bit is set when the selected edge event arrives on the interrupt
+ * @retval @note This bit is set when the selected edge event arrives on the
+ * interrupt
  */
-__STATIC_INLINE uint32_t LL_EXTI_ReadFlag_0_31(uint32_t ExtiLine)
-{
-    return (uint32_t)(READ_BIT(EXTI->PR1, ExtiLine));
+__STATIC_INLINE uint32_t LL_EXTI_ReadFlag_0_31(uint32_t ExtiLine) {
+  return (uint32_t)(READ_BIT(EXTI->PR1, ExtiLine));
 }
 
 /**
@@ -1453,11 +1434,11 @@ __STATIC_INLINE uint32_t LL_EXTI_ReadFlag_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_40
  *         @arg @ref LL_EXTI_LINE_41
  *         @arg @ref LL_EXTI_LINE_45
- * @retval @note This bit is set when the selected edge event arrives on the interrupt
+ * @retval @note This bit is set when the selected edge event arrives on the
+ * interrupt
  */
-__STATIC_INLINE uint32_t LL_EXTI_ReadFlag_32_63(uint32_t ExtiLine)
-{
-    return (uint32_t)(READ_BIT(EXTI->PR2, ExtiLine));
+__STATIC_INLINE uint32_t LL_EXTI_ReadFlag_32_63(uint32_t ExtiLine) {
+  return (uint32_t)(READ_BIT(EXTI->PR2, ExtiLine));
 }
 
 /**
@@ -1488,9 +1469,8 @@ __STATIC_INLINE uint32_t LL_EXTI_ReadFlag_32_63(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_22
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_ClearFlag_0_31(uint32_t ExtiLine)
-{
-    WRITE_REG(EXTI->PR1, ExtiLine);
+__STATIC_INLINE void LL_EXTI_ClearFlag_0_31(uint32_t ExtiLine) {
+  WRITE_REG(EXTI->PR1, ExtiLine);
 }
 
 /**
@@ -1505,9 +1485,8 @@ __STATIC_INLINE void LL_EXTI_ClearFlag_0_31(uint32_t ExtiLine)
  *         @arg @ref LL_EXTI_LINE_45
  * @retval None
  */
-__STATIC_INLINE void LL_EXTI_ClearFlag_32_63(uint32_t ExtiLine)
-{
-    WRITE_REG(EXTI->PR2, ExtiLine);
+__STATIC_INLINE void LL_EXTI_ClearFlag_32_63(uint32_t ExtiLine) {
+  WRITE_REG(EXTI->PR2, ExtiLine);
 }
 
 /**

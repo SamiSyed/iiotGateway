@@ -1,13 +1,9 @@
 /**************************************************************************/ /**
-                                                                              * @file
-                                                                              *system_ARMv8MML.c
-                                                                              * @brief    CMSIS
-                                                                              *Device System Source
-                                                                              *File for ARMv8MML
-                                                                              *Device Series
+                                                                              * @file     system_ARMv8MML.c
+                                                                              * @brief    CMSIS Device System Source File for
+                                                                              *           ARMv8MML Device Series
                                                                               * @version  V5.00
-                                                                              * @date     02.
-                                                                              *November 2016
+                                                                              * @date     02. November 2016
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -69,32 +65,29 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
-{
-    SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit(void)
-{
+void SystemInit(void) {
+
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t)&__Vectors;
+  SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
 #if defined(__FPU_USED) && (__FPU_USED == 1U)
-    SCB->CPACR |= ((3U << 10U * 2U) | /* set CP10 Full Access */
-                   (3U << 11U * 2U)); /* set CP11 Full Access */
+  SCB->CPACR |= ((3U << 10U * 2U) | /* set CP10 Full Access */
+                 (3U << 11U * 2U)); /* set CP11 Full Access */
 #endif
 
 #ifdef UNALIGNED_SUPPORT_DISABLE
-    SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
+  SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-    TZ_SAU_Setup();
+  TZ_SAU_Setup();
 #endif
 
-    SystemCoreClock = SYSTEM_CLOCK;
+  SystemCoreClock = SYSTEM_CLOCK;
 }

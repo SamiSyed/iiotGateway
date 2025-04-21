@@ -29,7 +29,8 @@ extern "C" {
  * @{
  */
 
-/* Exported Functions ------------------------------------------------------------------*/
+/* Exported Functions
+ * ------------------------------------------------------------------*/
 
 /** @defgroup TINY_LPM_IF_Exported_functions TINY LPM IF Exported functions
  * @{

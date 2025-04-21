@@ -43,41 +43,39 @@ extern "C" {
  * LoRaMac Class B Context structure for NVM parameters
  * related to ping slots
  */
-typedef struct sLoRaMacClassBPingSlotNvmData
-{
-    struct sPingSlotCtrlNvm
-    {
-        /*!
-         * Set when the server assigned a ping slot to the node
-         */
-        uint8_t Assigned : 1;
-        /*!
-         * Set when a custom frequency is used
-         */
-        uint8_t CustomFreq : 1;
-    } Ctrl;
+typedef struct sLoRaMacClassBPingSlotNvmData {
+  struct sPingSlotCtrlNvm {
     /*!
-     * Number of ping slots
+     * Set when the server assigned a ping slot to the node
      */
-    uint8_t PingNb;
+    uint8_t Assigned : 1;
     /*!
-     * Period of the ping slots
+     * Set when a custom frequency is used
      */
-    uint16_t PingPeriod;
-    /*!
-     * Reception frequency of the ping slot windows
-     */
-    uint32_t Frequency;
-    /*!
-     * Datarate of the ping slot
-     */
-    int8_t Datarate;
-#if (defined(LORAMAC_VERSION)                                                                      \
-     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
-    /*!
-     * Set to 1, if the FPending bit is set
-     */
-    uint8_t FPendingSet;
+    uint8_t CustomFreq : 1;
+  } Ctrl;
+  /*!
+   * Number of ping slots
+   */
+  uint8_t PingNb;
+  /*!
+   * Period of the ping slots
+   */
+  uint16_t PingPeriod;
+  /*!
+   * Reception frequency of the ping slot windows
+   */
+  uint32_t Frequency;
+  /*!
+   * Datarate of the ping slot
+   */
+  int8_t Datarate;
+#if (defined(LORAMAC_VERSION) &&                                               \
+     ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+  /*!
+   * Set to 1, if the FPending bit is set
+   */
+  uint8_t FPendingSet;
 #endif /* LORAMAC_VERSION */
 } LoRaMacClassBPingSlotNvmData_t;
 
@@ -85,38 +83,35 @@ typedef struct sLoRaMacClassBPingSlotNvmData
  * LoRaMac Class B Context structure for NVM parameters
  * related to beaconing
  */
-typedef struct sLoRaMacClassBBeaconNvmData
-{
-    struct sBeaconCtrlNvm
-    {
-        /*!
-         * Set if the node has a custom frequency for beaconing and ping slots
-         */
-        uint8_t CustomFreq : 1;
-    } Ctrl;
+typedef struct sLoRaMacClassBBeaconNvmData {
+  struct sBeaconCtrlNvm {
     /*!
-     * Beacon reception frequency
+     * Set if the node has a custom frequency for beaconing and ping slots
      */
-    uint32_t Frequency;
+    uint8_t CustomFreq : 1;
+  } Ctrl;
+  /*!
+   * Beacon reception frequency
+   */
+  uint32_t Frequency;
 } LoRaMacClassBBeaconNvmData_t;
 
 /*!
  * LoRaMac Class B Context structure
  */
-typedef struct sLoRaMacClassBNvmData
-{
-    /*!
-     * Class B ping slot context
-     */
-    LoRaMacClassBPingSlotNvmData_t PingSlotCtx;
-    /*!
-     * Class B beacon context
-     */
-    LoRaMacClassBBeaconNvmData_t BeaconCtx;
-    /*!
-     * CRC32 value of the ClassB data structure.
-     */
-    uint32_t Crc32;
+typedef struct sLoRaMacClassBNvmData {
+  /*!
+   * Class B ping slot context
+   */
+  LoRaMacClassBPingSlotNvmData_t PingSlotCtx;
+  /*!
+   * Class B beacon context
+   */
+  LoRaMacClassBBeaconNvmData_t BeaconCtx;
+  /*!
+   * CRC32 value of the ClassB data structure.
+   */
+  uint32_t Crc32;
 } LoRaMacClassBNvmData_t;
 
 /*! \} defgroup LORAMACCLASSB */

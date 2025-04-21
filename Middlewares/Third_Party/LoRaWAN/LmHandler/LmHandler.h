@@ -50,245 +50,244 @@ extern "C" {
 /*!
  * \brief Join notification parameters
  */
-typedef struct LmHandlerJoinParams_s
-{
-    CommissioningParams_t *CommissioningParams;
-    int8_t Datarate;
-    int8_t TxPower;
-    LmHandlerErrorStatus_t Status;
-    ActivationType_t Mode;
-    bool forceRejoin;
+typedef struct LmHandlerJoinParams_s {
+  CommissioningParams_t *CommissioningParams;
+  int8_t Datarate;
+  int8_t TxPower;
+  LmHandlerErrorStatus_t Status;
+  ActivationType_t Mode;
+  bool forceRejoin;
 } LmHandlerJoinParams_t;
 
 /*!
  * \brief Tx notification parameters
  */
-typedef struct LmHandlerTxParams_s
-{
-    uint8_t IsMcpsConfirm;
-    LoRaMacEventInfoStatus_t Status;
-    CommissioningParams_t *CommissioningParams;
-    LmHandlerMsgTypes_t MsgType;
-    uint8_t AckReceived;
-    int8_t Datarate;
-    uint32_t UplinkCounter;
-    LmHandlerAppData_t AppData;
-    int8_t TxPower;
-    uint8_t Channel;
+typedef struct LmHandlerTxParams_s {
+  uint8_t IsMcpsConfirm;
+  LoRaMacEventInfoStatus_t Status;
+  CommissioningParams_t *CommissioningParams;
+  LmHandlerMsgTypes_t MsgType;
+  uint8_t AckReceived;
+  int8_t Datarate;
+  uint32_t UplinkCounter;
+  LmHandlerAppData_t AppData;
+  int8_t TxPower;
+  uint8_t Channel;
 } LmHandlerTxParams_t;
 
 /*!
  * \brief Rx notification parameters
  */
-typedef struct LmHandlerRxParams_s
-{
-    uint8_t IsMcpsIndication;
-    LoRaMacEventInfoStatus_t Status;
-    CommissioningParams_t *CommissioningParams;
-    int8_t Datarate;
-    int8_t Rssi;
-    int8_t Snr;
-    uint32_t DownlinkCounter;
-    uint8_t RxSlot;
-    bool LinkCheck;
-    uint8_t DemodMargin;
-    uint8_t NbGateways;
+typedef struct LmHandlerRxParams_s {
+  uint8_t IsMcpsIndication;
+  LoRaMacEventInfoStatus_t Status;
+  CommissioningParams_t *CommissioningParams;
+  int8_t Datarate;
+  int8_t Rssi;
+  int8_t Snr;
+  uint32_t DownlinkCounter;
+  uint8_t RxSlot;
+  bool LinkCheck;
+  uint8_t DemodMargin;
+  uint8_t NbGateways;
 } LmHandlerRxParams_t;
 
 /*!
  * \brief Beacon notification parameters
  */
-typedef struct LmHandlerBeaconParams_s
-{
-    LoRaMacEventInfoStatus_t Status;
-    LmHandlerBeaconState_t State;
-    BeaconInfo_t Info;
+typedef struct LmHandlerBeaconParams_s {
+  LoRaMacEventInfoStatus_t Status;
+  LmHandlerBeaconState_t State;
+  BeaconInfo_t Info;
 } LmHandlerBeaconParams_t;
 
 /*!
  * \brief LoRaMac handler parameters
  */
-typedef struct LmHandlerParams_s
-{
-    /*!
-     * Active Region
-     */
-    LoRaMacRegion_t ActiveRegion;
-    /*!
-     * Default Class
-     */
-    DeviceClass_t DefaultClass;
-    /*!
-     * Holds the ADR state
-     */
-    bool AdrEnable;
-    /*!
-     * Uplink frame type
-     */
-    LmHandlerMsgTypes_t IsTxConfirmed;
-    /*!
-     * Uplink datarate, when \ref AdrEnable is OFF
-     */
-    int8_t TxDatarate;
-    /*!
-     * Channels TX power
-     */
-    int8_t TxPower;
-    /*!
-     * Enables/Disables a public network usage
-     */
-    bool PublicNetworkEnable;
-    /*!
-     * LoRaWAN ETSI duty cycle control enable/disable
-     *
-     * \remark Please note that ETSI mandates duty cycled transmissions. Use only for test purposes
-     */
-    bool DutyCycleEnabled;
-    /*!
-     * Application data buffer maximum size
-     */
-    uint8_t DataBufferMaxSize;
-    /*!
-     * Application data buffer pointer
-     */
-    uint8_t *DataBuffer;
-    /*!
-     * Class B ping-slot periodicity.
-     */
-    uint8_t PingSlotPeriodicity;
-    /*!
-     * Default response timeout for class b and class c confirmed downlink frames in milli seconds.
-     */
-    uint32_t RxBCTimeout;
+typedef struct LmHandlerParams_s {
+  /*!
+   * Active Region
+   */
+  LoRaMacRegion_t ActiveRegion;
+  /*!
+   * Default Class
+   */
+  DeviceClass_t DefaultClass;
+  /*!
+   * Holds the ADR state
+   */
+  bool AdrEnable;
+  /*!
+   * Uplink frame type
+   */
+  LmHandlerMsgTypes_t IsTxConfirmed;
+  /*!
+   * Uplink datarate, when \ref AdrEnable is OFF
+   */
+  int8_t TxDatarate;
+  /*!
+   * Channels TX power
+   */
+  int8_t TxPower;
+  /*!
+   * Enables/Disables a public network usage
+   */
+  bool PublicNetworkEnable;
+  /*!
+   * LoRaWAN ETSI duty cycle control enable/disable
+   *
+   * \remark Please note that ETSI mandates duty cycled transmissions. Use only
+   * for test purposes
+   */
+  bool DutyCycleEnabled;
+  /*!
+   * Application data buffer maximum size
+   */
+  uint8_t DataBufferMaxSize;
+  /*!
+   * Application data buffer pointer
+   */
+  uint8_t *DataBuffer;
+  /*!
+   * Class B ping-slot periodicity.
+   */
+  uint8_t PingSlotPeriodicity;
+  /*!
+   * Default response timeout for class b and class c confirmed downlink frames
+   * in milli seconds.
+   */
+  uint32_t RxBCTimeout;
 } LmHandlerParams_t;
 
 /*!
  * \brief LoRaMac handler callbacks
  */
-typedef struct LmHandlerCallbacks_s
-{
-    /*!
-     * Get the current battery level
-     *
-     * \retval value  Battery level ( 0: very low, 254: fully charged )
-     */
-    uint8_t (*GetBatteryLevel)(void);
-    /*!
-     * Get the current temperature
-     *
-     * \retval value  Temperature in degree Celsius
-     */
-    int16_t (*GetTemperature)(void);
-    /*!
-     * Get the board 64 bits unique ID
-     *
-     * \param   [out] id unique
-     */
-    void (*GetUniqueId)(uint8_t *id);
-    /*!
-     * Get the board 32 bits unique ID (LSB)
-     *
-     * \param   [out] devAddr Device Address
-     */
-    void (*GetDevAddr)(uint32_t *devAddr);
-    /*!
-     * Restore the NVM Data context from the Flash
-     *
-     * \param [IN] nvm ptr on nvm structure
-     *
-     * \param [IN] nvm_size number of data bytes which were restored
-     */
-    void (*OnRestoreContextRequest)(void *nvm, uint32_t nvm_size);
-    /*!
-     * Store the NVM Data context to the Flash
-     *
-     * \param [IN] nvm ptr on nvm structure
-     *
-     * \param [IN] nvm_size number of data bytes which were stored
-     */
-    void (*OnStoreContextRequest)(void *nvm, uint32_t nvm_size);
-    /*!
-     *\brief    Will be called each time a Radio IRQ is handled by the MAC
-     *          layer.
-     *
-     *\warning  Runs in a IRQ context. Should only change variables state.
-     */
-    void (*OnMacProcess)(void);
-    /*!
-     * Notifies the upper layer that the NVM context has changed
-     *
-     * \param [in] state Indicates if we are storing (true) or
-     *                   restoring (false) the NVM context
-     */
-    void (*OnNvmDataChange)(LmHandlerNvmContextStates_t state);
-    /*!
-     * Notifies the upper layer that a network parameters have been set
-     *
-     * \param [in] params notification parameters
-     */
-    void (*OnNetworkParametersChange)(CommissioningParams_t *params);
-    /*!
-     * Notifies the upper layer that a network has been joined
-     *
-     * \param [in] params notification parameters
-     */
-    void (*OnJoinRequest)(LmHandlerJoinParams_t *params);
-    /*!
-     * Notifies upper layer that a frame has been transmitted
-     *
-     * \param [in] params notification parameters
-     */
-    void (*OnTxData)(LmHandlerTxParams_t *params);
-    /*!
-     * Notifies the upper layer that an applicative frame has been received
-     *
-     * \param [in] appData Received applicative data
-     * \param [in] params notification parameters
-     */
-    void (*OnRxData)(LmHandlerAppData_t *appData, LmHandlerRxParams_t *params);
-    /*!
-     * Confirms the LoRaWAN device class change
-     *
-     * \param [in] deviceClass New end-device class
-     */
-    void (*OnClassChange)(DeviceClass_t deviceClass);
-    /*!
-     * Notifies the upper layer that the beacon status has changed
-     *
-     * \param [in] params notification parameters
-     */
-    void (*OnBeaconStatusChange)(LmHandlerBeaconParams_t *params);
-    /*!
-     * Notifies the upper layer that the system time has been updated.
-     */
-    void (*OnSysTimeUpdate)(void);
-    /*!
-     * Will be called to change applicative Tx frame period
-     *
-     * \param [in] periodicity index of Tx period in time array in sec [0, 5, 10, 20, 30, 40, 50,
-     * 60, 120, 240, 480] \note Compliance test protocol callbacks used when TS001-1.0.4 +
-     * TS009 1.0.0 are defined
-     */
-    void (*OnTxPeriodicityChanged)(uint32_t periodicity);
-    /*!
-     * Will be called to change applicative Tx frame control
-     *
-     * \param [in] isTxConfirmed set the Tx frame in confirmed/unconfirmed control
-     * \note Compliance test protocol callbacks used when TS001-1.0.4 + TS009 1.0.0 are defined
-     */
-    void (*OnTxFrameCtrlChanged)(LmHandlerMsgTypes_t isTxConfirmed);
-    /*!
-     * Will be called to change the ping period
-     *
-     * \param [in] pingSlotPeriodicity index of ping period as 2^X value
-     * \note Compliance test protocol callbacks used when TS001-1.0.4 + TS009 1.0.0 are defined
-     */
-    void (*OnPingSlotPeriodicityChanged)(uint8_t pingSlotPeriodicity);
-    /*!
-     * Will be called to reset the system
-     * \note Compliance test protocol callbacks used when TS001-1.0.4 + TS009 1.0.0 are defined
-     */
-    void (*OnSystemReset)(void);
+typedef struct LmHandlerCallbacks_s {
+  /*!
+   * Get the current battery level
+   *
+   * \retval value  Battery level ( 0: very low, 254: fully charged )
+   */
+  uint8_t (*GetBatteryLevel)(void);
+  /*!
+   * Get the current temperature
+   *
+   * \retval value  Temperature in degree Celsius
+   */
+  int16_t (*GetTemperature)(void);
+  /*!
+   * Get the board 64 bits unique ID
+   *
+   * \param   [out] id unique
+   */
+  void (*GetUniqueId)(uint8_t *id);
+  /*!
+   * Get the board 32 bits unique ID (LSB)
+   *
+   * \param   [out] devAddr Device Address
+   */
+  void (*GetDevAddr)(uint32_t *devAddr);
+  /*!
+   * Restore the NVM Data context from the Flash
+   *
+   * \param [IN] nvm ptr on nvm structure
+   *
+   * \param [IN] nvm_size number of data bytes which were restored
+   */
+  void (*OnRestoreContextRequest)(void *nvm, uint32_t nvm_size);
+  /*!
+   * Store the NVM Data context to the Flash
+   *
+   * \param [IN] nvm ptr on nvm structure
+   *
+   * \param [IN] nvm_size number of data bytes which were stored
+   */
+  void (*OnStoreContextRequest)(void *nvm, uint32_t nvm_size);
+  /*!
+   *\brief    Will be called each time a Radio IRQ is handled by the MAC
+   *          layer.
+   *
+   *\warning  Runs in a IRQ context. Should only change variables state.
+   */
+  void (*OnMacProcess)(void);
+  /*!
+   * Notifies the upper layer that the NVM context has changed
+   *
+   * \param [in] state Indicates if we are storing (true) or
+   *                   restoring (false) the NVM context
+   */
+  void (*OnNvmDataChange)(LmHandlerNvmContextStates_t state);
+  /*!
+   * Notifies the upper layer that a network parameters have been set
+   *
+   * \param [in] params notification parameters
+   */
+  void (*OnNetworkParametersChange)(CommissioningParams_t *params);
+  /*!
+   * Notifies the upper layer that a network has been joined
+   *
+   * \param [in] params notification parameters
+   */
+  void (*OnJoinRequest)(LmHandlerJoinParams_t *params);
+  /*!
+   * Notifies upper layer that a frame has been transmitted
+   *
+   * \param [in] params notification parameters
+   */
+  void (*OnTxData)(LmHandlerTxParams_t *params);
+  /*!
+   * Notifies the upper layer that an applicative frame has been received
+   *
+   * \param [in] appData Received applicative data
+   * \param [in] params notification parameters
+   */
+  void (*OnRxData)(LmHandlerAppData_t *appData, LmHandlerRxParams_t *params);
+  /*!
+   * Confirms the LoRaWAN device class change
+   *
+   * \param [in] deviceClass New end-device class
+   */
+  void (*OnClassChange)(DeviceClass_t deviceClass);
+  /*!
+   * Notifies the upper layer that the beacon status has changed
+   *
+   * \param [in] params notification parameters
+   */
+  void (*OnBeaconStatusChange)(LmHandlerBeaconParams_t *params);
+  /*!
+   * Notifies the upper layer that the system time has been updated.
+   */
+  void (*OnSysTimeUpdate)(void);
+  /*!
+   * Will be called to change applicative Tx frame period
+   *
+   * \param [in] periodicity index of Tx period in time array in sec [0, 5, 10,
+   * 20, 30, 40, 50, 60, 120, 240, 480] \note Compliance test protocol callbacks
+   * used when TS001-1.0.4 + TS009 1.0.0 are defined
+   */
+  void (*OnTxPeriodicityChanged)(uint32_t periodicity);
+  /*!
+   * Will be called to change applicative Tx frame control
+   *
+   * \param [in] isTxConfirmed set the Tx frame in confirmed/unconfirmed control
+   * \note Compliance test protocol callbacks used when TS001-1.0.4 +
+   * TS009 1.0.0 are defined
+   */
+  void (*OnTxFrameCtrlChanged)(LmHandlerMsgTypes_t isTxConfirmed);
+  /*!
+   * Will be called to change the ping period
+   *
+   * \param [in] pingSlotPeriodicity index of ping period as 2^X value
+   * \note Compliance test protocol callbacks used when TS001-1.0.4 +
+   * TS009 1.0.0 are defined
+   */
+  void (*OnPingSlotPeriodicityChanged)(uint8_t pingSlotPeriodicity);
+  /*!
+   * Will be called to reset the system
+   * \note Compliance test protocol callbacks used when TS001-1.0.4 +
+   * TS009 1.0.0 are defined
+   */
+  void (*OnSystemReset)(void);
 } LmHandlerCallbacks_t;
 
 /* External variables --------------------------------------------------------*/
@@ -303,7 +302,8 @@ typedef struct LmHandlerCallbacks_s
  * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if package have been
  *                initialized else \ref LORAMAC_HANDLER_ERROR
  */
-LmHandlerErrorStatus_t LmHandlerInit(LmHandlerCallbacks_t *handlerCallbacks, uint32_t fwVersion);
+LmHandlerErrorStatus_t LmHandlerInit(LmHandlerCallbacks_t *handlerCallbacks,
+                                     uint32_t fwVersion);
 
 /*!
  * LoRaMac handler deinit
@@ -363,14 +363,16 @@ TimerTime_t LmHandlerGetDutyCycleWaitTime(void);
  * Join a LoRa Network in classA
  *
  * \param [in] mode Activation mode (OTAA or ABP)
- * \param [in] forceRejoin Flag to force the rejoin even if LoRaWAN context can be restored
+ * \param [in] forceRejoin Flag to force the rejoin even if LoRaWAN context can
+ * be restored
  */
 void LmHandlerJoin(ActivationType_t mode, bool forceRejoin);
 
 /*!
  * Check whether the Device is joined to the network
  *
- * \retval status Returns \ref LORAMAC_HANDLER_SET if joined else \ref LORAMAC_HANDLER_RESET
+ * \retval status Returns \ref LORAMAC_HANDLER_SET if joined else \ref
+ * LORAMAC_HANDLER_RESET
  */
 LmHandlerFlagStatus_t LmHandlerJoinStatus(void);
 
@@ -378,8 +380,8 @@ LmHandlerFlagStatus_t LmHandlerJoinStatus(void);
  * Informs the server on the ping-slot periodicity to use
  *
  * \param [in] periodicity Is equal to 2^periodicity seconds.
- *                         Example: 2^3 = 8 seconds. The end-device will open an Rx slot every 8
- * seconds.
+ *                         Example: 2^3 = 8 seconds. The end-device will open an
+ * Rx slot every 8 seconds.
  *
  * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if request has been
  *                processed else \ref LORAMAC_HANDLER_ERROR
@@ -389,9 +391,10 @@ LmHandlerErrorStatus_t LmHandlerPingSlotReq(uint8_t periodicity);
 /*!
  * \brief Request the MAC layer to change LoRaWAN class
  *
- * \note Callback \ref LmHandlerCallbacks_t.OnClassChange informs upper layer that the change has
- occurred
- * \note Only switch from class A to class B/C OR from class B/C to class A is allowed
+ * \note Callback \ref LmHandlerCallbacks_t.OnClassChange informs upper layer
+ that the change has occurred
+ * \note Only switch from class A to class B/C OR from class B/C to class A is
+ allowed
  *
  * \param [in] newClass New class to be requested
  *
@@ -452,24 +455,24 @@ LmHandlerErrorStatus_t LmHandlerSetSystemMaxRxError(uint32_t maxErrorInMs);
  * \param [in] id package identifier
  * \param [in] params package parameters
  *
- * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if package initialization is
- *                completed else \ref LORAMAC_HANDLER_ERROR
+ * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if package initialization
+ * is completed else \ref LORAMAC_HANDLER_ERROR
  */
 LmHandlerErrorStatus_t LmHandlerPackageRegister(uint8_t id, void *params);
 
 /*!
  * \brief Stop a LoRa Network connection
  *
- * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if LoRaMAC has been stopped successfully
- *                else \ref LORAMAC_HANDLER_BUSY_ERROR
+ * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if LoRaMAC has been
+ * stopped successfully else \ref LORAMAC_HANDLER_BUSY_ERROR
  */
 LmHandlerErrorStatus_t LmHandlerStop(void);
 
 /*!
  * \brief Halt the LoRa stack with break of current process
  *
- * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if LoRaMAC has been stopped successfully
- *                else \ref LORAMAC_HANDLER_BUSY_ERROR
+ * \retval status Returns \ref LORAMAC_HANDLER_SUCCESS if LoRaMAC has been
+ * stopped successfully else \ref LORAMAC_HANDLER_BUSY_ERROR
  */
 LmHandlerErrorStatus_t LmHandlerHalt(void);
 
@@ -514,7 +517,8 @@ LmHandlerErrorStatus_t LmHandlerGetAppEUI(uint8_t *appEUI);
 LmHandlerErrorStatus_t LmHandlerSetAppEUI(uint8_t *appEUI);
 
 /*!
- * \brief Gets the LoRaWAN Network ID (from the Commissioning if ABP or after the Join if OTAA)
+ * \brief Gets the LoRaWAN Network ID (from the Commissioning if ABP or after
+ * the Join if OTAA)
  *
  * \param [out] networkId current network ID
  *
@@ -534,7 +538,8 @@ LmHandlerErrorStatus_t LmHandlerGetNetworkID(uint32_t *networkId);
 LmHandlerErrorStatus_t LmHandlerSetNetworkID(uint32_t networkId);
 
 /*!
- * \brief Gets the LoRaWAN Device Address (from the Commissioning if ABP or after the Join if OTAA)
+ * \brief Gets the LoRaWAN Device Address (from the Commissioning if ABP or
+ * after the Join if OTAA)
  *
  * \param [out] devAddr current device address
  *
@@ -564,8 +569,8 @@ LmHandlerErrorStatus_t LmHandlerSetDevAddr(uint32_t devAddr);
 LmHandlerErrorStatus_t LmHandlerSetActiveRegion(LoRaMacRegion_t region);
 
 /*!
- * \brief Gets the Adaptive data rate (1 = the Network manages the DR, 0 = the device manages the
- * DR)
+ * \brief Gets the Adaptive data rate (1 = the Network manages the DR, 0 = the
+ * device manages the DR)
  *
  * \param [out] adrEnable Adaptive data rate flag
  *
@@ -575,8 +580,8 @@ LmHandlerErrorStatus_t LmHandlerSetActiveRegion(LoRaMacRegion_t region);
 LmHandlerErrorStatus_t LmHandlerGetAdrEnable(bool *adrEnable);
 
 /*!
- * \brief Sets the Adaptive data rate (1 = the Network manages the DR, 0 = the device manages the
- * DR)
+ * \brief Sets the Adaptive data rate (1 = the Network manages the DR, 0 = the
+ * device manages the DR)
  *
  * \param [in] adrEnable Adaptive data rate flag
  *

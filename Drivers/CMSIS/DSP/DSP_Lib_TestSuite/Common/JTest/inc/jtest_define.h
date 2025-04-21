@@ -26,6 +26,7 @@
  *  Define and initialize a struct (created with JTEST_DEFINE_STRUCT()) and
  *  initialize it with init_values.
  */
-#define JTEST_INIT_STRUCT(struct_definition, init_values) struct_definition = {init_values}
+#define JTEST_INIT_STRUCT(struct_definition, init_values)                      \
+  struct_definition = {init_values}
 
 #endif /* _JTEST_DEFINE_H_ */

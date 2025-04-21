@@ -26,8 +26,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32wlxx.h"
 #include "Legacy/stm32_hal_legacy.h" /* Aliases file for old names compatibility */
+#include "stm32wlxx.h"
 #include <stddef.h>
 
 /* Exported types ------------------------------------------------------------*/
@@ -35,22 +35,17 @@ extern "C" {
 /**
  * @brief  HAL Status structures definition
  */
-typedef enum
-{
-    HAL_OK = 0x00,
-    HAL_ERROR = 0x01,
-    HAL_BUSY = 0x02,
-    HAL_TIMEOUT = 0x03
+typedef enum {
+  HAL_OK = 0x00,
+  HAL_ERROR = 0x01,
+  HAL_BUSY = 0x02,
+  HAL_TIMEOUT = 0x03
 } HAL_StatusTypeDef;
 
 /**
  * @brief  HAL Lock structures definition
  */
-typedef enum
-{
-    HAL_UNLOCKED = 0x00,
-    HAL_LOCKED = 0x01
-} HAL_LockTypeDef;
+typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 
 /* Exported macros -----------------------------------------------------------*/
 
@@ -61,26 +56,26 @@ typedef enum
 #define HAL_IS_BIT_SET(REG, BIT) (((REG) & (BIT)) == (BIT))
 #define HAL_IS_BIT_CLR(REG, BIT) (((REG) & (BIT)) == 0U)
 
-#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)                               \
-    do                                                                                             \
-    {                                                                                              \
-        (__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);                                       \
-        (__DMA_HANDLE__).Parent = (__HANDLE__);                                                    \
-    } while (0)
+#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)           \
+  do {                                                                         \
+    (__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);                       \
+    (__DMA_HANDLE__).Parent = (__HANDLE__);                                    \
+  } while (0)
 
 /** @brief Reset the Handle's State field.
  * @param __HANDLE__ specifies the Peripheral Handle.
  * @note  This macro can be used for the following purpose:
- *          - When the Handle is declared as local variable; before passing it as parameter
- *            to HAL_PPP_Init() for the first time, it is mandatory to use this macro
- *            to set to 0 the Handle's "State" field.
- *            Otherwise, "State" field may have any random value and the first time the function
- *            HAL_PPP_Init() is called, the low level hardware initialization will be missed
- *            (i.e. HAL_PPP_MspInit() will not be executed).
- *          - When there is a need to reconfigure the low level hardware: instead of calling
- *            HAL_PPP_DeInit() then HAL_PPP_Init(), user can make a call to this macro then
- * HAL_PPP_Init(). In this later function, when the Handle's "State" field is set to 0, it will
- * execute the function HAL_PPP_MspInit() which will reconfigure the low level hardware.
+ *          - When the Handle is declared as local variable; before passing it
+ * as parameter to HAL_PPP_Init() for the first time, it is mandatory to use
+ * this macro to set to 0 the Handle's "State" field. Otherwise, "State" field
+ * may have any random value and the first time the function HAL_PPP_Init() is
+ * called, the low level hardware initialization will be missed (i.e.
+ * HAL_PPP_MspInit() will not be executed).
+ *          - When there is a need to reconfigure the low level hardware:
+ * instead of calling HAL_PPP_DeInit() then HAL_PPP_Init(), user can make a call
+ * to this macro then HAL_PPP_Init(). In this later function, when the Handle's
+ * "State" field is set to 0, it will execute the function HAL_PPP_MspInit()
+ * which will reconfigure the low level hardware.
  * @retval None
  */
 #define __HAL_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = 0)
@@ -89,27 +84,23 @@ typedef enum
 /* Reserved for future use */
 #error " USE_RTOS should be 0 in the current HAL release "
 #else
-#define __HAL_LOCK(__HANDLE__)                                                                     \
-    do                                                                                             \
-    {                                                                                              \
-        if ((__HANDLE__)->Lock == HAL_LOCKED)                                                      \
-        {                                                                                          \
-            return HAL_BUSY;                                                                       \
-        }                                                                                          \
-        else                                                                                       \
-        {                                                                                          \
-            (__HANDLE__)->Lock = HAL_LOCKED;                                                       \
-        }                                                                                          \
-    } while (0)
+#define __HAL_LOCK(__HANDLE__)                                                 \
+  do {                                                                         \
+    if ((__HANDLE__)->Lock == HAL_LOCKED) {                                    \
+      return HAL_BUSY;                                                         \
+    } else {                                                                   \
+      (__HANDLE__)->Lock = HAL_LOCKED;                                         \
+    }                                                                          \
+  } while (0)
 
-#define __HAL_UNLOCK(__HANDLE__)                                                                   \
-    do                                                                                             \
-    {                                                                                              \
-        (__HANDLE__)->Lock = HAL_UNLOCKED;                                                         \
-    } while (0)
+#define __HAL_UNLOCK(__HANDLE__)                                               \
+  do {                                                                         \
+    (__HANDLE__)->Lock = HAL_UNLOCKED;                                         \
+  } while (0)
 #endif /* USE_RTOS */
 
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
+#if defined(__ARMCC_VERSION) &&                                                \
+    (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
 #ifndef __weak
 #define __weak __attribute__((weak))
 #endif
@@ -125,9 +116,10 @@ typedef enum
 #endif /* __packed */
 #endif /* __GNUC__ */
 
-/* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive "#pragma data_alignment=4"
- * must be used instead */
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
+/* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive
+ * "#pragma data_alignment=4" must be used instead */
+#if defined(__ARMCC_VERSION) &&                                                \
+    (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
 #ifndef __ALIGN_BEGIN
 #define __ALIGN_BEGIN
 #endif
@@ -157,15 +149,16 @@ typedef enum
 /**
  * @brief  __RAM_FUNC definition
  */
-#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+#if defined(__CC_ARM) ||                                                       \
+    (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 /* ARM Compiler V4/V5 and V6
    --------------------------
    RAM functions are defined using the toolchain options.
    Functions that are executed in RAM should reside in a separate source module.
    Using the 'Options for File' dialog you can simply change the 'Code / Const'
    area of a module to a memory space in physical RAM.
-   Available memory areas are declared in the 'Target' tab of the 'Options for Target'
-   dialog.
+   Available memory areas are declared in the 'Target' tab of the 'Options for
+   Target' dialog.
 */
 #define __RAM_FUNC
 
@@ -189,8 +182,9 @@ typedef enum
 /**
  * @brief  __NOINLINE definition
  */
-#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))                \
-    || defined(__GNUC__)
+#if defined(__CC_ARM) ||                                                       \
+    (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) ||              \
+    defined(__GNUC__)
 /* ARM V4/V5 and V6 & GNU Compiler
    -------------------------------
 */

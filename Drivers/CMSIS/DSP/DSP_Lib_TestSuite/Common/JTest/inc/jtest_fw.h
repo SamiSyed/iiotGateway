@@ -18,29 +18,28 @@
 /**
  *  A struct used to interface with the Keil Debugger.
  */
-typedef struct JTEST_FW_struct
-{
-    /* Action Triggers: The Keil debugger monitors these values for changes.  In
-     * response to a change, the debugger executes code on the host. */
-    volatile int32_t test_start;
-    volatile int32_t test_end;
-    volatile int32_t group_start;
-    volatile int32_t group_end;
-    volatile int32_t dump_str;
-    volatile int32_t dump_data;
-    volatile int32_t exit_fw;
+typedef struct JTEST_FW_struct {
+  /* Action Triggers: The Keil debugger monitors these values for changes.  In
+   * response to a change, the debugger executes code on the host. */
+  volatile int32_t test_start;
+  volatile int32_t test_end;
+  volatile int32_t group_start;
+  volatile int32_t group_end;
+  volatile int32_t dump_str;
+  volatile int32_t dump_data;
+  volatile int32_t exit_fw;
 
-    JTEST_GROUP_t *current_group_ptr;
+  JTEST_GROUP_t *current_group_ptr;
 
-    /* Buffers: The C-code cannot send strings and data directly to the
-     * debugging framework. Instead, the debugger can be told to read 128 byte
-     * (by default) chunks of memory.  Data received in this manner requires
-     * post-processing to be legible.*/
-    char *str_buffer;
-    char *data_buffer;
+  /* Buffers: The C-code cannot send strings and data directly to the
+   * debugging framework. Instead, the debugger can be told to read 128 byte
+   * (by default) chunks of memory.  Data received in this manner requires
+   * post-processing to be legible.*/
+  char *str_buffer;
+  char *data_buffer;
 
-    /* Pass/Fail Data */
-    JTEST_PF_MEMBERS;
+  /* Pass/Fail Data */
+  JTEST_PF_MEMBERS;
 
 } JTEST_FW_t;
 
@@ -86,16 +85,16 @@ typedef struct JTEST_FW_struct
  *  The maximum number of block transimissions needed to send a string from a
  *  buffer with JTEST_BUF_SIZE.
  */
-#define JTEST_STR_MAX_OUTPUT_SEGMENTS (JTEST_BUF_SIZE / JTEST_STR_MAX_OUTPUT_SIZE)
+#define JTEST_STR_MAX_OUTPUT_SEGMENTS                                          \
+  (JTEST_BUF_SIZE / JTEST_STR_MAX_OUTPUT_SIZE)
 
 /**
  *  Initialize the JTEST framework.
  */
-#define JTEST_INIT()                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_FW.str_buffer = JTEST_FW_STR_BUFFER;                                                 \
-    } while (0)
+#define JTEST_INIT()                                                           \
+  do {                                                                         \
+    JTEST_FW.str_buffer = JTEST_FW_STR_BUFFER;                                 \
+  } while (0)
 
 /* Debugger Action-triggering Macros */
 /*--------------------------------------------------------------------------------*/
@@ -103,11 +102,10 @@ typedef struct JTEST_FW_struct
 /**
  *  Dispatch macro to trigger various actions in the Keil Debugger.
  */
-#define JTEST_TRIGGER_ACTION(action_name)                                                          \
-    do                                                                                             \
-    {                                                                                              \
-        action_name();                                                                             \
-    } while (0)
+#define JTEST_TRIGGER_ACTION(action_name)                                      \
+  do {                                                                         \
+    action_name();                                                             \
+  } while (0)
 
 /**
  *  Trigger the "Test Start" action in the Keil Debugger.
@@ -135,34 +133,31 @@ typedef struct JTEST_FW_struct
  */
 #if defined(ARMv7A) || defined(FILEIO)
 
-#define JTEST_ACT_DUMP(action, buf_name, value)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_CLEAR_BUFFER(buf_name);                                                              \
-        printf("%s", value);                                                                       \
-        strcpy(JTEST_FW.buf_name, (value));                                                        \
-        JTEST_TRIGGER_ACTION(action);                                                              \
-    } while (0)
+#define JTEST_ACT_DUMP(action, buf_name, value)                                \
+  do {                                                                         \
+    JTEST_CLEAR_BUFFER(buf_name);                                              \
+    printf("%s", value);                                                       \
+    strcpy(JTEST_FW.buf_name, (value));                                        \
+    JTEST_TRIGGER_ACTION(action);                                              \
+  } while (0)
 
 #else
 
-#define JTEST_ACT_DUMP(action, buf_name, value)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_CLEAR_BUFFER(buf_name);                                                              \
-        strcpy(JTEST_FW.buf_name, (value));                                                        \
-        JTEST_TRIGGER_ACTION(action);                                                              \
-    } while (0)
+#define JTEST_ACT_DUMP(action, buf_name, value)                                \
+  do {                                                                         \
+    JTEST_CLEAR_BUFFER(buf_name);                                              \
+    strcpy(JTEST_FW.buf_name, (value));                                        \
+    JTEST_TRIGGER_ACTION(action);                                              \
+  } while (0)
 
 #endif
 /**
  *  Trigger the "Exit Framework" action in the Keil Debugger.
  */
-#define JTEST_ACT_EXIT_FW()                                                                        \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_TRIGGER_ACTION(exit_fw);                                                             \
-    } while (0)
+#define JTEST_ACT_EXIT_FW()                                                    \
+  do {                                                                         \
+    JTEST_TRIGGER_ACTION(exit_fw);                                             \
+  } while (0)
 
 /* Buffer Manipulation Macros */
 /*--------------------------------------------------------------------------------*/
@@ -170,11 +165,10 @@ typedef struct JTEST_FW_struct
 /**
  *  Clear the JTEST_FW buffer with name buf_name.
  */
-#define JTEST_CLEAR_BUFFER(buf_name)                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        memset(JTEST_FW.buf_name, 0, JTEST_BUF_SIZE);                                              \
-    } while (0)
+#define JTEST_CLEAR_BUFFER(buf_name)                                           \
+  do {                                                                         \
+    memset(JTEST_FW.buf_name, 0, JTEST_BUF_SIZE);                              \
+  } while (0)
 
 /**
  *  Clear the memory needed for the JTEST_FW's string buffer.
@@ -196,24 +190,22 @@ typedef struct JTEST_FW_struct
  */
 #if defined(ARMv7A) || defined(FILEIO)
 
-#define JTEST_DUMP_STRF(format_str, ...)                                                           \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_CLEAR_STR_BUFFER();                                                                  \
-        sprintf(JTEST_FW.str_buffer, format_str, __VA_ARGS__);                                     \
-        printf("%s", JTEST_FW.str_buffer);                                                         \
-        jtest_dump_str_segments();                                                                 \
-    } while (0)
+#define JTEST_DUMP_STRF(format_str, ...)                                       \
+  do {                                                                         \
+    JTEST_CLEAR_STR_BUFFER();                                                  \
+    sprintf(JTEST_FW.str_buffer, format_str, __VA_ARGS__);                     \
+    printf("%s", JTEST_FW.str_buffer);                                         \
+    jtest_dump_str_segments();                                                 \
+  } while (0)
 
 #else
 
-#define JTEST_DUMP_STRF(format_str, ...)                                                           \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_CLEAR_STR_BUFFER();                                                                  \
-        sprintf(JTEST_FW.str_buffer, format_str, __VA_ARGS__);                                     \
-        jtest_dump_str_segments();                                                                 \
-    } while (0)
+#define JTEST_DUMP_STRF(format_str, ...)                                       \
+  do {                                                                         \
+    JTEST_CLEAR_STR_BUFFER();                                                  \
+    sprintf(JTEST_FW.str_buffer, format_str, __VA_ARGS__);                     \
+    jtest_dump_str_segments();                                                 \
+  } while (0)
 
 #endif
 
@@ -238,11 +230,10 @@ typedef struct JTEST_FW_struct
  */
 #define JTEST_CURRENT_GROUP_PTR() (JTEST_FW.current_group_ptr)
 
-#define JTEST_SET_CURRENT_GROUP(group_ptr)                                                         \
-    do                                                                                             \
-    {                                                                                              \
-        JTEST_CURRENT_GROUP_PTR() = group_ptr;                                                     \
-    } while (0)
+#define JTEST_SET_CURRENT_GROUP(group_ptr)                                     \
+  do {                                                                         \
+    JTEST_CURRENT_GROUP_PTR() = group_ptr;                                     \
+  } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* Declare Global Variables */
