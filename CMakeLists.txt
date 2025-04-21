@@ -83,8 +83,10 @@ set(C_SOURCES
     Core/Src/gpio.c
     Core/Src/filter.c
     Core/Src/rtc.c
+    Core/Src/ringBuffer.c
     Core/Src/subghz.c
     Core/Src/user_system.c
+    Core/Src/user_wifi.c
     Core/Src/usart.c
     Core/Src/user_mqttFunctions.c
     Core/Src/stm32wlxx_it.c
@@ -102,6 +104,7 @@ set(C_SOURCES
     Core/Src/dma.c
     Utilities/sequencer/stm32_seq.c
     Core/Src/iwdg.c
+    Core/Src/index_html.c
 )
 
 # List of ASM source files
@@ -151,6 +154,29 @@ add_executable(${TARGET}
     ${DRIVER_SOURCE}
     ${UTILITES_SOURCE}
 )
+
+# Convert index.html to index_html.c using xxd (run during build)
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+    COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up old index_html files..."
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.h
+    COMMAND ${CMAKE_COMMAND} -E echo "Generating index_html.c from index.html..."
+    COMMAND xxd -i ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index.html > ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+    COMMAND sed -i 's/unsigned char .* =/const unsigned char index_html[] =/' ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+    COMMAND sed -i 's/unsigned int .* =/const unsigned int index_html_len =/' ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index.html
+    COMMENT "Generating fresh index_html.c from index.html"
+)
+
+# Add a custom target so that index_html.c is built before compiling
+add_custom_target(
+    GenerateHTML ALL
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Core/Src/index_html.c
+)
+
+# Make sure your main target depends on HTML generation
+add_dependencies(${PROJECT_NAME} GenerateHTML)
 
 # Define compile definitions (MCU_MODEL)
 target_compile_definitions(${TARGET} PRIVATE ${DEFINITIONS})
