@@ -149,12 +149,12 @@ int main(void) {
   startServer();
   Delay_CustomTimer(1000);
   setGotHttpRequest(false);
+
+  /* TODO: Replace While loop with button based logic 
+    need to save the topics in some where in the memory
+    */
   while (true) {
-    // Delay_CustomTimer(1000);
-    // printf("Buffer:\r\n");
     serveHttpRequest();
-    // printf("Buffer: %s\r\n", bufferTest->buffer);
-    // printBufferWifi();
   }
 
   // setLastCommandOK(true);
@@ -222,19 +222,14 @@ int main(void) {
     if (getTick_CustomTimer_Sec() - dataOkStatus > MAX_TIME_CANNOT_SEND_MQTT) {
       printf("**MQTT data cannot be send for 2 min**\r\n");
       printf("**Please check Network and SIM card.**\r\n");
-      // Delay_CustomTimer(10000);
-      // NVIC_SystemReset();
       systemResetFlag = true;
     }
 
     if (getTick_CustomTimer_Sec() - loraRecieveOkStatus >
         MAX_TIME_LORA_INCOMING_MISSING) {
-      // printf("**LoRa data not receiving for %i min**\r\n",
-      // MAX_TIME_LORA_INCOMING_MISSING);
       printf("**LoRa data not receiving for 5 min**\r\n");
       printf("**\r\nPlease check End nodes. Atleast one End node should be "
              "responding**\r\n");
-      // NVIC_SystemReset();
       systemResetFlag = true;
     }
 
@@ -247,10 +242,10 @@ int main(void) {
     }
 
     if (systemResetFlag) {
-      systemResetFlag = false;
-      printf("\r\n****************\r\n");
-      printf("\r\n**System Reset**\r\n");
-      printf("\r\n****************\r\n");
+      printf("\r\n*****************************\r\n");
+      printf("\r\n**System Reset after 10 sec**\r\n");
+      printf("\r\n*****************************\r\n");
+      Delay_CustomTimer(10000);
       NVIC_SystemReset();
     }
     setLastCommandOK(true);
