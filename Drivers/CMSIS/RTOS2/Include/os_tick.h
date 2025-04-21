@@ -1,10 +1,8 @@
 /**************************************************************************/ /**
                                                                               * @file     os_tick.h
-                                                                              * @brief    CMSIS OS
-                                                                              *Tick header file
+                                                                              * @brief    CMSIS OS Tick header file
                                                                               * @version  V1.0.1
-                                                                              * @date     24.
-                                                                              *November 2017
+                                                                              * @date     24. November 2017
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2017-2017 ARM Limited. All rights reserved.

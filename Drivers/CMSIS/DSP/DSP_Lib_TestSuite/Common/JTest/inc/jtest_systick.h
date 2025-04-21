@@ -2,7 +2,7 @@
 #define _JTEST_SYSTICK_H_
 
 /*--------------------------------------------------------------------------------*/
-/* Includes                                                                       */
+/* Includes */
 /*--------------------------------------------------------------------------------*/
 
 /* Get access to the SysTick structure. */
@@ -49,13 +49,14 @@
 #endif
 
 /*--------------------------------------------------------------------------------*/
-/* Macros and Defines                                                             */
+/* Macros and Defines */
 /*--------------------------------------------------------------------------------*/
 
 /**
  *  Initial value for the SysTick module.
  *
- *  This is also the maximum value, important as SysTick is a decrementing counter.
+ *  This is also the maximum value, important as SysTick is a decrementing
+ * counter.
  */
 #define JTEST_SYSTICK_INITIAL_VALUE 0xFFFFFF
 
@@ -65,23 +66,22 @@
  *  This macro should leave the SysTick timer in a state that's ready for cycle
  *  counting.
  */
-#define JTEST_SYSTICK_RESET(systick_ptr)                                                           \
-    do                                                                                             \
-    {                                                                                              \
-        (systick_ptr)->CTRL = SysTick_CTRL_CLKSOURCE_Msk;                                          \
-                                                                                                   \
-        (systick_ptr)->LOAD = JTEST_SYSTICK_INITIAL_VALUE;                                         \
-        (systick_ptr)->VAL = JTEST_SYSTICK_INITIAL_VALUE;                                          \
-    } while (0)
+#define JTEST_SYSTICK_RESET(systick_ptr)                                       \
+  do {                                                                         \
+    (systick_ptr)->CTRL = SysTick_CTRL_CLKSOURCE_Msk;                          \
+                                                                               \
+    (systick_ptr)->LOAD = JTEST_SYSTICK_INITIAL_VALUE;                         \
+    (systick_ptr)->VAL = JTEST_SYSTICK_INITIAL_VALUE;                          \
+  } while (0)
 
 /**
  *  Start the SysTick timer, sourced by the processor clock.
  */
-#define JTEST_SYSTICK_START(systick_ptr)                                                           \
-    do                                                                                             \
-    {                                                                                              \
-        (systick_ptr)->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;                \
-    } while (0)
+#define JTEST_SYSTICK_START(systick_ptr)                                       \
+  do {                                                                         \
+    (systick_ptr)->CTRL =                                                      \
+        SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;                  \
+  } while (0)
 
 /**
  *  Evaluate to the current value of the SysTick timer.

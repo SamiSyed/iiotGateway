@@ -44,16 +44,19 @@
 #define CRYP_PHASE_FINAL AES_CR_GCMPH     /*!< GCM/GMAC or CCM  final phase  */
 
 #define CRYP_OPERATINGMODE_ENCRYPT 0x00000000U /*!< Encryption mode   */
-#define CRYP_OPERATINGMODE_KEYDERIVATION                                                           \
-    AES_CR_MODE_0 /*!< Key derivation mode  only used when performing ECB and CBC decryptions  */
+#define CRYP_OPERATINGMODE_KEYDERIVATION                                       \
+  AES_CR_MODE_0 /*!< Key derivation mode  only used when performing ECB and    \
+                   CBC decryptions  */
 #define CRYP_OPERATINGMODE_DECRYPT AES_CR_MODE_1 /*!< Decryption       */
-#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                                                   \
-    AES_CR_MODE /*!< Key derivation and decryption only used when performing ECB and CBC           \
-                   decryptions  */
+#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                               \
+  AES_CR_MODE /*!< Key derivation and decryption only used when performing ECB \
+                 and CBC decryptions  */
 
-#define CRYPEx_PHASE_PROCESS 0x02U /*!< CRYP peripheral is in processing phase */
-#define CRYPEx_PHASE_FINAL                                                                         \
-    0x03U /*!< CRYP peripheral is in final phase this is relevant only with CCM and GCM modes */
+#define CRYPEx_PHASE_PROCESS                                                   \
+  0x02U /*!< CRYP peripheral is in processing phase */
+#define CRYPEx_PHASE_FINAL                                                     \
+  0x03U /*!< CRYP peripheral is in final phase this is relevant only with CCM  \
+           and GCM modes */
 
 /*  CTR0 information to use in CCM algorithm */
 #define CRYP_CCM_CTR0_0 0x07FFFFFFU
@@ -79,8 +82,8 @@
   ==============================================================================
               ##### Extended AES processing functions #####
   ==============================================================================
-    [..]  This section provides functions allowing to generate the authentication
-          TAG in Polling mode
+    [..]  This section provides functions allowing to generate the
+authentication TAG in Polling mode
       (#)HAL_CRYPEx_AESGCM_GenerateAuthTAG
       (#)HAL_CRYPEx_AESCCM_GenerateAuthTAG
          they should be used after Encrypt/Decrypt operation.
@@ -99,117 +102,110 @@
  */
 HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
                                                     uint32_t *AuthTag,
-                                                    uint32_t Timeout)
-{
-    uint32_t tickstart;
-    /* Assume first Init.HeaderSize is in words */
-    uint64_t headerlength = (uint64_t)hcryp->Init.HeaderSize * 32U; /* Header length in bits */
-    uint64_t inputlength = (uint64_t)hcryp->SizesSum * 8U;          /* Input length in bits */
-    uint32_t tagaddr = (uint32_t)AuthTag;
+                                                    uint32_t Timeout) {
+  uint32_t tickstart;
+  /* Assume first Init.HeaderSize is in words */
+  uint64_t headerlength =
+      (uint64_t)hcryp->Init.HeaderSize * 32U; /* Header length in bits */
+  uint64_t inputlength =
+      (uint64_t)hcryp->SizesSum * 8U; /* Input length in bits */
+  uint32_t tagaddr = (uint32_t)AuthTag;
 
-    /* Correct headerlength if Init.HeaderSize is actually in bytes */
-    if (hcryp->Init.HeaderWidthUnit == CRYP_HEADERWIDTHUNIT_BYTE)
+  /* Correct headerlength if Init.HeaderSize is actually in bytes */
+  if (hcryp->Init.HeaderWidthUnit == CRYP_HEADERWIDTHUNIT_BYTE) {
+    headerlength /= 4U;
+  }
+
+  if (hcryp->State == HAL_CRYP_STATE_READY) {
+    /* Process locked */
+    __HAL_LOCK(hcryp);
+
+    /* Change the CRYP peripheral state */
+    hcryp->State = HAL_CRYP_STATE_BUSY;
+
+    /* Check if initialization phase has already been performed */
+    if (hcryp->Phase == CRYPEx_PHASE_PROCESS) {
+      /* Change the CRYP phase */
+      hcryp->Phase = CRYPEx_PHASE_FINAL;
+    } else /* Initialization phase has not been performed*/
     {
-        headerlength /= 4U;
+      /* Disable the Peripheral */
+      __HAL_CRYP_DISABLE(hcryp);
+
+      /* Sequence error code field */
+      hcryp->ErrorCode |= HAL_CRYP_ERROR_AUTH_TAG_SEQUENCE;
+
+      /* Change the CRYP peripheral state */
+      hcryp->State = HAL_CRYP_STATE_READY;
+
+      /* Process unlocked */
+      __HAL_UNLOCK(hcryp);
+      return HAL_ERROR;
     }
 
-    if (hcryp->State == HAL_CRYP_STATE_READY)
-    {
-        /* Process locked */
-        __HAL_LOCK(hcryp);
+    /* Select final phase */
+    MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
 
-        /* Change the CRYP peripheral state */
-        hcryp->State = HAL_CRYP_STATE_BUSY;
+    /* Set the encrypt operating mode*/
+    MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
 
-        /* Check if initialization phase has already been performed */
-        if (hcryp->Phase == CRYPEx_PHASE_PROCESS)
-        {
-            /* Change the CRYP phase */
-            hcryp->Phase = CRYPEx_PHASE_FINAL;
+    /*TinyAES peripheral from V3.1.1 : data has to be inserted normally (no
+     * swapping)*/
+    /* Write into the AES_DINR register the number of bits in header (64 bits)
+    followed by the number of bits in the payload */
+
+    hcryp->Instance->DINR = 0U;
+    hcryp->Instance->DINR = (uint32_t)(headerlength);
+    hcryp->Instance->DINR = 0U;
+    hcryp->Instance->DINR = (uint32_t)(inputlength);
+
+    /* Wait for CCF flag to be raised */
+    tickstart = HAL_GetTick();
+    while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF)) {
+      /* Check for the Timeout */
+      if (Timeout != HAL_MAX_DELAY) {
+        if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+          /* Disable the CRYP peripheral clock */
+          __HAL_CRYP_DISABLE(hcryp);
+
+          /* Change state */
+          hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
+          hcryp->State = HAL_CRYP_STATE_READY;
+
+          /* Process unlocked */
+          __HAL_UNLOCK(hcryp);
+          return HAL_ERROR;
         }
-        else /* Initialization phase has not been performed*/
-        {
-            /* Disable the Peripheral */
-            __HAL_CRYP_DISABLE(hcryp);
-
-            /* Sequence error code field */
-            hcryp->ErrorCode |= HAL_CRYP_ERROR_AUTH_TAG_SEQUENCE;
-
-            /* Change the CRYP peripheral state */
-            hcryp->State = HAL_CRYP_STATE_READY;
-
-            /* Process unlocked */
-            __HAL_UNLOCK(hcryp);
-            return HAL_ERROR;
-        }
-
-        /* Select final phase */
-        MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
-
-        /* Set the encrypt operating mode*/
-        MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
-
-        /*TinyAES peripheral from V3.1.1 : data has to be inserted normally (no swapping)*/
-        /* Write into the AES_DINR register the number of bits in header (64 bits)
-        followed by the number of bits in the payload */
-
-        hcryp->Instance->DINR = 0U;
-        hcryp->Instance->DINR = (uint32_t)(headerlength);
-        hcryp->Instance->DINR = 0U;
-        hcryp->Instance->DINR = (uint32_t)(inputlength);
-
-        /* Wait for CCF flag to be raised */
-        tickstart = HAL_GetTick();
-        while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF))
-        {
-            /* Check for the Timeout */
-            if (Timeout != HAL_MAX_DELAY)
-            {
-                if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
-                {
-                    /* Disable the CRYP peripheral clock */
-                    __HAL_CRYP_DISABLE(hcryp);
-
-                    /* Change state */
-                    hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
-                    hcryp->State = HAL_CRYP_STATE_READY;
-
-                    /* Process unlocked */
-                    __HAL_UNLOCK(hcryp);
-                    return HAL_ERROR;
-                }
-            }
-        }
-
-        /* Read the authentication TAG in the output FIFO */
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-
-        /* Clear CCF flag */
-        __HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
-
-        /* Disable the peripheral */
-        __HAL_CRYP_DISABLE(hcryp);
-
-        /* Change the CRYP peripheral state */
-        hcryp->State = HAL_CRYP_STATE_READY;
-
-        /* Process unlocked */
-        __HAL_UNLOCK(hcryp);
+      }
     }
-    else
-    {
-        /* Busy error code field */
-        hcryp->ErrorCode |= HAL_CRYP_ERROR_BUSY;
-        return HAL_ERROR;
-    }
-    /* Return function status */
-    return HAL_OK;
+
+    /* Read the authentication TAG in the output FIFO */
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+
+    /* Clear CCF flag */
+    __HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
+
+    /* Disable the peripheral */
+    __HAL_CRYP_DISABLE(hcryp);
+
+    /* Change the CRYP peripheral state */
+    hcryp->State = HAL_CRYP_STATE_READY;
+
+    /* Process unlocked */
+    __HAL_UNLOCK(hcryp);
+  } else {
+    /* Busy error code field */
+    hcryp->ErrorCode |= HAL_CRYP_ERROR_BUSY;
+    return HAL_ERROR;
+  }
+  /* Return function status */
+  return HAL_OK;
 }
 
 /**
@@ -222,109 +218,101 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
  */
 HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
                                                     uint32_t *AuthTag,
-                                                    uint32_t Timeout)
-{
-    uint32_t tagaddr = (uint32_t)AuthTag;
-    uint32_t tickstart;
+                                                    uint32_t Timeout) {
+  uint32_t tagaddr = (uint32_t)AuthTag;
+  uint32_t tickstart;
 
-    if (hcryp->State == HAL_CRYP_STATE_READY)
+  if (hcryp->State == HAL_CRYP_STATE_READY) {
+    /* Process locked */
+    __HAL_LOCK(hcryp);
+
+    /* Disable interrupts in case they were kept enabled to proceed
+       a single message in several iterations */
+    __HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_ERRIE);
+
+    /* Change the CRYP peripheral state */
+    hcryp->State = HAL_CRYP_STATE_BUSY;
+
+    /* Check if initialization phase has already been performed */
+    if (hcryp->Phase == CRYPEx_PHASE_PROCESS) {
+      /* Change the CRYP phase */
+      hcryp->Phase = CRYPEx_PHASE_FINAL;
+    } else /* Initialization phase has not been performed*/
     {
-        /* Process locked */
-        __HAL_LOCK(hcryp);
+      /* Disable the peripheral */
+      __HAL_CRYP_DISABLE(hcryp);
 
-        /* Disable interrupts in case they were kept enabled to proceed
-           a single message in several iterations */
-        __HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_ERRIE);
+      /* Sequence error code field */
+      hcryp->ErrorCode |= HAL_CRYP_ERROR_AUTH_TAG_SEQUENCE;
 
-        /* Change the CRYP peripheral state */
-        hcryp->State = HAL_CRYP_STATE_BUSY;
+      /* Change the CRYP peripheral state */
+      hcryp->State = HAL_CRYP_STATE_READY;
 
-        /* Check if initialization phase has already been performed */
-        if (hcryp->Phase == CRYPEx_PHASE_PROCESS)
-        {
-            /* Change the CRYP phase */
-            hcryp->Phase = CRYPEx_PHASE_FINAL;
-        }
-        else /* Initialization phase has not been performed*/
-        {
-            /* Disable the peripheral */
-            __HAL_CRYP_DISABLE(hcryp);
-
-            /* Sequence error code field */
-            hcryp->ErrorCode |= HAL_CRYP_ERROR_AUTH_TAG_SEQUENCE;
-
-            /* Change the CRYP peripheral state */
-            hcryp->State = HAL_CRYP_STATE_READY;
-
-            /* Process unlocked */
-            __HAL_UNLOCK(hcryp);
-            return HAL_ERROR;
-        }
-        /* Select final phase */
-        MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
-
-        /* Set encrypt  operating mode*/
-        MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
-
-        /* Wait for CCF flag to be raised */
-        tickstart = HAL_GetTick();
-        while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF))
-        {
-            /* Check for the Timeout */
-            if (Timeout != HAL_MAX_DELAY)
-            {
-                if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U))
-                {
-                    /* Disable the CRYP peripheral Clock */
-                    __HAL_CRYP_DISABLE(hcryp);
-
-                    /* Change state */
-                    hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
-                    hcryp->State = HAL_CRYP_STATE_READY;
-
-                    /* Process unlocked */
-                    __HAL_UNLOCK(hcryp);
-                    return HAL_ERROR;
-                }
-            }
-        }
-
-        /* Read the authentication TAG in the output FIFO */
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-        tagaddr += 4U;
-        *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
-
-        /* Clear CCF Flag */
-        __HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
-
-        /* Change the CRYP peripheral state */
-        hcryp->State = HAL_CRYP_STATE_READY;
-
-        /* Process unlocked */
-        __HAL_UNLOCK(hcryp);
-
-        /* Disable CRYP  */
-        __HAL_CRYP_DISABLE(hcryp);
+      /* Process unlocked */
+      __HAL_UNLOCK(hcryp);
+      return HAL_ERROR;
     }
-    else
-    {
-        /* Busy error code field */
-        hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
-        return HAL_ERROR;
+    /* Select final phase */
+    MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
+
+    /* Set encrypt  operating mode*/
+    MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
+
+    /* Wait for CCF flag to be raised */
+    tickstart = HAL_GetTick();
+    while (HAL_IS_BIT_CLR(hcryp->Instance->SR, AES_SR_CCF)) {
+      /* Check for the Timeout */
+      if (Timeout != HAL_MAX_DELAY) {
+        if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
+          /* Disable the CRYP peripheral Clock */
+          __HAL_CRYP_DISABLE(hcryp);
+
+          /* Change state */
+          hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
+          hcryp->State = HAL_CRYP_STATE_READY;
+
+          /* Process unlocked */
+          __HAL_UNLOCK(hcryp);
+          return HAL_ERROR;
+        }
+      }
     }
-    /* Return function status */
-    return HAL_OK;
+
+    /* Read the authentication TAG in the output FIFO */
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+    tagaddr += 4U;
+    *(uint32_t *)(tagaddr) = hcryp->Instance->DOUTR;
+
+    /* Clear CCF Flag */
+    __HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_CCF_CLEAR);
+
+    /* Change the CRYP peripheral state */
+    hcryp->State = HAL_CRYP_STATE_READY;
+
+    /* Process unlocked */
+    __HAL_UNLOCK(hcryp);
+
+    /* Disable CRYP  */
+    __HAL_CRYP_DISABLE(hcryp);
+  } else {
+    /* Busy error code field */
+    hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
+    return HAL_ERROR;
+  }
+  /* Return function status */
+  return HAL_OK;
 }
 
 /**
  * @}
  */
 
-/** @defgroup CRYPEx_Exported_Functions_Group2 Extended AES Key Derivations functions
+/** @defgroup CRYPEx_Exported_Functions_Group2 Extended AES Key Derivations
+functions
   * @brief   Extended Key Derivations functions.
   *
 @verbatim
@@ -342,33 +330,25 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
  * @brief  AES enable key derivation functions
  * @param  hcryp pointer to a CRYP_HandleTypeDef structure.
  */
-void HAL_CRYPEx_EnableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp)
-{
-    if (hcryp->State == HAL_CRYP_STATE_READY)
-    {
-        hcryp->AutoKeyDerivation = ENABLE;
-    }
-    else
-    {
-        /* Busy error code field */
-        hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
-    }
+void HAL_CRYPEx_EnableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp) {
+  if (hcryp->State == HAL_CRYP_STATE_READY) {
+    hcryp->AutoKeyDerivation = ENABLE;
+  } else {
+    /* Busy error code field */
+    hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
+  }
 }
 /**
  * @brief  AES disable key derivation functions
  * @param  hcryp pointer to a CRYP_HandleTypeDef structure.
  */
-void HAL_CRYPEx_DisableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp)
-{
-    if (hcryp->State == HAL_CRYP_STATE_READY)
-    {
-        hcryp->AutoKeyDerivation = DISABLE;
-    }
-    else
-    {
-        /* Busy error code field */
-        hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
-    }
+void HAL_CRYPEx_DisableAutoKeyDerivation(CRYP_HandleTypeDef *hcryp) {
+  if (hcryp->State == HAL_CRYP_STATE_READY) {
+    hcryp->AutoKeyDerivation = DISABLE;
+  } else {
+    /* Busy error code field */
+    hcryp->ErrorCode = HAL_CRYP_ERROR_BUSY;
+  }
 }
 
 /**

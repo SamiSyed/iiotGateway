@@ -53,33 +53,30 @@
  */
 
 /**
- * @brief  De-initialize CRC registers (Registers restored to their default values).
+ * @brief  De-initialize CRC registers (Registers restored to their default
+ * values).
  * @param  CRCx CRC Instance
  * @retval An ErrorStatus enumeration value:
  *          - SUCCESS: CRC registers are de-initialized
  *          - ERROR: CRC registers are not de-initialized
  */
-ErrorStatus LL_CRC_DeInit(CRC_TypeDef *CRCx)
-{
-    ErrorStatus status = SUCCESS;
+ErrorStatus LL_CRC_DeInit(CRC_TypeDef *CRCx) {
+  ErrorStatus status = SUCCESS;
 
-    /* Check the parameters */
-    assert_param(IS_CRC_ALL_INSTANCE(CRCx));
+  /* Check the parameters */
+  assert_param(IS_CRC_ALL_INSTANCE(CRCx));
 
-    if (CRCx == CRC)
-    {
-        /* Force CRC reset */
-        LL_AHB1_GRP1_ForceReset(LL_AHB1_GRP1_PERIPH_CRC);
+  if (CRCx == CRC) {
+    /* Force CRC reset */
+    LL_AHB1_GRP1_ForceReset(LL_AHB1_GRP1_PERIPH_CRC);
 
-        /* Release CRC reset */
-        LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_CRC);
-    }
-    else
-    {
-        status = ERROR;
-    }
+    /* Release CRC reset */
+    LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_CRC);
+  } else {
+    status = ERROR;
+  }
 
-    return (status);
+  return (status);
 }
 
 /**

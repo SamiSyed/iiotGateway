@@ -49,7 +49,8 @@ extern "C" {
 #define APP_LOG_ENABLED 0
 
 /**
- * @brief Activate monitoring (probes) of some internal RF signals for debug purpose
+ * @brief Activate monitoring (probes) of some internal RF signals for debug
+ * purpose
  */
 #define DEBUG_SUBGHZSPI_MONITORING_ENABLED 0
 
@@ -67,14 +68,15 @@ extern "C" {
 
 /**
  * @brief Enable/Disable MCU Debugger pins (dbg serial wires)
- * @note  by HW serial wires are ON by default, need to put them OFF to save power
+ * @note  by HW serial wires are ON by default, need to put them OFF to save
+ * power
  */
 #define DEBUGGER_ENABLED 0
 
 /**
  * @brief Disable Low Power mode
- * @note  0: LowPowerMode enabled. MCU enters stop2 mode, 1: LowPowerMode disabled. MCU enters sleep
- * mode only
+ * @note  0: LowPowerMode enabled. MCU enters stop2 mode, 1: LowPowerMode
+ * disabled. MCU enters sleep mode only
  */
 #define LOW_POWER_DISABLE 1
 

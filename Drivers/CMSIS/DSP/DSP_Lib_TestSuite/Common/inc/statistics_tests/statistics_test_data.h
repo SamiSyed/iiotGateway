@@ -24,9 +24,11 @@ ARR_DESC_DECLARE(statistics_output_ref);
 extern uint32_t statistics_idx_fut;
 extern uint32_t statistics_idx_ref;
 
-extern STATISTICS_BIGGEST_INPUT_TYPE statistics_output_f32_ref[STATISTICS_MAX_INPUT_ELEMENTS];
+extern STATISTICS_BIGGEST_INPUT_TYPE
+    statistics_output_f32_ref[STATISTICS_MAX_INPUT_ELEMENTS];
 
-extern STATISTICS_BIGGEST_INPUT_TYPE statistics_output_f32_fut[STATISTICS_MAX_INPUT_ELEMENTS];
+extern STATISTICS_BIGGEST_INPUT_TYPE
+    statistics_output_f32_fut[STATISTICS_MAX_INPUT_ELEMENTS];
 
 /* Block Sizes */
 ARR_DESC_DECLARE(statistics_block_sizes);

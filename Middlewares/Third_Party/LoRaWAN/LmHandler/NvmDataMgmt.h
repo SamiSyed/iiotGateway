@@ -41,29 +41,29 @@
 extern "C" {
 #endif
 
-typedef enum NvmDataErrorStatus_e
-{
-    NVM_DATA_ERROR = -1,
-    NVM_DATA_NO_UPDATED_DATA = -2,
-    NVM_DATA_NOT_AVAILABLE = -3,
-    NVM_DATA_INCONSISTENT = -4,
-    NVM_DATA_DISABLED = -5,
-    NVM_DATA_OK = 0
+typedef enum NvmDataErrorStatus_e {
+  NVM_DATA_ERROR = -1,
+  NVM_DATA_NO_UPDATED_DATA = -2,
+  NVM_DATA_NOT_AVAILABLE = -3,
+  NVM_DATA_INCONSISTENT = -4,
+  NVM_DATA_DISABLED = -5,
+  NVM_DATA_OK = 0
 
 } NvmDataErrorStatus_t;
 
 /*!
  * \brief NVM Management event.
  *
- * \param [in] notifyFlags Bitmap which contains the information about modules that
- *                         changed.
+ * \param [in] notifyFlags Bitmap which contains the information about modules
+ * that changed.
  */
 void NvmDataMgmtEvent(uint16_t notifyFlags);
 
 /*!
  * \brief Check the NVM Flag status and LoRaMAC state
  *
- * \retval status NVM_DATA_OK, NVM_DATA_DISABLED, NVM_DATA_NOT_AVAILABLE, NVM_DATA_NO_UPDATED_DATA
+ * \retval status NVM_DATA_OK, NVM_DATA_DISABLED, NVM_DATA_NOT_AVAILABLE,
+ * NVM_DATA_NO_UPDATED_DATA
  */
 int32_t NvmDataMgmtStoreBegin(void);
 

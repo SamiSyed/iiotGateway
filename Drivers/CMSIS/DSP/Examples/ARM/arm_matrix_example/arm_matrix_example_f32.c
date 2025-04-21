@@ -48,10 +48,11 @@
  *
  * \par Description:
  * \par
- * Demonstrates the use of Matrix Transpose, Matrix Muliplication, and Matrix Inverse
- * functions to apply least squares fitting to input data. Least squares fitting is
- * the procedure for finding the best-fitting curve that minimizes the sum of the
- * squares of the offsets (least square error) from a given set of data.
+ * Demonstrates the use of Matrix Transpose, Matrix Muliplication, and Matrix
+ * Inverse functions to apply least squares fitting to input data. Least squares
+ * fitting is the procedure for finding the best-fitting curve that minimizes
+ * the sum of the squares of the offsets (least square error) from a given set
+ * of data.
  *
  * \par Algorithm:
  * \par
@@ -95,34 +96,23 @@
 #define SNR_THRESHOLD 90
 
 /* --------------------------------------------------------------------------------
- * Test input data(Cycles) taken from FIR Q15 module for differant cases of blockSize
- * and tapSize
- * --------------------------------------------------------------------------------- */
+ * Test input data(Cycles) taken from FIR Q15 module for differant cases of
+ * blockSize and tapSize
+ * ---------------------------------------------------------------------------------
+ */
 
 const float32_t B_f32[4] = {782.0, 7577.0, 470.0, 4505.0};
 
 /* --------------------------------------------------------------------------------
- * Formula to fit is  C1 + C2 * numTaps + C3 * blockSize + C4 * numTaps * blockSize
- * -------------------------------------------------------------------------------- */
+ * Formula to fit is  C1 + C2 * numTaps + C3 * blockSize + C4 * numTaps *
+ * blockSize
+ * --------------------------------------------------------------------------------
+ */
 
 const float32_t A_f32[16] = {
     /* Const,   numTaps,   blockSize,   numTaps*blockSize */
-    1.0,
-    32.0,
-    4.0,
-    128.0,
-    1.0,
-    32.0,
-    64.0,
-    2048.0,
-    1.0,
-    16.0,
-    4.0,
-    64.0,
-    1.0,
-    16.0,
-    64.0,
-    1024.0,
+    1.0, 32.0, 4.0, 128.0, 1.0, 32.0, 64.0, 2048.0,
+    1.0, 16.0, 4.0, 64.0,  1.0, 16.0, 64.0, 1024.0,
 };
 
 /* ----------------------------------------------------------------------
@@ -148,90 +138,89 @@ float32_t snr;
  * Max magnitude FFT Bin test
  * ------------------------------------------------------------------- */
 
-int32_t main(void)
-{
-    arm_matrix_instance_f32 A;     /* Matrix A Instance */
-    arm_matrix_instance_f32 AT;    /* Matrix AT(A transpose) instance */
-    arm_matrix_instance_f32 ATMA;  /* Matrix ATMA( AT multiply with A) instance */
-    arm_matrix_instance_f32 ATMAI; /* Matrix ATMAI(Inverse of ATMA) instance */
-    arm_matrix_instance_f32 B;     /* Matrix B instance */
-    arm_matrix_instance_f32 X;     /* Matrix X(Unknown Matrix) instance */
+int32_t main(void) {
 
-    uint32_t srcRows, srcColumns; /* Temporary variables */
-    arm_status status;
+  arm_matrix_instance_f32 A;     /* Matrix A Instance */
+  arm_matrix_instance_f32 AT;    /* Matrix AT(A transpose) instance */
+  arm_matrix_instance_f32 ATMA;  /* Matrix ATMA( AT multiply with A) instance */
+  arm_matrix_instance_f32 ATMAI; /* Matrix ATMAI(Inverse of ATMA) instance */
+  arm_matrix_instance_f32 B;     /* Matrix B instance */
+  arm_matrix_instance_f32 X;     /* Matrix X(Unknown Matrix) instance */
 
-    /* Initialise A Matrix Instance with numRows, numCols and data array(A_f32) */
-    srcRows = 4;
-    srcColumns = 4;
-    arm_mat_init_f32(&A, srcRows, srcColumns, (float32_t *)A_f32);
+  uint32_t srcRows, srcColumns; /* Temporary variables */
+  arm_status status;
 
-    /* Initialise Matrix Instance AT with numRows, numCols and data array(AT_f32) */
-    srcRows = 4;
-    srcColumns = 4;
-    arm_mat_init_f32(&AT, srcRows, srcColumns, AT_f32);
+  /* Initialise A Matrix Instance with numRows, numCols and data array(A_f32) */
+  srcRows = 4;
+  srcColumns = 4;
+  arm_mat_init_f32(&A, srcRows, srcColumns, (float32_t *)A_f32);
 
-    /* calculation of A transpose */
-    status = arm_mat_trans_f32(&A, &AT);
+  /* Initialise Matrix Instance AT with numRows, numCols and data array(AT_f32)
+   */
+  srcRows = 4;
+  srcColumns = 4;
+  arm_mat_init_f32(&AT, srcRows, srcColumns, AT_f32);
 
-    /* Initialise ATMA Matrix Instance with numRows, numCols and data array(ATMA_f32) */
-    srcRows = 4;
-    srcColumns = 4;
-    arm_mat_init_f32(&ATMA, srcRows, srcColumns, ATMA_f32);
+  /* calculation of A transpose */
+  status = arm_mat_trans_f32(&A, &AT);
 
-    /* calculation of AT Multiply with A */
-    status = arm_mat_mult_f32(&AT, &A, &ATMA);
+  /* Initialise ATMA Matrix Instance with numRows, numCols and data
+   * array(ATMA_f32) */
+  srcRows = 4;
+  srcColumns = 4;
+  arm_mat_init_f32(&ATMA, srcRows, srcColumns, ATMA_f32);
 
-    /* Initialise ATMAI Matrix Instance with numRows, numCols and data array(ATMAI_f32) */
-    srcRows = 4;
-    srcColumns = 4;
-    arm_mat_init_f32(&ATMAI, srcRows, srcColumns, ATMAI_f32);
+  /* calculation of AT Multiply with A */
+  status = arm_mat_mult_f32(&AT, &A, &ATMA);
 
-    /* calculation of Inverse((Transpose(A) * A) */
-    status = arm_mat_inverse_f32(&ATMA, &ATMAI);
+  /* Initialise ATMAI Matrix Instance with numRows, numCols and data
+   * array(ATMAI_f32) */
+  srcRows = 4;
+  srcColumns = 4;
+  arm_mat_init_f32(&ATMAI, srcRows, srcColumns, ATMAI_f32);
 
-    /* calculation of (Inverse((Transpose(A) * A)) *  Transpose(A)) */
-    status = arm_mat_mult_f32(&ATMAI, &AT, &ATMA);
+  /* calculation of Inverse((Transpose(A) * A) */
+  status = arm_mat_inverse_f32(&ATMA, &ATMAI);
 
-    /* Initialise B Matrix Instance with numRows, numCols and data array(B_f32) */
-    srcRows = 4;
-    srcColumns = 1;
-    arm_mat_init_f32(&B, srcRows, srcColumns, (float32_t *)B_f32);
+  /* calculation of (Inverse((Transpose(A) * A)) *  Transpose(A)) */
+  status = arm_mat_mult_f32(&ATMAI, &AT, &ATMA);
 
-    /* Initialise X Matrix Instance with numRows, numCols and data array(X_f32) */
-    srcRows = 4;
-    srcColumns = 1;
-    arm_mat_init_f32(&X, srcRows, srcColumns, X_f32);
+  /* Initialise B Matrix Instance with numRows, numCols and data array(B_f32) */
+  srcRows = 4;
+  srcColumns = 1;
+  arm_mat_init_f32(&B, srcRows, srcColumns, (float32_t *)B_f32);
 
-    /* calculation ((Inverse((Transpose(A) * A)) *  Transpose(A)) * B) */
-    status = arm_mat_mult_f32(&ATMA, &B, &X);
+  /* Initialise X Matrix Instance with numRows, numCols and data array(X_f32) */
+  srcRows = 4;
+  srcColumns = 1;
+  arm_mat_init_f32(&X, srcRows, srcColumns, X_f32);
 
-    /* Comparison of reference with test output */
-    snr = arm_snr_f32((float32_t *)xRef_f32, X_f32, 4);
+  /* calculation ((Inverse((Transpose(A) * A)) *  Transpose(A)) * B) */
+  status = arm_mat_mult_f32(&ATMA, &B, &X);
 
-    /*------------------------------------------------------------------------------
-     *            Initialise status depending on SNR calculations
-     *------------------------------------------------------------------------------*/
-    if (snr > SNR_THRESHOLD)
-    {
-        status = ARM_MATH_SUCCESS;
-    }
-    else
-    {
-        status = ARM_MATH_TEST_FAILURE;
-    }
+  /* Comparison of reference with test output */
+  snr = arm_snr_f32((float32_t *)xRef_f32, X_f32, 4);
 
-    /* ----------------------------------------------------------------------
-    ** Loop here if the signals fail the PASS check.
-    ** This denotes a test failure
-    ** ------------------------------------------------------------------- */
-    if (status != ARM_MATH_SUCCESS)
-    {
-        while (1)
-            ;
-    }
+  /*------------------------------------------------------------------------------
+   *            Initialise status depending on SNR calculations
+   *------------------------------------------------------------------------------*/
+  if (snr > SNR_THRESHOLD) {
+    status = ARM_MATH_SUCCESS;
+  } else {
+    status = ARM_MATH_TEST_FAILURE;
+  }
 
+  /* ----------------------------------------------------------------------
+  ** Loop here if the signals fail the PASS check.
+  ** This denotes a test failure
+  ** ------------------------------------------------------------------- */
+  if (status != ARM_MATH_SUCCESS) {
     while (1)
-        ; /* main function does not return */
+      ;
+  }
+
+  while (1)
+    ; /* main function does not return */
 }
 
 /** \endlink */

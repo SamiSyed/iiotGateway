@@ -66,59 +66,58 @@ extern "C" {
 /**
  * @brief Timer mode
  */
-typedef enum
-{
-    UTIL_TIMER_ONESHOT = 0, /*!<One-shot timer. */
-    UTIL_TIMER_PERIODIC = 1 /*!<Periodic timer. */
+typedef enum {
+  UTIL_TIMER_ONESHOT = 0, /*!<One-shot timer. */
+  UTIL_TIMER_PERIODIC = 1 /*!<Periodic timer. */
 } UTIL_TIMER_Mode_t;
 
 /**
  * @brief Timer status
  */
-typedef enum
-{
-    UTIL_TIMER_OK = 0,            /*!<Operation terminated successfully.*/
-    UTIL_TIMER_INVALID_PARAM = 1, /*!<Invalid Parameter.                */
-    UTIL_TIMER_HW_ERROR = 2,      /*!<Hardware Error.                   */
-    UTIL_TIMER_UNKNOWN_ERROR = 3  /*!<Unknown Error.                    */
+typedef enum {
+  UTIL_TIMER_OK = 0,            /*!<Operation terminated successfully.*/
+  UTIL_TIMER_INVALID_PARAM = 1, /*!<Invalid Parameter.                */
+  UTIL_TIMER_HW_ERROR = 2,      /*!<Hardware Error.                   */
+  UTIL_TIMER_UNKNOWN_ERROR = 3  /*!<Unknown Error.                    */
 } UTIL_TIMER_Status_t;
 
 /**
  * @brief Timer object description
  */
-typedef struct TimerEvent_s
-{
-    uint32_t Timestamp;        /*!<Expiring timer value in ticks from TimerContext */
-    uint32_t ReloadValue;      /*!<Reload Value when Timer is restarted            */
-    uint8_t IsPending;         /*!<Is the timer waiting for an event               */
-    uint8_t IsRunning;         /*!<Is the timer running                            */
-    uint8_t IsReloadStopped;   /*!<Is the reload stopped                           */
-    UTIL_TIMER_Mode_t Mode;    /*!<Timer type : one-shot/continuous                */
-    void (*Callback)(void *);  /*!<callback function                               */
-    void *argument;            /*!<callback argument                               */
-    struct TimerEvent_s *Next; /*!<Pointer to the next Timer object.               */
+typedef struct TimerEvent_s {
+  uint32_t Timestamp;   /*!<Expiring timer value in ticks from TimerContext */
+  uint32_t ReloadValue; /*!<Reload Value when Timer is restarted            */
+  uint8_t IsPending;    /*!<Is the timer waiting for an event               */
+  uint8_t IsRunning;    /*!<Is the timer running                            */
+  uint8_t IsReloadStopped; /*!<Is the reload stopped */
+  UTIL_TIMER_Mode_t Mode; /*!<Timer type : one-shot/continuous                */
+  void (*Callback)(void *); /*!<callback function */
+  void *argument; /*!<callback argument                               */
+  struct TimerEvent_s *Next; /*!<Pointer to the next Timer object. */
 } UTIL_TIMER_Object_t;
 
 /**
  * @brief Timer driver definition
  */
-typedef struct
-{
-    UTIL_TIMER_Status_t (*InitTimer)(void);   /*!< Initialisation of the low layer timer    */
-    UTIL_TIMER_Status_t (*DeInitTimer)(void); /*!< Un-Initialisation of the low layer timer */
+typedef struct {
+  UTIL_TIMER_Status_t (*InitTimer)(
+      void); /*!< Initialisation of the low layer timer    */
+  UTIL_TIMER_Status_t (*DeInitTimer)(
+      void); /*!< Un-Initialisation of the low layer timer */
 
-    UTIL_TIMER_Status_t (*StartTimerEvt)(uint32_t timeout); /*!< Start the low layer timer */
-    UTIL_TIMER_Status_t (*StopTimerEvt)(void);              /*!< Stop the low layer timer */
+  UTIL_TIMER_Status_t (*StartTimerEvt)(
+      uint32_t timeout);                     /*!< Start the low layer timer */
+  UTIL_TIMER_Status_t (*StopTimerEvt)(void); /*!< Stop the low layer timer */
 
-    uint32_t (*SetTimerContext)(void); /*!< Set the timer context */
-    uint32_t (*GetTimerContext)(void); /*!< Get the timer context */
+  uint32_t (*SetTimerContext)(void); /*!< Set the timer context */
+  uint32_t (*GetTimerContext)(void); /*!< Get the timer context */
 
-    uint32_t (*GetTimerElapsedTime)(void); /*!< Get elapsed time */
-    uint32_t (*GetTimerValue)(void);       /*!< Get timer value */
-    uint32_t (*GetMinimumTimeout)(void);   /*!< Get Minimum timeout */
+  uint32_t (*GetTimerElapsedTime)(void); /*!< Get elapsed time */
+  uint32_t (*GetTimerValue)(void);       /*!< Get timer value */
+  uint32_t (*GetMinimumTimeout)(void);   /*!< Get Minimum timeout */
 
-    uint32_t (*ms2Tick)(uint32_t timeMicroSec); /*!< convert ms to tick */
-    uint32_t (*Tick2ms)(uint32_t tick);         /*!< convert tick into ms */
+  uint32_t (*ms2Tick)(uint32_t timeMicroSec); /*!< convert ms to tick */
+  uint32_t (*Tick2ms)(uint32_t tick);         /*!< convert tick into ms */
 } UTIL_TIMER_Driver_s;
 
 /**
@@ -129,7 +128,8 @@ typedef uint32_t UTIL_TIMER_Time_t;
  *  @}
  */
 
-/* Exported variables ------------------------------------------------------------*/
+/* Exported variables
+ * ------------------------------------------------------------*/
 /** @defgroup TIMER_SERVER_exported_Variable TIMER_SERVER exported Variable
  *  @{
  */
@@ -184,8 +184,7 @@ UTIL_TIMER_Status_t UTIL_TIMER_DeInit(void);
 UTIL_TIMER_Status_t UTIL_TIMER_Create(UTIL_TIMER_Object_t *TimerObject,
                                       uint32_t PeriodValue,
                                       UTIL_TIMER_Mode_t Mode,
-                                      void (*Callback)(void *),
-                                      void *Argument);
+                                      void (*Callback)(void *), void *Argument);
 
 /**
  * @brief Start and adds the timer object to the list of timer events
@@ -220,7 +219,8 @@ UTIL_TIMER_Status_t UTIL_TIMER_Stop(UTIL_TIMER_Object_t *TimerObject);
  * @param NewPeriodValue new period value of the timer
  * @retval Status based on @ref UTIL_TIMER_Status_t
  */
-UTIL_TIMER_Status_t UTIL_TIMER_SetPeriod(UTIL_TIMER_Object_t *TimerObject, uint32_t NewPeriodValue);
+UTIL_TIMER_Status_t UTIL_TIMER_SetPeriod(UTIL_TIMER_Object_t *TimerObject,
+                                         uint32_t NewPeriodValue);
 
 /**
  * @brief update the period and start the timer
@@ -239,7 +239,8 @@ UTIL_TIMER_Status_t UTIL_TIMER_SetReloadMode(UTIL_TIMER_Object_t *TimerObject,
  * @param Time time before expiration in ms
  * @retval Status based on @ref UTIL_TIMER_Status_t
  */
-UTIL_TIMER_Status_t UTIL_TIMER_GetRemainingTime(UTIL_TIMER_Object_t *TimerObject, uint32_t *Time);
+UTIL_TIMER_Status_t
+UTIL_TIMER_GetRemainingTime(UTIL_TIMER_Object_t *TimerObject, uint32_t *Time);
 
 /**
  * @brief return timer state

@@ -29,8 +29,9 @@
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
  * \defgroup  LORAMACTEST LoRa MAC layer test function implementation
- *            This module specifies the API implementation of test function of the LoRaMAC layer.
- *            The functions in this file are only for testing purposes only.
+ *            This module specifies the API implementation of test function of
+ * the LoRaMAC layer. The functions in this file are only for testing purposes
+ * only.
  * \{
  */
 #ifndef __LORAMACTEST_H__
@@ -44,7 +45,8 @@ extern "C" {
  * \brief   Enabled or disables the duty cycle
  *
  * \details This is a test function. It shall be used for testing purposes only.
- *          Changing this attribute may lead to a non-conformance LoRaMac operation.
+ *          Changing this attribute may lead to a non-conformance LoRaMac
+ * operation.
  *
  * \param   [in] enable - Enabled or disables the duty cycle
  */

@@ -37,24 +37,22 @@
 typedef void (*funcptr_void)(void) __attribute__((cmse_nonsecure_call));
 
 /* Secure main() */
-int main(void)
-{
-    funcptr_void NonSecure_ResetHandler;
+int main(void) {
+  funcptr_void NonSecure_ResetHandler;
 
-    /* Add user setup code for secure part here*/
+  /* Add user setup code for secure part here*/
 
-    /* Set non-secure main stack (MSP_NS) */
-    __TZ_set_MSP_NS(*((uint32_t *)(TZ_START_NS)));
+  /* Set non-secure main stack (MSP_NS) */
+  __TZ_set_MSP_NS(*((uint32_t *)(TZ_START_NS)));
 
-    /* Get non-secure reset handler */
-    NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));
+  /* Get non-secure reset handler */
+  NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));
 
-    /* Start non-secure state software application */
-    NonSecure_ResetHandler();
+  /* Start non-secure state software application */
+  NonSecure_ResetHandler();
 
-    /* Non-secure software does not return, this code is not executed */
-    while (1)
-    {
-        __NOP();
-    }
+  /* Non-secure software does not return, this code is not executed */
+  while (1) {
+    __NOP();
+  }
 }

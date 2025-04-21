@@ -30,7 +30,13 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 #include "stdbool.h"
+
+#define RX_BUFFER_SIZE_WIFI 500
+#define TX_BUFFER_SIZE_WIFI 1500
+
 /* USER CODE END Includes */
+
+extern UART_HandleTypeDef hlpuart1;
 
 extern UART_HandleTypeDef huart1;
 
@@ -40,6 +46,7 @@ extern UART_HandleTypeDef huart2;
 
 /* USER CODE END Private defines */
 
+void MX_LPUART1_UART_Init(void);
 void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
@@ -49,6 +56,9 @@ bool replyContains(char *reply);
 bool isOKReceived(void);
 void cleanAllBuffers(void);
 void printfMainBuffer(void);
+void printBufferWifi(void);
+bool isWiFiBufferContain(char *reply);
+void getWiFiBufferData(char *data);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

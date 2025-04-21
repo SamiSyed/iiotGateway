@@ -44,13 +44,20 @@ extern "C" {
 /** @defgroup SMBUSEx_FastModePlus SMBUS Extended Fast Mode Plus
  * @{
  */
-#define SMBUS_FASTMODEPLUS_PB6 SYSCFG_CFGR1_I2C_PB6_FMP /*!< Enable Fast Mode Plus on PB6       */
-#define SMBUS_FASTMODEPLUS_PB7 SYSCFG_CFGR1_I2C_PB7_FMP /*!< Enable Fast Mode Plus on PB7       */
-#define SMBUS_FASTMODEPLUS_PB8 SYSCFG_CFGR1_I2C_PB8_FMP /*!< Enable Fast Mode Plus on PB8       */
-#define SMBUS_FASTMODEPLUS_PB9 SYSCFG_CFGR1_I2C_PB9_FMP /*!< Enable Fast Mode Plus on PB9       */
-#define SMBUS_FASTMODEPLUS_I2C1 SYSCFG_CFGR1_I2C1_FMP   /*!< Enable Fast Mode Plus on I2C1 pins */
-#define SMBUS_FASTMODEPLUS_I2C2 SYSCFG_CFGR1_I2C2_FMP   /*!< Enable Fast Mode Plus on I2C2 pins */
-#define SMBUS_FASTMODEPLUS_I2C3 SYSCFG_CFGR1_I2C3_FMP   /*!< Enable Fast Mode Plus on I2C3 pins */
+#define SMBUS_FASTMODEPLUS_PB6                                                 \
+  SYSCFG_CFGR1_I2C_PB6_FMP /*!< Enable Fast Mode Plus on PB6       */
+#define SMBUS_FASTMODEPLUS_PB7                                                 \
+  SYSCFG_CFGR1_I2C_PB7_FMP /*!< Enable Fast Mode Plus on PB7       */
+#define SMBUS_FASTMODEPLUS_PB8                                                 \
+  SYSCFG_CFGR1_I2C_PB8_FMP /*!< Enable Fast Mode Plus on PB8       */
+#define SMBUS_FASTMODEPLUS_PB9                                                 \
+  SYSCFG_CFGR1_I2C_PB9_FMP /*!< Enable Fast Mode Plus on PB9       */
+#define SMBUS_FASTMODEPLUS_I2C1                                                \
+  SYSCFG_CFGR1_I2C1_FMP /*!< Enable Fast Mode Plus on I2C1 pins */
+#define SMBUS_FASTMODEPLUS_I2C2                                                \
+  SYSCFG_CFGR1_I2C2_FMP /*!< Enable Fast Mode Plus on I2C2 pins */
+#define SMBUS_FASTMODEPLUS_I2C3                                                \
+  SYSCFG_CFGR1_I2C3_FMP /*!< Enable Fast Mode Plus on I2C3 pins */
 /**
  * @}
  */
@@ -76,7 +83,8 @@ extern "C" {
 /** @addtogroup SMBUSEx_Exported_Functions_Group2 WakeUp Mode Functions
  * @{
  */
-/* Peripheral Control functions  ************************************************/
+/* Peripheral Control functions
+ * ************************************************/
 HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus);
 HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus);
 /**
@@ -109,14 +117,14 @@ void HAL_SMBUSEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
 /** @defgroup SMBUSEx_Private_Macro SMBUS Extended Private Macros
  * @{
  */
-#define IS_SMBUS_FASTMODEPLUS(__CONFIG__)                                                          \
-    ((((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB6)) == SMBUS_FASTMODEPLUS_PB6)                         \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB7)) == SMBUS_FASTMODEPLUS_PB7)                      \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB8)) == SMBUS_FASTMODEPLUS_PB8)                      \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB9)) == SMBUS_FASTMODEPLUS_PB9)                      \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C1)) == SMBUS_FASTMODEPLUS_I2C1)                    \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C2)) == SMBUS_FASTMODEPLUS_I2C2)                    \
-     || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C3)) == SMBUS_FASTMODEPLUS_I2C3))
+#define IS_SMBUS_FASTMODEPLUS(__CONFIG__)                                      \
+  ((((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB6)) == SMBUS_FASTMODEPLUS_PB6) ||    \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB7)) == SMBUS_FASTMODEPLUS_PB7) ||    \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB8)) == SMBUS_FASTMODEPLUS_PB8) ||    \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB9)) == SMBUS_FASTMODEPLUS_PB9) ||    \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C1)) == SMBUS_FASTMODEPLUS_I2C1) ||  \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C2)) == SMBUS_FASTMODEPLUS_I2C2) ||  \
+   (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C3)) == SMBUS_FASTMODEPLUS_I2C3))
 /**
  * @}
  */

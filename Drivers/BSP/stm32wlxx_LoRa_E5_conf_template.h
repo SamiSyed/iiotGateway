@@ -39,7 +39,8 @@ extern "C" {
  * @{
  */
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_CONFIG_Exported_Constants Exported Constants
+/** @defgroup STM32WLXX_LoRa_E5_mini_CONFIG_Exported_Constants Exported
+ * Constants
  * @{
  */
 /* COM usage define */

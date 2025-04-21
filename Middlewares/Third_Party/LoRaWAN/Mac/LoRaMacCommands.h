@@ -51,63 +51,61 @@ extern "C" {
  */
 typedef struct sMacCommand MacCommand_t;
 
-struct sMacCommand
-{
-    /*!
-     *  The pointer to the next MAC Command element in the list
-     */
-    MacCommand_t *Next;
-    /*!
-     * MAC command identifier
-     */
-    uint8_t CID;
-    /*!
-     * MAC command payload
-     */
-    uint8_t Payload[LORAMAC_COMMADS_MAX_NUM_OF_PARAMS];
-    /*!
-     * Size of MAC command payload
-     */
-    size_t PayloadSize;
-    /*!
-     * Indicates if it's a sticky MAC command
-     */
-    bool IsSticky;
-    /*!
-     * The command requires an explicit confirmation
-     */
-    bool IsConfirmationRequired;
+struct sMacCommand {
+  /*!
+   *  The pointer to the next MAC Command element in the list
+   */
+  MacCommand_t *Next;
+  /*!
+   * MAC command identifier
+   */
+  uint8_t CID;
+  /*!
+   * MAC command payload
+   */
+  uint8_t Payload[LORAMAC_COMMADS_MAX_NUM_OF_PARAMS];
+  /*!
+   * Size of MAC command payload
+   */
+  size_t PayloadSize;
+  /*!
+   * Indicates if it's a sticky MAC command
+   */
+  bool IsSticky;
+  /*!
+   * The command requires an explicit confirmation
+   */
+  bool IsConfirmationRequired;
 };
 
 /*!
  * LoRaMac Commands Status
  */
-typedef enum eLoRaMacCommandsStatus
-{
-    /*!
-     * No error occurred
-     */
-    LORAMAC_COMMANDS_SUCCESS = 0,
-    /*!
-     * Null pointer exception
-     */
-    LORAMAC_COMMANDS_ERROR_NPE,
-    /*!
-     * There is no memory left to add a further MAC command
-     */
-    LORAMAC_COMMANDS_ERROR_MEMORY,
-    /*!
-     * MAC command not found.
-     */
-    LORAMAC_COMMANDS_ERROR_CMD_NOT_FOUND,
-    /*!
-     * Unknown or corrupted command error occurred.
-     */
-    LORAMAC_COMMANDS_ERROR_UNKNOWN_CMD,
-    /*!
-     * Undefined Error occurred
-     */
-    LORAMAC_COMMANDS_ERROR,
+typedef enum eLoRaMacCommandsStatus {
+  /*!
+   * No error occurred
+   */
+  LORAMAC_COMMANDS_SUCCESS = 0,
+  /*!
+   * Null pointer exception
+   */
+  LORAMAC_COMMANDS_ERROR_NPE,
+  /*!
+   * There is no memory left to add a further MAC command
+   */
+  LORAMAC_COMMANDS_ERROR_MEMORY,
+  /*!
+   * MAC command not found.
+   */
+  LORAMAC_COMMANDS_ERROR_CMD_NOT_FOUND,
+  /*!
+   * Unknown or corrupted command error occurred.
+   */
+  LORAMAC_COMMANDS_ERROR_UNKNOWN_CMD,
+  /*!
+   * Undefined Error occurred
+   */
+  LORAMAC_COMMANDS_ERROR,
 } LoRaMacCommandStatus_t;
 
 /*!
@@ -132,7 +130,8 @@ LoRaMacCommandStatus_t LoRaMacCommandsInit(void);
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsAddCmd(uint8_t cid, uint8_t *payload, size_t payloadSize);
+LoRaMacCommandStatus_t LoRaMacCommandsAddCmd(uint8_t cid, uint8_t *payload,
+                                             size_t payloadSize);
 
 /*!
  * \brief Remove a MAC command.
@@ -151,7 +150,8 @@ LoRaMacCommandStatus_t LoRaMacCommandsRemoveCmd(MacCommand_t *macCmd);
  *
  * \retval                     - Status of the operation
  */
-LoRaMacCommandStatus_t LoRaMacCommandsGetCmd(uint8_t cid, MacCommand_t **macCmd);
+LoRaMacCommandStatus_t LoRaMacCommandsGetCmd(uint8_t cid,
+                                             MacCommand_t **macCmd);
 
 /*!
  * \brief Remove all none sticky MAC commands.
@@ -180,8 +180,8 @@ LoRaMacCommandStatus_t LoRaMacCommandsGetSizeSerializedCmds(size_t *size);
  * \brief Get as many as possible MAC commands serialized
  *
  * \param [in]  availableSize  - Available size of memory for MAC commands
- * \param [out] effectiveSize  - Size of memory which was effectively used for serializing.
- * \param [out] buffer         - Destination data buffer
+ * \param [out] effectiveSize  - Size of memory which was effectively used for
+ * serializing. \param [out] buffer         - Destination data buffer
  *
  * \retval                     - Status of the operation
  */

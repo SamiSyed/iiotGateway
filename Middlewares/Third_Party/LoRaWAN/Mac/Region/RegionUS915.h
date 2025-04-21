@@ -206,13 +206,11 @@ extern "C" {
 
 /*!
  * Band 0 definition
- * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, LastMaxCreditAssignTime, TimeCredits,
- * MaxTimeCredits, ReadyForTransmission }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, LastMaxCreditAssignTime,
+ * TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define US915_BAND0                                                                                \
-    {                                                                                              \
-        1, US915_MAX_TX_POWER, 0, 0, 0, 0, 0                                                       \
-    } //  100.0 %
+#define US915_BAND0                                                            \
+  { 1, US915_MAX_TX_POWER, 0, 0, 0, 0, 0 } //  100.0 %
 
 /*!
  * Defines the first channel for RX window 1 for US band
@@ -232,27 +230,15 @@ extern "C" {
 /*!
  * Data rates table definition
  */
-static const uint8_t DataratesUS915[] = {10, 9, 8, 7, 8, 0, 0, 0, 12, 11, 10, 9, 8, 7, 0, 0};
+static const uint8_t DataratesUS915[] = {10, 9,  8,  7, 8, 0, 0, 0,
+                                         12, 11, 10, 9, 8, 7, 0, 0};
 
 /*!
  * Bandwidths table definition in Hz
  */
-static const uint32_t BandwidthsUS915[] = {125000,
-                                           125000,
-                                           125000,
-                                           125000,
-                                           500000,
-                                           0,
-                                           0,
-                                           0,
-                                           500000,
-                                           500000,
-                                           500000,
-                                           500000,
-                                           500000,
-                                           500000,
-                                           0,
-                                           0};
+static const uint32_t BandwidthsUS915[] = {
+    125000, 125000, 125000, 125000, 500000, 0,      0, 0,
+    500000, 500000, 500000, 500000, 500000, 500000, 0, 0};
 
 /*!
  * Up/Down link data rates offset definition
@@ -266,16 +252,18 @@ static const int8_t DatarateOffsetsUS915[5][4] = {
 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index. Cannot operate with
+ * repeater.
  */
-static const uint8_t MaxPayloadOfDatarateUS915[]
-    = {11, 53, 125, 242, 242, 0, 0, 0, 53, 129, 242, 242, 242, 242, 0, 0};
+static const uint8_t MaxPayloadOfDatarateUS915[] = {
+    11, 53, 125, 242, 242, 0, 0, 0, 53, 129, 242, 242, 242, 242, 0, 0};
 
 /*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
+ * Maximum payload with respect to the datarate index. Can operate with
+ * repeater.
  */
-static const uint8_t MaxPayloadOfDatarateRepeaterUS915[]
-    = {11, 53, 125, 242, 242, 0, 0, 0, 33, 109, 222, 222, 222, 222, 0, 0};
+static const uint8_t MaxPayloadOfDatarateRepeaterUS915[] = {
+    11, 53, 125, 242, 242, 0, 0, 0, 33, 109, 222, 222, 222, 222, 0, 0};
 
 /*!
  * \brief The function gets a value of a specific phy attribute.
@@ -333,16 +321,17 @@ bool RegionUS915ChanMaskSet(ChanMaskSetParams_t *chanMaskSet);
  *
  * \param [in] datarate     Rx window datarate index to be used
  *
- * \param [in] minRxSymbols Minimum required number of symbols to detect an Rx frame.
+ * \param [in] minRxSymbols Minimum required number of symbols to detect an Rx
+ * frame.
  *
- * \param [in] rxError      System maximum timing error of the receiver. In milliseconds
- *                          The receiver will turn on in a [-rxError : +rxError] ms
- *                          interval around RxOffset
+ * \param [in] rxError      System maximum timing error of the receiver. In
+ * milliseconds The receiver will turn on in a [-rxError : +rxError] ms interval
+ * around RxOffset
  *
- * \param [out] rxConfigParams Returns updated WindowTimeout and WindowOffset fields.
+ * \param [out] rxConfigParams Returns updated WindowTimeout and WindowOffset
+ * fields.
  */
-void RegionUS915ComputeRxWindowParameters(int8_t datarate,
-                                          uint8_t minRxSymbols,
+void RegionUS915ComputeRxWindowParameters(int8_t datarate, uint8_t minRxSymbols,
                                           uint32_t rxError,
                                           RxConfigParams_t *rxConfigParams);
 
@@ -368,7 +357,8 @@ bool RegionUS915RxConfig(RxConfigParams_t *rxConfig, int8_t *datarate);
  *
  * \retval Returns true, if the configuration was applied successfully.
  */
-bool RegionUS915TxConfig(TxConfigParams_t *txConfig, int8_t *txPower, TimerTime_t *txTimeOnAir);
+bool RegionUS915TxConfig(TxConfigParams_t *txConfig, int8_t *txPower,
+                         TimerTime_t *txTimeOnAir);
 
 /*!
  * \brief The function processes a Link ADR Request.
@@ -383,12 +373,11 @@ bool RegionUS915TxConfig(TxConfigParams_t *txConfig, int8_t *txPower, TimerTime_
  *
  * \param [out] nbBytesParsed The number bytes which were parsed.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
-uint8_t RegionUS915LinkAdrReq(LinkAdrReqParams_t *linkAdrReq,
-                              int8_t *drOut,
-                              int8_t *txPowOut,
-                              uint8_t *nbRepOut,
+uint8_t RegionUS915LinkAdrReq(LinkAdrReqParams_t *linkAdrReq, int8_t *drOut,
+                              int8_t *txPowOut, uint8_t *nbRepOut,
                               uint8_t *nbBytesParsed);
 
 /*!
@@ -396,7 +385,8 @@ uint8_t RegionUS915LinkAdrReq(LinkAdrReqParams_t *linkAdrReq,
  *
  * \param [in] rxParamSetupReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 uint8_t RegionUS915RxParamSetupReq(RxParamSetupReqParams_t *rxParamSetupReq);
 
@@ -405,7 +395,8 @@ uint8_t RegionUS915RxParamSetupReq(RxParamSetupReqParams_t *rxParamSetupReq);
  *
  * \param [in] newChannelReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 int8_t RegionUS915NewChannelReq(NewChannelReqParams_t *newChannelReq);
 
@@ -414,9 +405,9 @@ int8_t RegionUS915NewChannelReq(NewChannelReqParams_t *newChannelReq);
  *
  * \param [in] txParamSetupReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
- *         Returns -1, if the functionality is not implemented. In this case, the end node
- *         shall not process the command.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification. Returns -1, if the functionality is not implemented. In this
+ * case, the end node shall not process the command.
  */
 int8_t RegionUS915TxParamSetupReq(TxParamSetupReqParams_t *txParamSetupReq);
 
@@ -425,7 +416,8 @@ int8_t RegionUS915TxParamSetupReq(TxParamSetupReqParams_t *txParamSetupReq);
  *
  * \param [in] dlChannelReq Pointer to the function parameters.
  *
- * \retval Returns the status of the operation, according to the LoRaMAC specification.
+ * \retval Returns the status of the operation, according to the LoRaMAC
+ * specification.
  */
 int8_t RegionUS915DlChannelReq(DlChannelReqParams_t *dlChannelReq);
 
@@ -447,16 +439,16 @@ int8_t RegionUS915AlternateDr(int8_t currentDr, AlternateDrType_t type);
  *
  * \param [out] channel Next channel to use for TX.
  *
- * \param [out] time Time to wait for the next transmission according to the duty
- *              cycle.
+ * \param [out] time Time to wait for the next transmission according to the
+ * duty cycle.
  *
  * \param [out] aggregatedTimeOff Updates the aggregated time off.
  *
- * \retval Function status [1: OK, 0: Unable to find a channel on the current datarate]
+ * \retval Function status [1: OK, 0: Unable to find a channel on the current
+ * datarate]
  */
 LoRaMacStatus_t RegionUS915NextChannel(NextChanParams_t *nextChanParams,
-                                       uint8_t *channel,
-                                       TimerTime_t *time,
+                                       uint8_t *channel, TimerTime_t *time,
                                        TimerTime_t *aggregatedTimeOff);
 
 /*!
@@ -489,7 +481,8 @@ void RegionUS915SetContinuousWave(ContinuousWaveParams_t *continuousWave);
 /*!
  * \brief Computes new datarate according to the given offset
  *
- * \param [in] downlinkDwellTime Downlink dwell time configuration. 0: No limit, 1: 400ms
+ * \param [in] downlinkDwellTime Downlink dwell time configuration. 0: No limit,
+ * 1: 400ms
  *
  * \param [in] dr Current datarate
  *
@@ -497,7 +490,8 @@ void RegionUS915SetContinuousWave(ContinuousWaveParams_t *continuousWave);
  *
  * \retval newDr Computed datarate.
  */
-uint8_t RegionUS915ApplyDrOffset(uint8_t downlinkDwellTime, int8_t dr, int8_t drOffset);
+uint8_t RegionUS915ApplyDrOffset(uint8_t downlinkDwellTime, int8_t dr,
+                                 int8_t drOffset);
 
 /*!
  * \brief Sets the radio into beacon reception mode

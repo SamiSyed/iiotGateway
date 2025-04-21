@@ -46,24 +46,23 @@ extern "C" {
 /*!
  * LoRaMac Parser Status
  */
-typedef enum eLoRaMacParserStatus
-{
-    /*!
-     * No error occurred
-     */
-    LORAMAC_PARSER_SUCCESS = 0,
-    /*!
-     * Failure during parsing occurred
-     */
-    LORAMAC_PARSER_FAIL,
-    /*!
-     * Null pointer exception
-     */
-    LORAMAC_PARSER_ERROR_NPE,
-    /*!
-     * Undefined Error occurred
-     */
-    LORAMAC_PARSER_ERROR,
+typedef enum eLoRaMacParserStatus {
+  /*!
+   * No error occurred
+   */
+  LORAMAC_PARSER_SUCCESS = 0,
+  /*!
+   * Failure during parsing occurred
+   */
+  LORAMAC_PARSER_FAIL,
+  /*!
+   * Null pointer exception
+   */
+  LORAMAC_PARSER_ERROR_NPE,
+  /*!
+   * Undefined Error occurred
+   */
+  LORAMAC_PARSER_ERROR,
 } LoRaMacParserStatus_t;
 
 /*!
@@ -72,7 +71,8 @@ typedef enum eLoRaMacParserStatus
  * \param [in,out] macMsg      - Join-accept message object
  * \retval                     - Status of the operation
  */
-LoRaMacParserStatus_t LoRaMacParserJoinAccept(LoRaMacMessageJoinAccept_t *macMsg);
+LoRaMacParserStatus_t
+LoRaMacParserJoinAccept(LoRaMacMessageJoinAccept_t *macMsg);
 
 /*!
  * Parse a serialized data message and fills the structured object.

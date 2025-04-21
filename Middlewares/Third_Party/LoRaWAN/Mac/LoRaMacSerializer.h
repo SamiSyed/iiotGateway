@@ -45,24 +45,23 @@ extern "C" {
 /*!
  * LoRaMac Serializer Status
  */
-typedef enum eLoRaMacSerializerStatus
-{
-    /*!
-     * No error occurred
-     */
-    LORAMAC_SERIALIZER_SUCCESS = 0,
-    /*!
-     * Null pointer exception
-     */
-    LORAMAC_SERIALIZER_ERROR_NPE,
-    /*!
-     * Incompatible buffer size
-     */
-    LORAMAC_SERIALIZER_ERROR_BUF_SIZE,
-    /*!
-     * Undefined Error occurred
-     */
-    LORAMAC_SERIALIZER_ERROR,
+typedef enum eLoRaMacSerializerStatus {
+  /*!
+   * No error occurred
+   */
+  LORAMAC_SERIALIZER_SUCCESS = 0,
+  /*!
+   * Null pointer exception
+   */
+  LORAMAC_SERIALIZER_ERROR_NPE,
+  /*!
+   * Incompatible buffer size
+   */
+  LORAMAC_SERIALIZER_ERROR_BUF_SIZE,
+  /*!
+   * Undefined Error occurred
+   */
+  LORAMAC_SERIALIZER_ERROR,
 } LoRaMacSerializerStatus_t;
 
 /*!
@@ -71,7 +70,8 @@ typedef enum eLoRaMacSerializerStatus
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerJoinRequest(LoRaMacMessageJoinRequest_t *macMsg);
+LoRaMacSerializerStatus_t
+LoRaMacSerializerJoinRequest(LoRaMacMessageJoinRequest_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -79,7 +79,8 @@ LoRaMacSerializerStatus_t LoRaMacSerializerJoinRequest(LoRaMacMessageJoinRequest
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType1(LoRaMacMessageReJoinType1_t *macMsg);
+LoRaMacSerializerStatus_t
+LoRaMacSerializerReJoinType1(LoRaMacMessageReJoinType1_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.
@@ -87,7 +88,8 @@ LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType1(LoRaMacMessageReJoinType1
  * \param [in,out] macMsg       - Join-request message object
  * \retval                      - Status of the operation
  */
-LoRaMacSerializerStatus_t LoRaMacSerializerReJoinType0or2(LoRaMacMessageReJoinType0or2_t *macMsg);
+LoRaMacSerializerStatus_t
+LoRaMacSerializerReJoinType0or2(LoRaMacMessageReJoinType0or2_t *macMsg);
 
 /*!
  * Creates serialized MAC message of structured object.

@@ -29,8 +29,8 @@
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
  * \defgroup  LORAMACCLASSBCONFIG LoRa MAC Class B configuration
- *            This header file contains parameters to configure the class b operation.
- *            By default, all parameters are set according to the specification.
+ *            This header file contains parameters to configure the class b
+ * operation. By default, all parameters are set according to the specification.
  * \{
  */
 #ifndef __LORAMACCLASSBCONFIG_H__

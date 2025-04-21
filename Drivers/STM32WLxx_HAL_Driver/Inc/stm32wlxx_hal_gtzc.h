@@ -43,13 +43,12 @@ extern "C" {
 /**
  * @brief  GTZC TZSC MPCWM structure
  */
-typedef struct
-{
-    uint32_t AreaId; /*!< Area identifier field. It can be a value of @ref
-                          GTZC_MPCWM_AreaId */
-    uint32_t Length; /*!< length of the unprivileged area starting from selected
-                          memory base address. It must be aligned on 2kB for Flash
-                          areas and 1kB for Sram ones. */
+typedef struct {
+  uint32_t AreaId; /*!< Area identifier field. It can be a value of @ref
+                        GTZC_MPCWM_AreaId */
+  uint32_t Length; /*!< length of the unprivileged area starting from selected
+                        memory base address. It must be aligned on 2kB for Flash
+                        areas and 1kB for Sram ones. */
 } MPCWM_ConfigTypeDef;
 /**
  * @}
@@ -75,22 +74,24 @@ typedef struct
 #define GTZC_PERIPH_REG_Msk (0xFUL << GTZC_PERIPH_REG_Pos) /*0 xF0000000 */
 #define GTZC_PERIPH_REG1 (0x0UL << GTZC_PERIPH_REG_Pos)
 #define GTZC_PERIPH_ALLPERIPH_Pos (5U)
-#define GTZC_PERIPH_ALLPERIPH_Msk (0x1UL << GTZC_PERIPH_ALLPERIPH_Pos) /* 0x00000020 */
+#define GTZC_PERIPH_ALLPERIPH_Msk                                              \
+  (0x1UL << GTZC_PERIPH_ALLPERIPH_Pos) /* 0x00000020 */
 #define GTZC_PERIPH_BITPOS_Pos (0U)
-#define GTZC_PERIPH_BITPOS_Msk (0x1FUL << GTZC_PERIPH_BITPOS_Pos) /* 0x0000001F */
+#define GTZC_PERIPH_BITPOS_Msk                                                 \
+  (0x1FUL << GTZC_PERIPH_BITPOS_Pos) /* 0x0000001F */
 
 /**
  * @brief GTZC TZSC MPCWM Watermark granularity depending on area
  */
 #define GTZC_TZSC_MPCWM_GRANULARITY_FLASH_OFFSET 11U
-#define GTZC_TZSC_MPCWM_GRANULARITY_FLASH                                                          \
-    (1UL << GTZC_TZSC_MPCWM_GRANULARITY_FLASH_OFFSET) /* 2 kB */
+#define GTZC_TZSC_MPCWM_GRANULARITY_FLASH                                      \
+  (1UL << GTZC_TZSC_MPCWM_GRANULARITY_FLASH_OFFSET) /* 2 kB */
 #define GTZC_TZSC_MPCWM_GRANULARITY_SRAM1_OFFSET 10U
-#define GTZC_TZSC_MPCWM_GRANULARITY_SRAM1                                                          \
-    (1UL << GTZC_TZSC_MPCWM_GRANULARITY_SRAM1_OFFSET) /* 1 kB */
+#define GTZC_TZSC_MPCWM_GRANULARITY_SRAM1                                      \
+  (1UL << GTZC_TZSC_MPCWM_GRANULARITY_SRAM1_OFFSET) /* 1 kB */
 #define GTZC_TZSC_MPCWM_GRANULARITY_SRAM2_OFFSET 10U
-#define GTZC_TZSC_MPCWM_GRANULARITY_SRAM2                                                          \
-    (1UL << GTZC_TZSC_MPCWM_GRANULARITY_SRAM2_OFFSET) /* 1 kB */
+#define GTZC_TZSC_MPCWM_GRANULARITY_SRAM2                                      \
+  (1UL << GTZC_TZSC_MPCWM_GRANULARITY_SRAM2_OFFSET) /* 1 kB */
 
 /**
  * @}
@@ -114,10 +115,10 @@ typedef struct
  */
 
 /** @defgroup GTZC_Peripheral_Identification GTZC Peripheral Identification
- *           user-oriented definition for each IP identifier parameter (PeriphId)
- *           used in HAL_GTZC_TZSC_ConfigPeriphAttributes and
- * HAL_GTZC_TZSC_GetConfigPeriphAttributes functions and also in all HAL_GTZC_TZIC relative
- * functions.
+ *           user-oriented definition for each IP identifier parameter
+ * (PeriphId) used in HAL_GTZC_TZSC_ConfigPeriphAttributes and
+ * HAL_GTZC_TZSC_GetConfigPeriphAttributes functions and also in all
+ * HAL_GTZC_TZIC relative functions.
  * @note     user can also select all IPs using specific define
  * @note     that two maximum values are also defined here:
  *           - max number of securable AHB/APB peripherals or masters (used in
@@ -197,10 +198,12 @@ typedef struct
  * @{
  */
 /* TZSC Initialization and Configuration functions ****************************/
-HAL_StatusTypeDef HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId,
-                                                       uint32_t PeriphAttributes);
-HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId,
-                                                          uint32_t *PeriphAttributes);
+HAL_StatusTypeDef
+HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId,
+                                     uint32_t PeriphAttributes);
+HAL_StatusTypeDef
+HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId,
+                                        uint32_t *PeriphAttributes);
 /**
  * @}
  */
@@ -209,10 +212,12 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId,
  * @{
  */
 /* MPCWM Initialization and Configuration functions ***************************/
-HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress,
-                                                          MPCWM_ConfigTypeDef *pMPCWM_Desc);
-HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress,
-                                                             MPCWM_ConfigTypeDef *pMPCWM_Desc);
+HAL_StatusTypeDef
+HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress,
+                                        MPCWM_ConfigTypeDef *pMPCWM_Desc);
+HAL_StatusTypeDef
+HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress,
+                                           MPCWM_ConfigTypeDef *pMPCWM_Desc);
 /**
  * @}
  */
@@ -262,54 +267,67 @@ void HAL_GTZC_TZIC_Callback(uint32_t PeriphId);
  * @brief  GTZC private macros usable to retrieve information to access register
  *         for a specific PeriphId
  */
-#define GTZC_GET_REG_INDEX(__PERIPHERAL__)                                                         \
-    (((__PERIPHERAL__)&GTZC_PERIPH_REG_Msk) >> GTZC_PERIPH_REG_Pos)
-#define GTZC_GET_PERIPH_POS(__PERIPHERAL__) ((__PERIPHERAL__)&GTZC_PERIPH_BITPOS_Msk)
+#define GTZC_GET_REG_INDEX(__PERIPHERAL__)                                     \
+  (((__PERIPHERAL__)&GTZC_PERIPH_REG_Msk) >> GTZC_PERIPH_REG_Pos)
+#define GTZC_GET_PERIPH_POS(__PERIPHERAL__)                                    \
+  ((__PERIPHERAL__)&GTZC_PERIPH_BITPOS_Msk)
 
 /**
  * @brief  GTZC private macro to get array index of a specific PeriphId
  *         in case of GTZC_PERIPH_ALL usage in the two following functions:
- *         HAL_GTZC_TZSC_ConfigPeriphAttributes and HAL_GTZC_TZSC_GetConfigPeriphAttributes
+ *         HAL_GTZC_TZSC_ConfigPeriphAttributes and
+ * HAL_GTZC_TZSC_GetConfigPeriphAttributes
  */
-#define GTZC_GET_ARRAY_INDEX(__PERIPHERAL__)                                                       \
-    ((GTZC_GET_REG_INDEX(__PERIPHERAL__) * 32U) + GTZC_GET_PERIPH_POS(__PERIPHERAL__))
+#define GTZC_GET_ARRAY_INDEX(__PERIPHERAL__)                                   \
+  ((GTZC_GET_REG_INDEX(__PERIPHERAL__) * 32U) +                                \
+   GTZC_GET_PERIPH_POS(__PERIPHERAL__))
 
 /**
  * @brief  GTZC private macros to check function input parameters
  */
-#define IS_GTZC_ATTRIBUTE(__ATTRIBUTES__)                                                          \
-    (((__ATTRIBUTES__) & ~(GTZC_TZSC_ATTRIBUTE_SEC | GTZC_TZSC_ATTRIBUTE_PRIV)) == 0x00u)
+#define IS_GTZC_ATTRIBUTE(__ATTRIBUTES__)                                      \
+  (((__ATTRIBUTES__) &                                                         \
+    ~(GTZC_TZSC_ATTRIBUTE_SEC | GTZC_TZSC_ATTRIBUTE_PRIV)) == 0x00u)
 
-#define IS_GTZC_TZSC_PERIPHERAL(__PERIPHERAL__)                                                    \
-    (((__PERIPHERAL__) == GTZC_PERIPH_AES) || ((__PERIPHERAL__) == GTZC_PERIPH_RNG)                \
-     || ((__PERIPHERAL__) == GTZC_PERIPH_SUBGHZSPI) || ((__PERIPHERAL__) == GTZC_PERIPH_PKA)       \
-     || ((__PERIPHERAL__) == GTZC_PERIPH_ALL))
+#define IS_GTZC_TZSC_PERIPHERAL(__PERIPHERAL__)                                \
+  (((__PERIPHERAL__) == GTZC_PERIPH_AES) ||                                    \
+   ((__PERIPHERAL__) == GTZC_PERIPH_RNG) ||                                    \
+   ((__PERIPHERAL__) == GTZC_PERIPH_SUBGHZSPI) ||                              \
+   ((__PERIPHERAL__) == GTZC_PERIPH_PKA) ||                                    \
+   ((__PERIPHERAL__) == GTZC_PERIPH_ALL))
 
-#define IS_GTZC_TZIC_PERIPHERAL(__PERIPHERAL__)                                                    \
-    (((((__PERIPHERAL__) & ~(GTZC_PERIPH_REG_Pos | GTZC_PERIPH_BITPOS_Msk)) == 0x00u)              \
-      && ((GTZC_GET_ARRAY_INDEX(__PERIPHERAL__) <= GTZC_GET_ARRAY_INDEX(GTZC_PERIPH_TZIC_MAX))))   \
-     || ((__PERIPHERAL__) == GTZC_PERIPH_ALLPERIPH_Msk))
+#define IS_GTZC_TZIC_PERIPHERAL(__PERIPHERAL__)                                \
+  (((((__PERIPHERAL__) & ~(GTZC_PERIPH_REG_Pos | GTZC_PERIPH_BITPOS_Msk)) ==   \
+     0x00u) &&                                                                 \
+    ((GTZC_GET_ARRAY_INDEX(__PERIPHERAL__) <=                                  \
+      GTZC_GET_ARRAY_INDEX(GTZC_PERIPH_TZIC_MAX)))) ||                         \
+   ((__PERIPHERAL__) == GTZC_PERIPH_ALLPERIPH_Msk))
 
-#define IS_GTZC_MPCWM_MEMORY_BASEADDRESS(__BASE_ADDRESS__)                                         \
-    (((__BASE_ADDRESS__) == FLASH_BASE) || ((__BASE_ADDRESS__) == SRAM1_BASE)                      \
-     || ((__BASE_ADDRESS__) == SRAM2_BASE))
+#define IS_GTZC_MPCWM_MEMORY_BASEADDRESS(__BASE_ADDRESS__)                     \
+  (((__BASE_ADDRESS__) == FLASH_BASE) || ((__BASE_ADDRESS__) == SRAM1_BASE) || \
+   ((__BASE_ADDRESS__) == SRAM2_BASE))
 
-#define IS_GTZC_MPCWM_FLASH_AREAID(__AREAID__)                                                     \
-    (((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV)                                               \
-     || ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV_WRITABLE))
+#define IS_GTZC_MPCWM_FLASH_AREAID(__AREAID__)                                 \
+  (((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV) ||                          \
+   ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV_WRITABLE))
 
-#define IS_GTZC_MPCWM_SRAM1_AREAID(__AREAID__) ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV)
+#define IS_GTZC_MPCWM_SRAM1_AREAID(__AREAID__)                                 \
+  ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV)
 
-#define IS_GTZC_MPCWM_SRAM2_AREAID(__AREAID__) ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV)
+#define IS_GTZC_MPCWM_SRAM2_AREAID(__AREAID__)                                 \
+  ((__AREAID__) == GTZC_TZSC_MPCWM_AREAID_UNPRIV)
 
-#define IS_GTZC_MPCWM_FLASH_LENGTH(__LENGTH__)                                                     \
-    ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_FLASH) == 0x00u) && ((__LENGTH__) <= FLASH_SIZE))
+#define IS_GTZC_MPCWM_FLASH_LENGTH(__LENGTH__)                                 \
+  ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_FLASH) == 0x00u) &&            \
+   ((__LENGTH__) <= FLASH_SIZE))
 
-#define IS_GTZC_MPCWM_SRAM1_LENGTH(__LENGTH__)                                                     \
-    ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_SRAM1) == 0x00u) && ((__LENGTH__) <= SRAM1_SIZE))
+#define IS_GTZC_MPCWM_SRAM1_LENGTH(__LENGTH__)                                 \
+  ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_SRAM1) == 0x00u) &&            \
+   ((__LENGTH__) <= SRAM1_SIZE))
 
-#define IS_GTZC_MPCWM_SRAM2_LENGTH(__LENGTH__)                                                     \
-    ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_SRAM2) == 0x00u) && ((__LENGTH__) <= SRAM2_SIZE))
+#define IS_GTZC_MPCWM_SRAM2_LENGTH(__LENGTH__)                                 \
+  ((((__LENGTH__) % GTZC_TZSC_MPCWM_GRANULARITY_SRAM2) == 0x00u) &&            \
+   ((__LENGTH__) <= SRAM2_SIZE))
 
 /**
  * @}

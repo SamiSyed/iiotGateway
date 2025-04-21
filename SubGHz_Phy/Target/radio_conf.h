@@ -60,14 +60,17 @@ extern "C" {
 #define SMPS_DRIVE_SETTING_MAX SMPS_DRV_60
 
 /**
- * @brief Provides the frequency of the chip running on the radio and the frequency step
- * @remark These defines are used for computing the frequency divider to set the RF frequency
+ * @brief Provides the frequency of the chip running on the radio and the
+ * frequency step
+ * @remark These defines are used for computing the frequency divider to set the
+ * RF frequency
  * @note override the default configuration of radio_driver.c
  */
 #define XTAL_FREQ (32000000UL)
 
 /**
- * @brief in XO mode, set internal capacitor (from 0x00 to 0x2F starting 11.2pF with 0.47pF steps)
+ * @brief in XO mode, set internal capacitor (from 0x00 to 0x2F starting 11.2pF
+ * with 0.47pF steps)
  * @note override the default configuration of radio_driver.c
  */
 #define XTAL_DEFAULT_CAP_VALUE (0x20UL)

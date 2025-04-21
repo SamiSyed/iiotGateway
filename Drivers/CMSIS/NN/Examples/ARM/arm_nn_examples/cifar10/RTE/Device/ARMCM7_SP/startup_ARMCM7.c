@@ -1,13 +1,9 @@
 /**************************************************************************/ /**
-                                                                              * @file
-                                                                              *startup_ARMCM7.s
-                                                                              * @brief    CMSIS Core
-                                                                              *Device Startup File
-                                                                              *for ARMCM7 Device
-                                                                              *Series
+                                                                              * @file     startup_ARMCM7.s
+                                                                              * @brief    CMSIS Core Device Startup File for
+                                                                              *           ARMCM7 Device Series
                                                                               * @version  V5.00
-                                                                              * @date     26. April
-                                                                              *2016
+                                                                              * @date     26. April 2016
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -52,7 +48,8 @@ typedef void (*pFunc)(void);
   External References
  *----------------------------------------------------------------------------*/
 #ifndef __START
-extern void _start(void) __attribute__((noreturn)); /* PreeMain (C library entry point) */
+extern void _start(void)
+    __attribute__((noreturn)); /* PreeMain (C library entry point) */
 #else
 extern int __START(void) __attribute__((noreturn)); /* main entry point */
 #endif
@@ -73,13 +70,15 @@ void Reset_Handler(void);   /* Reset Handler */
 #ifndef __STACK_SIZE
 #define __STACK_SIZE 0x00000400
 #endif
-static uint8_t stack[__STACK_SIZE] __attribute__((aligned(8), used, section(".stack")));
+static uint8_t stack[__STACK_SIZE]
+    __attribute__((aligned(8), used, section(".stack")));
 
 #ifndef __HEAP_SIZE
 #define __HEAP_SIZE 0x00000C00
 #endif
 #if __HEAP_SIZE > 0
-static uint8_t heap[__HEAP_SIZE] __attribute__((aligned(8), used, section(".heap")));
+static uint8_t heap[__HEAP_SIZE]
+    __attribute__((aligned(8), used, section(".heap")));
 #endif
 
 /*----------------------------------------------------------------------------
@@ -181,39 +180,36 @@ const pFunc __Vectors[] __attribute__((section(".vectors"))) = {
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void)
-{
-    uint32_t *pSrc, *pDest;
-    uint32_t *pTable __attribute__((unused));
+void Reset_Handler(void) {
+  uint32_t *pSrc, *pDest;
+  uint32_t *pTable __attribute__((unused));
 
-    /*  Firstly it copies data from read only memory to RAM. There are two schemes
-     *  to copy. One can copy more than one sections. Another can only copy
-     *  one section.  The former scheme needs more instructions and read-only
-     *  data to implement than the latter.
-     *  Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.  */
+  /*  Firstly it copies data from read only memory to RAM. There are two schemes
+   *  to copy. One can copy more than one sections. Another can only copy
+   *  one section.  The former scheme needs more instructions and read-only
+   *  data to implement than the latter.
+   *  Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.  */
 
 #ifdef __STARTUP_COPY_MULTIPLE
-    /*  Multiple sections scheme.
-     *
-     *  Between symbol address __copy_table_start__ and __copy_table_end__,
-     *  there are array of triplets, each of which specify:
-     *    offset 0: LMA of start of a section to copy from
-     *    offset 4: VMA of start of a section to copy to
-     *    offset 8: size of the section to copy. Must be multiply of 4
-     *
-     *  All addresses must be aligned to 4 bytes boundary.
-     */
-    pTable = &__copy_table_start__;
+  /*  Multiple sections scheme.
+   *
+   *  Between symbol address __copy_table_start__ and __copy_table_end__,
+   *  there are array of triplets, each of which specify:
+   *    offset 0: LMA of start of a section to copy from
+   *    offset 4: VMA of start of a section to copy to
+   *    offset 8: size of the section to copy. Must be multiply of 4
+   *
+   *  All addresses must be aligned to 4 bytes boundary.
+   */
+  pTable = &__copy_table_start__;
 
-    for (; pTable < &__copy_table_end__; pTable = pTable + 3)
-    {
-        pSrc = (uint32_t *)*(pTable + 0);
-        pDest = (uint32_t *)*(pTable + 1);
-        for (; pDest < (uint32_t *)(*(pTable + 1) + *(pTable + 2));)
-        {
-            *pDest++ = *pSrc++;
-        }
+  for (; pTable < &__copy_table_end__; pTable = pTable + 3) {
+    pSrc = (uint32_t *)*(pTable + 0);
+    pDest = (uint32_t *)*(pTable + 1);
+    for (; pDest < (uint32_t *)(*(pTable + 1) + *(pTable + 2));) {
+      *pDest++ = *pSrc++;
     }
+  }
 #else
                                                     /*  Single section scheme.
                                                      *
@@ -224,13 +220,12 @@ void Reset_Handler(void)
                                                      *
                                                      *  All addresses must be aligned to 4 bytes boundary.
                                                      */
-    pSrc = &__etext;
-    pDest = &__data_start__;
+  pSrc = &__etext;
+  pDest = &__data_start__;
 
-    for (; pDest < &__data_end__;)
-    {
-        *pDest++ = *pSrc++;
-    }
+  for (; pDest < &__data_end__;) {
+    *pDest++ = *pSrc++;
+  }
 #endif /*__STARTUP_COPY_MULTIPLE */
 
 /*  This part of work usually is done in C library startup code. Otherwise,
@@ -244,55 +239,52 @@ void Reset_Handler(void)
  *  Otherwise efine macro __STARTUP_CLEAR_BSS to choose the later.
  */
 #ifdef __STARTUP_CLEAR_BSS_MULTIPLE
-    /*  Multiple sections scheme.
-     *
-     *  Between symbol address __copy_table_start__ and __copy_table_end__,
-     *  there are array of tuples specifying:
-     *    offset 0: Start of a BSS section
-     *    offset 4: Size of this BSS section. Must be multiply of 4
-     */
-    pTable = &__zero_table_start__;
+  /*  Multiple sections scheme.
+   *
+   *  Between symbol address __copy_table_start__ and __copy_table_end__,
+   *  there are array of tuples specifying:
+   *    offset 0: Start of a BSS section
+   *    offset 4: Size of this BSS section. Must be multiply of 4
+   */
+  pTable = &__zero_table_start__;
 
-    for (; pTable < &__zero_table_end__; pTable = pTable + 2)
-    {
-        pDest = (uint32_t *)*(pTable + 0);
-        for (; pDest < (uint32_t *)(*(pTable + 0) + *(pTable + 1));)
-        {
-            *pDest++ = 0;
-        }
+  for (; pTable < &__zero_table_end__; pTable = pTable + 2) {
+    pDest = (uint32_t *)*(pTable + 0);
+    for (; pDest < (uint32_t *)(*(pTable + 0) + *(pTable + 1));) {
+      *pDest++ = 0;
     }
+  }
 #elif defined(__STARTUP_CLEAR_BSS)
-    /*  Single BSS section scheme.
-     *
-     *  The BSS section is specified by following symbols
-     *    __bss_start__: start of the BSS section.
-     *    __bss_end__: end of the BSS section.
-     *
-     *  Both addresses must be aligned to 4 bytes boundary.
-     */
-    pDest = &__bss_start__;
+  /*  Single BSS section scheme.
+   *
+   *  The BSS section is specified by following symbols
+   *    __bss_start__: start of the BSS section.
+   *    __bss_end__: end of the BSS section.
+   *
+   *  Both addresses must be aligned to 4 bytes boundary.
+   */
+  pDest = &__bss_start__;
 
-    for (; pDest < &__bss_end__;)
-    {
-        *pDest++ = 0UL;
-    }
+  for (; pDest < &__bss_end__;) {
+    *pDest++ = 0UL;
+  }
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
 #ifndef __NO_SYSTEM_INIT
-    SystemInit();
+  SystemInit();
 #endif
 
 #ifndef __START
 #define __START _start
 #endif
-    __START();
+  __START();
 }
 
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/
-void Default_Handler(void)
-{
-    while (1)
-        ;
+void Default_Handler(void) {
+
+  while (1)
+    ;
 }

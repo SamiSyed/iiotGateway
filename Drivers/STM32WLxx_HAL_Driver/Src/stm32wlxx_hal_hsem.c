@@ -10,7 +10,8 @@
   *           + Semaphore Status check
   *           + Semaphore Clear Key Set and Get
   *           + Release and release all functions
-  *           + Semaphore notification enabling and disabling and callnack functions
+  *           + Semaphore notification enabling and disabling and callnack
+  functions
   *           + IRQ handler management
   *
   *
@@ -30,62 +31,66 @@
                      ##### How to use this driver #####
   ==============================================================================
   [..]
-      (#)Take a semaphore In 2-Step mode Using function HAL_HSEM_Take. This function takes as
-  parameters :
+      (#)Take a semaphore In 2-Step mode Using function HAL_HSEM_Take. This
+  function takes as parameters :
            (++) the semaphore ID from 0 to 15
            (++) the process ID from 0 to 255
-      (#) Fast Take semaphore In 1-Step mode Using function HAL_HSEM_FastTake. This function takes
-  as parameter :
-           (++) the semaphore ID from 0_ID to 15. Note that the process ID value is implicitly
-  assumed as zero
-      (#) Check if a semaphore is Taken using function HAL_HSEM_IsSemTaken. This function takes as
-  parameter :
+      (#) Fast Take semaphore In 1-Step mode Using function HAL_HSEM_FastTake.
+  This function takes as parameter :
+           (++) the semaphore ID from 0_ID to 15. Note that the process ID value
+  is implicitly assumed as zero
+      (#) Check if a semaphore is Taken using function HAL_HSEM_IsSemTaken. This
+  function takes as parameter :
           (++) the semaphore ID from 0_ID to 15
-          (++) It returns 1 if the given semaphore is taken otherwise (Free) zero
-      (#)Release a semaphore using function with HAL_HSEM_Release. This function takes as parameters
-  :
+          (++) It returns 1 if the given semaphore is taken otherwise (Free)
+  zero
+      (#)Release a semaphore using function with HAL_HSEM_Release. This function
+  takes as parameters :
            (++) the semaphore ID from 0 to 15
            (++) the process ID from 0 to 255:
-           (++) Note: If ProcessID and MasterID match, semaphore is freed, and an interrupt
-         may be generated when enabled (notification activated). If ProcessID or MasterID does not
-  match, semaphore remains taken (locked)
+           (++) Note: If ProcessID and MasterID match, semaphore is freed, and
+  an interrupt may be generated when enabled (notification activated). If
+  ProcessID or MasterID does not match, semaphore remains taken (locked)
 
-      (#)Release all semaphores at once taken by a given Master using function HAL_HSEM_Release_All
-          This function takes as parameters :
-           (++) the Release Key (value from 0 to 0xFFFF) can be Set or Get respectively by
-              HAL_HSEM_SetClearKey() or HAL_HSEM_GetClearKey functions
+      (#)Release all semaphores at once taken by a given Master using function
+  HAL_HSEM_Release_All This function takes as parameters :
+           (++) the Release Key (value from 0 to 0xFFFF) can be Set or Get
+  respectively by HAL_HSEM_SetClearKey() or HAL_HSEM_GetClearKey functions
            (++) the Master ID:
-           (++) Note: If the Key and MasterID match, all semaphores taken by the given CPU that
-  corresponds to MasterID  will be freed, and an interrupt may be generated when enabled
-  (notification activated). If the Key or the MasterID doesn't match, semaphores remains taken
-  (locked)
+           (++) Note: If the Key and MasterID match, all semaphores taken by the
+  given CPU that corresponds to MasterID  will be freed, and an interrupt may be
+  generated when enabled (notification activated). If the Key or the MasterID
+  doesn't match, semaphores remains taken (locked)
 
       (#)Semaphores Release all key functions:
          (++)  HAL_HSEM_SetClearKey() to set semaphore release all Key
          (++)  HAL_HSEM_GetClearKey() to get release all Key
       (#)Semaphores notification functions :
-         (++)  HAL_HSEM_ActivateNotification to activate a notification callback on
-               a given semaphores Mask (bitfield). When one or more semaphores defined by the mask
-  are released the callback HAL_HSEM_FreeCallback will be asserted giving as parameters a mask of
-  the released semaphores (bitfield).
+         (++)  HAL_HSEM_ActivateNotification to activate a notification callback
+  on a given semaphores Mask (bitfield). When one or more semaphores defined by
+  the mask are released the callback HAL_HSEM_FreeCallback will be asserted
+  giving as parameters a mask of the released semaphores (bitfield).
 
-         (++)  HAL_HSEM_DeactivateNotification to deactivate the notification of a given semaphores
-  Mask (bitfield).
-         (++) See the description of the macro __HAL_HSEM_SEMID_TO_MASK to check how to calculate a
-  semaphore mask Used by the notification functions
+         (++)  HAL_HSEM_DeactivateNotification to deactivate the notification of
+  a given semaphores Mask (bitfield).
+         (++) See the description of the macro __HAL_HSEM_SEMID_TO_MASK to check
+  how to calculate a semaphore mask Used by the notification functions
      *** HSEM HAL driver macros list ***
      =============================================
      [..] Below the list of most used macros in HSEM HAL driver.
 
-      (+) __HAL_HSEM_SEMID_TO_MASK: Helper macro to convert a Semaphore ID to a Mask.
+      (+) __HAL_HSEM_SEMID_TO_MASK: Helper macro to convert a Semaphore ID to a
+  Mask.
       [..] Example of use :
       [..] mask = __HAL_HSEM_SEMID_TO_MASK(8)  |  __HAL_HSEM_SEMID_TO_MASK(21) |
   __HAL_HSEM_SEMID_TO_MASK(25).
-      [..] All next macros take as parameter a semaphore Mask (bitfiled) that can be constructed
-  using  __HAL_HSEM_SEMID_TO_MASK as the above example.
+      [..] All next macros take as parameter a semaphore Mask (bitfiled) that
+  can be constructed using  __HAL_HSEM_SEMID_TO_MASK as the above example.
       (+) __HAL_HSEM_ENABLE_IT: Enable the specified semaphores Mask interrupts.
-      (+) __HAL_HSEM_DISABLE_IT: Disable the specified semaphores Mask interrupts.
-      (+) __HAL_HSEM_GET_IT: Checks whether the specified semaphore interrupt has occurred or not.
+      (+) __HAL_HSEM_DISABLE_IT: Disable the specified semaphores Mask
+  interrupts.
+      (+) __HAL_HSEM_GET_IT: Checks whether the specified semaphore interrupt
+  has occurred or not.
       (+) __HAL_HSEM_GET_FLAG: Get the semaphores status release flags.
       (+) __HAL_HSEM_CLEAR_FLAG: Clear the semaphores status release flags.
 
@@ -164,25 +169,23 @@
  * @param  ProcessID: Process ID from 0 to 255
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HSEM_Take(uint32_t SemID, uint32_t ProcessID)
-{
-    /* Check the parameters */
-    assert_param(IS_HSEM_SEMID(SemID));
-    assert_param(IS_HSEM_PROCESSID(ProcessID));
+HAL_StatusTypeDef HAL_HSEM_Take(uint32_t SemID, uint32_t ProcessID) {
+  /* Check the parameters */
+  assert_param(IS_HSEM_SEMID(SemID));
+  assert_param(IS_HSEM_PROCESSID(ProcessID));
 
-    /* First step  write R register with MasterID, processID and take bit=1*/
-    HSEM->R[SemID] = (ProcessID | HSEM_CR_COREID_CURRENT | HSEM_R_LOCK);
+  /* First step  write R register with MasterID, processID and take bit=1*/
+  HSEM->R[SemID] = (ProcessID | HSEM_CR_COREID_CURRENT | HSEM_R_LOCK);
 
-    /* second step : read the R register . Take achieved if MasterID and processID match and take
-     * bit set to 1 */
-    if (HSEM->R[SemID] == (ProcessID | HSEM_CR_COREID_CURRENT | HSEM_R_LOCK))
-    {
-        /*take success when MasterID and ProcessID match and take bit set*/
-        return HAL_OK;
-    }
+  /* second step : read the R register . Take achieved if MasterID and processID
+   * match and take bit set to 1 */
+  if (HSEM->R[SemID] == (ProcessID | HSEM_CR_COREID_CURRENT | HSEM_R_LOCK)) {
+    /*take success when MasterID and ProcessID match and take bit set*/
+    return HAL_OK;
+  }
 
-    /* Semaphore take fails*/
-    return HAL_ERROR;
+  /* Semaphore take fails*/
+  return HAL_ERROR;
 }
 
 /**
@@ -190,29 +193,26 @@ HAL_StatusTypeDef HAL_HSEM_Take(uint32_t SemID, uint32_t ProcessID)
  * @param  SemID: semaphore ID from 0 to 15
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HSEM_FastTake(uint32_t SemID)
-{
-    /* Check the parameters */
-    assert_param(IS_HSEM_SEMID(SemID));
+HAL_StatusTypeDef HAL_HSEM_FastTake(uint32_t SemID) {
+  /* Check the parameters */
+  assert_param(IS_HSEM_SEMID(SemID));
 
-    /* Read the RLR register to take the semaphore */
-    if (HSEM->RLR[SemID] == (HSEM_CR_COREID_CURRENT | HSEM_RLR_LOCK))
-    {
-        /*take success when MasterID match and take bit set*/
-        return HAL_OK;
-    }
+  /* Read the RLR register to take the semaphore */
+  if (HSEM->RLR[SemID] == (HSEM_CR_COREID_CURRENT | HSEM_RLR_LOCK)) {
+    /*take success when MasterID match and take bit set*/
+    return HAL_OK;
+  }
 
-    /* Semaphore take fails */
-    return HAL_ERROR;
+  /* Semaphore take fails */
+  return HAL_ERROR;
 }
 /**
  * @brief  Check semaphore state Taken or not.
  * @param  SemID: semaphore ID
  * @retval HAL HSEM state
  */
-uint32_t HAL_HSEM_IsSemTaken(uint32_t SemID)
-{
-    return (((HSEM->R[SemID] & HSEM_R_LOCK) != 0U) ? 1UL : 0UL);
+uint32_t HAL_HSEM_IsSemTaken(uint32_t SemID) {
+  return (((HSEM->R[SemID] & HSEM_R_LOCK) != 0U) ? 1UL : 0UL);
 }
 
 /**
@@ -221,15 +221,14 @@ uint32_t HAL_HSEM_IsSemTaken(uint32_t SemID)
  * @param  ProcessID: Process ID from 0 to 255
  * @retval None
  */
-void HAL_HSEM_Release(uint32_t SemID, uint32_t ProcessID)
-{
-    /* Check the parameters */
-    assert_param(IS_HSEM_SEMID(SemID));
-    assert_param(IS_HSEM_PROCESSID(ProcessID));
+void HAL_HSEM_Release(uint32_t SemID, uint32_t ProcessID) {
+  /* Check the parameters */
+  assert_param(IS_HSEM_SEMID(SemID));
+  assert_param(IS_HSEM_PROCESSID(ProcessID));
 
-    /* Clear the semaphore by writing to the R register : the MasterID , the processID and take bit
-     * = 0  */
-    HSEM->R[SemID] = (ProcessID | HSEM_CR_COREID_CURRENT);
+  /* Clear the semaphore by writing to the R register : the MasterID , the
+   * processID and take bit = 0  */
+  HSEM->R[SemID] = (ProcessID | HSEM_CR_COREID_CURRENT);
 }
 
 /**
@@ -238,12 +237,11 @@ void HAL_HSEM_Release(uint32_t SemID, uint32_t ProcessID)
  * @param  CoreID: CoreID of the CPU that is using semaphores to be released
  * @retval None
  */
-void HAL_HSEM_ReleaseAll(uint32_t Key, uint32_t CoreID)
-{
-    assert_param(IS_HSEM_KEY(Key));
-    assert_param(IS_HSEM_COREID(CoreID));
+void HAL_HSEM_ReleaseAll(uint32_t Key, uint32_t CoreID) {
+  assert_param(IS_HSEM_KEY(Key));
+  assert_param(IS_HSEM_COREID(CoreID));
 
-    HSEM->CR = ((Key << HSEM_CR_KEY_Pos) | (CoreID << HSEM_CR_COREID_Pos));
+  HSEM->CR = ((Key << HSEM_CR_KEY_Pos) | (CoreID << HSEM_CR_COREID_Pos));
 }
 
 /**
@@ -270,20 +268,18 @@ void HAL_HSEM_ReleaseAll(uint32_t Key, uint32_t CoreID)
  * @param  Key: Semaphore Key , value from 0 to 0xFFFF
  * @retval None
  */
-void HAL_HSEM_SetClearKey(uint32_t Key)
-{
-    assert_param(IS_HSEM_KEY(Key));
+void HAL_HSEM_SetClearKey(uint32_t Key) {
+  assert_param(IS_HSEM_KEY(Key));
 
-    MODIFY_REG(HSEM->KEYR, HSEM_KEYR_KEY, (Key << HSEM_KEYR_KEY_Pos));
+  MODIFY_REG(HSEM->KEYR, HSEM_KEYR_KEY, (Key << HSEM_KEYR_KEY_Pos));
 }
 
 /**
  * @brief  Get semaphore Key .
  * @retval Semaphore Key , value from 0 to 0xFFFF
  */
-uint32_t HAL_HSEM_GetClearKey(void)
-{
-    return (HSEM->KEYR >> HSEM_KEYR_KEY_Pos);
+uint32_t HAL_HSEM_GetClearKey(void) {
+  return (HSEM->KEYR >> HSEM_KEYR_KEY_Pos);
 }
 
 /**
@@ -308,39 +304,37 @@ uint32_t HAL_HSEM_GetClearKey(void)
  * @param  SemMask: Mask of Released semaphores
  * @retval Semaphore Key
  */
-void HAL_HSEM_ActivateNotification(uint32_t SemMask)
-{
-    HSEM_COMMON->IER |= SemMask;
+void HAL_HSEM_ActivateNotification(uint32_t SemMask) {
+  HSEM_COMMON->IER |= SemMask;
 }
 
 /**
- * @brief  Deactivate Semaphore release Notification for a given Semaphores Mask .
+ * @brief  Deactivate Semaphore release Notification for a given Semaphores Mask
+ * .
  * @param  SemMask: Mask of Released semaphores
  * @retval Semaphore Key
  */
-void HAL_HSEM_DeactivateNotification(uint32_t SemMask)
-{
-    HSEM_COMMON->IER &= ~SemMask;
+void HAL_HSEM_DeactivateNotification(uint32_t SemMask) {
+  HSEM_COMMON->IER &= ~SemMask;
 }
 
 /**
  * @brief  This function handles HSEM interrupt request
  * @retval None
  */
-void HAL_HSEM_IRQHandler(void)
-{
-    uint32_t statusreg;
-    /* Get the list of masked freed semaphores*/
-    statusreg = HSEM_COMMON->MISR;
+void HAL_HSEM_IRQHandler(void) {
+  uint32_t statusreg;
+  /* Get the list of masked freed semaphores*/
+  statusreg = HSEM_COMMON->MISR;
 
-    /*Disable Interrupts*/
-    HSEM_COMMON->IER &= ~((uint32_t)statusreg);
+  /*Disable Interrupts*/
+  HSEM_COMMON->IER &= ~((uint32_t)statusreg);
 
-    /*Clear Flags*/
-    HSEM_COMMON->ICR = ((uint32_t)statusreg);
+  /*Clear Flags*/
+  HSEM_COMMON->ICR = ((uint32_t)statusreg);
 
-    /* Call FreeCallback */
-    HAL_HSEM_FreeCallback(statusreg);
+  /* Call FreeCallback */
+  HAL_HSEM_FreeCallback(statusreg);
 }
 
 /**
@@ -348,14 +342,13 @@ void HAL_HSEM_IRQHandler(void)
  * @param SemMask: Mask of Released semaphores
  * @retval None
  */
-__weak void HAL_HSEM_FreeCallback(uint32_t SemMask)
-{
-    /* Prevent unused argument(s) compilation warning */
-    UNUSED(SemMask);
+__weak void HAL_HSEM_FreeCallback(uint32_t SemMask) {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(SemMask);
 
-    /* NOTE : This function should not be modified, when the callback is needed,
-    the HAL_HSEM_FreeCallback can be implemented in the user file
-      */
+  /* NOTE : This function should not be modified, when the callback is needed,
+  the HAL_HSEM_FreeCallback can be implemented in the user file
+    */
 }
 
 /**

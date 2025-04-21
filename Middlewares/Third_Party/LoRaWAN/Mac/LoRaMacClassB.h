@@ -29,8 +29,8 @@
  * \author    Daniel Jaeckle ( STACKFORCE )
  *
  * \defgroup  LORAMACCLASSB LoRa MAC Class B layer implementation
- *            This module specifies the API implementation of the LoRaMAC Class B layer.
- *            This is a placeholder for a detailed description of the LoRaMac
+ *            This module specifies the API implementation of the LoRaMAC Class
+ * B layer. This is a placeholder for a detailed description of the LoRaMac
  *            layer and the supported features.
  * \{
  */
@@ -57,196 +57,190 @@ extern "C" {
 /*!
  * States of the class B ping slot mechanism
  */
-typedef enum ePingSlotState
-{
-    /*!
-     * Calculation of the ping slot offset
-     */
-    PINGSLOT_STATE_CALC_PING_OFFSET,
-    /*!
-     * State to set the timer to open the next ping slot
-     */
-    PINGSLOT_STATE_SET_TIMER,
-    /*!
-     * The node is in idle state
-     */
-    PINGSLOT_STATE_IDLE,
-    /*!
-     * The node opens up a ping slot window
-     */
-    PINGSLOT_STATE_RX,
+typedef enum ePingSlotState {
+  /*!
+   * Calculation of the ping slot offset
+   */
+  PINGSLOT_STATE_CALC_PING_OFFSET,
+  /*!
+   * State to set the timer to open the next ping slot
+   */
+  PINGSLOT_STATE_SET_TIMER,
+  /*!
+   * The node is in idle state
+   */
+  PINGSLOT_STATE_IDLE,
+  /*!
+   * The node opens up a ping slot window
+   */
+  PINGSLOT_STATE_RX,
 } PingSlotState_t;
 
 /*!
  * Class B ping slot context structure
  */
-typedef struct sPingSlotContext
-{
-    /*!
-     * Ping slot length time in ms
-     */
-    uint32_t PingSlotWindow;
-    /*!
-     * Ping offset
-     */
-    uint16_t PingOffset;
-    /*!
-     * Current symbol timeout. The node enlarges this variable in case of beacon
-     * loss.
-     */
-    uint16_t SymbolTimeout;
-    /*!
-     * The multicast channel which will be enabled next.
-     */
-    MulticastCtx_t *NextMulticastChannel;
+typedef struct sPingSlotContext {
+  /*!
+   * Ping slot length time in ms
+   */
+  uint32_t PingSlotWindow;
+  /*!
+   * Ping offset
+   */
+  uint16_t PingOffset;
+  /*!
+   * Current symbol timeout. The node enlarges this variable in case of beacon
+   * loss.
+   */
+  uint16_t SymbolTimeout;
+  /*!
+   * The multicast channel which will be enabled next.
+   */
+  MulticastCtx_t *NextMulticastChannel;
 } PingSlotContext_t;
 
 /*!
  * Class B beacon context structure
  */
-typedef struct sBeaconContext
-{
-    struct sBeaconCtrl
-    {
-        /*!
-         * Set if the node receives beacons
-         */
-        uint8_t BeaconMode : 1;
-        /*!
-         * Set if the node has acquired the beacon
-         */
-        uint8_t BeaconAcquired : 1;
-        /*!
-         * Set if a beacon delay was set for the beacon acquisition
-         */
-        uint8_t BeaconDelaySet : 1;
-        /*!
-         * Set if a beacon channel was set for the beacon acquisition
-         */
-        uint8_t BeaconChannelSet : 1;
-        /*!
-         * Set if beacon acquisition is pending
-         */
-        uint8_t AcquisitionPending : 1;
-        /*!
-         * Set if the beacon state machine will be resumed
-         */
-        uint8_t ResumeBeaconing : 1;
-    } Ctrl;
+typedef struct sBeaconContext {
+  struct sBeaconCtrl {
+    /*!
+     * Set if the node receives beacons
+     */
+    uint8_t BeaconMode : 1;
+    /*!
+     * Set if the node has acquired the beacon
+     */
+    uint8_t BeaconAcquired : 1;
+    /*!
+     * Set if a beacon delay was set for the beacon acquisition
+     */
+    uint8_t BeaconDelaySet : 1;
+    /*!
+     * Set if a beacon channel was set for the beacon acquisition
+     */
+    uint8_t BeaconChannelSet : 1;
+    /*!
+     * Set if beacon acquisition is pending
+     */
+    uint8_t AcquisitionPending : 1;
+    /*!
+     * Set if the beacon state machine will be resumed
+     */
+    uint8_t ResumeBeaconing : 1;
+  } Ctrl;
 
-    /*!
-     * Current temperature
-     */
-    int16_t Temperature;
-    /*!
-     * Beacon time received with the beacon frame
-     */
-    SysTime_t BeaconTime;
-    /*!
-     * Time when the last beacon was received
-     */
-    SysTime_t LastBeaconRx;
-    /*!
-     * Time when the next beacon will be received
-     */
-    SysTime_t NextBeaconRx;
-    /*!
-     * This is the time where the RX window will be opened.
-     * Its base is NextBeaconRx with temperature compensations
-     * and RX window movement.
-     */
-    TimerTime_t NextBeaconRxAdjusted;
-    /*!
-     * Current symbol timeout. The node enlarges this variable in case of beacon
-     * loss.
-     */
-    uint16_t SymbolTimeout;
-    /*!
-     * Specifies how much time the beacon window will be moved.
-     */
-    TimerTime_t BeaconWindowMovement;
-    /*!
-     * Beacon timing channel for next beacon
-     */
-    uint8_t BeaconTimingChannel;
-    /*!
-     * Delay for next beacon in ms
-     */
-    TimerTime_t BeaconTimingDelay;
-    TimerTime_t TimeStamp;
-#if (defined(LORAMAC_VERSION)                                                                      \
-     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
-    /*!
-     * Beacons transmit time precision determined using
-     * param field of beacon frame format.
-     */
-    SysTime_t BeaconTimePrecision;
+  /*!
+   * Current temperature
+   */
+  int16_t Temperature;
+  /*!
+   * Beacon time received with the beacon frame
+   */
+  SysTime_t BeaconTime;
+  /*!
+   * Time when the last beacon was received
+   */
+  SysTime_t LastBeaconRx;
+  /*!
+   * Time when the next beacon will be received
+   */
+  SysTime_t NextBeaconRx;
+  /*!
+   * This is the time where the RX window will be opened.
+   * Its base is NextBeaconRx with temperature compensations
+   * and RX window movement.
+   */
+  TimerTime_t NextBeaconRxAdjusted;
+  /*!
+   * Current symbol timeout. The node enlarges this variable in case of beacon
+   * loss.
+   */
+  uint16_t SymbolTimeout;
+  /*!
+   * Specifies how much time the beacon window will be moved.
+   */
+  TimerTime_t BeaconWindowMovement;
+  /*!
+   * Beacon timing channel for next beacon
+   */
+  uint8_t BeaconTimingChannel;
+  /*!
+   * Delay for next beacon in ms
+   */
+  TimerTime_t BeaconTimingDelay;
+  TimerTime_t TimeStamp;
+#if (defined(LORAMAC_VERSION) &&                                               \
+     ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+  /*!
+   * Beacons transmit time precision determined using
+   * param field of beacon frame format.
+   */
+  SysTime_t BeaconTimePrecision;
 #endif /* LORAMAC_VERSION */
 } BeaconContext_t;
 
 /*!
  * Data structure which contains the callbacks
  */
-typedef struct sLoRaMacClassBCallback
-{
-    /*!
-     * \brief   Measures the temperature level
-     *
-     * \retval  Temperature level
-     */
-    int16_t (*GetTemperatureLevel)(void);
-    /*!
-     *\brief    Will be called each time a Radio IRQ is handled by the MAC
-     *          layer.
-     *
-     *\warning  Runs in a IRQ context. Should only change variables state.
-     */
-    void (*MacProcessNotify)(void);
+typedef struct sLoRaMacClassBCallback {
+  /*!
+   * \brief   Measures the temperature level
+   *
+   * \retval  Temperature level
+   */
+  int16_t (*GetTemperatureLevel)(void);
+  /*!
+   *\brief    Will be called each time a Radio IRQ is handled by the MAC
+   *          layer.
+   *
+   *\warning  Runs in a IRQ context. Should only change variables state.
+   */
+  void (*MacProcessNotify)(void);
 } LoRaMacClassBCallback_t;
 
 /*!
  * Data structure which pointers to the properties LoRaMAC
  */
-typedef struct sLoRaMacClassBParams
-{
-    /*!
-     * Pointer to the MlmeIndication structure
-     */
-    MlmeIndication_t *MlmeIndication;
-    /*!
-     * Pointer to the McpsIndication structure
-     */
-    McpsIndication_t *McpsIndication;
-    /*!
-     * Pointer to the MlmeConfirm structure
-     */
-    MlmeConfirm_t *MlmeConfirm;
-    /*!
-     * Pointer to the LoRaMacFlags structure
-     */
-    LoRaMacFlags_t *LoRaMacFlags;
-    /*!
-     * Pointer to the LoRaMac device address
-     */
-    uint32_t *LoRaMacDevAddr;
-    /*!
-     * Pointer to the LoRaMac region definition
-     */
-    LoRaMacRegion_t *LoRaMacRegion;
-    /*!
-     * Pointer to the LoRaMacParams structure
-     */
-    LoRaMacParams_t *LoRaMacParams;
-    /*!
-     * Pointer to the multicast channel list
-     */
-    MulticastCtx_t *MulticastChannels;
-#if (defined(LORAMAC_VERSION)                                                                      \
-     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
-    /*!
-     * Pointer to the activation type
-     */
-    ActivationType_t *NetworkActivation;
+typedef struct sLoRaMacClassBParams {
+  /*!
+   * Pointer to the MlmeIndication structure
+   */
+  MlmeIndication_t *MlmeIndication;
+  /*!
+   * Pointer to the McpsIndication structure
+   */
+  McpsIndication_t *McpsIndication;
+  /*!
+   * Pointer to the MlmeConfirm structure
+   */
+  MlmeConfirm_t *MlmeConfirm;
+  /*!
+   * Pointer to the LoRaMacFlags structure
+   */
+  LoRaMacFlags_t *LoRaMacFlags;
+  /*!
+   * Pointer to the LoRaMac device address
+   */
+  uint32_t *LoRaMacDevAddr;
+  /*!
+   * Pointer to the LoRaMac region definition
+   */
+  LoRaMacRegion_t *LoRaMacRegion;
+  /*!
+   * Pointer to the LoRaMacParams structure
+   */
+  LoRaMacParams_t *LoRaMacParams;
+  /*!
+   * Pointer to the multicast channel list
+   */
+  MulticastCtx_t *MulticastChannels;
+#if (defined(LORAMAC_VERSION) &&                                               \
+     ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+  /*!
+   * Pointer to the activation type
+   */
+  ActivationType_t *NetworkActivation;
 #endif /* LORAMAC_VERSION */
 } LoRaMacClassBParams_t;
 
@@ -260,8 +254,9 @@ typedef void (*LoRaMacClassBNvmEvent)(void);
  * \brief Initialize LoRaWAN Class B
  *
  * \param [in] classBParams Information and feedback parameter
- * \param [in] callbacks Contains the callback which the Class B implementation needs
- * \param [in] nvm Pointer to an external non-volatile memory data structure.
+ * \param [in] callbacks Contains the callback which the Class B implementation
+ * needs \param [in] nvm Pointer to an external non-volatile memory data
+ * structure.
  */
 void LoRaMacClassBInit(LoRaMacClassBParams_t *classBParams,
                        LoRaMacClassBCallback_t *callbacks,
@@ -296,18 +291,20 @@ void LoRaMacClassBSetMulticastSlotState(PingSlotState_t multicastSlotState);
 bool LoRaMacClassBIsAcquisitionInProgress(void);
 
 /*!
- * \brief Asks to the application cb to schedule the state machine of the Class B for beaconing
+ * \brief Asks to the application cb to schedule the state machine of the Class
+ * B for beaconing
  */
 void LoRaMacClassBBeaconTimerEvent(void *context);
 
 /*!
- * \brief Asks to the application cb to schedule the state machine of the Class B for ping slots
+ * \brief Asks to the application cb to schedule the state machine of the Class
+ * B for ping slots
  */
 void LoRaMacClassBPingSlotTimerEvent(void *context);
 
 /*!
- * \brief Asks to the application cb to schedule the state machine of the Class B for multicast
- * slots
+ * \brief Asks to the application cb to schedule the state machine of the Class
+ * B for multicast slots
  */
 void LoRaMacClassBMulticastSlotTimerEvent(void *context);
 
@@ -390,7 +387,8 @@ LoRaMacStatus_t LoRaMacClassBSwitchClass(DeviceClass_t nextClass);
  * \details The mac information base service to get attributes of the LoRaMac
  *          Class B layer.
  *
- * \param   [in] mibGet - MIB-GET-Request to perform. Refer to \ref MibRequestConfirm_t.
+ * \param   [in] mibGet - MIB-GET-Request to perform. Refer to \ref
+ * MibRequestConfirm_t.
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -405,7 +403,8 @@ LoRaMacStatus_t LoRaMacClassBMibGetRequestConfirm(MibRequestConfirm_t *mibGet);
  * \details The mac information base service to set attributes of the LoRaMac
  *          Class B layer.
  *
- * \param   [in] mibSet - MIB-SET-Request to perform. Refer to \ref MibRequestConfirm_t.
+ * \param   [in] mibSet - MIB-SET-Request to perform. Refer to \ref
+ * MibRequestConfirm_t.
  *
  * \retval  LoRaMacStatus_t Status of the operation. Possible returns are:
  *          \ref LORAMAC_STATUS_OK,
@@ -484,8 +483,8 @@ void LoRaMacClassBStartRxSlots(void);
  */
 void LoRaMacClassBSetMulticastPeriodicity(MulticastCtx_t *multicastChannel);
 
-#if (defined(LORAMAC_VERSION)                                                                      \
-     && ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
+#if (defined(LORAMAC_VERSION) &&                                               \
+     ((LORAMAC_VERSION == 0x01000400) || (LORAMAC_VERSION == 0x01010100)))
 /*!
  * \brief Sets the FPending bit status of the related downlink slot
  *

@@ -54,19 +54,18 @@
  *
  * \par Algorithm:
  * \par
- * The input test signal contains a 10 kHz signal with uniformly distributed white noise.
- * Calculating the FFT of the input signal will give us the maximum energy of the
- * bin corresponding to the input frequency of 10 kHz.
+ * The input test signal contains a 10 kHz signal with uniformly distributed
+ * white noise. Calculating the FFT of the input signal will give us the maximum
+ * energy of the bin corresponding to the input frequency of 10 kHz.
  *
  * \par Block Diagram:
  * \image html FFTBin.gif "Block Diagram"
  * \par
  * The figure below shows the time domain signal of 10 kHz signal with
  * uniformly distributed white noise, and the next figure shows the input
- * in the frequency domain. The bin with maximum energy corresponds to 10 kHz signal.
- * \par
- * \image html FFTBinInput.gif "Input signal in Time domain"
- * \image html FFTBinOutput.gif "Input signal in Frequency domain"
+ * in the frequency domain. The bin with maximum energy corresponds to 10 kHz
+ * signal. \par \image html FFTBinInput.gif "Input signal in Time domain" \image
+ * html FFTBinOutput.gif "Input signal in Frequency domain"
  *
  * \par Variables Description:
  * \par
@@ -117,41 +116,40 @@ uint32_t refIndex = 213, testIndex = 0;
  * Max magnitude FFT Bin test
  * ------------------------------------------------------------------- */
 
-int32_t main(void)
-{
-    arm_status status;
-    float32_t maxValue;
+int32_t main(void) {
 
-    status = ARM_MATH_SUCCESS;
+  arm_status status;
+  float32_t maxValue;
 
-    /* Process the data through the CFFT/CIFFT module */
-    arm_cfft_f32(&arm_cfft_sR_f32_len1024, testInput_f32_10khz, ifftFlag, doBitReverse);
+  status = ARM_MATH_SUCCESS;
 
-    /* Process the data through the Complex Magnitude Module for
-    calculating the magnitude at each bin */
-    arm_cmplx_mag_f32(testInput_f32_10khz, testOutput, fftSize);
+  /* Process the data through the CFFT/CIFFT module */
+  arm_cfft_f32(&arm_cfft_sR_f32_len1024, testInput_f32_10khz, ifftFlag,
+               doBitReverse);
 
-    /* Calculates maxValue and returns corresponding BIN value */
-    arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
+  /* Process the data through the Complex Magnitude Module for
+  calculating the magnitude at each bin */
+  arm_cmplx_mag_f32(testInput_f32_10khz, testOutput, fftSize);
 
-    if (testIndex != refIndex)
-    {
-        status = ARM_MATH_TEST_FAILURE;
-    }
+  /* Calculates maxValue and returns corresponding BIN value */
+  arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
 
-    /* ----------------------------------------------------------------------
-    ** Loop here if the signals fail the PASS check.
-    ** This denotes a test failure
-    ** ------------------------------------------------------------------- */
+  if (testIndex != refIndex) {
+    status = ARM_MATH_TEST_FAILURE;
+  }
 
-    if (status != ARM_MATH_SUCCESS)
-    {
-        while (1)
-            ;
-    }
+  /* ----------------------------------------------------------------------
+  ** Loop here if the signals fail the PASS check.
+  ** This denotes a test failure
+  ** ------------------------------------------------------------------- */
 
+  if (status != ARM_MATH_SUCCESS) {
     while (1)
-        ; /* main function does not return */
+      ;
+  }
+
+  while (1)
+    ; /* main function does not return */
 }
 
 /** \endlink */

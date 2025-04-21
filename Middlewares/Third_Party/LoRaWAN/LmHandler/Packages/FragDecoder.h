@@ -44,56 +44,52 @@ extern "C" {
 #define FRAG_SESSION_NOT_STARTED (int32_t) - 2
 #define FRAG_SESSION_ONGOING (int32_t) - 1
 
-typedef struct sFragDecoderStatus
-{
-    uint16_t FragNbRx;
-    uint16_t FragNbLost;
-    uint16_t FragNbLastRx;
-    uint8_t MatrixError;
+typedef struct sFragDecoderStatus {
+  uint16_t FragNbRx;
+  uint16_t FragNbLost;
+  uint16_t FragNbLastRx;
+  uint8_t MatrixError;
 } FragDecoderStatus_t;
 
-typedef struct sFragDecoderCallbacks
-{
-    /*!
-     * Initialize final uncoded data buffer
-     *
-     * \retval status Write operation status [0: Success, -1 Fail]
-     */
-    int32_t (*FragDecoderErase)(void);
-    /*!
-     * Writes `data` buffer of `size` starting at address `addr`
-     *
-     * \param [in] addr Address start index to write to.
-     * \param [in] data Data buffer to be written.
-     * \param [in] size Size of data buffer to be written.
-     *
-     * \retval status Write operation status [0: Success, -1 Fail]
-     */
-    int32_t (*FragDecoderWrite)(uint32_t addr, uint8_t *data, uint32_t size);
-    /*!
-     * Reads `data` buffer of `size` starting at address `addr`
-     *
-     * \param [in] addr Address start index to read from.
-     * \param [in] data Data buffer to be read.
-     * \param [in] size Size of data buffer to be read.
-     *
-     * \retval status Read operation status [0: Success, -1 Fail]
-     */
-    int32_t (*FragDecoderRead)(uint32_t addr, uint8_t *data, uint32_t size);
+typedef struct sFragDecoderCallbacks {
+  /*!
+   * Initialize final uncoded data buffer
+   *
+   * \retval status Write operation status [0: Success, -1 Fail]
+   */
+  int32_t (*FragDecoderErase)(void);
+  /*!
+   * Writes `data` buffer of `size` starting at address `addr`
+   *
+   * \param [in] addr Address start index to write to.
+   * \param [in] data Data buffer to be written.
+   * \param [in] size Size of data buffer to be written.
+   *
+   * \retval status Write operation status [0: Success, -1 Fail]
+   */
+  int32_t (*FragDecoderWrite)(uint32_t addr, uint8_t *data, uint32_t size);
+  /*!
+   * Reads `data` buffer of `size` starting at address `addr`
+   *
+   * \param [in] addr Address start index to read from.
+   * \param [in] data Data buffer to be read.
+   * \param [in] size Size of data buffer to be read.
+   *
+   * \retval status Read operation status [0: Success, -1 Fail]
+   */
+  int32_t (*FragDecoderRead)(uint32_t addr, uint8_t *data, uint32_t size);
 } FragDecoderCallbacks_t;
 
 /*!
  * \brief Initializes the fragmentation decoder
  *
- * \param [in] fragNb     Number of expected fragments (without redundancy packets)
- * \param [in] fragSize   Size of a fragment
- * \param [in] callbacks  Pointer to the Write/Read functions.
- * \param [in] fragPVer   Fragmentation Package version to adapt the LDPC matrix usage
+ * \param [in] fragNb     Number of expected fragments (without redundancy
+ * packets) \param [in] fragSize   Size of a fragment \param [in] callbacks
+ * Pointer to the Write/Read functions. \param [in] fragPVer   Fragmentation
+ * Package version to adapt the LDPC matrix usage
  */
-void FragDecoderInit(uint16_t fragNb,
-                     uint8_t fragSize,
-                     FragDecoderCallbacks_t *callbacks,
-                     uint8_t fragPVer);
+void FragDecoderInit(uint16_t fragNb, uint8_t fragSize,
+                     FragDecoderCallbacks_t *callbacks, uint8_t fragPVer);
 
 /*!
  * \brief Gets the maximum file size that can be received
@@ -106,8 +102,9 @@ uint32_t FragDecoderGetMaxFileSize(void);
  * \brief Function to decode and reconstruct the binary file
  *        Called for each receive frame
  *
- * \param [in] fragCounter Fragment counter [1..(FragDecoder.FragNb + FragDecoder.Redundancy)]
- * \param [in] rawData     Pointer to the fragment to be processed (length = FragDecoder.FragSize)
+ * \param [in] fragCounter Fragment counter [1..(FragDecoder.FragNb +
+ * FragDecoder.Redundancy)] \param [in] rawData     Pointer to the fragment to
+ * be processed (length = FragDecoder.FragSize)
  *
  * \retval status          Process status. [FRAG_SESSION_ONGOING,
  *                                          FRAG_SESSION_FINISHED or

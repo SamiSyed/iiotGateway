@@ -38,11 +38,13 @@ extern "C" {
  * reading from s instead of the standard input (stdin).
  *
  * The additional arguments should point to already allocated objects of the
- * type specified by their corresponding format specifier within the format string.
+ * type specified by their corresponding format specifier within the format
+ * string.
  *
- * @param  C string that the function processes as its source to retrieve the data.
- * @param  C string that contains a format string that follows the same specifications
- *         as format in scanf (see scanf for details).
+ * @param  C string that the function processes as its source to retrieve the
+ * data.
+ * @param  C string that contains a format string that follows the same
+ * specifications as format in scanf (see scanf for details).
  * @param  Depending on the format string, the function may expect a sequence of
  *         additional arguments, each containing a pointer to allocated storage
  *         where the interpretation of the extracted characters is stored with

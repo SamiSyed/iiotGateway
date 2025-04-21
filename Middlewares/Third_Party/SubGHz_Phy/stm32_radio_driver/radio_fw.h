@@ -32,17 +32,15 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 
 /*reserved for SubGHz_Phy internal MW communication*/
-typedef enum
-{
-    CONFIG_RX = 0,
-    CONFIG_TX,
+typedef enum {
+  CONFIG_RX = 0,
+  CONFIG_TX,
 } ConfigGenericRTx_t;
 
-typedef struct
-{
-    TxConfigGeneric_t *TxConfig;
-    RxConfigGeneric_t *RxConfig;
-    ConfigGenericRTx_t rtx;
+typedef struct {
+  TxConfigGeneric_t *TxConfig;
+  RxConfigGeneric_t *RxConfig;
+  ConfigGenericRTx_t rtx;
 } ConfigGeneric_t;
 
 /* Exported constants --------------------------------------------------------*/
@@ -51,15 +49,15 @@ typedef struct
 /* Exported functions prototypes ---------------------------------------------*/
 
 /*!
- * @brief Initialise the RFW module and enables custom  whitening, optionally long packet feature
+ * @brief Initialise the RFW module and enables custom  whitening, optionally
+ * long packet feature
  *
  * @param [in] config             rx or tx config from the application
  * @param [in] RadioEvents        from the radio
  * @param [in] TimeoutTimerEvent  Timer for Rx or Tx timeout event
  * @return 0 when no parameters error, -1 otherwise
  */
-int32_t RFW_Init(ConfigGeneric_t *config,
-                 RadioEvents_t *RadioEvents,
+int32_t RFW_Init(ConfigGeneric_t *config, RadioEvents_t *RadioEvents,
                  TimerEvent_t *TimeoutTimerEvent);
 
 /*!
@@ -84,8 +82,8 @@ uint8_t RFW_Is_LongPacketModeEnabled(void);
 void RFW_SetRadioModem(RadioModems_t Modem);
 
 /*!
- * @brief DeInitialise the RFW module and enable custom  whitening and optionally long packet
- * feature
+ * @brief DeInitialise the RFW module and enable custom  whitening and
+ * optionally long packet feature
  *
  */
 void RFW_DeInit(void);
@@ -114,7 +112,8 @@ int32_t RFW_ReceiveInit(void);
 /*!
  * @brief Initialise transmission for IBM whitening case
  *
- * @param [in,out] inOutBuffer pointer of exchange buffer to send or receive data
+ * @param [in,out] inOutBuffer pointer of exchange buffer to send or receive
+ * data
  * @param [in]     size input buffer size
  * @param [out]    outSize output buffer size
  *
@@ -128,34 +127,35 @@ int32_t RFW_TransmitInit(uint8_t *inOutBuffer, uint8_t size, uint8_t *outSize);
 void RFW_ReceivePayload(void);
 
 /*!
- * @brief Starts transmitting long Packet, note packet length may be on 1 bytes depending on config
+ * @brief Starts transmitting long Packet, note packet length may be on 1 bytes
+ * depending on config
  *
  * @param [in] payload_size        total payload size to be sent
  * @param [in] timeout             Reception timeout [ms]
- * @param [in] TxLongPacketGetNextChunkCb   callback to be implemented on user side to feed partial
- * chunk buffer: source buffer allocated by the app size: size in bytes to feed. User to implement
- * the offset based on previous chunk request
+ * @param [in] TxLongPacketGetNextChunkCb   callback to be implemented on user
+ * side to feed partial chunk buffer: source buffer allocated by the app size:
+ * size in bytes to feed. User to implement the offset based on previous chunk
+ * request
  * @return 0 when no parameters error, -1 otherwise
  */
-int32_t RFW_TransmitLongPacket(uint16_t payload_size,
-                               uint32_t timeout,
-                               void (*TxLongPacketGetNextChunkCb)(uint8_t **buffer,
-                                                                  uint8_t buffer_size));
+int32_t RFW_TransmitLongPacket(
+    uint16_t payload_size, uint32_t timeout,
+    void (*TxLongPacketGetNextChunkCb)(uint8_t **buffer, uint8_t buffer_size));
 
 /*!
  * @brief Starts receiving long Packet, packet maybe short
  *
- * @param [in] boosted_mode        boosted_mode: 0 normal Rx, 1:improved sensitivity
+ * @param [in] boosted_mode        boosted_mode: 0 normal Rx, 1:improved
+ * sensitivity
  * @param [in] timeout             Reception timeout [ms]
- * @param [in] RxLongStorePacketChunkCb   callback to be implemented on user side to record partial
- * chunk in the application buffer: source buffer allocated in the radio driver size: size in bytes
- * to record
+ * @param [in] RxLongStorePacketChunkCb   callback to be implemented on user
+ * side to record partial chunk in the application buffer: source buffer
+ * allocated in the radio driver size: size in bytes to record
  * @return 0 when no parameters error, -1 otherwise
  */
-int32_t RFW_ReceiveLongPacket(uint8_t boosted_mode,
-                              uint32_t timeout,
-                              void (*RxLongStorePacketChunkCb)(uint8_t *buffer,
-                                                               uint8_t chunk_size));
+int32_t RFW_ReceiveLongPacket(
+    uint8_t boosted_mode, uint32_t timeout,
+    void (*RxLongStorePacketChunkCb)(uint8_t *buffer, uint8_t chunk_size));
 
 #ifdef __cplusplus
 }

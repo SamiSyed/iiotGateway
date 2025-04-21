@@ -48,27 +48,29 @@
  *
  * \par Description:
  * \par
- * Demonstrates the ability of an adaptive filter to "learn" the transfer function of
- * a FIR lowpass filter using the Normalized LMS Filter, Finite Impulse
- * Response (FIR) Filter, and Basic Math Functions.
+ * Demonstrates the ability of an adaptive filter to "learn" the transfer
+ * function of a FIR lowpass filter using the Normalized LMS Filter, Finite
+ * Impulse Response (FIR) Filter, and Basic Math Functions.
  *
  * \par Algorithm:
  * \par
- * The figure below illustrates the signal flow in this example. Uniformly distributed white
- * noise is passed through an FIR lowpass filter. The output of the FIR filter serves as the
- * reference input of the adaptive filter (normalized LMS filter). The white noise is input
- * to the adaptive filter. The adaptive filter learns the transfer function of the FIR filter.
- * The filter outputs two signals: (1) the output of the internal adaptive FIR filter, and
- * (2) the error signal which is the difference between the adaptive filter and the reference
- * output of the FIR filter. Over time as the adaptive filter learns the transfer function
- * of the FIR filter, the first output approaches the reference output of the FIR filter,
- * and the error signal approaches zero.
+ * The figure below illustrates the signal flow in this example. Uniformly
+ * distributed white noise is passed through an FIR lowpass filter. The output
+ * of the FIR filter serves as the reference input of the adaptive filter
+ * (normalized LMS filter). The white noise is input to the adaptive filter. The
+ * adaptive filter learns the transfer function of the FIR filter. The filter
+ * outputs two signals: (1) the output of the internal adaptive FIR filter, and
+ * (2) the error signal which is the difference between the adaptive filter and
+ * the reference output of the FIR filter. Over time as the adaptive filter
+ * learns the transfer function of the FIR filter, the first output approaches
+ * the reference output of the FIR filter, and the error signal approaches zero.
  * \par
- * The adaptive filter converges properly even if the input signal has a large dynamic
- * range (i.e., varies from small to large values). The coefficients of the adaptive filter
- * are initially zero, and then converge over 1536 samples. The internal function
- * test_signal_converge() implements the stopping condition. The function checks if all of the
- * values of the error signal have a magnitude below a threshold DELTA.
+ * The adaptive filter converges properly even if the input signal has a large
+ * dynamic range (i.e., varies from small to large values). The coefficients of
+ * the adaptive filter are initially zero, and then converge over 1536 samples.
+ * The internal function test_signal_converge() implements the stopping
+ * condition. The function checks if all of the values of the error signal have
+ * a magnitude below a threshold DELTA.
  *
  * \par Block Diagram:
  * \par
@@ -79,11 +81,11 @@
  * \par
  * \li \c testInput_f32 points to the input data
  * \li \c firStateF32 points to FIR state buffer
- * \li \c lmsStateF32 points to Normalised Least mean square FIR filter state buffer
- * \li \c FIRCoeff_f32 points to coefficient buffer
- * \li \c lmsNormCoeff_f32 points to Normalised Least mean square FIR filter coefficient buffer
- * \li \c wire1, wir2, wire3 temporary buffers
- * \li \c errOutput, err_signal temporary error buffers
+ * \li \c lmsStateF32 points to Normalised Least mean square FIR filter state
+ * buffer \li \c FIRCoeff_f32 points to coefficient buffer \li \c
+ * lmsNormCoeff_f32 points to Normalised Least mean square FIR filter
+ * coefficient buffer \li \c wire1, wir2, wire3 temporary buffers \li \c
+ * errOutput, err_signal temporary error buffers
  *
  * \par CMSIS DSP Software Library Functions Used:
  * \par
@@ -170,87 +172,86 @@ float32_t err_signal[BLOCKSIZE];
  * Signal converge test
  * ------------------------------------------------------------------- */
 
-int32_t main(void)
-{
-    uint32_t i;
-    arm_status status;
-    uint32_t index;
-    float32_t minValue;
+int32_t main(void) {
+  uint32_t i;
+  arm_status status;
+  uint32_t index;
+  float32_t minValue;
 
-    /* Initialize the LMSNorm data structure */
-    arm_lms_norm_init_f32(&lmsNorm_instance, NUMTAPS, lmsNormCoeff_f32, lmsStateF32, MU, BLOCKSIZE);
+  /* Initialize the LMSNorm data structure */
+  arm_lms_norm_init_f32(&lmsNorm_instance, NUMTAPS, lmsNormCoeff_f32,
+                        lmsStateF32, MU, BLOCKSIZE);
 
-    /* Initialize the FIR data structure */
-    arm_fir_init_f32(&LPF_instance, NUMTAPS, (float32_t *)FIRCoeff_f32, firStateF32, BLOCKSIZE);
+  /* Initialize the FIR data structure */
+  arm_fir_init_f32(&LPF_instance, NUMTAPS, (float32_t *)FIRCoeff_f32,
+                   firStateF32, BLOCKSIZE);
 
-    /* ----------------------------------------------------------------------
-     * Loop over the frames of data and execute each of the processing
-     * functions in the system.
-     * ------------------------------------------------------------------- */
+  /* ----------------------------------------------------------------------
+   * Loop over the frames of data and execute each of the processing
+   * functions in the system.
+   * ------------------------------------------------------------------- */
 
-    for (i = 0; i < NUMFRAMES; i++)
-    {
-        /* Read the input data - uniformly distributed random noise - into wire1 */
-        arm_copy_f32(testInput_f32 + (i * BLOCKSIZE), wire1, BLOCKSIZE);
+  for (i = 0; i < NUMFRAMES; i++) {
+    /* Read the input data - uniformly distributed random noise - into wire1 */
+    arm_copy_f32(testInput_f32 + (i * BLOCKSIZE), wire1, BLOCKSIZE);
 
-        /* Execute the FIR processing function.  Input wire1 and output wire2 */
-        arm_fir_f32(&LPF_instance, wire1, wire2, BLOCKSIZE);
+    /* Execute the FIR processing function.  Input wire1 and output wire2 */
+    arm_fir_f32(&LPF_instance, wire1, wire2, BLOCKSIZE);
 
-        /* Execute the LMS Norm processing function*/
+    /* Execute the LMS Norm processing function*/
 
-        arm_lms_norm_f32(&lmsNorm_instance, /* LMSNorm instance */
-                         wire1,             /* Input signal */
-                         wire2,             /* Reference Signal */
-                         wire3,             /* Converged Signal */
-                         err_signal, /* Error Signal, this will become small as the signal converges
-                                      */
-                         BLOCKSIZE); /* BlockSize */
+    arm_lms_norm_f32(&lmsNorm_instance, /* LMSNorm instance */
+                     wire1,             /* Input signal */
+                     wire2,             /* Reference Signal */
+                     wire3,             /* Converged Signal */
+                     err_signal, /* Error Signal, this will become small as the
+                                    signal converges */
+                     BLOCKSIZE); /* BlockSize */
 
-        /* apply overall gain */
-        arm_scale_f32(wire3, 5, wire3, BLOCKSIZE); /* in-place buffer */
-    }
+    /* apply overall gain */
+    arm_scale_f32(wire3, 5, wire3, BLOCKSIZE); /* in-place buffer */
+  }
 
-    status = ARM_MATH_SUCCESS;
+  status = ARM_MATH_SUCCESS;
 
-    /* -------------------------------------------------------------------------------
-     * Test whether the error signal has reached towards 0.
-     * ----------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------------
+   * Test whether the error signal has reached towards 0.
+   * -----------------------------------------------------------------------------
+   */
 
-    arm_abs_f32(err_signal, err_signal, BLOCKSIZE);
-    arm_min_f32(err_signal, BLOCKSIZE, &minValue, &index);
+  arm_abs_f32(err_signal, err_signal, BLOCKSIZE);
+  arm_min_f32(err_signal, BLOCKSIZE, &minValue, &index);
 
-    if (minValue > DELTA_ERROR)
-    {
-        status = ARM_MATH_TEST_FAILURE;
-    }
+  if (minValue > DELTA_ERROR) {
+    status = ARM_MATH_TEST_FAILURE;
+  }
 
-    /* ----------------------------------------------------------------------
-     * Test whether the filter coefficients have converged.
-     * ------------------------------------------------------------------- */
+  /* ----------------------------------------------------------------------
+   * Test whether the filter coefficients have converged.
+   * ------------------------------------------------------------------- */
 
-    arm_sub_f32((float32_t *)FIRCoeff_f32, lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);
+  arm_sub_f32((float32_t *)FIRCoeff_f32, lmsNormCoeff_f32, lmsNormCoeff_f32,
+              NUMTAPS);
 
-    arm_abs_f32(lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);
-    arm_min_f32(lmsNormCoeff_f32, NUMTAPS, &minValue, &index);
+  arm_abs_f32(lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);
+  arm_min_f32(lmsNormCoeff_f32, NUMTAPS, &minValue, &index);
 
-    if (minValue > DELTA_COEFF)
-    {
-        status = ARM_MATH_TEST_FAILURE;
-    }
+  if (minValue > DELTA_COEFF) {
+    status = ARM_MATH_TEST_FAILURE;
+  }
 
-    /* ----------------------------------------------------------------------
-     * Loop here if the signals did not pass the convergence check.
-     * This denotes a test failure
-     * ------------------------------------------------------------------- */
+  /* ----------------------------------------------------------------------
+   * Loop here if the signals did not pass the convergence check.
+   * This denotes a test failure
+   * ------------------------------------------------------------------- */
 
-    if (status != ARM_MATH_SUCCESS)
-    {
-        while (1)
-            ;
-    }
-
+  if (status != ARM_MATH_SUCCESS) {
     while (1)
-        ; /* main function does not return */
+      ;
+  }
+
+  while (1)
+    ; /* main function does not return */
 }
 
 /** \endlink */

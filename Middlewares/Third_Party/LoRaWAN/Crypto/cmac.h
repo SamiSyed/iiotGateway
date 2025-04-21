@@ -45,12 +45,11 @@ extern "C" {
 #define AES_CMAC_KEY_LENGTH 16
 #define AES_CMAC_DIGEST_LENGTH 16
 
-typedef struct _AES_CMAC_CTX
-{
-    lorawan_aes_context rijndael;
-    uint8_t X[16];
-    uint8_t M_last[16];
-    uint32_t M_n;
+typedef struct _AES_CMAC_CTX {
+  lorawan_aes_context rijndael;
+  uint8_t X[16];
+  uint8_t M_last[16];
+  uint32_t M_n;
 } AES_CMAC_CTX;
 
 //#include <sys/cdefs.h>

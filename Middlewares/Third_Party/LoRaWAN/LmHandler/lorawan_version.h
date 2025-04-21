@@ -41,9 +41,11 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
-#define LORAWAN_VERSION                                                                            \
-    ((LORAWAN_VERSION_MAIN << LORAWAN_MAIN_SHIFT) | (LORAWAN_VERSION_SUB1 << LORAWAN_SUB1_SHIFT)   \
-     | (LORAWAN_VERSION_SUB2 << LORAWAN_SUB2_SHIFT) | (LORAWAN_VERSION_RC << LORAWAN_RC_SHIFT))
+#define LORAWAN_VERSION                                                        \
+  ((LORAWAN_VERSION_MAIN << LORAWAN_MAIN_SHIFT) |                              \
+   (LORAWAN_VERSION_SUB1 << LORAWAN_SUB1_SHIFT) |                              \
+   (LORAWAN_VERSION_SUB2 << LORAWAN_SUB2_SHIFT) |                              \
+   (LORAWAN_VERSION_RC << LORAWAN_RC_SHIFT))
 /* Exported functions ------------------------------------------------------- */
 
 #ifdef __cplusplus

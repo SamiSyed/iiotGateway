@@ -54,9 +54,10 @@ extern "C" {
  *
  * \retval Status
  */
-LoRaMacStatus_t RegionBaseUSComputeNext125kHzJoinChannel(uint16_t *channelsMaskRemaining,
-                                                         uint8_t *groupsCurrentIndex,
-                                                         uint8_t *newChannelIndex);
+LoRaMacStatus_t
+RegionBaseUSComputeNext125kHzJoinChannel(uint16_t *channelsMaskRemaining,
+                                         uint8_t *groupsCurrentIndex,
+                                         uint8_t *newChannelIndex);
 
 /*!
  * \brief Verifies if the frequency is in the correct range with a
@@ -72,10 +73,8 @@ LoRaMacStatus_t RegionBaseUSComputeNext125kHzJoinChannel(uint16_t *channelsMaskR
  *
  * \retval True, if the frequency is valid, false if not.
  */
-bool RegionBaseUSVerifyFrequencyGroup(uint32_t freq,
-                                      uint32_t minFreq,
-                                      uint32_t maxFreq,
-                                      uint32_t stepwidth);
+bool RegionBaseUSVerifyFrequencyGroup(uint32_t freq, uint32_t minFreq,
+                                      uint32_t maxFreq, uint32_t stepwidth);
 
 /*!
  * \brief Calculates the downlink frequency for a given channel. This
@@ -89,7 +88,8 @@ bool RegionBaseUSVerifyFrequencyGroup(uint32_t freq,
  *
  * \retval The downlink frequency.
  */
-uint32_t RegionBaseUSCalcDownlinkFrequency(uint8_t channel, uint32_t frequency, uint32_t stepwidth);
+uint32_t RegionBaseUSCalcDownlinkFrequency(uint8_t channel, uint32_t frequency,
+                                           uint32_t stepwidth);
 
 /*! \} defgroup REGIONBASEUS */
 

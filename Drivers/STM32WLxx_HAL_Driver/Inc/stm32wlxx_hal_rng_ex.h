@@ -49,15 +49,15 @@ extern "C" {
  * @brief RNG_Ex Configuration Structure definition
  */
 
-typedef struct
-{
-    uint32_t Config1;        /*!< Config1 must be a value between 0 and 0x3F */
-    uint32_t Config2;        /*!< Config2 must be a value between 0 and 0x7 */
-    uint32_t Config3;        /*!< Config3 must be a value between 0 and 0xF */
-    uint32_t ClockDivider;   /*!< Clock Divider factor.This parameter can
-                                  be a value of @ref RNG_Ex_Clock_Divider_Factor   */
-    uint32_t NistCompliance; /*!< NIST compliance.This parameter can be a
-                                  value of @ref RNG_Ex_NIST_Compliance   */
+typedef struct {
+  uint32_t Config1; /*!< Config1 must be a value between 0 and 0x3F */
+  uint32_t Config2; /*!< Config2 must be a value between 0 and 0x7 */
+  uint32_t Config3; /*!< Config3 must be a value between 0 and 0xF */
+  uint32_t
+      ClockDivider;        /*!< Clock Divider factor.This parameter can
+                                be a value of @ref RNG_Ex_Clock_Divider_Factor   */
+  uint32_t NistCompliance; /*!< NIST compliance.This parameter can be a
+                                value of @ref RNG_Ex_NIST_Compliance   */
 } RNG_ConfigTypeDef;
 
 /**
@@ -100,9 +100,11 @@ typedef struct
 /*!< 4096 RNG clock cycles per internal RNG clock  */
 #define RNG_CLKDIV_BY_8192 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_0)
 /*!< 8192 RNG clock cycles per internal RNG clock  */
-#define RNG_CLKDIV_BY_16384 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1)
+#define RNG_CLKDIV_BY_16384                                                    \
+  (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1)
 /*!< 16384 RNG clock cycles per internal RNG clock */
-#define RNG_CLKDIV_BY_32768 (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)
+#define RNG_CLKDIV_BY_32768                                                    \
+  (RNG_CR_CLKDIV_3 | RNG_CR_CLKDIV_2 | RNG_CR_CLKDIV_1 | RNG_CR_CLKDIV_0)
 /*!< 32768 RNG clock cycles per internal RNG clock */
 /**
  * @}
@@ -154,18 +156,27 @@ typedef struct
  * @{
  */
 
-#define IS_RNG_CLOCK_DIVIDER(__CLOCK_DIV__)                                                        \
-    (((__CLOCK_DIV__) == RNG_CLKDIV_BY_1) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2)                  \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8)               \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32)             \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_64) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_128)            \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_256) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_512)           \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_1024) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2048)         \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4096) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8192)         \
-     || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16384) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32768))
+#define IS_RNG_CLOCK_DIVIDER(__CLOCK_DIV__)                                    \
+  (((__CLOCK_DIV__) == RNG_CLKDIV_BY_1) ||                                     \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2) ||                                     \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4) ||                                     \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8) ||                                     \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16) ||                                    \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32) ||                                    \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_64) ||                                    \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_128) ||                                   \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_256) ||                                   \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_512) ||                                   \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_1024) ||                                  \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2048) ||                                  \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4096) ||                                  \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8192) ||                                  \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16384) ||                                 \
+   ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32768))
 
-#define IS_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__)                                                \
-    (((__NIST_COMPLIANCE__) == RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == RNG_CUSTOM_NIST))
+#define IS_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__)                            \
+  (((__NIST_COMPLIANCE__) == RNG_NIST_COMPLIANT) ||                            \
+   ((__NIST_COMPLIANCE__) == RNG_CUSTOM_NIST))
 
 #define IS_RNG_CONFIG1(__CONFIG1__) ((__CONFIG1__) <= 0x3FUL)
 
@@ -194,8 +205,10 @@ typedef struct
 /** @addtogroup RNG_Ex_Exported_Functions_Group1
  * @{
  */
-HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef *pConf);
-HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef *pConf);
+HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng,
+                                      RNG_ConfigTypeDef *pConf);
+HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng,
+                                      RNG_ConfigTypeDef *pConf);
 HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng);
 
 /**

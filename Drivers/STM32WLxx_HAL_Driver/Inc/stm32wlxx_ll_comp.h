@@ -43,8 +43,8 @@ extern "C" {
  */
 
 /* COMP registers bits positions */
-#define LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS                                                         \
-    (30UL) /* Value equivalent to POSITION_VAL(COMP_CSR_VALUE) */
+#define LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS                                     \
+  (30UL) /* Value equivalent to POSITION_VAL(COMP_CSR_VALUE) */
 
 /**
  * @}
@@ -68,44 +68,51 @@ extern "C" {
 /**
  * @brief  Structure definition of some features of COMP instance.
  */
-typedef struct
-{
-    uint32_t PowerMode; /*!< Set comparator operating mode to adjust power and speed.
-                             This parameter can be a value of @ref COMP_LL_EC_POWERMODE
+typedef struct {
+  uint32_t
+      PowerMode; /*!< Set comparator operating mode to adjust power and speed.
+                      This parameter can be a value of @ref COMP_LL_EC_POWERMODE
 
-                             This feature can be modified afterwards using unitary function @ref
-                           LL_COMP_SetPowerMode(). */
+                      This feature can be modified afterwards using unitary
+                    function @ref LL_COMP_SetPowerMode(). */
 
-    uint32_t InputPlus; /*!< Set comparator input plus (non-inverting input).
-                             This parameter can be a value of @ref COMP_LL_EC_INPUT_PLUS
+  uint32_t InputPlus; /*!< Set comparator input plus (non-inverting input).
+                           This parameter can be a value of @ref
+                         COMP_LL_EC_INPUT_PLUS
 
-                             This feature can be modified afterwards using unitary function @ref
-                           LL_COMP_SetInputPlus(). */
+                           This feature can be modified afterwards using unitary
+                         function @ref LL_COMP_SetInputPlus(). */
 
-    uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
-                              This parameter can be a value of @ref COMP_LL_EC_INPUT_MINUS
+  uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
+                            This parameter can be a value of @ref
+                          COMP_LL_EC_INPUT_MINUS
 
-                              This feature can be modified afterwards using unitary function @ref
-                            LL_COMP_SetInputMinus(). */
+                            This feature can be modified afterwards using
+                          unitary function @ref LL_COMP_SetInputMinus(). */
 
-    uint32_t InputHysteresis; /*!< Set comparator hysteresis mode of the input minus.
-                                   This parameter can be a value of @ref COMP_LL_EC_INPUT_HYSTERESIS
+  uint32_t
+      InputHysteresis; /*!< Set comparator hysteresis mode of the input minus.
+                            This parameter can be a value of @ref
+                          COMP_LL_EC_INPUT_HYSTERESIS
 
-                                   This feature can be modified afterwards using unitary function
-                                 @ref LL_COMP_SetInputHysteresis(). */
+                            This feature can be modified afterwards using
+                          unitary function @ref LL_COMP_SetInputHysteresis(). */
 
-    uint32_t OutputPolarity; /*!< Set comparator output polarity.
-                                  This parameter can be a value of @ref COMP_LL_EC_OUTPUT_POLARITY
+  uint32_t
+      OutputPolarity; /*!< Set comparator output polarity.
+                           This parameter can be a value of @ref
+                         COMP_LL_EC_OUTPUT_POLARITY
 
-                                  This feature can be modified afterwards using unitary function
-                                @ref LL_COMP_SetOutputPolarity(). */
+                           This feature can be modified afterwards using unitary
+                         function @ref LL_COMP_SetOutputPolarity(). */
 
-    uint32_t OutputBlankingSource; /*!< Set comparator blanking source.
-                                        This parameter can be a value of @ref
-                                      COMP_LL_EC_OUTPUT_BLANKING_SOURCE
+  uint32_t OutputBlankingSource; /*!< Set comparator blanking source.
+                                      This parameter can be a value of @ref
+                                    COMP_LL_EC_OUTPUT_BLANKING_SOURCE
 
-                                        This feature can be modified afterwards using unitary
-                                      function @ref LL_COMP_SetOutputBlankingSource(). */
+                                      This feature can be modified afterwards
+                                    using unitary function @ref
+                                    LL_COMP_SetOutputBlankingSource(). */
 
 } LL_COMP_InitTypeDef;
 
@@ -122,12 +129,14 @@ typedef struct
 /** @defgroup COMP_LL_EC_COMMON_WINDOWMODE Comparator common modes - Window mode
  * @{
  */
-#define LL_COMP_WINDOWMODE_DISABLE                                                                 \
-    (0x00000000UL) /*!< Window mode disable: Comparators 1 and 2 are independent */
-#define LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON                                                 \
-    (COMP_CSR_WINMODE) /*!< Window mode enable: Comparators instances pair COMP1 and COMP2 have    \
-                          their input plus connected together. The common input is COMP1 input     \
-                          plus (COMP2 input plus is no more accessible). */
+#define LL_COMP_WINDOWMODE_DISABLE                                             \
+  (0x00000000UL) /*!< Window mode disable: Comparators 1 and 2 are independent \
+                  */
+#define LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON                             \
+  (COMP_CSR_WINMODE) /*!< Window mode enable: Comparators instances pair COMP1 \
+                        and COMP2 have their input plus connected together.    \
+                        The common input is COMP1 input plus (COMP2 input plus \
+                        is no more accessible). */
 /**
  * @}
  */
@@ -135,77 +144,69 @@ typedef struct
 /** @defgroup COMP_LL_EC_POWERMODE Comparator modes - Power mode
  * @{
  */
-#define LL_COMP_POWERMODE_HIGHSPEED (0x00000000UL)         /*!< COMP power mode to high speed */
-#define LL_COMP_POWERMODE_MEDIUMSPEED (COMP_CSR_PWRMODE_0) /*!< COMP power mode to medium speed */
-#define LL_COMP_POWERMODE_ULTRALOWPOWER                                                            \
-    (COMP_CSR_PWRMODE_1 | COMP_CSR_PWRMODE_0) /*!< COMP power mode to ultra-low power */
+#define LL_COMP_POWERMODE_HIGHSPEED                                            \
+  (0x00000000UL) /*!< COMP power mode to high speed */
+#define LL_COMP_POWERMODE_MEDIUMSPEED                                          \
+  (COMP_CSR_PWRMODE_0) /*!< COMP power mode to medium speed */
+#define LL_COMP_POWERMODE_ULTRALOWPOWER                                        \
+  (COMP_CSR_PWRMODE_1 |                                                        \
+   COMP_CSR_PWRMODE_0) /*!< COMP power mode to ultra-low power */
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EC_INPUT_PLUS Comparator inputs - Input plus (input non-inverting) selection
+/** @defgroup COMP_LL_EC_INPUT_PLUS Comparator inputs - Input plus (input
+ * non-inverting) selection
  * @{
  */
-#define LL_COMP_INPUT_PLUS_IO1                                                                     \
-    (0x00000000UL) /*!< Comparator input plus connected to IO1 (pin PB4 for COMP1, pin PB4 for     \
-                      COMP2) */
-#define LL_COMP_INPUT_PLUS_IO2                                                                     \
-    (COMP_CSR_INPSEL_0) /*!< Comparator input plus connected to IO2 (pin PB2 for COMP1, pin PB1    \
-                           for COMP2) */
-#define LL_COMP_INPUT_PLUS_IO3                                                                     \
-    (COMP_CSR_INPSEL_1) /*!< Comparator input plus connected to IO2 (not applicable for COMP1, pin \
-                           PA15 for COMP2) */
+#define LL_COMP_INPUT_PLUS_IO1                                                 \
+  (0x00000000UL) /*!< Comparator input plus connected to IO1 (pin PB4 for      \
+                    COMP1, pin PB4 for COMP2) */
+#define LL_COMP_INPUT_PLUS_IO2                                                 \
+  (COMP_CSR_INPSEL_0) /*!< Comparator input plus connected to IO2 (pin PB2 for \
+                         COMP1, pin PB1 for COMP2) */
+#define LL_COMP_INPUT_PLUS_IO3                                                 \
+  (COMP_CSR_INPSEL_1) /*!< Comparator input plus connected to IO2 (not         \
+                         applicable for COMP1, pin PA15 for COMP2) */
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EC_INPUT_MINUS Comparator inputs - Input minus (input inverting) selection
+/** @defgroup COMP_LL_EC_INPUT_MINUS Comparator inputs - Input minus (input
+ * inverting) selection
  * @{
  */
-#define LL_COMP_INPUT_MINUS_1_4VREFINT                                                             \
-    (COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected to 1/4 VrefInt  */
-#define LL_COMP_INPUT_MINUS_1_2VREFINT                                                             \
-    (COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected   \
-                                                              to 1/2 VrefInt  */
-#define LL_COMP_INPUT_MINUS_3_4VREFINT                                                             \
-    (COMP_CSR_INMSEL_1 | COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected   \
-                                                              to 3/4 VrefInt  */
-#define LL_COMP_INPUT_MINUS_VREFINT                                                                \
-    (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN) /*!< Comparator input minus          \
-                                                                 connected to VrefInt */
-#define LL_COMP_INPUT_MINUS_DAC_CH1                                                                \
-    (COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC channel 1 (DAC_OUT1)  */
-#define LL_COMP_INPUT_MINUS_IO1                                                                    \
-    (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1) /*!< Comparator input minus connected to IO1 (pin PB3  \
-                                               for COMP1, pin PB3 for COMP2) */
-#define LL_COMP_INPUT_MINUS_IO2                                                                    \
-    (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus        \
-                                                                   connected to IO2 (pin PA10 for  \
-                                                                   COMP1, pin PB2 for COMP2) */
-#define LL_COMP_INPUT_MINUS_IO3                                                                    \
-    (COMP_CSR_INMESEL_0 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!<          \
-                                                                                        Comparator \
-                                                                                        input      \
-                                                                                        minus      \
-                                                                                        connected  \
-                                                                                        to IO3     \
-                                                                                        (pin PA11  \
-                                                                                        for COMP1, \
-                                                                                        pin PA10   \
-                                                                                        for COMP2) \
-                                                                                      */
-#define LL_COMP_INPUT_MINUS_IO4                                                                    \
-    (COMP_CSR_INMESEL_1 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!<          \
-                                                                                        Comparator \
-                                                                                        input      \
-                                                                                        minus      \
-                                                                                        connected  \
-                                                                                        to IO4     \
-                                                                                        (pin PA15  \
-                                                                                        for COMP1, \
-                                                                                        pin PA11   \
-                                                                                        for COMP2) \
-                                                                                      */
+#define LL_COMP_INPUT_MINUS_1_4VREFINT                                         \
+  (COMP_CSR_SCALEN |                                                           \
+   COMP_CSR_BRGEN) /*!< Comparator input minus connected to 1/4 VrefInt  */
+#define LL_COMP_INPUT_MINUS_1_2VREFINT                                         \
+  (COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN |                                       \
+   COMP_CSR_BRGEN) /*!< Comparator input minus connected to 1/2 VrefInt  */
+#define LL_COMP_INPUT_MINUS_3_4VREFINT                                         \
+  (COMP_CSR_INMSEL_1 | COMP_CSR_SCALEN |                                       \
+   COMP_CSR_BRGEN) /*!< Comparator input minus connected to 3/4 VrefInt  */
+#define LL_COMP_INPUT_MINUS_VREFINT                                            \
+  (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0 |                                     \
+   COMP_CSR_SCALEN) /*!< Comparator input minus connected to VrefInt */
+#define LL_COMP_INPUT_MINUS_DAC_CH1                                            \
+  (COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC channel 1   \
+                         (DAC_OUT1)  */
+#define LL_COMP_INPUT_MINUS_IO1                                                \
+  (COMP_CSR_INMSEL_2 |                                                         \
+   COMP_CSR_INMSEL_1) /*!< Comparator input minus connected to IO1 (pin PB3    \
+                         for COMP1, pin PB3 for COMP2) */
+#define LL_COMP_INPUT_MINUS_IO2                                                \
+  (COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 |                                     \
+   COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO2 (pin PA10   \
+                         for COMP1, pin PB2 for COMP2) */
+#define LL_COMP_INPUT_MINUS_IO3                                                \
+  (COMP_CSR_INMESEL_0 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 |                \
+   COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO3 (pin PA11   \
+                         for COMP1, pin PA10 for COMP2) */
+#define LL_COMP_INPUT_MINUS_IO4                                                \
+  (COMP_CSR_INMESEL_1 | COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 |                \
+   COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO4 (pin PA15   \
+                         for COMP1, pin PA11 for COMP2) */
 /**
  * @}
  */
@@ -213,10 +214,12 @@ typedef struct
 /** @defgroup COMP_LL_EC_INPUT_HYSTERESIS Comparator input - Hysteresis
  * @{
  */
-#define LL_COMP_HYSTERESIS_NONE (0x00000000UL)                      /*!< No hysteresis */
-#define LL_COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0)                    /*!< Hysteresis level low */
-#define LL_COMP_HYSTERESIS_MEDIUM (COMP_CSR_HYST_1)                 /*!< Hysteresis level medium */
-#define LL_COMP_HYSTERESIS_HIGH (COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level high */
+#define LL_COMP_HYSTERESIS_NONE (0x00000000UL)   /*!< No hysteresis */
+#define LL_COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0) /*!< Hysteresis level low */
+#define LL_COMP_HYSTERESIS_MEDIUM                                              \
+  (COMP_CSR_HYST_1) /*!< Hysteresis level medium */
+#define LL_COMP_HYSTERESIS_HIGH                                                \
+  (COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level high */
 /**
  * @}
  */
@@ -224,29 +227,31 @@ typedef struct
 /** @defgroup COMP_LL_EC_OUTPUT_POLARITY Comparator output - Output polarity
  * @{
  */
-#define LL_COMP_OUTPUTPOL_NONINVERTED                                                              \
-    (0x00000000UL) /*!< COMP output polarity is not inverted: comparator output is high when the   \
-                      plus (non-inverting) input is at a higher voltage than the minus (inverting) \
-                      input */
-#define LL_COMP_OUTPUTPOL_INVERTED                                                                 \
-    (COMP_CSR_POLARITY) /*!< COMP output polarity is inverted: comparator output is low when the   \
-                           plus (non-inverting) input is at a lower voltage than the minus         \
-                           (inverting) input */
+#define LL_COMP_OUTPUTPOL_NONINVERTED                                          \
+  (0x00000000UL) /*!< COMP output polarity is not inverted: comparator output  \
+                    is high when the plus (non-inverting) input is at a higher \
+                    voltage than the minus (inverting) input */
+#define LL_COMP_OUTPUTPOL_INVERTED                                             \
+  (COMP_CSR_POLARITY) /*!< COMP output polarity is inverted: comparator output \
+                         is low when the plus (non-inverting) input is at a    \
+                         lower voltage than the minus (inverting) input */
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EC_OUTPUT_BLANKING_SOURCE Comparator output - Blanking source
+/** @defgroup COMP_LL_EC_OUTPUT_BLANKING_SOURCE Comparator output - Blanking
+ * source
  * @{
  */
-#define LL_COMP_BLANKINGSRC_NONE (0x00000000UL) /*!<Comparator output without blanking */
+#define LL_COMP_BLANKINGSRC_NONE                                               \
+  (0x00000000UL) /*!<Comparator output without blanking */
 /* Note: Output blanking source common to all COMP instances */
-#define LL_COMP_BLANKINGSRC_TIM1_OC5                                                               \
-    (COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5 (common to all COMP      \
-                             instances: COMP1, COMP2) */
-#define LL_COMP_BLANKINGSRC_TIM2_OC3                                                               \
-    (COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3 (common to all COMP      \
-                             instances: COMP1, COMP2) */
+#define LL_COMP_BLANKINGSRC_TIM1_OC5                                           \
+  (COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5        \
+                           (common to all COMP instances: COMP1, COMP2) */
+#define LL_COMP_BLANKINGSRC_TIM2_OC3                                           \
+  (COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3        \
+                           (common to all COMP instances: COMP1, COMP2) */
 /**
  * @}
  */
@@ -254,17 +259,18 @@ typedef struct
 /** @defgroup COMP_LL_EC_OUTPUT_LEVEL Comparator output - Output level
  * @{
  */
-#define LL_COMP_OUTPUT_LEVEL_LOW                                                                   \
-    (0x00000000UL) /*!< Comparator output level low (if the polarity is not inverted, otherwise to \
-                      be complemented) */
-#define LL_COMP_OUTPUT_LEVEL_HIGH                                                                  \
-    (0x00000001UL) /*!< Comparator output level high (if the polarity is not inverted, otherwise   \
-                      to be complemented) */
+#define LL_COMP_OUTPUT_LEVEL_LOW                                               \
+  (0x00000000UL) /*!< Comparator output level low (if the polarity is not      \
+                    inverted, otherwise to be complemented) */
+#define LL_COMP_OUTPUT_LEVEL_HIGH                                              \
+  (0x00000001UL) /*!< Comparator output level high (if the polarity is not     \
+                    inverted, otherwise to be complemented) */
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EC_HW_DELAYS  Definitions of COMP hardware constraints delays
+/** @defgroup COMP_LL_EC_HW_DELAYS  Definitions of COMP hardware constraints
+ * delays
  * @note   Only COMP peripheral HW delays are defined in COMP LL driver driver,
  *         not timeout values.
  *         For details on delays values, refer to descriptions in source code
@@ -285,8 +291,8 @@ typedef struct
 /* Literal set to maximum value (refer to device datasheet,                   */
 /* parameter "tSTART_SCALER").                                                */
 /* Unit: us                                                                   */
-#define LL_COMP_DELAY_VOLTAGE_SCALER_STAB_US                                                       \
-    (200UL) /*!< Delay for COMP voltage scaler stabilization time */
+#define LL_COMP_DELAY_VOLTAGE_SCALER_STAB_US                                   \
+  (200UL) /*!< Delay for COMP voltage scaler stabilization time */
 
 /**
  * @}
@@ -311,8 +317,8 @@ typedef struct
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_COMP_WriteReg(__INSTANCE__, __REG__, __VALUE__)                                         \
-    WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
+#define LL_COMP_WriteReg(__INSTANCE__, __REG__, __VALUE__)                     \
+  WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in COMP register
@@ -336,7 +342,8 @@ typedef struct
  *         set parameters common to several COMP instances.
  *         Refer to functions having argument "COMPxy_COMMON" as parameter.
  * @param  __COMPx__ COMP instance
- * @retval COMP common instance or value "0" if there is no COMP common instance.
+ * @retval COMP common instance or value "0" if there is no COMP common
+ * instance.
  */
 #define __LL_COMP_COMMON_INSTANCE(__COMPx__) (COMP12_COMMON)
 
@@ -353,8 +360,8 @@ typedef struct
  * @{
  */
 
-/** @defgroup COMP_LL_EF_Configuration_comparator_common Configuration of COMP hierarchical scope:
- * common to several COMP instances
+/** @defgroup COMP_LL_EF_Configuration_comparator_common Configuration of COMP
+ * hierarchical scope: common to several COMP instances
  * @{
  */
 
@@ -363,19 +370,19 @@ typedef struct
  *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
  * @rmtoll CSR      WINMODE        LL_COMP_SetCommonWindowMode
  * @param  COMPxy_COMMON Comparator common instance
- *         (can be set directly from CMSIS definition or by using helper macro @ref
- * __LL_COMP_COMMON_INSTANCE() )
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
  * @param  WindowMode This parameter can be one of the following values:
  *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
  *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON,
-                                                 uint32_t WindowMode)
-{
-    /* Note: On this STM32 series, window mode can be set only                  */
-    /*       from COMP instance: COMP2.                                         */
-    MODIFY_REG(COMPxy_COMMON->CSR, COMP_CSR_WINMODE, WindowMode);
+__STATIC_INLINE void
+LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON,
+                            uint32_t WindowMode) {
+  /* Note: On this STM32 series, window mode can be set only                  */
+  /*       from COMP instance: COMP2.                                         */
+  MODIFY_REG(COMPxy_COMMON->CSR, COMP_CSR_WINMODE, WindowMode);
 }
 
 /**
@@ -383,22 +390,23 @@ __STATIC_INLINE void LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COM
  *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
  * @rmtoll CSR      WINMODE        LL_COMP_GetCommonWindowMode
  * @param  COMPxy_COMMON Comparator common instance
- *         (can be set directly from CMSIS definition or by using helper macro @ref
- * __LL_COMP_COMMON_INSTANCE() )
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
  * @retval Returned value can be one of the following values:
  *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
  *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
  */
-__STATIC_INLINE uint32_t LL_COMP_GetCommonWindowMode(const COMP_Common_TypeDef *COMPxy_COMMON)
-{
-    return (uint32_t)(READ_BIT(COMPxy_COMMON->CSR, COMP_CSR_WINMODE));
+__STATIC_INLINE uint32_t
+LL_COMP_GetCommonWindowMode(const COMP_Common_TypeDef *COMPxy_COMMON) {
+  return (uint32_t)(READ_BIT(COMPxy_COMMON->CSR, COMP_CSR_WINMODE));
 }
 
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EF_Configuration_comparator_modes Configuration of comparator modes
+/** @defgroup COMP_LL_EF_Configuration_comparator_modes Configuration of
+ * comparator modes
  * @{
  */
 
@@ -412,9 +420,9 @@ __STATIC_INLINE uint32_t LL_COMP_GetCommonWindowMode(const COMP_Common_TypeDef *
  *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx, uint32_t PowerMode)
-{
-    MODIFY_REG(COMPx->CSR, COMP_CSR_PWRMODE, PowerMode);
+__STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx,
+                                          uint32_t PowerMode) {
+  MODIFY_REG(COMPx->CSR, COMP_CSR_PWRMODE, PowerMode);
 }
 
 /**
@@ -426,16 +434,16 @@ __STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx, uint32_t PowerMod
  *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED
  *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
  */
-__STATIC_INLINE uint32_t LL_COMP_GetPowerMode(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_PWRMODE));
+__STATIC_INLINE uint32_t LL_COMP_GetPowerMode(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_PWRMODE));
 }
 
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EF_Configuration_comparator_inputs Configuration of comparator inputs
+/** @defgroup COMP_LL_EF_Configuration_comparator_inputs Configuration of
+ * comparator inputs
  * @{
  */
 
@@ -481,12 +489,11 @@ __STATIC_INLINE uint32_t LL_COMP_GetPowerMode(const COMP_TypeDef *COMPx)
  */
 __STATIC_INLINE void LL_COMP_ConfigInputs(COMP_TypeDef *COMPx,
                                           uint32_t InputMinus,
-                                          uint32_t InputPlus)
-{
-    MODIFY_REG(COMPx->CSR,
-               COMP_CSR_INMESEL | COMP_CSR_INMSEL | COMP_CSR_INPSEL | COMP_CSR_SCALEN
-                   | COMP_CSR_BRGEN,
-               InputMinus | InputPlus);
+                                          uint32_t InputPlus) {
+  MODIFY_REG(COMPx->CSR,
+             COMP_CSR_INMESEL | COMP_CSR_INMSEL | COMP_CSR_INPSEL |
+                 COMP_CSR_SCALEN | COMP_CSR_BRGEN,
+             InputMinus | InputPlus);
 }
 
 /**
@@ -504,9 +511,9 @@ __STATIC_INLINE void LL_COMP_ConfigInputs(COMP_TypeDef *COMPx,
  *         (*) Parameter not available on all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx, uint32_t InputPlus)
-{
-    MODIFY_REG(COMPx->CSR, COMP_CSR_INPSEL, InputPlus);
+__STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx,
+                                          uint32_t InputPlus) {
+  MODIFY_REG(COMPx->CSR, COMP_CSR_INPSEL, InputPlus);
 }
 
 /**
@@ -523,9 +530,8 @@ __STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx, uint32_t InputPlu
  *
  *         (*) Parameter not available on all devices.
  */
-__STATIC_INLINE uint32_t LL_COMP_GetInputPlus(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INPSEL));
+__STATIC_INLINE uint32_t LL_COMP_GetInputPlus(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INPSEL));
 }
 
 /**
@@ -561,11 +567,12 @@ __STATIC_INLINE uint32_t LL_COMP_GetInputPlus(const COMP_TypeDef *COMPx)
  *         @arg @ref LL_COMP_INPUT_MINUS_IO4
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx, uint32_t InputMinus)
-{
-    MODIFY_REG(COMPx->CSR,
-               COMP_CSR_INMESEL | COMP_CSR_INMSEL | COMP_CSR_SCALEN | COMP_CSR_BRGEN,
-               InputMinus);
+__STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx,
+                                           uint32_t InputMinus) {
+  MODIFY_REG(COMPx->CSR,
+             COMP_CSR_INMESEL | COMP_CSR_INMSEL | COMP_CSR_SCALEN |
+                 COMP_CSR_BRGEN,
+             InputMinus);
 }
 
 /**
@@ -588,15 +595,14 @@ __STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx, uint32_t InputMi
  *         @arg @ref LL_COMP_INPUT_MINUS_IO3
  *         @arg @ref LL_COMP_INPUT_MINUS_IO4
  */
-__STATIC_INLINE uint32_t LL_COMP_GetInputMinus(const COMP_TypeDef *COMPx)
-{
-    return (
-        uint32_t)(READ_BIT(COMPx->CSR,
-                           COMP_CSR_INMESEL | COMP_CSR_INMSEL | COMP_CSR_SCALEN | COMP_CSR_BRGEN));
+__STATIC_INLINE uint32_t LL_COMP_GetInputMinus(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INMESEL | COMP_CSR_INMSEL |
+                                             COMP_CSR_SCALEN | COMP_CSR_BRGEN));
 }
 
 /**
- * @brief  Set comparator instance hysteresis mode of the input minus (inverting input).
+ * @brief  Set comparator instance hysteresis mode of the input minus (inverting
+ * input).
  * @rmtoll CSR      HYST           LL_COMP_SetInputHysteresis
  * @param  COMPx Comparator instance
  * @param  InputHysteresis This parameter can be one of the following values:
@@ -606,13 +612,14 @@ __STATIC_INLINE uint32_t LL_COMP_GetInputMinus(const COMP_TypeDef *COMPx)
  *         @arg @ref LL_COMP_HYSTERESIS_HIGH
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetInputHysteresis(COMP_TypeDef *COMPx, uint32_t InputHysteresis)
-{
-    MODIFY_REG(COMPx->CSR, COMP_CSR_HYST, InputHysteresis);
+__STATIC_INLINE void LL_COMP_SetInputHysteresis(COMP_TypeDef *COMPx,
+                                                uint32_t InputHysteresis) {
+  MODIFY_REG(COMPx->CSR, COMP_CSR_HYST, InputHysteresis);
 }
 
 /**
- * @brief  Get comparator instance hysteresis mode of the minus (inverting) input.
+ * @brief  Get comparator instance hysteresis mode of the minus (inverting)
+ * input.
  * @rmtoll CSR      HYST           LL_COMP_GetInputHysteresis
  * @param  COMPx Comparator instance
  * @retval Returned value can be one of the following values:
@@ -621,16 +628,16 @@ __STATIC_INLINE void LL_COMP_SetInputHysteresis(COMP_TypeDef *COMPx, uint32_t In
  *         @arg @ref LL_COMP_HYSTERESIS_MEDIUM
  *         @arg @ref LL_COMP_HYSTERESIS_HIGH
  */
-__STATIC_INLINE uint32_t LL_COMP_GetInputHysteresis(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_HYST));
+__STATIC_INLINE uint32_t LL_COMP_GetInputHysteresis(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_HYST));
 }
 
 /**
  * @}
  */
 
-/** @defgroup COMP_LL_EF_Configuration_comparator_output Configuration of comparator output
+/** @defgroup COMP_LL_EF_Configuration_comparator_output Configuration of
+ * comparator output
  * @{
  */
 
@@ -643,9 +650,9 @@ __STATIC_INLINE uint32_t LL_COMP_GetInputHysteresis(const COMP_TypeDef *COMPx)
  *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx, uint32_t OutputPolarity)
-{
-    MODIFY_REG(COMPx->CSR, COMP_CSR_POLARITY, OutputPolarity);
+__STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx,
+                                               uint32_t OutputPolarity) {
+  MODIFY_REG(COMPx->CSR, COMP_CSR_POLARITY, OutputPolarity);
 }
 
 /**
@@ -656,9 +663,8 @@ __STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx, uint32_t Out
  *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
  *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
  */
-__STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_POLARITY));
+__STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_POLARITY));
 }
 
 /**
@@ -678,9 +684,9 @@ __STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(const COMP_TypeDef *COMPx)
  *             on the selected device.
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_SetOutputBlankingSource(COMP_TypeDef *COMPx, uint32_t BlankingSource)
-{
-    MODIFY_REG(COMPx->CSR, COMP_CSR_BLANKING, BlankingSource);
+__STATIC_INLINE void LL_COMP_SetOutputBlankingSource(COMP_TypeDef *COMPx,
+                                                     uint32_t BlankingSource) {
+  MODIFY_REG(COMPx->CSR, COMP_CSR_BLANKING, BlankingSource);
 }
 
 /**
@@ -699,9 +705,9 @@ __STATIC_INLINE void LL_COMP_SetOutputBlankingSource(COMP_TypeDef *COMPx, uint32
  *         (1) Parameter availability depending on timer availability
  *             on the selected device.
  */
-__STATIC_INLINE uint32_t LL_COMP_GetOutputBlankingSource(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_BLANKING));
+__STATIC_INLINE uint32_t
+LL_COMP_GetOutputBlankingSource(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_BLANKING));
 }
 
 /**
@@ -721,9 +727,8 @@ __STATIC_INLINE uint32_t LL_COMP_GetOutputBlankingSource(const COMP_TypeDef *COM
  * @param  COMPx Comparator instance
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx)
-{
-    SET_BIT(COMPx->CSR, COMP_CSR_EN);
+__STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx) {
+  SET_BIT(COMPx->CSR, COMP_CSR_EN);
 }
 
 /**
@@ -732,9 +737,8 @@ __STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx)
  * @param  COMPx Comparator instance
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx)
-{
-    CLEAR_BIT(COMPx->CSR, COMP_CSR_EN);
+__STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx) {
+  CLEAR_BIT(COMPx->CSR, COMP_CSR_EN);
 }
 
 /**
@@ -744,9 +748,8 @@ __STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx)
  * @param  COMPx Comparator instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_COMP_IsEnabled(const COMP_TypeDef *COMPx)
-{
-    return ((READ_BIT(COMPx->CSR, COMP_CSR_EN) == (COMP_CSR_EN)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_COMP_IsEnabled(const COMP_TypeDef *COMPx) {
+  return ((READ_BIT(COMPx->CSR, COMP_CSR_EN) == (COMP_CSR_EN)) ? 1UL : 0UL);
 }
 
 /**
@@ -757,9 +760,8 @@ __STATIC_INLINE uint32_t LL_COMP_IsEnabled(const COMP_TypeDef *COMPx)
  * @param  COMPx Comparator instance
  * @retval None
  */
-__STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx)
-{
-    SET_BIT(COMPx->CSR, COMP_CSR_LOCK);
+__STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx) {
+  SET_BIT(COMPx->CSR, COMP_CSR_LOCK);
 }
 
 /**
@@ -771,9 +773,8 @@ __STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx)
  * @param  COMPx Comparator instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_COMP_IsLocked(const COMP_TypeDef *COMPx)
-{
-    return ((READ_BIT(COMPx->CSR, COMP_CSR_LOCK) == (COMP_CSR_LOCK)) ? 1UL : 0UL);
+__STATIC_INLINE uint32_t LL_COMP_IsLocked(const COMP_TypeDef *COMPx) {
+  return ((READ_BIT(COMPx->CSR, COMP_CSR_LOCK) == (COMP_CSR_LOCK)) ? 1UL : 0UL);
 }
 
 /**
@@ -796,9 +797,9 @@ __STATIC_INLINE uint32_t LL_COMP_IsLocked(const COMP_TypeDef *COMPx)
  *         @arg @ref LL_COMP_OUTPUT_LEVEL_LOW
  *         @arg @ref LL_COMP_OUTPUT_LEVEL_HIGH
  */
-__STATIC_INLINE uint32_t LL_COMP_ReadOutputLevel(const COMP_TypeDef *COMPx)
-{
-    return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_VALUE) >> LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS);
+__STATIC_INLINE uint32_t LL_COMP_ReadOutputLevel(const COMP_TypeDef *COMPx) {
+  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_VALUE) >>
+                    LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS);
 }
 
 /**
@@ -811,7 +812,8 @@ __STATIC_INLINE uint32_t LL_COMP_ReadOutputLevel(const COMP_TypeDef *COMPx)
  */
 
 ErrorStatus LL_COMP_DeInit(COMP_TypeDef *COMPx);
-ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, const LL_COMP_InitTypeDef *COMP_InitStruct);
+ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx,
+                         const LL_COMP_InitTypeDef *COMP_InitStruct);
 void LL_COMP_StructInit(LL_COMP_InitTypeDef *COMP_InitStruct);
 
 /**

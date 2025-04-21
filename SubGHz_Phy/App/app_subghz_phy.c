@@ -28,7 +28,8 @@
 
 /* USER CODE END Includes */
 
-/* External variables ---------------------------------------------------------*/
+/* External variables
+ * ---------------------------------------------------------*/
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -60,37 +61,36 @@
 
 /* Exported functions --------------------------------------------------------*/
 
-void MX_SubGHz_Phy_Init(void)
-{
-    /* USER CODE BEGIN MX_SubGHz_Phy_Init_1 */
+void MX_SubGHz_Phy_Init(void) {
+  /* USER CODE BEGIN MX_SubGHz_Phy_Init_1 */
 
-    /* USER CODE END MX_SubGHz_Phy_Init_1 */
-    SystemApp_Init();
-    /* USER CODE BEGIN MX_SubGHz_Phy_Init_1_1 */
+  /* USER CODE END MX_SubGHz_Phy_Init_1 */
+  SystemApp_Init();
+  /* USER CODE BEGIN MX_SubGHz_Phy_Init_1_1 */
 
-    /* USER CODE END MX_SubGHz_Phy_Init_1_1 */
-    SubghzApp_Init();
-    /* USER CODE BEGIN MX_SubGHz_Phy_Init_2 */
+  /* USER CODE END MX_SubGHz_Phy_Init_1_1 */
+  SubghzApp_Init();
+  /* USER CODE BEGIN MX_SubGHz_Phy_Init_2 */
 
-    /* USER CODE END MX_SubGHz_Phy_Init_2 */
+  /* USER CODE END MX_SubGHz_Phy_Init_2 */
 }
 
-void MX_SubGHz_Phy_Process(void)
-{
-    /* USER CODE BEGIN MX_SubGHz_Phy_Process_1 */
+void MX_SubGHz_Phy_Process(void) {
+  /* USER CODE BEGIN MX_SubGHz_Phy_Process_1 */
 
-    /* USER CODE END MX_SubGHz_Phy_Process_1 */
-    UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
-    /* USER CODE BEGIN MX_SubGHz_Phy_Process_2 */
+  /* USER CODE END MX_SubGHz_Phy_Process_1 */
+  UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
+  /* USER CODE BEGIN MX_SubGHz_Phy_Process_2 */
 
-    /* USER CODE END MX_SubGHz_Phy_Process_2 */
+  /* USER CODE END MX_SubGHz_Phy_Process_2 */
 }
 
 /* USER CODE BEGIN EF */
 
 /* USER CODE END EF */
 
-/* Private Functions Definition -----------------------------------------------*/
+/* Private Functions Definition
+ * -----------------------------------------------*/
 /* USER CODE BEGIN PrFD */
 
 /* USER CODE END PrFD */

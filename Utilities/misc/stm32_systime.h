@@ -116,26 +116,26 @@ extern "C" {
 /**
  * @brief Structure holding the system time in seconds and milliseconds.
  */
-typedef struct SysTime_s
-{
-    uint32_t Seconds;
-    int16_t SubSeconds;
+typedef struct SysTime_s {
+  uint32_t Seconds;
+  int16_t SubSeconds;
 } SysTime_t;
 
 /**
  * @brief SysTime driver definition
  */
-typedef struct
-{
-    void (*BKUPWrite_Seconds)(uint32_t Seconds); /*!< Set the timer differencebetween real time and
-                                                    rtc time */
-    uint32_t (*BKUPRead_Seconds)(void); /*!< Get the timer differencebetween real time and rtc time
-                                         */
-    void (*BKUPWrite_SubSeconds)(uint32_t SubSeconds); /*!< Set the timer differencebetween real
-                                                          time and rtc time */
-    uint32_t (*BKUPRead_SubSeconds)(void); /*!< Get the timer differencebetween real time and rtc
-                                              time */
-    uint32_t (*GetCalendarTime)(uint16_t *SubSeconds); /*!< Set the rtc time */
+typedef struct {
+  void (*BKUPWrite_Seconds)(
+      uint32_t Seconds); /*!< Set the timer differencebetween real time and rtc
+                            time */
+  uint32_t (*BKUPRead_Seconds)(
+      void); /*!< Get the timer differencebetween real time and rtc time */
+  void (*BKUPWrite_SubSeconds)(
+      uint32_t SubSeconds); /*!< Set the timer differencebetween real time and
+                               rtc time */
+  uint32_t (*BKUPRead_SubSeconds)(
+      void); /*!< Get the timer differencebetween real time and rtc time */
+  uint32_t (*GetCalendarTime)(uint16_t *SubSeconds); /*!< Set the rtc time */
 } UTIL_SYSTIM_Driver_s;
 
 /**
@@ -143,7 +143,8 @@ typedef struct
  */
 
 /* Exported macros -----------------------------------------------------------*/
-/* Exported variables ------------------------------------------------------------*/
+/* Exported variables
+ * ------------------------------------------------------------*/
 
 /** @defgroup SYSTIME_exported_Variable SYSTIME exported Variable
  *  @{
@@ -234,7 +235,8 @@ uint32_t SysTimeMkTime(const struct tm *localtime);
 /*!
 * @brief Converts a given time in seconds since UNIX epoch into calendar time.
 *
-* @param [IN]  timestamp The time since UNIX epoch to convert into calendar time.
+* @param [IN]  timestamp The time since UNIX epoch to convert into calendar
+time.
 * @param [OUT] localtime Pointer to the calendar time object which will contain
 the result of the conversion.
 */

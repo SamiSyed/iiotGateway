@@ -37,11 +37,14 @@ extern float32_t filtering_scratch2[FILTERING_MAX_BLOCKSIZE * 3];
 extern float32_t filtering_coeffs_lms[FILTERING_MAX_NUMTAPS];
 
 extern const float64_t
-    filtering_f64_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
+    filtering_f64_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+                         FILTERING_MAX_NUMTAPS];
 extern const float32_t
-    filtering_f32_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
+    filtering_f32_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+                         FILTERING_MAX_NUMTAPS];
 extern const q31_t
-    filtering_q31_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
+    filtering_q31_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+                         FILTERING_MAX_NUMTAPS];
 extern const q15_t *filtering_q15_inputs;
 extern const q7_t *filtering_q7_inputs;
 

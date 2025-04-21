@@ -57,7 +57,8 @@ extern "C" {
 /**
  * @brief Set pin to x value
  */
-#define PROBE_GPIO_WRITE(gpio, n, x) HAL_GPIO_WritePin(gpio, n, (GPIO_PinState)(x))
+#define PROBE_GPIO_WRITE(gpio, n, x)                                           \
+  HAL_GPIO_WritePin(gpio, n, (GPIO_PinState)(x))
 
 /**
  * @brief Set pin to high level
@@ -94,7 +95,8 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 /**
- * @brief Initializes the SW probes pins and the monitor RF pins via Alternate Function
+ * @brief Initializes the SW probes pins and the monitor RF pins via Alternate
+ * Function
  */
 void DBG_Init(void);
 

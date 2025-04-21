@@ -28,30 +28,16 @@
 /* Exported variables --------------------------------------------------------*/
 /*System Time driver*/
 const UTIL_SYSTIM_Driver_s UTIL_SYSTIMDriver = {
-    PPP_BkUp_Write_Seconds,
-    PPP_BkUp_Read_Seconds,
-    PPP_BkUp_Write_SubSeconds,
-    PPP_BkUp_Read_SubSeconds,
-    PPP_GetTime,
+    PPP_BkUp_Write_Seconds,   PPP_BkUp_Read_Seconds, PPP_BkUp_Write_SubSeconds,
+    PPP_BkUp_Read_SubSeconds, PPP_GetTime,
 };
 
-uint32_t RTC_IF_GetTime(uint16_t *mSeconds)
-{
-    return 0;
-}
+uint32_t RTC_IF_GetTime(uint16_t *mSeconds) { return 0; }
 
-void RTC_IF_BkUp_Write_Seconds(uint32_t Seconds)
-{}
+void RTC_IF_BkUp_Write_Seconds(uint32_t Seconds) {}
 
-void RTC_IF_BkUp_Write_SubSeconds(uint32_t SubSeconds)
-{}
+void RTC_IF_BkUp_Write_SubSeconds(uint32_t SubSeconds) {}
 
-uint32_t RTC_IF_BkUp_Read_Seconds(void)
-{
-    return 0;
-}
+uint32_t RTC_IF_BkUp_Read_Seconds(void) { return 0; }
 
-uint32_t RTC_IF_BkUp_Read_SubSeconds(void)
-{
-    return 0;
-}
+uint32_t RTC_IF_BkUp_Read_SubSeconds(void) { return 0; }

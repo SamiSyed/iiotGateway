@@ -48,104 +48,90 @@ extern "C" {
  * @{
  */
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Types LOW LEVEL Exported Types
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Types LOW LEVEL Exported
+ * Types
  * @{
  */
-typedef enum
-{
-    LED1 = 0,
-    LED_RED = LED1
-} Led_TypeDef;
+typedef enum { LED1 = 0, LED_RED = LED1 } Led_TypeDef;
 
-typedef enum
-{
-    BUTTON_SW1 = 0,
+typedef enum {
+  BUTTON_SW1 = 0,
 } Button_TypeDef;
 
-typedef enum
-{
-    BUTTON_MODE_GPIO = 0,
-    BUTTON_MODE_EXTI = 1
-} ButtonMode_TypeDef;
+typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 } ButtonMode_TypeDef;
 
 #if (USE_BSP_COM_FEATURE > 0)
-typedef enum
-{
-    COM1 = 0U,
-    COMn
-} COM_TypeDef;
+typedef enum { COM1 = 0U, COMn } COM_TypeDef;
 
-typedef enum
-{
-    COM_STOPBITS_1 = UART_STOPBITS_1,
-    COM_STOPBITS_2 = UART_STOPBITS_2,
+typedef enum {
+  COM_STOPBITS_1 = UART_STOPBITS_1,
+  COM_STOPBITS_2 = UART_STOPBITS_2,
 } COM_StopBitsTypeDef;
 
-typedef enum
-{
-    COM_PARITY_NONE = UART_PARITY_NONE,
-    COM_PARITY_EVEN = UART_PARITY_EVEN,
-    COM_PARITY_ODD = UART_PARITY_ODD,
+typedef enum {
+  COM_PARITY_NONE = UART_PARITY_NONE,
+  COM_PARITY_EVEN = UART_PARITY_EVEN,
+  COM_PARITY_ODD = UART_PARITY_ODD,
 } COM_ParityTypeDef;
 
-typedef enum
-{
-    COM_HWCONTROL_NONE = UART_HWCONTROL_NONE,
-    COM_HWCONTROL_RTS = UART_HWCONTROL_RTS,
-    COM_HWCONTROL_CTS = UART_HWCONTROL_CTS,
-    COM_HWCONTROL_RTS_CTS = UART_HWCONTROL_RTS_CTS,
+typedef enum {
+  COM_HWCONTROL_NONE = UART_HWCONTROL_NONE,
+  COM_HWCONTROL_RTS = UART_HWCONTROL_RTS,
+  COM_HWCONTROL_CTS = UART_HWCONTROL_CTS,
+  COM_HWCONTROL_RTS_CTS = UART_HWCONTROL_RTS_CTS,
 } COM_HwFlowCtlTypeDef;
 
-typedef enum
-{
-    COM_WORDLENGTH_7B = UART_WORDLENGTH_7B,
-    COM_WORDLENGTH_8B = UART_WORDLENGTH_8B,
-    COM_WORDLENGTH_9B = UART_WORDLENGTH_9B,
+typedef enum {
+  COM_WORDLENGTH_7B = UART_WORDLENGTH_7B,
+  COM_WORDLENGTH_8B = UART_WORDLENGTH_8B,
+  COM_WORDLENGTH_9B = UART_WORDLENGTH_9B,
 } COM_WordLengthTypeDef;
 
-typedef struct
-{
-    uint32_t BaudRate;
-    COM_WordLengthTypeDef WordLength;
-    COM_StopBitsTypeDef StopBits;
-    COM_ParityTypeDef Parity;
-    COM_HwFlowCtlTypeDef HwFlowCtl;
+typedef struct {
+  uint32_t BaudRate;
+  COM_WordLengthTypeDef WordLength;
+  COM_StopBitsTypeDef StopBits;
+  COM_ParityTypeDef Parity;
+  COM_HwFlowCtlTypeDef HwFlowCtl;
 } COM_InitTypeDef;
 
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
-typedef struct
-{
-    pUART_CallbackTypeDef pMspInitCb;
-    pUART_CallbackTypeDef pMspDeInitCb;
+typedef struct {
+  pUART_CallbackTypeDef pMspInitCb;
+  pUART_CallbackTypeDef pMspDeInitCb;
 } BSP_COM_Cb_t;
 #endif /* (USE_HAL_UART_REGISTER_CALLBACKS == 1) */
 #endif /* (USE_BSP_COM_FEATURE > 0) */
 
-typedef enum
-{
-    ABSENT = 0,
-    PRESENT = 1,
+typedef enum {
+  ABSENT = 0,
+  PRESENT = 1,
 } Presence_TypeDef;
 /**
  * @}
  */
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Constants LOW LEVEL Exported Constants
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Constants LOW LEVEL
+ * Exported Constants
  * @{
  */
 
 /**
  * @brief STM32WLXX LoRa_E5_mini BSP Driver version number
  */
-#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_MAIN (0x01U) /*!< [31:24] main version */
-#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB1 (0x01U) /*!< [23:16] sub1 version */
-#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB2 (0x00U) /*!< [15:8]  sub2 version */
-#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_RC (0x00U)   /*!< [7:0]  release candidate */
-#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION                                                       \
-    ((__STM32WLXX_LoRa_E5_mini_BSP_VERSION_MAIN << 24)                                             \
-     | (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB1 << 16)                                           \
-     | (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB2 << 8)                                            \
-     | (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_RC))
+#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_MAIN                              \
+  (0x01U) /*!< [31:24] main version */
+#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB1                              \
+  (0x01U) /*!< [23:16] sub1 version */
+#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB2                              \
+  (0x00U) /*!< [15:8]  sub2 version */
+#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION_RC                                \
+  (0x00U) /*!< [7:0]  release candidate */
+#define __STM32WLXX_LoRa_E5_mini_BSP_VERSION                                   \
+  ((__STM32WLXX_LoRa_E5_mini_BSP_VERSION_MAIN << 24) |                         \
+   (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB1 << 16) |                         \
+   (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_SUB2 << 8) |                          \
+   (__STM32WLXX_LoRa_E5_mini_BSP_VERSION_RC))
 
 /**
  * @brief Define for STM32WLXX_LoRa_E5_mini board
@@ -164,8 +150,10 @@ typedef enum
 #define LED1_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define LED1_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 
-#define LEDx_GPIO_CLK_ENABLE(__INDEX__) __HAL_RCC_GPIOB_CLK_ENABLE()   /* All Led on same port */
-#define LEDx_GPIO_CLK_DISABLE(__INDEX__) __HAL_RCC_GPIOB_CLK_DISABLE() /* All Led on same port */
+#define LEDx_GPIO_CLK_ENABLE(__INDEX__)                                        \
+  __HAL_RCC_GPIOB_CLK_ENABLE() /* All Led on same port */
+#define LEDx_GPIO_CLK_DISABLE(__INDEX__)                                       \
+  __HAL_RCC_GPIOB_CLK_DISABLE() /* All Led on same port */
 /**
  * @}
  */
@@ -186,17 +174,15 @@ typedef enum
 #define BUTTON_SW1_EXTI_IRQn EXTI15_10_IRQn
 #define H_EXTI_GPIO_PIN_13 hpb_exti[BUTTON_SW1]
 
-#define BUTTONx_GPIO_CLK_ENABLE(__INDEX__)                                                         \
-    do                                                                                             \
-    {                                                                                              \
-        BUTTON_SW1_GPIO_CLK_ENABLE();                                                              \
-    } while (0)
+#define BUTTONx_GPIO_CLK_ENABLE(__INDEX__)                                     \
+  do {                                                                         \
+    BUTTON_SW1_GPIO_CLK_ENABLE();                                              \
+  } while (0)
 
-#define BUTTONx_GPIO_CLK_DISABLE(__INDEX__)                                                        \
-    do                                                                                             \
-    {                                                                                              \
-        BUTTON_SW1_GPIO_CLK_DISABLE();                                                             \
-    } while (0)
+#define BUTTONx_GPIO_CLK_DISABLE(__INDEX__)                                    \
+  do {                                                                         \
+    BUTTON_SW1_GPIO_CLK_DISABLE();                                             \
+  } while (0)
 
 /**
  * @}
@@ -244,12 +230,14 @@ extern UART_HandleTypeDef hcom_uart[];
  * @}
  */
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Functions LOW LEVEL Exported Functions
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_Exported_Functions LOW LEVEL
+ * Exported Functions
  * @{
  */
 uint32_t BSP_GetVersion(void);
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_LED_Functions LOW LEVEL LED Functions
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_LED_Functions LOW LEVEL LED
+ * Functions
  * @{
  */
 int32_t BSP_LED_Init(Led_TypeDef Led);
@@ -262,7 +250,8 @@ int32_t BSP_LED_GetState(Led_TypeDef Led);
  * @}
  */
 
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_BUTTON_Functions  LOW LEVEL BUTTON Functions
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_BUTTON_Functions  LOW LEVEL
+ * BUTTON Functions
  * @{
  */
 int32_t BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef ButtonMode);
@@ -275,7 +264,8 @@ void BSP_PB_IRQHandler(Button_TypeDef Button);
  */
 
 #if (USE_BSP_COM_FEATURE > 0)
-/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_COM_Functions LOW LEVEL COM Port Functions
+/** @defgroup STM32WLXX_LoRa_E5_mini_LOW_LEVEL_COM_Functions LOW LEVEL COM Port
+ * Functions
  * @{
  */
 int32_t BSP_COM_Init(COM_TypeDef COM, COM_InitTypeDef *COM_Init);
@@ -287,7 +277,8 @@ int32_t BSP_COM_SelectLogPort(COM_TypeDef COM);
 int32_t BSP_COM_RegisterDefaultMspCallbacks(COM_TypeDef COM);
 int32_t BSP_COM_RegisterMspCallbacks(COM_TypeDef COM, BSP_COM_Cb_t *Callback);
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
-HAL_StatusTypeDef MX_LPUART1_Init(UART_HandleTypeDef *huart, MX_UART_InitTypeDef *COM_Init);
+HAL_StatusTypeDef MX_LPUART1_Init(UART_HandleTypeDef *huart,
+                                  MX_UART_InitTypeDef *COM_Init);
 /**
  * @}
  */

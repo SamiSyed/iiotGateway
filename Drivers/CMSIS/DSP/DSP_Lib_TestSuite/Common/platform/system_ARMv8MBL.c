@@ -1,13 +1,9 @@
 /**************************************************************************/ /**
-                                                                              * @file
-                                                                              *system_ARMv8MBL.c
-                                                                              * @brief    CMSIS
-                                                                              *Device System Source
-                                                                              *File for ARMv8MBL
-                                                                              *Device Series
+                                                                              * @file     system_ARMv8MBL.c
+                                                                              * @brief    CMSIS Device System Source File for
+                                                                              *           ARMv8MBL Device Series
                                                                               * @version  V5.00
-                                                                              * @date     07.
-                                                                              *September 2016
+                                                                              * @date     07. September 2016
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -55,23 +51,20 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
-{
-    SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit(void)
-{
+void SystemInit(void) {
+
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t)&__Vectors;
+  SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-    TZ_SAU_Setup();
+  TZ_SAU_Setup();
 #endif
 
-    SystemCoreClock = SYSTEM_CLOCK;
+  SystemCoreClock = SYSTEM_CLOCK;
 }

@@ -42,39 +42,46 @@ extern "C" {
  */
 
 #if (__MPU_PRESENT == 1)
-/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region Initialization
- * Structure Definition
+/** @defgroup CORTEX_MPU_Region_Initialization_Structure_definition MPU Region
+ * Initialization Structure Definition
  * @brief  MPU Region initialization structure
  * @{
  */
-typedef struct
-{
-    uint8_t Enable;           /*!< Specifies the status of the region.
-                                   This parameter can be a value of @ref CORTEX_MPU_Region_Enable           */
-    uint8_t Number;           /*!< Specifies the number of the region to protect.
-                                   This parameter can be a value of @ref CORTEX_MPU_Region_Number           */
-    uint32_t BaseAddress;     /*!< Specifies the base address of the region to protect.
-                               */
-    uint8_t Size;             /*!< Specifies the size of the region to protect.
-                                   This parameter can be a value of @ref CORTEX_MPU_Region_Size             */
-    uint8_t SubRegionDisable; /*!< Specifies the number of the subregion protection to disable.
-                                   This parameter must be a number between Min_Data = 0x00 and
-                                 Max_Data = 0xFF   */
-    uint8_t TypeExtField;     /*!< Specifies the TEX field level.
-                                   This parameter can be a value of @ref CORTEX_MPU_TEX_Levels     */
-    uint8_t AccessPermission; /*!< Specifies the region access permission type.
-                                   This parameter can be a value of @ref
-                                 CORTEX_MPU_Region_Permission_Attributes */
-    uint8_t
-        DisableExec;     /*!< Specifies the instruction access status.
-                              This parameter can be a value of @ref CORTEX_MPU_Instruction_Access     */
-    uint8_t IsShareable; /*!< Specifies the shareability status of the protected region.
-                              This parameter can be a value of @ref CORTEX_MPU_Access_Shareable */
-    uint8_t IsCacheable; /*!< Specifies the cacheable status of the region protected.
-                              This parameter can be a value of @ref CORTEX_MPU_Access_Cacheable */
-    uint8_t
-        IsBufferable; /*!< Specifies the bufferable status of the protected region.
-                           This parameter can be a value of @ref CORTEX_MPU_Access_Bufferable */
+typedef struct {
+  uint8_t Enable; /*!< Specifies the status of the region.
+                       This parameter can be a value of @ref
+                     CORTEX_MPU_Region_Enable                */
+  uint8_t Number; /*!< Specifies the number of the region to protect.
+                       This parameter can be a value of @ref
+                     CORTEX_MPU_Region_Number                */
+  uint32_t
+      BaseAddress; /*!< Specifies the base address of the region to protect.
+                    */
+  uint8_t Size;    /*!< Specifies the size of the region to protect.
+                        This parameter can be a value of @ref
+                      CORTEX_MPU_Region_Size                  */
+  uint8_t
+      SubRegionDisable; /*!< Specifies the number of the subregion protection to
+                           disable. This parameter must be a number between
+                           Min_Data = 0x00 and Max_Data = 0xFF   */
+  uint8_t TypeExtField; /*!< Specifies the TEX field level.
+                             This parameter can be a value of @ref
+                           CORTEX_MPU_TEX_Levels                   */
+  uint8_t AccessPermission; /*!< Specifies the region access permission type.
+                                 This parameter can be a value of @ref
+                               CORTEX_MPU_Region_Permission_Attributes */
+  uint8_t DisableExec;      /*!< Specifies the instruction access status.
+                                 This parameter can be a value of @ref
+                               CORTEX_MPU_Instruction_Access           */
+  uint8_t IsShareable;  /*!< Specifies the shareability status of the protected
+                           region.  This parameter can be a value of @ref
+                           CORTEX_MPU_Access_Shareable             */
+  uint8_t IsCacheable;  /*!< Specifies the cacheable status of the region
+                           protected.  This parameter can be a value of @ref
+                           CORTEX_MPU_Access_Cacheable             */
+  uint8_t IsBufferable; /*!< Specifies the bufferable status of the protected
+                           region. This parameter can be a value of @ref
+                           CORTEX_MPU_Access_Bufferable            */
 } MPU_Region_InitTypeDef;
 /**
  * @}
@@ -95,25 +102,25 @@ typedef struct
 /** @defgroup CORTEX_Preemption_Priority_Group CORTEX Preemption Priority Group
  * @{
  */
-#define NVIC_PRIORITYGROUP_0                                                                       \
-    (0x00000007U) /*!< 0 bit  for pre-emption priority,                                            \
-                                4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1                                                                       \
-    (0x00000006U) /*!< 1 bit  for pre-emption priority,                                            \
-                                3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2                                                                       \
-    (0x00000005U) /*!< 2 bits for pre-emption priority,                                            \
-                                2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3                                                                       \
-    (0x00000004U) /*!< 3 bits for pre-emption priority,                                            \
-                                1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4                                                                       \
-    (0x00000003U) /*!< 4 bits for pre-emption priority,                                            \
-                                0 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_0                                                   \
+  (0x00000007U) /*!< 0 bit  for pre-emption priority,                          \
+                              4 bits for subpriority */
+#define NVIC_PRIORITYGROUP_1                                                   \
+  (0x00000006U) /*!< 1 bit  for pre-emption priority,                          \
+                              3 bits for subpriority */
+#define NVIC_PRIORITYGROUP_2                                                   \
+  (0x00000005U) /*!< 2 bits for pre-emption priority,                          \
+                              2 bits for subpriority */
+#define NVIC_PRIORITYGROUP_3                                                   \
+  (0x00000004U) /*!< 3 bits for pre-emption priority,                          \
+                              1 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_4                                                   \
+  (0x00000003U) /*!< 4 bits for pre-emption priority,                          \
+                              0 bit  for subpriority */
 /**
  * @}
  */
-#endif            /* CORE_CM0PLUS */
+#endif          /* CORE_CM0PLUS */
 
 /** @defgroup CORTEX_SysTick_clock_source CORTEX SysTick clock source
  * @{
@@ -126,7 +133,8 @@ typedef struct
  */
 
 #if (__MPU_PRESENT == 1)
-/** @defgroup CORTEX_MPU_HFNMI_PRIVDEF_Control CORTEX MPU HFNMI and PRIVILEGED Access control
+/** @defgroup CORTEX_MPU_HFNMI_PRIVDEF_Control CORTEX MPU HFNMI and PRIVILEGED
+ * Access control
  * @{
  */
 #define MPU_HFNMI_PRIVDEF_NONE 0x00000000U
@@ -155,7 +163,8 @@ typedef struct
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Shareable CORTEX MPU Instruction Access Shareable
+/** @defgroup CORTEX_MPU_Access_Shareable CORTEX MPU Instruction Access
+ * Shareable
  * @{
  */
 #define MPU_ACCESS_SHAREABLE ((uint8_t)0x01)
@@ -164,7 +173,8 @@ typedef struct
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Cacheable CORTEX MPU Instruction Access Cacheable
+/** @defgroup CORTEX_MPU_Access_Cacheable CORTEX MPU Instruction Access
+ * Cacheable
  * @{
  */
 #define MPU_ACCESS_CACHEABLE ((uint8_t)0x01)
@@ -173,7 +183,8 @@ typedef struct
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Access_Bufferable CORTEX MPU Instruction Access Bufferable
+/** @defgroup CORTEX_MPU_Access_Bufferable CORTEX MPU Instruction Access
+ * Bufferable
  * @{
  */
 #define MPU_ACCESS_BUFFERABLE ((uint8_t)0x01)
@@ -231,7 +242,8 @@ typedef struct
  * @}
  */
 
-/** @defgroup CORTEX_MPU_Region_Permission_Attributes CORTEX MPU Region Permission Attributes
+/** @defgroup CORTEX_MPU_Region_Permission_Attributes CORTEX MPU Region
+ * Permission Attributes
  * @{
  */
 #define MPU_REGION_NO_ACCESS ((uint8_t)0x00)
@@ -278,7 +290,8 @@ typedef struct
  * @{
  */
 
-/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration functions
+/** @defgroup CORTEX_Exported_Functions_Group1 Initialization and Configuration
+ * functions
  * @brief    Initialization and Configuration functions
  * @{
  */
@@ -287,7 +300,8 @@ typedef struct
 #else
 void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
 #endif /* CORE_CM0PLUS */
-void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority);
+void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority,
+                          uint32_t SubPriority);
 void HAL_NVIC_EnableIRQ(IRQn_Type IRQn);
 void HAL_NVIC_DisableIRQ(IRQn_Type IRQn);
 void HAL_NVIC_SystemReset(void);
@@ -300,14 +314,13 @@ uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb);
  * @brief   Cortex control functions
  * @{
  */
-/* Peripheral Control functions *************************************************/
+/* Peripheral Control functions
+ * *************************************************/
 #ifdef CORE_CM0PLUS
 uint32_t HAL_NVIC_GetPriority(IRQn_Type IRQn);
 #else
-void HAL_NVIC_GetPriority(IRQn_Type IRQn,
-                          uint32_t PriorityGroup,
-                          uint32_t *pPreemptPriority,
-                          uint32_t *pSubPriority);
+void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup,
+                          uint32_t *pPreemptPriority, uint32_t *pSubPriority);
 uint32_t HAL_NVIC_GetPriorityGrouping(void);
 uint32_t HAL_NVIC_GetActive(IRQn_Type IRQn);
 #endif /* CORE_CM0PLUS */
@@ -341,10 +354,10 @@ void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init);
 #ifdef CORE_CM0PLUS
 #define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY) ((PRIORITY) < 0x4U)
 #else
-#define IS_NVIC_PRIORITY_GROUP(GROUP)                                                              \
-    (((GROUP) == NVIC_PRIORITYGROUP_0) || ((GROUP) == NVIC_PRIORITYGROUP_1)                        \
-     || ((GROUP) == NVIC_PRIORITYGROUP_2) || ((GROUP) == NVIC_PRIORITYGROUP_3)                     \
-     || ((GROUP) == NVIC_PRIORITYGROUP_4))
+#define IS_NVIC_PRIORITY_GROUP(GROUP)                                          \
+  (((GROUP) == NVIC_PRIORITYGROUP_0) || ((GROUP) == NVIC_PRIORITYGROUP_1) ||   \
+   ((GROUP) == NVIC_PRIORITYGROUP_2) || ((GROUP) == NVIC_PRIORITYGROUP_3) ||   \
+   ((GROUP) == NVIC_PRIORITYGROUP_4))
 
 #define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY) ((PRIORITY) < 0x10U)
 
@@ -353,70 +366,73 @@ void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init);
 
 #define IS_NVIC_DEVICE_IRQ(IRQ) ((IRQ) > SysTick_IRQn)
 
-#define IS_SYSTICK_CLK_SOURCE(SOURCE)                                                              \
-    (((SOURCE) == SYSTICK_CLKSOURCE_HCLK) || ((SOURCE) == SYSTICK_CLKSOURCE_HCLK_DIV8))
+#define IS_SYSTICK_CLK_SOURCE(SOURCE)                                          \
+  (((SOURCE) == SYSTICK_CLKSOURCE_HCLK) ||                                     \
+   ((SOURCE) == SYSTICK_CLKSOURCE_HCLK_DIV8))
 
 #if (__MPU_PRESENT == 1)
-#define IS_MPU_REGION_ENABLE(STATE)                                                                \
-    (((STATE) == MPU_REGION_ENABLE) || ((STATE) == MPU_REGION_DISABLE))
+#define IS_MPU_REGION_ENABLE(STATE)                                            \
+  (((STATE) == MPU_REGION_ENABLE) || ((STATE) == MPU_REGION_DISABLE))
 
-#define IS_MPU_INSTRUCTION_ACCESS(STATE)                                                           \
-    (((STATE) == MPU_INSTRUCTION_ACCESS_ENABLE) || ((STATE) == MPU_INSTRUCTION_ACCESS_DISABLE))
+#define IS_MPU_INSTRUCTION_ACCESS(STATE)                                       \
+  (((STATE) == MPU_INSTRUCTION_ACCESS_ENABLE) ||                               \
+   ((STATE) == MPU_INSTRUCTION_ACCESS_DISABLE))
 
-#define IS_MPU_ACCESS_SHAREABLE(STATE)                                                             \
-    (((STATE) == MPU_ACCESS_SHAREABLE) || ((STATE) == MPU_ACCESS_NOT_SHAREABLE))
+#define IS_MPU_ACCESS_SHAREABLE(STATE)                                         \
+  (((STATE) == MPU_ACCESS_SHAREABLE) || ((STATE) == MPU_ACCESS_NOT_SHAREABLE))
 
-#define IS_MPU_ACCESS_CACHEABLE(STATE)                                                             \
-    (((STATE) == MPU_ACCESS_CACHEABLE) || ((STATE) == MPU_ACCESS_NOT_CACHEABLE))
+#define IS_MPU_ACCESS_CACHEABLE(STATE)                                         \
+  (((STATE) == MPU_ACCESS_CACHEABLE) || ((STATE) == MPU_ACCESS_NOT_CACHEABLE))
 
-#define IS_MPU_ACCESS_BUFFERABLE(STATE)                                                            \
-    (((STATE) == MPU_ACCESS_BUFFERABLE) || ((STATE) == MPU_ACCESS_NOT_BUFFERABLE))
+#define IS_MPU_ACCESS_BUFFERABLE(STATE)                                        \
+  (((STATE) == MPU_ACCESS_BUFFERABLE) || ((STATE) == MPU_ACCESS_NOT_BUFFERABLE))
 
-#define IS_MPU_TEX_LEVEL(TYPE)                                                                     \
-    (((TYPE) == MPU_TEX_LEVEL0) || ((TYPE) == MPU_TEX_LEVEL1) || ((TYPE) == MPU_TEX_LEVEL2))
+#define IS_MPU_TEX_LEVEL(TYPE)                                                 \
+  (((TYPE) == MPU_TEX_LEVEL0) || ((TYPE) == MPU_TEX_LEVEL1) ||                 \
+   ((TYPE) == MPU_TEX_LEVEL2))
 
-#define IS_MPU_REGION_PERMISSION_ATTRIBUTE(TYPE)                                                   \
-    (((TYPE) == MPU_REGION_NO_ACCESS) || ((TYPE) == MPU_REGION_PRIV_RW)                            \
-     || ((TYPE) == MPU_REGION_PRIV_RW_URO) || ((TYPE) == MPU_REGION_FULL_ACCESS)                   \
-     || ((TYPE) == MPU_REGION_PRIV_RO) || ((TYPE) == MPU_REGION_PRIV_RO_URO))
+#define IS_MPU_REGION_PERMISSION_ATTRIBUTE(TYPE)                               \
+  (((TYPE) == MPU_REGION_NO_ACCESS) || ((TYPE) == MPU_REGION_PRIV_RW) ||       \
+   ((TYPE) == MPU_REGION_PRIV_RW_URO) || ((TYPE) == MPU_REGION_FULL_ACCESS) || \
+   ((TYPE) == MPU_REGION_PRIV_RO) || ((TYPE) == MPU_REGION_PRIV_RO_URO))
 
-#define IS_MPU_REGION_NUMBER(NUMBER)                                                               \
-    (((NUMBER) == MPU_REGION_NUMBER0) || ((NUMBER) == MPU_REGION_NUMBER1)                          \
-     || ((NUMBER) == MPU_REGION_NUMBER2) || ((NUMBER) == MPU_REGION_NUMBER3)                       \
-     || ((NUMBER) == MPU_REGION_NUMBER4) || ((NUMBER) == MPU_REGION_NUMBER5)                       \
-     || ((NUMBER) == MPU_REGION_NUMBER6) || ((NUMBER) == MPU_REGION_NUMBER7))
+#define IS_MPU_REGION_NUMBER(NUMBER)                                           \
+  (((NUMBER) == MPU_REGION_NUMBER0) || ((NUMBER) == MPU_REGION_NUMBER1) ||     \
+   ((NUMBER) == MPU_REGION_NUMBER2) || ((NUMBER) == MPU_REGION_NUMBER3) ||     \
+   ((NUMBER) == MPU_REGION_NUMBER4) || ((NUMBER) == MPU_REGION_NUMBER5) ||     \
+   ((NUMBER) == MPU_REGION_NUMBER6) || ((NUMBER) == MPU_REGION_NUMBER7))
 
 #if defined(CORE_CM0PLUS)
-#define IS_MPU_REGION_SIZE(SIZE)                                                                   \
-    (((SIZE) == MPU_REGION_SIZE_256B) || ((SIZE) == MPU_REGION_SIZE_512B)                          \
-     || ((SIZE) == MPU_REGION_SIZE_1KB) || ((SIZE) == MPU_REGION_SIZE_2KB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_4KB) || ((SIZE) == MPU_REGION_SIZE_8KB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_16KB) || ((SIZE) == MPU_REGION_SIZE_32KB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_64KB) || ((SIZE) == MPU_REGION_SIZE_128KB)                      \
-     || ((SIZE) == MPU_REGION_SIZE_256KB) || ((SIZE) == MPU_REGION_SIZE_512KB)                     \
-     || ((SIZE) == MPU_REGION_SIZE_1MB) || ((SIZE) == MPU_REGION_SIZE_2MB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_4MB) || ((SIZE) == MPU_REGION_SIZE_8MB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_16MB) || ((SIZE) == MPU_REGION_SIZE_32MB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_64MB) || ((SIZE) == MPU_REGION_SIZE_128MB)                      \
-     || ((SIZE) == MPU_REGION_SIZE_256MB) || ((SIZE) == MPU_REGION_SIZE_512MB)                     \
-     || ((SIZE) == MPU_REGION_SIZE_1GB) || ((SIZE) == MPU_REGION_SIZE_2GB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_4GB))
+#define IS_MPU_REGION_SIZE(SIZE)                                               \
+  (((SIZE) == MPU_REGION_SIZE_256B) || ((SIZE) == MPU_REGION_SIZE_512B) ||     \
+   ((SIZE) == MPU_REGION_SIZE_1KB) || ((SIZE) == MPU_REGION_SIZE_2KB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_4KB) || ((SIZE) == MPU_REGION_SIZE_8KB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_16KB) || ((SIZE) == MPU_REGION_SIZE_32KB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_64KB) || ((SIZE) == MPU_REGION_SIZE_128KB) ||    \
+   ((SIZE) == MPU_REGION_SIZE_256KB) || ((SIZE) == MPU_REGION_SIZE_512KB) ||   \
+   ((SIZE) == MPU_REGION_SIZE_1MB) || ((SIZE) == MPU_REGION_SIZE_2MB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_4MB) || ((SIZE) == MPU_REGION_SIZE_8MB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_16MB) || ((SIZE) == MPU_REGION_SIZE_32MB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_64MB) || ((SIZE) == MPU_REGION_SIZE_128MB) ||    \
+   ((SIZE) == MPU_REGION_SIZE_256MB) || ((SIZE) == MPU_REGION_SIZE_512MB) ||   \
+   ((SIZE) == MPU_REGION_SIZE_1GB) || ((SIZE) == MPU_REGION_SIZE_2GB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_4GB))
 #else
-#define IS_MPU_REGION_SIZE(SIZE)                                                                   \
-    (((SIZE) == MPU_REGION_SIZE_32B) || ((SIZE) == MPU_REGION_SIZE_64B)                            \
-     || ((SIZE) == MPU_REGION_SIZE_128B) || ((SIZE) == MPU_REGION_SIZE_256B)                       \
-     || ((SIZE) == MPU_REGION_SIZE_512B) || ((SIZE) == MPU_REGION_SIZE_1KB)                        \
-     || ((SIZE) == MPU_REGION_SIZE_2KB) || ((SIZE) == MPU_REGION_SIZE_4KB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_8KB) || ((SIZE) == MPU_REGION_SIZE_16KB)                        \
-     || ((SIZE) == MPU_REGION_SIZE_32KB) || ((SIZE) == MPU_REGION_SIZE_64KB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_128KB) || ((SIZE) == MPU_REGION_SIZE_256KB)                     \
-     || ((SIZE) == MPU_REGION_SIZE_512KB) || ((SIZE) == MPU_REGION_SIZE_1MB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_2MB) || ((SIZE) == MPU_REGION_SIZE_4MB)                         \
-     || ((SIZE) == MPU_REGION_SIZE_8MB) || ((SIZE) == MPU_REGION_SIZE_16MB)                        \
-     || ((SIZE) == MPU_REGION_SIZE_32MB) || ((SIZE) == MPU_REGION_SIZE_64MB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_128MB) || ((SIZE) == MPU_REGION_SIZE_256MB)                     \
-     || ((SIZE) == MPU_REGION_SIZE_512MB) || ((SIZE) == MPU_REGION_SIZE_1GB)                       \
-     || ((SIZE) == MPU_REGION_SIZE_2GB) || ((SIZE) == MPU_REGION_SIZE_4GB))
+#define IS_MPU_REGION_SIZE(SIZE)                                               \
+  (((SIZE) == MPU_REGION_SIZE_32B) || ((SIZE) == MPU_REGION_SIZE_64B) ||       \
+   ((SIZE) == MPU_REGION_SIZE_128B) || ((SIZE) == MPU_REGION_SIZE_256B) ||     \
+   ((SIZE) == MPU_REGION_SIZE_512B) || ((SIZE) == MPU_REGION_SIZE_1KB) ||      \
+   ((SIZE) == MPU_REGION_SIZE_2KB) || ((SIZE) == MPU_REGION_SIZE_4KB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_8KB) || ((SIZE) == MPU_REGION_SIZE_16KB) ||      \
+   ((SIZE) == MPU_REGION_SIZE_32KB) || ((SIZE) == MPU_REGION_SIZE_64KB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_128KB) || ((SIZE) == MPU_REGION_SIZE_256KB) ||   \
+   ((SIZE) == MPU_REGION_SIZE_512KB) || ((SIZE) == MPU_REGION_SIZE_1MB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_2MB) || ((SIZE) == MPU_REGION_SIZE_4MB) ||       \
+   ((SIZE) == MPU_REGION_SIZE_8MB) || ((SIZE) == MPU_REGION_SIZE_16MB) ||      \
+   ((SIZE) == MPU_REGION_SIZE_32MB) || ((SIZE) == MPU_REGION_SIZE_64MB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_128MB) || ((SIZE) == MPU_REGION_SIZE_256MB) ||   \
+   ((SIZE) == MPU_REGION_SIZE_512MB) || ((SIZE) == MPU_REGION_SIZE_1GB) ||     \
+   ((SIZE) == MPU_REGION_SIZE_2GB) || ((SIZE) == MPU_REGION_SIZE_4GB))
 #endif
 #define IS_MPU_SUB_REGION_DISABLE(SUBREGION) ((SUBREGION) < (uint16_t)0x00FFU)
 #endif /* __MPU_PRESENT */

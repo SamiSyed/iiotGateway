@@ -2,7 +2,8 @@
  * Project:      CMSIS DSP Library
  * Title:        arm_const_structs.h
  * Description:  Constant structs that are initialized for user convenience.
- *               For example, some can be given as arguments to the arm_cfft_f32() function.
+ *               For example, some can be given as arguments to the
+ * arm_cfft_f32() function.
  *
  * $Date:        27. January 2017
  * $Revision:    V.1.5.1

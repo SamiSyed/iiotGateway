@@ -1,13 +1,9 @@
 /**************************************************************************/ /**
-                                                                              * @file
-                                                                              *system_ARMCM0.c
-                                                                              * @brief    CMSIS
-                                                                              *Device System Source
-                                                                              *File for ARMCM0
-                                                                              *Device
+                                                                              * @file     system_ARMCM0.c
+                                                                              * @brief    CMSIS Device System Source File for
+                                                                              *           ARMCM0 Device
                                                                               * @version  V5.3.1
-                                                                              * @date     09. July
-                                                                              *2018
+                                                                              * @date     09. July 2018
                                                                               ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -44,15 +40,9 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK; /* System Core Clock Frequency */
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate(void)
-{
-    SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit(void)
-{
-    SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemInit(void) { SystemCoreClock = SYSTEM_CLOCK; }

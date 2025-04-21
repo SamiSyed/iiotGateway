@@ -66,7 +66,8 @@ extern "C" {
 #define HAL_PWR_MODULE_ENABLED
 #define HAL_RCC_MODULE_ENABLED
 
-/* ########################## Register Callbacks selection ############################## */
+/* ########################## Register Callbacks selection
+ * ############################## */
 /**
  * @brief This is the list of modules where register callback can be used
  */
@@ -90,11 +91,13 @@ extern "C" {
 #define USE_HAL_USART_REGISTER_CALLBACKS 0u
 #define USE_HAL_WWDG_REGISTER_CALLBACKS 0u
 
-/* ########################## Oscillator Values adaptation ####################*/
+/* ########################## Oscillator Values adaptation
+ * ####################*/
 /**
- * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
- *        This value is used by the RCC HAL module to compute the system frequency
- *        (when HSE is used as system clock source, directly or through the PLL).
+ * @brief Adjust the value of External High Speed oscillator (HSE) used in your
+ * application. This value is used by the RCC HAL module to compute the system
+ * frequency (when HSE is used as system clock source, directly or through the
+ * PLL).
  */
 
 #if !defined(HSE_VALUE)
@@ -115,8 +118,9 @@ extern "C" {
 
 /**
  * @brief Internal High Speed oscillator (HSI) value.
- *        This value is used by the RCC HAL module to compute the system frequency
- *        (when HSI is used as system clock source, directly or through the PLL).
+ *        This value is used by the RCC HAL module to compute the system
+ * frequency (when HSI is used as system clock source, directly or through the
+ * PLL).
  */
 #if !defined(HSI_VALUE)
 #define HSI_VALUE 16000000UL /*!< Value of the Internal oscillator in Hz*/
@@ -127,13 +131,14 @@ extern "C" {
  */
 #if !defined(LSI_VALUE)
 #define LSI_VALUE 32000UL /*!< LSI Typical Value in Hz*/
-#endif /* LSI_VALUE */    /*!< Value of the Internal Low Speed oscillator in Hz                    \
-                          The real value may vary depending on the variations                      \
-                          in voltage and temperature. */
+#endif /* LSI_VALUE */ /*!< Value of the Internal Low Speed oscillator in Hz   \
+                       The real value may vary depending on the variations     \
+                       in voltage and temperature. */
 
 /**
  * @brief External Low Speed oscillator (LSE) value.
- *        This value is used by the UART, RTC HAL module to compute the system frequency
+ *        This value is used by the UART, RTC HAL module to compute the system
+ * frequency
  */
 #if !defined(LSE_VALUE)
 #define LSE_VALUE 32768UL /*!< Value of the External oscillator in Hz*/
@@ -159,8 +164,9 @@ extern "C" {
  * @brief This is the HAL system configuration section
  */
 #define VDD_VALUE 3300U /*!< Value of VDD in mv */
-#define TICK_INT_PRIORITY                                                                          \
-    ((1uL << __NVIC_PRIO_BITS) - 1uL) /*!< tick interrupt priority (lowest by default) */
+#define TICK_INT_PRIORITY                                                      \
+  ((1uL << __NVIC_PRIO_BITS) -                                                 \
+   1uL) /*!< tick interrupt priority (lowest by default) */
 #define USE_RTOS 0U
 #define PREFETCH_ENABLE 0U
 #define INSTRUCTION_CACHE_ENABLE 1U
@@ -182,7 +188,8 @@ extern "C" {
 
 #define USE_SPI_CRC 1U
 
-/* ################## CRYP peripheral configuration ########################## */
+/* ################## CRYP peripheral configuration ##########################
+ */
 
 #define USE_HAL_CRYP_SUSPEND_RESUME 1U
 
@@ -324,7 +331,8 @@ extern "C" {
  *         If expr is true, it returns no value.
  * @retval None
  */
-#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+#define assert_param(expr)                                                     \
+  ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
 void assert_failed(uint8_t *file, uint32_t line);
 #else

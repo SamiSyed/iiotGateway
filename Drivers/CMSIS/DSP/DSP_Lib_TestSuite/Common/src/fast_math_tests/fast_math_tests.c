@@ -20,19 +20,18 @@ SIN_COS_TEST_TEMPLATE_ELT1(q15, q15_t, cos);
 /* Collect all tests in a group */
 /*--------------------------------------------------------------------------------*/
 
-JTEST_DEFINE_GROUP(fast_math_tests)
-{
-    /*
-      To skip a test, comment it out.
-    */
-    JTEST_TEST_CALL(arm_sqrt_q31_test);
-    JTEST_TEST_CALL(arm_sqrt_q15_test);
+JTEST_DEFINE_GROUP(fast_math_tests) {
+  /*
+    To skip a test, comment it out.
+  */
+  JTEST_TEST_CALL(arm_sqrt_q31_test);
+  JTEST_TEST_CALL(arm_sqrt_q15_test);
 
-    JTEST_TEST_CALL(arm_sin_f32_test);
-    JTEST_TEST_CALL(arm_sin_q31_test);
-    JTEST_TEST_CALL(arm_sin_q15_test);
+  JTEST_TEST_CALL(arm_sin_f32_test);
+  JTEST_TEST_CALL(arm_sin_q31_test);
+  JTEST_TEST_CALL(arm_sin_q15_test);
 
-    JTEST_TEST_CALL(arm_cos_f32_test);
-    JTEST_TEST_CALL(arm_cos_q31_test);
-    JTEST_TEST_CALL(arm_cos_q15_test);
+  JTEST_TEST_CALL(arm_cos_f32_test);
+  JTEST_TEST_CALL(arm_cos_q31_test);
+  JTEST_TEST_CALL(arm_cos_q15_test);
 }

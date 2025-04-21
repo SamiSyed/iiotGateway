@@ -44,33 +44,29 @@ extern "C" {
 /**
  * @brief   GPIO Init structure definition
  */
-typedef struct
-{
-    uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
-                      This parameter can be any value of @ref GPIO_pins */
+typedef struct {
+  uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
+                    This parameter can be any value of @ref GPIO_pins */
 
-    uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
-                       This parameter can be a value of @ref GPIO_mode */
+  uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
+                     This parameter can be a value of @ref GPIO_mode */
 
-    uint32_t Pull; /*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
-                       This parameter can be a value of @ref GPIO_pull */
+  uint32_t
+      Pull; /*!< Specifies the Pull-up or Pull-Down activation for the selected
+               pins. This parameter can be a value of @ref GPIO_pull */
 
-    uint32_t Speed; /*!< Specifies the speed for the selected pins.
-                        This parameter can be a value of @ref GPIO_speed */
+  uint32_t Speed; /*!< Specifies the speed for the selected pins.
+                      This parameter can be a value of @ref GPIO_speed */
 
-    uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
-                             This parameter can be a value of @ref
-                           GPIOEx_Alternate_function_selection */
+  uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
+                           This parameter can be a value of @ref
+                         GPIOEx_Alternate_function_selection */
 } GPIO_InitTypeDef;
 
 /**
  * @brief  GPIO Bit SET and Bit RESET enumeration
  */
-typedef enum
-{
-    GPIO_PIN_RESET = 0U,
-    GPIO_PIN_SET
-} GPIO_PinState;
+typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
 /**
  * @}
  */
@@ -114,38 +110,42 @@ typedef enum
  *           - Z  : GPIO mode (Input, Output, Alternate or Analog) on 2 bits
  * @{
  */
-#define GPIO_MODE_INPUT                                                                            \
-    MODE_INPUT /*!< Input Floating Mode                                                */
-#define GPIO_MODE_OUTPUT_PP                                                                        \
-    (MODE_OUTPUT | OUTPUT_PP) /*!< Output Push Pull Mode */
-#define GPIO_MODE_OUTPUT_OD                                                                        \
-    (MODE_OUTPUT | OUTPUT_OD) /*!< Output Open Drain Mode */
-#define GPIO_MODE_AF_PP                                                                            \
-    (MODE_AF | OUTPUT_PP) /*!< Alternate Function Push Pull Mode */
-#define GPIO_MODE_AF_OD                                                                            \
-    (MODE_AF | OUTPUT_OD) /*!< Alternate Function Open Drain Mode */
-#define GPIO_MODE_ANALOG                                                                           \
-    MODE_ANALOG /*!< Analog Mode                                                        */
-#define GPIO_MODE_IT_RISING                                                                        \
-    (MODE_INPUT | EXTI_IT | TRIGGER_RISING) /*!< External Interrupt Mode with Rising edge trigger  \
-                                               detection         */
-#define GPIO_MODE_IT_FALLING                                                                       \
-    (MODE_INPUT | EXTI_IT | TRIGGER_FALLING) /*!< External Interrupt Mode with Falling edge        \
-                                                trigger detection        */
-#define GPIO_MODE_IT_RISING_FALLING                                                                \
-    (MODE_INPUT | EXTI_IT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Interrupt Mode with    \
-                                                                 Rising/Falling edge trigger       \
-                                                                 detection */
-#define GPIO_MODE_EVT_RISING                                                                       \
-    (MODE_INPUT | EXTI_EVT | TRIGGER_RISING) /*!< External Event Mode with Rising edge trigger     \
-                                                detection             */
-#define GPIO_MODE_EVT_FALLING                                                                      \
-    (MODE_INPUT | EXTI_EVT | TRIGGER_FALLING) /*!< External Event Mode with Falling edge trigger   \
-                                                 detection            */
-#define GPIO_MODE_EVT_RISING_FALLING                                                               \
-    (MODE_INPUT | EXTI_EVT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Event Mode with       \
-                                                                  Rising/Falling edge trigger      \
-                                                                  detection     */
+#define GPIO_MODE_INPUT                                                        \
+  MODE_INPUT /*!< Input Floating Mode */
+#define GPIO_MODE_OUTPUT_PP                                                    \
+  (MODE_OUTPUT | OUTPUT_PP) /*!< Output Push Pull Mode */
+#define GPIO_MODE_OUTPUT_OD                                                    \
+  (MODE_OUTPUT | OUTPUT_OD) /*!< Output Open Drain Mode */
+#define GPIO_MODE_AF_PP                                                        \
+  (MODE_AF | OUTPUT_PP) /*!< Alternate Function Push Pull Mode */
+#define GPIO_MODE_AF_OD                                                        \
+  (MODE_AF | OUTPUT_OD) /*!< Alternate Function Open Drain Mode */
+#define GPIO_MODE_ANALOG                                                       \
+  MODE_ANALOG /*!< Analog Mode */
+#define GPIO_MODE_IT_RISING                                                    \
+  (MODE_INPUT | EXTI_IT |                                                      \
+   TRIGGER_RISING) /*!< External Interrupt Mode with Rising edge trigger       \
+                      detection         */
+#define GPIO_MODE_IT_FALLING                                                   \
+  (MODE_INPUT | EXTI_IT |                                                      \
+   TRIGGER_FALLING) /*!< External Interrupt Mode with Falling edge trigger     \
+                       detection        */
+#define GPIO_MODE_IT_RISING_FALLING                                            \
+  (MODE_INPUT | EXTI_IT | TRIGGER_RISING |                                     \
+   TRIGGER_FALLING) /*!< External Interrupt Mode with Rising/Falling edge      \
+                       trigger detection */
+#define GPIO_MODE_EVT_RISING                                                   \
+  (MODE_INPUT | EXTI_EVT |                                                     \
+   TRIGGER_RISING) /*!< External Event Mode with Rising edge trigger detection \
+                    */
+#define GPIO_MODE_EVT_FALLING                                                  \
+  (MODE_INPUT | EXTI_EVT |                                                     \
+   TRIGGER_FALLING) /*!< External Event Mode with Falling edge trigger         \
+                       detection            */
+#define GPIO_MODE_EVT_RISING_FALLING                                           \
+  (MODE_INPUT | EXTI_EVT | TRIGGER_RISING |                                    \
+   TRIGGER_FALLING) /*!< External Event Mode with Rising/Falling edge trigger  \
+                       detection     */
 /**
  * @}
  */
@@ -193,7 +193,8 @@ typedef enum
 /**
  * @brief  Clear the EXTI's line pending flags.
  * @param __EXTI_LINE__ specifies the EXTI lines flags to clear.
- *         This parameter can be any combination of GPIO_PIN_x where x can be (0..15)
+ *         This parameter can be any combination of GPIO_PIN_x where x can be
+ * (0..15)
  * @retval None
  */
 #define __HAL_GPIO_EXTI_CLEAR_FLAG(__EXTI_LINE__) (EXTI->PR1 = (__EXTI_LINE__))
@@ -209,7 +210,8 @@ typedef enum
 /**
  * @brief  Clear the EXTI's line pending bits.
  * @param __EXTI_LINE__ specifies the EXTI lines to clear.
- *          This parameter can be any combination of GPIO_PIN_x where x can be (0..15)
+ *          This parameter can be any combination of GPIO_PIN_x where x can be
+ * (0..15)
  * @retval None
  */
 #define __HAL_GPIO_EXTI_CLEAR_IT(__EXTI_LINE__) (EXTI->PR1 = (__EXTI_LINE__))
@@ -220,7 +222,8 @@ typedef enum
  *          This parameter can be GPIO_PIN_x where x can be(0..15)
  * @retval None
  */
-#define __HAL_GPIO_EXTI_GENERATE_SWIT(__EXTI_LINE__) (EXTI->SWIER1 |= (__EXTI_LINE__))
+#define __HAL_GPIO_EXTI_GENERATE_SWIT(__EXTI_LINE__)                           \
+  (EXTI->SWIER1 |= (__EXTI_LINE__))
 
 /**
  * @}
@@ -256,29 +259,36 @@ typedef enum
 /** @defgroup GPIO_Private_Macros GPIO Private Macros
  * @{
  */
-#define IS_GPIO_PIN_ACTION(ACTION) (((ACTION) == GPIO_PIN_RESET) || ((ACTION) == GPIO_PIN_SET))
+#define IS_GPIO_PIN_ACTION(ACTION)                                             \
+  (((ACTION) == GPIO_PIN_RESET) || ((ACTION) == GPIO_PIN_SET))
 
-#define IS_GPIO_PIN(__PIN__)                                                                       \
-    ((((uint32_t)(__PIN__)&GPIO_PIN_MASK) != 0x00U)                                                \
-     && (((uint32_t)(__PIN__) & ~GPIO_PIN_MASK) == 0x00U))
+#define IS_GPIO_PIN(__PIN__)                                                   \
+  ((((uint32_t)(__PIN__)&GPIO_PIN_MASK) != 0x00U) &&                           \
+   (((uint32_t)(__PIN__) & ~GPIO_PIN_MASK) == 0x00U))
 
-#define IS_GPIO_COMMON_PIN(__RESETMASK__, __SETMASK__)                                             \
-    (((uint32_t)(__RESETMASK__) & (uint32_t)(__SETMASK__)) == 0x00u)
+#define IS_GPIO_COMMON_PIN(__RESETMASK__, __SETMASK__)                         \
+  (((uint32_t)(__RESETMASK__) & (uint32_t)(__SETMASK__)) == 0x00u)
 
-#define IS_GPIO_MODE(__MODE__)                                                                     \
-    (((__MODE__) == GPIO_MODE_INPUT) || ((__MODE__) == GPIO_MODE_OUTPUT_PP)                        \
-     || ((__MODE__) == GPIO_MODE_OUTPUT_OD) || ((__MODE__) == GPIO_MODE_AF_PP)                     \
-     || ((__MODE__) == GPIO_MODE_AF_OD) || ((__MODE__) == GPIO_MODE_IT_RISING)                     \
-     || ((__MODE__) == GPIO_MODE_IT_FALLING) || ((__MODE__) == GPIO_MODE_IT_RISING_FALLING)        \
-     || ((__MODE__) == GPIO_MODE_EVT_RISING) || ((__MODE__) == GPIO_MODE_EVT_FALLING)              \
-     || ((__MODE__) == GPIO_MODE_EVT_RISING_FALLING) || ((__MODE__) == GPIO_MODE_ANALOG))
+#define IS_GPIO_MODE(__MODE__)                                                 \
+  (((__MODE__) == GPIO_MODE_INPUT) || ((__MODE__) == GPIO_MODE_OUTPUT_PP) ||   \
+   ((__MODE__) == GPIO_MODE_OUTPUT_OD) || ((__MODE__) == GPIO_MODE_AF_PP) ||   \
+   ((__MODE__) == GPIO_MODE_AF_OD) || ((__MODE__) == GPIO_MODE_IT_RISING) ||   \
+   ((__MODE__) == GPIO_MODE_IT_FALLING) ||                                     \
+   ((__MODE__) == GPIO_MODE_IT_RISING_FALLING) ||                              \
+   ((__MODE__) == GPIO_MODE_EVT_RISING) ||                                     \
+   ((__MODE__) == GPIO_MODE_EVT_FALLING) ||                                    \
+   ((__MODE__) == GPIO_MODE_EVT_RISING_FALLING) ||                             \
+   ((__MODE__) == GPIO_MODE_ANALOG))
 
-#define IS_GPIO_SPEED(__SPEED__)                                                                   \
-    (((__SPEED__) == GPIO_SPEED_FREQ_LOW) || ((__SPEED__) == GPIO_SPEED_FREQ_MEDIUM)               \
-     || ((__SPEED__) == GPIO_SPEED_FREQ_HIGH) || ((__SPEED__) == GPIO_SPEED_FREQ_VERY_HIGH))
+#define IS_GPIO_SPEED(__SPEED__)                                               \
+  (((__SPEED__) == GPIO_SPEED_FREQ_LOW) ||                                     \
+   ((__SPEED__) == GPIO_SPEED_FREQ_MEDIUM) ||                                  \
+   ((__SPEED__) == GPIO_SPEED_FREQ_HIGH) ||                                    \
+   ((__SPEED__) == GPIO_SPEED_FREQ_VERY_HIGH))
 
-#define IS_GPIO_PULL(__PULL__)                                                                     \
-    (((__PULL__) == GPIO_NOPULL) || ((__PULL__) == GPIO_PULLUP) || ((__PULL__) == GPIO_PULLDOWN))
+#define IS_GPIO_PULL(__PULL__)                                                 \
+  (((__PULL__) == GPIO_NOPULL) || ((__PULL__) == GPIO_PULLUP) ||               \
+   ((__PULL__) == GPIO_PULLDOWN))
 /**
  * @}
  */
@@ -292,7 +302,8 @@ typedef enum
  * @{
  */
 
-/** @defgroup GPIO_Exported_Functions_Group1 Initialization/de-initialization functions
+/** @defgroup GPIO_Exported_Functions_Group1 Initialization/de-initialization
+ * functions
  *  @brief    Initialization and Configuration functions
  * @{
  */
@@ -312,8 +323,10 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
 
 /* IO operation functions *****************************************************/
 GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
-void HAL_GPIO_WriteMultipleStatePin(GPIO_TypeDef *GPIOx, uint16_t PinReset, uint16_t PinSet);
+void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
+                       GPIO_PinState PinState);
+void HAL_GPIO_WriteMultipleStatePin(GPIO_TypeDef *GPIOx, uint16_t PinReset,
+                                    uint16_t PinSet);
 void HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);

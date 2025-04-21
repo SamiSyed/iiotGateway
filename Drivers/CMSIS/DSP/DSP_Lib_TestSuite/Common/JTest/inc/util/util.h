@@ -29,10 +29,8 @@
 /**
  *  Place curly braces around a varaible number of macro arguments.
  */
-#define CURLY(...)                                                                                 \
-    {                                                                                              \
-        __VA_ARGS__                                                                                \
-    }
+#define CURLY(...)                                                             \
+  { __VA_ARGS__ }
 
 /**
  *  Place parenthesis around a variable number of macro arguments.

@@ -53,8 +53,9 @@ extern "C" {
 /** @defgroup ADC_HAL_EC_GROUPS  ADC instance - Groups
  * @{
  */
-#define ADC_REGULAR_GROUP                                                                          \
-    (LL_ADC_GROUP_REGULAR) /*!< ADC group regular (available on all STM32 devices) */
+#define ADC_REGULAR_GROUP                                                      \
+  (LL_ADC_GROUP_REGULAR) /*!< ADC group regular (available on all STM32        \
+                            devices) */
 /**
  * @}
  */
@@ -67,7 +68,8 @@ extern "C" {
 
 /* Private macros ------------------------------------------------------------*/
 
-/** @defgroup ADCEx_Private_Macro_internal_HAL_driver ADC Extended Private Macros
+/** @defgroup ADCEx_Private_Macro_internal_HAL_driver ADC Extended Private
+ * Macros
  * @{
  */
 /* Macro reserved for internal HAL driver usage, not intended to be used in   */
@@ -87,40 +89,48 @@ extern "C" {
  * @retval SET (__CALIBRATION_FACTOR__ is within the authorized size) or RESET
  * (__CALIBRATION_FACTOR__ is too large)
  */
-#define IS_ADC_CALFACT(__CALIBRATION_FACTOR__) ((__CALIBRATION_FACTOR__) <= (0x7FU))
+#define IS_ADC_CALFACT(__CALIBRATION_FACTOR__)                                 \
+  ((__CALIBRATION_FACTOR__) <= (0x7FU))
 
 /**
  * @brief Verify the ADC oversampling ratio.
  * @param __RATIO__ programmed ADC oversampling ratio.
  * @retval SET (__RATIO__ is a valid value) or RESET (__RATIO__ is invalid)
  */
-#define IS_ADC_OVERSAMPLING_RATIO(__RATIO__)                                                       \
-    (((__RATIO__) == ADC_OVERSAMPLING_RATIO_2) || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_4)        \
-     || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_8) || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_16)    \
-     || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_32) || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_64)   \
-     || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_128)                                                \
-     || ((__RATIO__) == ADC_OVERSAMPLING_RATIO_256))
+#define IS_ADC_OVERSAMPLING_RATIO(__RATIO__)                                   \
+  (((__RATIO__) == ADC_OVERSAMPLING_RATIO_2) ||                                \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_4) ||                                \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_8) ||                                \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_16) ||                               \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_32) ||                               \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_64) ||                               \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_128) ||                              \
+   ((__RATIO__) == ADC_OVERSAMPLING_RATIO_256))
 
 /**
  * @brief Verify the ADC oversampling shift.
  * @param __SHIFT__ programmed ADC oversampling shift.
  * @retval SET (__SHIFT__ is a valid value) or RESET (__SHIFT__ is invalid)
  */
-#define IS_ADC_RIGHT_BIT_SHIFT(__SHIFT__)                                                          \
-    (((__SHIFT__) == ADC_RIGHTBITSHIFT_NONE) || ((__SHIFT__) == ADC_RIGHTBITSHIFT_1)               \
-     || ((__SHIFT__) == ADC_RIGHTBITSHIFT_2) || ((__SHIFT__) == ADC_RIGHTBITSHIFT_3)               \
-     || ((__SHIFT__) == ADC_RIGHTBITSHIFT_4) || ((__SHIFT__) == ADC_RIGHTBITSHIFT_5)               \
-     || ((__SHIFT__) == ADC_RIGHTBITSHIFT_6) || ((__SHIFT__) == ADC_RIGHTBITSHIFT_7)               \
-     || ((__SHIFT__) == ADC_RIGHTBITSHIFT_8))
+#define IS_ADC_RIGHT_BIT_SHIFT(__SHIFT__)                                      \
+  (((__SHIFT__) == ADC_RIGHTBITSHIFT_NONE) ||                                  \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_1) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_2) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_3) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_4) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_5) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_6) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_7) ||                                     \
+   ((__SHIFT__) == ADC_RIGHTBITSHIFT_8))
 
 /**
  * @brief Verify the ADC oversampling triggered mode.
  * @param __MODE__ programmed ADC oversampling triggered mode.
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
-#define IS_ADC_TRIGGERED_OVERSAMPLING_MODE(__MODE__)                                               \
-    (((__MODE__) == ADC_TRIGGEREDMODE_SINGLE_TRIGGER)                                              \
-     || ((__MODE__) == ADC_TRIGGEREDMODE_MULTI_TRIGGER))
+#define IS_ADC_TRIGGERED_OVERSAMPLING_MODE(__MODE__)                           \
+  (((__MODE__) == ADC_TRIGGEREDMODE_SINGLE_TRIGGER) ||                         \
+   ((__MODE__) == ADC_TRIGGEREDMODE_MULTI_TRIGGER))
 
 /**
  * @}

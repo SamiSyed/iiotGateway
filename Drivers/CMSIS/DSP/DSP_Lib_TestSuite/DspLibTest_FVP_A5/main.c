@@ -23,12 +23,12 @@
 #include "arm_math.h"
 #include "jtest.h"
 
-int main(void)
-{
-    JTEST_INIT();                /* Initialize test framework. */
-    JTEST_GROUP_CALL(all_tests); /* Run all tests. */
-    JTEST_ACT_EXIT_FW();         /* Exit test framework.  */
+int main(void) {
 
-    while (1)
-        ; /* Never return */
+  JTEST_INIT();                /* Initialize test framework. */
+  JTEST_GROUP_CALL(all_tests); /* Run all tests. */
+  JTEST_ACT_EXIT_FW();         /* Exit test framework.  */
+
+  while (1)
+    ; /* Never return */
 }
