@@ -28,7 +28,7 @@
 #define LORA_MESSAGE_DELIMITER "#"
 #define LORA_MESSAGE_DELIMITER_SIZE 1
 #define IOT_GATEWAY_MESSAGE_SIZE 3U
-#define LORA_END_NODE_VALUE_SIZE 4U
+#define LORA_END_NODE_VALUE_SIZE 28U
 
 /* Must sync with END node. Other wise LoRa communication will hang*/
 #define LORA_TX_BUFFER_SIZE                                                    \
@@ -52,6 +52,8 @@
 #define MQTT_MESSAGE_SIZE 200U
 #define MQTT_SEND_MESSAGE_SIZE (MQTT_TOPIC_SIZE + MQTT_MESSAGE_SIZE)
 #define WIFI_SEND_MESSAGE_SIZE 100U
+
+#define JSON_BUFFER_SIZE 256
 
 typedef enum {
   NO_ERROR,
@@ -86,6 +88,30 @@ typedef enum {
   UART2_WAITING_RX,
   UART2_RX_COMPLETE,
 } Uart2Status_e;
+
+typedef struct {
+  int16_t temperature;  // Soil Temperature in °C
+  int16_t moisture;     // Soil Moisture in %
+  int16_t conductivity; // Soil Conductivity (EC) in uS/cm
+  int16_t pH;           // pH value
+  int16_t nitrogen;     // Nitrogen content (mg/kg or similar)
+  int16_t phosphorus;   // Phosphorus content
+  int16_t potassium;    // Potassium content
+} __attribute__((__packed__)) SoilSensorData_t;
+
+typedef struct {
+  uint16_t temperature; // °C
+  uint16_t ec;          // Electrical Conductivity in µS/cm
+  uint16_t salinity;    // Salinity in mg/L
+  uint16_t tds;         // Total Dissolved Solids in mg/L
+  uint16_t voltage;     // Internal ADC voltage in volts
+} __attribute__((__packed__)) EC_TDS_SensorData_t;
+
+/* Sensor Types*/
+typedef enum {
+  SENSOR_TYPE_SOIL,
+  SENSOR_TYPE_EC_TDS
+} SensorType_t;
 
 void setRawDataReceived(bool status);
 bool isRawDataReceived(void);

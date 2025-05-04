@@ -34,7 +34,7 @@
 
 #include "user_mqttFunctions.h"
 #include "user_system.h"
-#include "user_wifi.h"
+// #include "user_wifi.h"
 
 /* USER CODE END Includes */
 
@@ -145,17 +145,17 @@ int main(void) {
   initUart();
   Delay_CustomTimer(3000);
 
-  initWifi();
-  startServer();
-  Delay_CustomTimer(1000);
-  setGotHttpRequest(false);
+  // initWifi();
+  // startServer();
+  // Delay_CustomTimer(1000);
+  // setGotHttpRequest(false);
 
-  /* TODO: Replace While loop with button based logic 
+  /* TODO: Replace While loop with button based logic
     need to save the topics in some where in the memory
     */
-  while (true) {
-    serveHttpRequest();
-  }
+  // while (true) {
+  //   serveHttpRequest();
+  // }
 
   // setLastCommandOK(true);
   Delay_CustomTimer(1000);
@@ -171,7 +171,7 @@ int main(void) {
   printf("\r\n\r\n**********Main Loop**********\r\n\r\n");
 
   /* Init IWDG */
-  initIwdg();
+  // initIwdg();
 
   while (1) {
     /* USER CODE END WHILE */
@@ -251,7 +251,7 @@ int main(void) {
     setLastCommandOK(true);
     cleanAllBuffers();
 
-    refreshIwdg();
+    // refreshIwdg();
   }
   /* USER CODE END 3 */
 }

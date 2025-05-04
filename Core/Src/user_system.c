@@ -337,3 +337,38 @@ char *prepareLoraMessage(uint8_t sID) {
            sIDString);
   return loraMessage_TX;
 }
+
+char *sensorDataToJson(void *data, SensorType_t type) {
+    static char jsonStr[JSON_BUFFER_SIZE]; // static so it's accessible after return
+
+    if (type == SENSOR_TYPE_SOIL) {
+        SoilSensorData_t *d = (SoilSensorData_t *)data;
+        snprintf(jsonStr, sizeof(jsonStr),
+                 "{"
+                 "\"temperature\": %d, "
+                 "\"moisture\": %d, "
+                 "\"conductivity\": %d, "
+                 "\"pH\": %d, "
+                 "\"nitrogen\": %d, "
+                 "\"phosphorus\": %d, "
+                 "\"potassium\": %d"
+                 "}",
+                 d->temperature, d->moisture, d->conductivity, d->pH,
+                 d->nitrogen, d->phosphorus, d->potassium);
+    } else if (type == SENSOR_TYPE_EC_TDS) {
+        EC_TDS_SensorData_t *d = (EC_TDS_SensorData_t *)data;
+        snprintf(jsonStr, sizeof(jsonStr),
+                 "{"
+                 "\"temperature\": %.2f, "
+                 "\"ec\": %.2f, "
+                 "\"salinity\": %.2f, "
+                 "\"tds\": %.2f, "
+                 "\"voltage\": %.2f"
+                 "}",
+                 d->temperature, d->ec, d->salinity, d->tds, d->voltage);
+    } else {
+        snprintf(jsonStr, sizeof(jsonStr), "{\"error\": \"Unknown sensor type\"}");
+    }
+
+    return jsonStr;
+}
