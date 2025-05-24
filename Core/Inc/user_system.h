@@ -22,12 +22,12 @@
 #define MAX_TIME_CANNOT_SEND_MQTT 120U      /* UNIT second */
 #define MAX_TIME_LORA_INCOMING_MISSING 120U /* UNIT second */
 
-#define SENSOR_ID_DIGIT 3
 #define IOT_GATEWAY_KEY "0123456789" /*Gateway unique ID*/
 #define IOT_GATEWAY_KEY_SIZE 10U
 #define LORA_MESSAGE_DELIMITER "#"
 #define LORA_MESSAGE_DELIMITER_SIZE 1
-#define IOT_GATEWAY_MESSAGE_SIZE 3U
+#define SENSOR_ID_DIGIT_SIZE 3U
+#define SENSOR_TYPE_DIGIT_SIZE 3U
 #define LORA_END_NODE_VALUE_SIZE 4U
 
 /*Type of sensor Supported */
@@ -37,7 +37,7 @@
 /* Must sync with END node. Other wise LoRa communication will hang*/
 #define LORA_TX_BUFFER_SIZE                                                    \
   (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
-   IOT_GATEWAY_MESSAGE_SIZE)
+   SENSOR_ID_DIGIT_SIZE + LORA_MESSAGE_DELIMITER_SIZE + SENSOR_TYPE_DIGIT_SIZE)
 #define LORA_RX_BUFFER_SIZE                                                    \
   (LORA_TX_BUFFER_SIZE + LORA_MESSAGE_DELIMITER_SIZE + LORA_END_NODE_VALUE_SIZE)
 

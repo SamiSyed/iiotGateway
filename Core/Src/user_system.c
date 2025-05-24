@@ -336,12 +336,12 @@ void initDelayCustomTimer(void) {
 }
 
 char *prepareLoraMessage(uint8_t sID, uint8_t sType) {
-  uint8_t sIDString[SENSOR_ID_DIGIT];
-  uint8_t sTypeString[SENSOR_ID_DIGIT];
+  uint8_t sIDString[SENSOR_ID_DIGIT_SIZE];
+  uint8_t sTypeString[SENSOR_TYPE_DIGIT_SIZE];
   itoa(sID, sIDString, 10);
   itoa(sType, sTypeString, 10);
 
-  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s#", IOT_GATEWAY_KEY,
-           sIDString);
+  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s#%s", IOT_GATEWAY_KEY,
+           sIDString, sTypeString);
   return loraMessage_TX;
 }
