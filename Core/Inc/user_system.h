@@ -30,6 +30,10 @@
 #define IOT_GATEWAY_MESSAGE_SIZE 3U
 #define LORA_END_NODE_VALUE_SIZE 4U
 
+/*Type of sensor Supported */
+#define SOIL_SENSOR 101U
+#define EC_SENSOR 102U
+
 /* Must sync with END node. Other wise LoRa communication will hang*/
 #define LORA_TX_BUFFER_SIZE                                                    \
   (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
@@ -93,6 +97,8 @@ bool isRawDataReceived(void);
 void setLastCommandOK(bool status);
 bool isLastCommandOK(void);
 
+uint8_t getSensorType(void);
+
 void setSystemError(SystemError error);
 SystemError getSystemError(void);
 
@@ -132,6 +138,6 @@ void Delay_CustomTimer(uint32_t delayMs);
 uint32_t getTick_CustomTimer(void);
 uint32_t getTick_CustomTimer_Sec(void);
 void initDelayCustomTimer(void);
-char *prepareLoraMessage(uint8_t sID);
+char *prepareLoraMessage(uint8_t sID, uint8_t sType);
 void sendRawAT(char *command, char *param);
 #endif /* SYSTEM_H */

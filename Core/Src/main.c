@@ -145,17 +145,17 @@ int main(void) {
   initUart();
   Delay_CustomTimer(3000);
 
-  initWifi();
-  startServer();
-  Delay_CustomTimer(1000);
-  setGotHttpRequest(false);
+  // initWifi();
+  // startServer();
+  // Delay_CustomTimer(1000);
+  // setGotHttpRequest(false);
 
   /* TODO: Replace While loop with button based logic 
     need to save the topics in some where in the memory
     */
-  while (true) {
-    serveHttpRequest();
-  }
+  // while (true) {
+  //   serveHttpRequest();
+  // }
 
   // setLastCommandOK(true);
   Delay_CustomTimer(1000);
@@ -234,7 +234,7 @@ int main(void) {
     }
 
     if (getTick_CustomTimer_Sec() - timer2sStatus > 1) {
-      getDataFromEndNode(sensorID_0 + loraGetMsgCounter);
+      getDataFromEndNode(sensorID_0 + loraGetMsgCounter, getSensorType());
       loraGetMsgCounter++;
       loraGetMsgCounter = loraGetMsgCounter % NUMBER_OF_SENSORS;
 

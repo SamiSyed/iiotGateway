@@ -195,10 +195,10 @@ static void OnRxError(void) {
 }
 
 /* USER CODE BEGIN PrFD */
-void getDataFromEndNode(SensorId sensorID) {
+void getDataFromEndNode(SensorId sensorID, uint8_t sensorType) {
   // HAL_Delay(Radio.GetWakeupTime() + 200);
 
-  char *loraMessage_p = prepareLoraMessage(sensorID);
+  char *loraMessage_p = prepareLoraMessage(sensorID, sensorType);
   status = Radio.Send(loraMessage_p, LORA_TX_BUFFER_SIZE);
   /* After sending any length of LORA message, MAX_PAYLOAD_LENGTH updates with
    * the same for receiving. Hence need to reset with following code. */

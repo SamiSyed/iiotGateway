@@ -12,6 +12,7 @@ static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
 static bool sendingData = false;
 static bool receivingData = false;
+
 /* This initially has to be true to fetch first AT Reply*/
 static bool lastCommandOK = true;
 uint32_t timeStamp_timer = 0;
@@ -26,6 +27,11 @@ static uint16_t filterBuffer[NUMBER_OF_SENSORS][FILTER_BUFFER_SIZE];
 static Uart2Status_e uart2Status = UART2_RX_COMPLETE;
 char p_command[MQTT_SEND_MESSAGE_SIZE];
 char p_wifCommand[WIFI_SEND_MESSAGE_SIZE];
+
+/* Sensor type variable */
+uint8_t sensorType = EC_SENSOR;
+
+uint8_t getSensorType(void) { return sensorType; }
 
 /* GSM variables */
 
@@ -329,11 +335,13 @@ void initDelayCustomTimer(void) {
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
 }
 
-char *prepareLoraMessage(uint8_t sID) {
+char *prepareLoraMessage(uint8_t sID, uint8_t sType) {
   uint8_t sIDString[SENSOR_ID_DIGIT];
+  uint8_t sTypeString[SENSOR_ID_DIGIT];
   itoa(sID, sIDString, 10);
+  itoa(sType, sTypeString, 10);
 
-  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s", IOT_GATEWAY_KEY,
+  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s#", IOT_GATEWAY_KEY,
            sIDString);
   return loraMessage_TX;
 }
