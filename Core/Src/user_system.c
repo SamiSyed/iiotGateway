@@ -28,6 +28,8 @@ static Uart2Status_e uart2Status = UART2_RX_COMPLETE;
 char p_command[MQTT_SEND_MESSAGE_SIZE];
 char p_wifCommand[WIFI_SEND_MESSAGE_SIZE];
 
+SoilSensorData_t soilSensorData = {0};
+
 /* Sensor type variable */
 uint8_t sensorType = EC_SENSOR;
 
@@ -49,6 +51,10 @@ bool getReceivingFlag(void) { return receivingData; }
 void setLastCommandOK(bool status) { lastCommandOK = status; }
 
 bool isLastCommandOK(void) { return lastCommandOK; }
+
+SoilSensorData_t* getSoilSensorData(void) {
+  return &soilSensorData;
+}
 
 /* Error */
 void setSystemError(SystemError error) {
@@ -96,6 +102,34 @@ void setNewValueBuffer(uint16_t newValue, uint8_t sID) {
 /* Get value from global sensor array*/
 uint16_t getFilteredValueByIndex(uint8_t index) {
   return filteredSensorValues[index];
+}
+
+uint16_t getSoilSensorTemperature(void) {
+  return soilSensorData.temperature;
+}
+
+uint16_t getSoilSensorMoisture(void) {
+  return soilSensorData.moisture;
+}
+
+uint16_t getSoilSensorConductivity(void) {
+  return soilSensorData.conductivity;
+}
+
+uint16_t getSoilSensorPH(void) {
+  return soilSensorData.pH;
+}
+
+uint16_t getSoilSensorNitrogen(void) {
+  return soilSensorData.nitrogen;
+}
+
+uint16_t getSoilSensorPhosphorus(void) {
+  return soilSensorData.phosphorus;
+}
+
+uint16_t getSoilSensorPotassium(void) {
+  return soilSensorData.potassium;
 }
 
 SystemError gsmInit(void) {

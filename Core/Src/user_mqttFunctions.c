@@ -47,18 +47,49 @@ void prepareMqttMessageStruct(uint8_t sensorIndex) {
                     "\\\"Sensor\\\":\\\"Temperature\\\",");
   }
 
-  if (len < sizeof(data) && !firstTime) {
-    len += snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"%i\\\",",
-                    getFilteredValueByIndex(sensorIndex));
-  } else if (len < sizeof(data) && firstTime) {
-    len +=
-        snprintf(data + len, sizeof(data) - len, "\\\"Value\\\":\\\"50\\\",");
-    firstTime = false;
+  // if (len < sizeof(data) && !firstTime) {
+  //   len += snprintf(data + len, sizeof(data) - len,
+  //   "\\\"Value\\\":\\\"%i\\\",",
+  //                   getFilteredValueByIndex(sensorIndex));
+  // } else if (len < sizeof(data) && firstTime) {
+  //   len +=
+  //       snprintf(data + len, sizeof(data) - len,
+  //       "\\\"Value\\\":\\\"50\\\",");
+  //   firstTime = false;
+  // }
+
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Temperature\\\":\\\"%i\\\",",
+                    getSoilSensorTemperature());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Moisture\\\":\\\"%i\\\",",
+                    getSoilSensorMoisture());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Conductivity\\\":\\\"%i\\\",", 
+                    getSoilSensorConductivity());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"pH\\\":\\\"%i\\\",",
+                    getSoilSensorPH());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Nitrogen\\\":\\\"%i\\\",",
+                    getSoilSensorNitrogen());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Phosphorus\\\":\\\"%i\\\",",
+                    getSoilSensorPhosphorus());
+  }
+  if (len < sizeof(data)) {
+    len += snprintf(data + len, sizeof(data) - len, "\\\"Potassium\\\":\\\"%i\\\",",
+                    getSoilSensorPotassium());
   }
 
   if (len < sizeof(data)) {
     len += snprintf(data + len, sizeof(data) - len,
-                    "\\\"Timestamp\\\":\\\"2025-04-13 10:16:05\\\"}");
+                    "\\\"Timestamp\\\":\\\"2025-05-28 10:16:05\\\"}");
   }
 
   strcpy(mqttMessages[sensorIndex].value, data);
