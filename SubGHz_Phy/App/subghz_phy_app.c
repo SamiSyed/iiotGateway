@@ -195,10 +195,10 @@ static void OnRxError(void) {
 }
 
 /* USER CODE BEGIN PrFD */
-void getDataFromEndNode(SensorId sensorID) {
+void getDataFromEndNode(SensorId sensorID, uint8_t sensorType) {
   // HAL_Delay(Radio.GetWakeupTime() + 200);
 
-  char *loraMessage_p = prepareLoraMessage(sensorID);
+  char *loraMessage_p = prepareLoraMessage(sensorID, sensorType);
   status = Radio.Send(loraMessage_p, LORA_TX_BUFFER_SIZE);
   /* After sending any length of LORA message, MAX_PAYLOAD_LENGTH updates with
    * the same for receiving. Hence need to reset with following code. */
@@ -216,12 +216,32 @@ void listenForLoraNodes(void) {
 
 void processIncomingLoraMessage(void) {
   char *message;
+  SoilSensorData_t *soilSensorData_p;
+
   message = strtok(BufferRx, LORA_MESSAGE_DELIMITER);
   if (strstr(message, IOT_GATEWAY_KEY) != NULL) {
     message = strtok(NULL, LORA_MESSAGE_DELIMITER);
     uint8_t sID = atoi(message);
     if (sID >= sensorID_0 && sID < (sensorID_0 + NUMBER_OF_SENSORS)) {
-      message = strtok(NULL, LORA_MESSAGE_DELIMITER);
+      soilSensorData_p = getSoilSensorData();
+
+      soilSensorData_p->temperature = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+      soilSensorData_p->moisture = atoi(strtok(NULL, LORA_MESSAGE_COMMA)); 
+      soilSensorData_p->conductivity = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+      soilSensorData_p->pH = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+      soilSensorData_p->nitrogen = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+      soilSensorData_p->phosphorus = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+      soilSensorData_p->potassium = atoi(strtok(NULL, LORA_MESSAGE_COMMA));
+
+      printf("\r\nSoil Sensor Data:\r\n");
+      printf("Temperature  : %d °C\r\n", soilSensorData_p->temperature);
+      printf("Moisture     : %d %%\r\n", soilSensorData_p->moisture);
+      printf("Conductivity : %d uS/cm\r\n", soilSensorData_p->conductivity);
+      printf("pH           : %d\r\n", soilSensorData_p->pH);
+      printf("Nitrogen     : %d mg/kg\r\n", soilSensorData_p->nitrogen);
+      printf("Phosphorus   : %d mg/kg\r\n", soilSensorData_p->phosphorus);
+      printf("Potassium    : %d mg/kg\r\n", soilSensorData_p->potassium);
+
       uint8_t sValue = atoi(message);
       printf("Correct Message :-) %i\r\n", sValue);
       setNewValueBuffer(sValue, sID);

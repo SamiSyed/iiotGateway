@@ -22,18 +22,23 @@
 #define MAX_TIME_CANNOT_SEND_MQTT 120U      /* UNIT second */
 #define MAX_TIME_LORA_INCOMING_MISSING 120U /* UNIT second */
 
-#define SENSOR_ID_DIGIT 3
 #define IOT_GATEWAY_KEY "0123456789" /*Gateway unique ID*/
 #define IOT_GATEWAY_KEY_SIZE 10U
 #define LORA_MESSAGE_DELIMITER "#"
+#define LORA_MESSAGE_COMMA ","
 #define LORA_MESSAGE_DELIMITER_SIZE 1
-#define IOT_GATEWAY_MESSAGE_SIZE 3U
-#define LORA_END_NODE_VALUE_SIZE 4U
+#define SENSOR_ID_DIGIT_SIZE 3U
+#define SENSOR_TYPE_DIGIT_SIZE 3U
+#define LORA_END_NODE_VALUE_SIZE 28U
+
+/*Type of sensor Supported */
+#define SOIL_SENSOR 101U
+#define EC_SENSOR 102U
 
 /* Must sync with END node. Other wise LoRa communication will hang*/
 #define LORA_TX_BUFFER_SIZE                                                    \
   (IOT_GATEWAY_KEY_SIZE + LORA_MESSAGE_DELIMITER_SIZE +                        \
-   IOT_GATEWAY_MESSAGE_SIZE)
+   SENSOR_ID_DIGIT_SIZE + LORA_MESSAGE_DELIMITER_SIZE + SENSOR_TYPE_DIGIT_SIZE)
 #define LORA_RX_BUFFER_SIZE                                                    \
   (LORA_TX_BUFFER_SIZE + LORA_MESSAGE_DELIMITER_SIZE + LORA_END_NODE_VALUE_SIZE)
 
@@ -49,7 +54,7 @@
 #define NO_AT false
 
 #define MQTT_TOPIC_SIZE 50U
-#define MQTT_MESSAGE_SIZE 200U
+#define MQTT_MESSAGE_SIZE 300U
 #define MQTT_SEND_MESSAGE_SIZE (MQTT_TOPIC_SIZE + MQTT_MESSAGE_SIZE)
 #define WIFI_SEND_MESSAGE_SIZE 100U
 
@@ -87,11 +92,23 @@ typedef enum {
   UART2_RX_COMPLETE,
 } Uart2Status_e;
 
+typedef struct {
+  int16_t temperature;     // Soil Temperature in °C
+  int16_t moisture;        // Soil Moisture in %
+  int16_t conductivity;    // Soil Conductivity (EC) in uS/cm
+  int16_t pH;              // pH value
+  int16_t nitrogen;        // Nitrogen content (mg/kg or similar)
+  int16_t phosphorus;      // Phosphorus content
+  int16_t potassium;       // Potassium content
+} __attribute__((__packed__)) SoilSensorData_t;
+
 void setRawDataReceived(bool status);
 bool isRawDataReceived(void);
 
 void setLastCommandOK(bool status);
 bool isLastCommandOK(void);
+
+uint8_t getSensorType(void);
 
 void setSystemError(SystemError error);
 SystemError getSystemError(void);
@@ -132,6 +149,18 @@ void Delay_CustomTimer(uint32_t delayMs);
 uint32_t getTick_CustomTimer(void);
 uint32_t getTick_CustomTimer_Sec(void);
 void initDelayCustomTimer(void);
-char *prepareLoraMessage(uint8_t sID);
+char *prepareLoraMessage(uint8_t sID, uint8_t sType);
 void sendRawAT(char *command, char *param);
+
+SoilSensorData_t* getSoilSensorData(void);
+
+/* Soil Sensor Data Getters */
+uint16_t getSoilSensorTemperature(void);
+uint16_t getSoilSensorMoisture(void);
+uint16_t getSoilSensorConductivity(void);
+uint16_t getSoilSensorPH(void);
+uint16_t getSoilSensorNitrogen(void);
+uint16_t getSoilSensorPhosphorus(void);
+uint16_t getSoilSensorPotassium(void);
+
 #endif /* SYSTEM_H */

@@ -94,7 +94,7 @@ void SubghzApp_Init(void);
 
 /* USER CODE BEGIN EFP */
 void listenForLoraNodes(void);
-void getDataFromEndNode(SensorId sensorID);
+void getDataFromEndNode(SensorId sensorID, uint8_t sensorType);
 void processIncomingLoraMessage(void);
 void setLoraReceived(bool status);
 bool isLoraReceived(void);

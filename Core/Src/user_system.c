@@ -12,6 +12,7 @@ static bool rawDataReceived = false;
 static SystemError systemError = NO_ERROR;
 static bool sendingData = false;
 static bool receivingData = false;
+
 /* This initially has to be true to fetch first AT Reply*/
 static bool lastCommandOK = true;
 uint32_t timeStamp_timer = 0;
@@ -26,6 +27,13 @@ static uint16_t filterBuffer[NUMBER_OF_SENSORS][FILTER_BUFFER_SIZE];
 static Uart2Status_e uart2Status = UART2_RX_COMPLETE;
 char p_command[MQTT_SEND_MESSAGE_SIZE];
 char p_wifCommand[WIFI_SEND_MESSAGE_SIZE];
+
+SoilSensorData_t soilSensorData = {0};
+
+/* Sensor type variable */
+uint8_t sensorType = EC_SENSOR;
+
+uint8_t getSensorType(void) { return sensorType; }
 
 /* GSM variables */
 
@@ -43,6 +51,10 @@ bool getReceivingFlag(void) { return receivingData; }
 void setLastCommandOK(bool status) { lastCommandOK = status; }
 
 bool isLastCommandOK(void) { return lastCommandOK; }
+
+SoilSensorData_t* getSoilSensorData(void) {
+  return &soilSensorData;
+}
 
 /* Error */
 void setSystemError(SystemError error) {
@@ -90,6 +102,34 @@ void setNewValueBuffer(uint16_t newValue, uint8_t sID) {
 /* Get value from global sensor array*/
 uint16_t getFilteredValueByIndex(uint8_t index) {
   return filteredSensorValues[index];
+}
+
+uint16_t getSoilSensorTemperature(void) {
+  return soilSensorData.temperature;
+}
+
+uint16_t getSoilSensorMoisture(void) {
+  return soilSensorData.moisture;
+}
+
+uint16_t getSoilSensorConductivity(void) {
+  return soilSensorData.conductivity;
+}
+
+uint16_t getSoilSensorPH(void) {
+  return soilSensorData.pH;
+}
+
+uint16_t getSoilSensorNitrogen(void) {
+  return soilSensorData.nitrogen;
+}
+
+uint16_t getSoilSensorPhosphorus(void) {
+  return soilSensorData.phosphorus;
+}
+
+uint16_t getSoilSensorPotassium(void) {
+  return soilSensorData.potassium;
 }
 
 SystemError gsmInit(void) {
@@ -329,11 +369,13 @@ void initDelayCustomTimer(void) {
   timeStamp_timer = __HAL_TIM_GET_COUNTER(&htim2);
 }
 
-char *prepareLoraMessage(uint8_t sID) {
-  uint8_t sIDString[SENSOR_ID_DIGIT];
+char *prepareLoraMessage(uint8_t sID, uint8_t sType) {
+  uint8_t sIDString[SENSOR_ID_DIGIT_SIZE];
+  uint8_t sTypeString[SENSOR_TYPE_DIGIT_SIZE];
   itoa(sID, sIDString, 10);
+  itoa(sType, sTypeString, 10);
 
-  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s", IOT_GATEWAY_KEY,
-           sIDString);
+  snprintf(loraMessage_TX, sizeof(loraMessage_TX), "%s#%s#%s", IOT_GATEWAY_KEY,
+           sIDString, sTypeString);
   return loraMessage_TX;
 }
