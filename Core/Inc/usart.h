@@ -52,7 +52,7 @@ void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void initUart(void);
-bool replyContains(char *reply);
+bool replyContains(const char *reply);
 bool isOKReceived(void);
 void cleanAllBuffers(void);
 void printfMainBuffer(void);

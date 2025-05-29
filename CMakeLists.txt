@@ -87,6 +87,7 @@ set(C_SOURCES
     Core/Src/subghz.c
     Core/Src/user_system.c
     Core/Src/user_wifi.c
+    Core/Src/user_gsm.c
     Core/Src/usart.c
     Core/Src/user_mqttFunctions.c
     Core/Src/stm32wlxx_it.c

@@ -17,24 +17,27 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "adc.h"
-#include "app_subghz_phy.h"
-#include "dma.h"
-#include "gpio.h"
-#include "rtc.h"
-#include "tim.h"
-#include "usart.h"
+#include "../Inc/main.h"
+#include "../Inc/adc.h"
+#include "../Inc/adc_if.h"
+#include "../Inc/app_subghz_phy.h"
+#include "../Inc/dma.h"
+#include "../Inc/gpio.h"
+#include "../Inc/rtc.h"
+#include "../Inc/tim.h"
+#include "../Inc/usart.h"
+#include "../Inc/user_system.h"
+#include "../Inc/user_gsm.h"
+#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "iwdg.h"
-#include "stm32wlxx.h"
-#include "subghz_phy_app.h"
+#include "../Inc/iwdg.h"
+#include "../Inc/stm32wlxx.h"
+#include "../Inc/subghz_phy_app.h"
 
-#include "user_mqttFunctions.h"
-#include "user_system.h"
-#include "user_wifi.h"
+#include "../Inc/user_mqttFunctions.h"
+#include "../Inc/user_wifi.h"
 
 /* USER CODE END Includes */
 
@@ -54,16 +57,16 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+static uint32_t timer2sStatus = 0;
+static uint32_t timer5sStatus = 0;
+static uint32_t dataOkStatus = 0;
+static uint32_t loraGetMsgCounter = 0;
+static uint8_t mqttMessageCounter = 0;
 
 /* USER CODE BEGIN PV */
 HAL_StatusTypeDef uart2status = HAL_OK;
-int32_t timer2sStatus = 0;
-int32_t timer5sStatus = 0;
 int32_t timer20sStatus = 0;
-int32_t dataOkStatus = 0;
 int32_t loraRecieveOkStatus = 0;
-uint8_t mqttMessageCounter = 0;
-uint8_t loraGetMsgCounter = 0;
 uint8_t debugDifference = 0;
 bool sendMqttData = false;
 bool systemResetFlag = false;

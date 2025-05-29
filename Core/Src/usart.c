@@ -355,8 +355,8 @@ void initUart(void) {
 }
 
 void cleanAllBuffers(void) {
-  memset(rxBuffer, 0, RX_BUFFER_SIZE);
-  memset(mainBuffer, 0, MAIN_BUFFER_SIZE);
+  memset((void *)rxBuffer, 0, RX_BUFFER_SIZE);
+  memset((void *)mainBuffer, 0, MAIN_BUFFER_SIZE);
 }
 
 void printBufferWifi(void) {
@@ -373,18 +373,12 @@ void printBufferWifi(void) {
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
   if (huart->Instance == USART2) {
-    if (getReceivingFlag()) {
-      memcpy(mainBuffer, rxBuffer, Size);
-
-      setReceivingFlag(false);
-
-      debug_RxCplt++;
+    if (Size > 0) {
+      memcpy((void *)mainBuffer, (const void *)rxBuffer, Size);
+      isOK = true;
     }
-    /* Keep the following 2 lines out of if (getReceivingFlag()) {}. Becasue it
-     * need to clear out noises*/
-    memset(rxBuffer, 0, Size);
-    HAL_UARTEx_ReceiveToIdle_IT(&huart2, rxBuffer, RX_BUFFER_SIZE);
-    debug_RxCplt_outside--;
+    memset((void *)rxBuffer, 0, Size);
+    HAL_UARTEx_ReceiveToIdle_IT(&huart2, (uint8_t *)rxBuffer, RX_BUFFER_SIZE);
   }
 
   if (huart->Instance == LPUART1) {
@@ -413,9 +407,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 
 bool isOKReceived(void) { return isOK; }
 
-bool replyContains(char *reply) {
-  // printfMainBuffer();
-  if (strstr(mainBuffer, reply) != NULL) {
+bool replyContains(const char *reply) {
+  if (strstr((const char *)mainBuffer, reply) != NULL) {
     return true;
   }
   return false;
