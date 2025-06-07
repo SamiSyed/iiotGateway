@@ -30,7 +30,7 @@ void setMqttTopic(void) {
 }
 
 MqttMessage_t *getMqttMessageByIndex(uint8_t index) {
-  if (index > NUMBER_OF_SENSORS) {
+  if (index >= NUMBER_OF_SENSORS) {
     setSystemError(ERROR_INDEX_OUT_OF_RANGE);
   }
   return &mqttMessages[index];

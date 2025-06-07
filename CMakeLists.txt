@@ -143,6 +143,8 @@ if(NOT CXX_COMPILER_NAME STREQUAL "arm-none-eabi-g++")
     add_custom_target(${EXECUTABLE}
         COMMAND ${CMAKE_COMMAND} -E echo "Error: Unsupported compiler detected(${CXX_COMPILER_NAME}). Use correct compiler(arm-none-eabi-g++) by selecting the CMake kit: Mono_SFCPU"
     )
+    enable_testing()
+    add_subdirectory(tests)
     return()
 endif()
 
