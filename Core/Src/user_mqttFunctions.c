@@ -42,10 +42,10 @@ void prepareMqttMessageStruct(uint8_t sensorIndex) {
   char data[MQTT_MESSAGE_SIZE];
   int len =
       snprintf(data, sizeof(data), "{\\\"ID\\\":\\\"0129784251391295\\\",");
-  if (len < sizeof(data)) {
-    len += snprintf(data + len, sizeof(data) - len,
-                    "\\\"Sensor\\\":\\\"Temperature\\\",");
-  }
+  // if (len < sizeof(data)) {
+  //   len += snprintf(data + len, sizeof(data) - len,
+  //                   "\\\"Sensor\\\":\\\"Temperature\\\",");
+  // }
 
   // if (len < sizeof(data) && !firstTime) {
   //   len += snprintf(data + len, sizeof(data) - len,
